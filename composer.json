@@ -1,10 +1,5 @@
 {
 	"name" : "simpleserv/webfiles-framework",
-	"config" : {
-		"github-oauth" : {
-			"github.com" : "e2bb8699e71d097e38a64d338b63d4819c32cbf8"
-		}
-	},
 	"version" : "v0.1",
 	"authors" : [{
 			"name" : "simpleserv company",
