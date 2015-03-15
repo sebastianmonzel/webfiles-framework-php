@@ -1,6 +1,6 @@
 #
 # SOURCE IMAGE
-FROM ubuntu
+FROM phusion/baseimage
 
 # 
 MAINTAINER mail@sebastianmonzel.de
