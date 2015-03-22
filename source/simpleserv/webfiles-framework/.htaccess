@@ -1,0 +1,3 @@
+RewriteEngine Off
+RewriteRule ^(.*)\.htm index.php?site=$1&%{QUERY_STRING}
+RewriteRule ^(.*)\.php index.php?site=$1&%{QUERY_STRING} 
