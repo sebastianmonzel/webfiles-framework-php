@@ -8,7 +8,7 @@
 	"license" : "GPL-2",
 	"autoload": {
         "psr-4": {
-            "simpleserv\\": "source/simpleserv/" }
+            "simpleserv\\webfilesframework\\": "source/" }
     },
 	"require" : {
 		"php" : ">=5.3.0",
