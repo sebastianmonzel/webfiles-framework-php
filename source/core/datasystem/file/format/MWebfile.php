@@ -1,6 +1,9 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datasystem\file\format;
+namespace \simpleserv\webfilesframework\core\datasystem\file\format;
+
+
+use \simpleserv\webfilesframework\MItem;
 
 /**
  * #########################################################
