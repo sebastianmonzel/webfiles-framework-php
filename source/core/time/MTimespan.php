@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\time;
+namespace simpleserv\webfilesframework\core\time;
 
 
 class MTimespan extends MWebfile {

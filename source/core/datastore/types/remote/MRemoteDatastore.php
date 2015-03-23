@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datastore\types\remote;
+namespace simpleserv\webfilesframework\core\datastore\types\remote;
 
 /**
  * Makes it 

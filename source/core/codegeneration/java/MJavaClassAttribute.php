@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\codegeneration\java;
+namespace simpleserv\webfilesframework\core\codegeneration\java;
 
 /**
  * #########################################################

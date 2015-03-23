@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datasystem\file\system;
+namespace simpleserv\webfilesframework\core\datasystem\file\system;
 
 /**
  * #########################################################

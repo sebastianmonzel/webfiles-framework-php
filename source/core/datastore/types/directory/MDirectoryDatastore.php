@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datastore\types\directory;
+namespace simpleserv\webfilesframework\core\datastore\types\directory;
 
 /**
  * #########################################################

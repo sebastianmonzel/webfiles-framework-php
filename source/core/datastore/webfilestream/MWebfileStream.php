@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datastore\webfilestream;
+namespace simpleserv\webfilesframework\core\datastore\webfilestream;
 
 /**
  * 

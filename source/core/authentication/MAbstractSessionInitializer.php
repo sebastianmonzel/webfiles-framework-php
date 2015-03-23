@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\authentication;
+namespace simpleserv\webfilesframework\core\authentication;
 
 /**
  * 

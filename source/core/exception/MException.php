@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\exception;
+namespace simpleserv\webfilesframework\core\exception;
 
 /**
  * #########################################################

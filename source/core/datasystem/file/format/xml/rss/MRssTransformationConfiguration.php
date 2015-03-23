@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datasystem\file\format\xml\rss;
+namespace simpleserv\webfilesframework\core\datasystem\file\format\xml\rss;
 
 /**
  * #########################################################

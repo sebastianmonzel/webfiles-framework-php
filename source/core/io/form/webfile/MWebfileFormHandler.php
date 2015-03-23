@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\io\form\webfile;
+namespace simpleserv\webfilesframework\core\io\form\webfile;
 
 /**
  * #########################################################

@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datasystem\file\system\dropbox;
+namespace simpleserv\webfilesframework\core\datasystem\file\system\dropbox;
 
 /**
  * #########################################################

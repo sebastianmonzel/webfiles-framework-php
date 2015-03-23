@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\app;
+namespace simpleserv\webfilesframework\core\app;
 
 /**
  * #########################################################

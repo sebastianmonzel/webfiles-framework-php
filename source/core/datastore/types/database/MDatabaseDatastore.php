@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\datastore\types\database;
+namespace simpleserv\webfilesframework\core\datastore\types\database;
 
 /**
  * #########################################################

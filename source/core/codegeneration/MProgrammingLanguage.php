@@ -1,6 +1,6 @@
 <?php
 
-namespace \simpleserv\webfiles-framework\core\codegeneration;
+namespace simpleserv\webfilesframework\core\codegeneration;
 
 /**
  * 
