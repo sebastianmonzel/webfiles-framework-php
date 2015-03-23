@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datastore\types\mail;
 
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

@@ -2,6 +2,10 @@
 
 namespace simpleserv\webfilesframework\core\datastore\types\remote;
 
+
+use \simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+use \simpleserv\webfilesframework\core\io\request\MPostHttpRequest;
+
 /**
  * Makes it 
  * 

@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\datastore\types\directory;
 
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

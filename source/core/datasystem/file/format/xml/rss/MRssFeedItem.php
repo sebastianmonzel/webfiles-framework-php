@@ -99,5 +99,4 @@ class MRssFeedItem {
 		$this->length     = $length;
 	}
 	
-	
 }
