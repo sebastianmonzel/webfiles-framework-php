@@ -1,5 +1,7 @@
 <?php
 
+namespace simpleserv\webfilesframework;
+
 class  MItem {
 
     protected $m_iId = 0;
