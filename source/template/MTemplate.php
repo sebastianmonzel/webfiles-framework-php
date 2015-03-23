@@ -269,6 +269,3 @@ class MTemplate extends MItem {
 	
 	
 }
-
-
-?>
