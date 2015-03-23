@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
+use \simpleserv\webfilesframework\core\exception\MException;
+
 /**
  * 
  * @author semo

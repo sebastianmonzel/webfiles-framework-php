@@ -2,6 +2,10 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
+use \simpleserv\webfilesframework\MItem;
+use \simpleserv\webfilesframework\datasystem\database\MDatabaseConnection;
+use \simpleserv\webfilesframework\datasystem\database\MDatabaseTableColumn;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps
@@ -36,7 +40,7 @@ class MDatabaseTable {
 	 * Enter description here ...
 	 * @param unknown_type $name
 	 */
-	public function __construct($databaseConnection, $name) {
+	public function __construct(MDatabaseConnection $databaseConnection, $name) {
 		
 		$this->databaseConnection = $databaseConnection;
 		$this->name = $name;

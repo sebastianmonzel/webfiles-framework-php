@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
+use \simpleserv\webfilesframework\MItem;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

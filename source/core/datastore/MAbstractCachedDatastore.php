@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
+use \simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+use \simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
+
 /**
  * 
  * @author semo

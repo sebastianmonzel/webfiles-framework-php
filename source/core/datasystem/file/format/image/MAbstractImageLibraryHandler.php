@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
+use \simpleserv\webfilesframework\MItem;
+
 /**
  * 
  * @author semo

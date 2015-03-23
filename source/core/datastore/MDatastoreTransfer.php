@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
+use \simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+
+
 /**
  * 
  * Transfers webfiles from one datastore to an other

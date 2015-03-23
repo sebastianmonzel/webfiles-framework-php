@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
+use \simpleserv\webfilesframework\core\datasystem\file\format\image\MAbstractImageLibraryHandler;
+
+
 /**
  * 
  * @author semo
