@@ -54,5 +54,3 @@ class MWrappedSiteContent extends MSiteElement {
 	}
 	
 }
-
-?>

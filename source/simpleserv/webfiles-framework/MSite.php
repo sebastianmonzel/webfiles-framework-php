@@ -156,6 +156,11 @@ class MSite {
 			return "";
 		}
 	}
+	
+	public static function show() {
+		
+		
+		
+	}
+	
 }
-
-?>
