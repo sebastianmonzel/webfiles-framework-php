@@ -49,7 +49,10 @@ class MSite {
 	 */
 	public static function getInstance() {
 		if ( MSite::$instance == null ) {
+			
 			MSite::$instance = new MSite();
+			MSite::$instance->makeDefaultConfiguration();
+			
 		}
 		return MSite::$instance;
 	}
@@ -157,10 +160,18 @@ class MSite {
 		}
 	}
 	
-	public static function show() {
+	public function makeDefaultConfiguration() {
 		
+		// CHARSET
+		header("Content-Type: text/html; charset=utf-8");
 		
+		// ERROR HANDLING
+		error_reporting(E_ALL);
+		ini_set('display_errors', 'On');
+		ini_set('html_errors', 'On');
 		
+		// TIMEZONE
+		date_default_timezone_set("Europe/Berlin");
 	}
 	
 }
