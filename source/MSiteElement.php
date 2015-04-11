@@ -1,5 +1,9 @@
 <?php
 
+namespace simpleserv\webfilesframework;
+
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

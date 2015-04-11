@@ -3,6 +3,13 @@
 namespace simpleserv\webfilesframework\core\datastore\types\directory;
 
 use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use \simpleserv\webfilesframework\core\datastore\MAbstractCachableDatastore;
+use \simpleserv\webfilesframework\core\datastore\MISingleDatastore;
+use \simpleserv\webfilesframework\core\datastore\MDatastoreException;
+use \simpleserv\webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
+use \simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use \simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
+use \simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
 
 /**

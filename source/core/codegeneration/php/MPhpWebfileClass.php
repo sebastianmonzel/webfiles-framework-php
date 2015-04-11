@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration\php;
 
+use \simpleserv\webfilesframework\core\codegeneration\MAbstractClass;
+use \simpleserv\webfilesframework\core\exception\MException;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

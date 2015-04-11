@@ -3,7 +3,7 @@
 namespace simpleserv\webfilesframework\core\datastore;
 
 use \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use \simpleserv\webfilesframework\core\datastore\types\webfilestream\MWebfileStream;
+use \simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 

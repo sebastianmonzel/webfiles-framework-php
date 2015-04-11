@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format;
 
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+
 /**
  * 
  * @author semo

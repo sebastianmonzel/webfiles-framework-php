@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration\php;
 
+use \simpleserv\webfilesframework\core\codegeneration\MAbstractClassAttribute;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

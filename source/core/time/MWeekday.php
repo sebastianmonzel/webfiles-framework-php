@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\time;
 
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+
 
 class MWeekday extends MWebfile {
 	

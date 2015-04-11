@@ -3,8 +3,8 @@
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
 use \simpleserv\webfilesframework\MItem;
-use \simpleserv\webfilesframework\datasystem\database\MDatabaseConnection;
-use \simpleserv\webfilesframework\datasystem\database\MDatabaseTableColumn;
+use \simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
+use \simpleserv\webfilesframework\core\datasystem\database\MDatabaseTableColumn;
 
 /**
  * #########################################################

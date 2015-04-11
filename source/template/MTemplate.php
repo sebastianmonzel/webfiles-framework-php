@@ -1,5 +1,9 @@
 <?php
 
+namespace simpleserv\webfilesframework\template;
+
+use \simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use \simpleserv\webfilesframework\MItem;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

@@ -1,5 +1,7 @@
 <?php 
 
+namespace simpleserv\webfilesframework;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps
