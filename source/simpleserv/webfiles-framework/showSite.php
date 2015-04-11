@@ -19,11 +19,6 @@ $basePath = "vendor/simpleserv/webfiles-framework/";
 
 require_once($basePath . 'const.php');
 
-// DEFAULT CONFIG
-require_once(ESSENTIAL_CONFIGURATION_FOLDER . FOLDER_SEPERATOR . 'configureCharset.php');
-require_once(ESSENTIAL_CONFIGURATION_FOLDER . FOLDER_SEPERATOR . 'configureErrorHandling.php');
-require_once(ESSENTIAL_CONFIGURATION_FOLDER . FOLDER_SEPERATOR . 'configureTimezone.php');
-
 include(CUSTOM_FOLDER . "/config.php");
 
 try {
@@ -49,7 +44,7 @@ try {
 	
 	
 	//@todo
-	//überprüfen, ob navigation gebraucht wird (siehe configuration), wenn ja konfiguration in template ersetzen,
+	//ueberpruefen, ob navigation gebraucht wird (siehe configuration), wenn ja konfiguration in template ersetzen,
 	//wenn nein, dann nichts tun.
 	
 	
