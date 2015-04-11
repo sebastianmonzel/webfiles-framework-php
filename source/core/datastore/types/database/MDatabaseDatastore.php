@@ -8,6 +8,7 @@ use \simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use \simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use \simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
 use \simpleserv\webfilesframework\core\datasystem\database\MIDbDatatypes;
+use \simpleserv\webfilesframework\core\datastore\MISingleDatastore;
 
 /**
  * #########################################################

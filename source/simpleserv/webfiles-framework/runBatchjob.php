@@ -1,5 +1,7 @@
 <?php
 
+use \simpleserv\webfilesframework\core\io\request\MUrl;
+
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

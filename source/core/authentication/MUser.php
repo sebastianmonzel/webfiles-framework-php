@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\authentication;
 
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 /**
  * 
  * @author semo

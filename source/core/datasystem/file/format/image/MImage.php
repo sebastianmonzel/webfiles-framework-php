@@ -3,6 +3,7 @@
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
 use \simpleserv\webfilesframework\core\datasystem\file\format\image\MAbstractImageLibraryHandler;
+use \simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 
 
 /**

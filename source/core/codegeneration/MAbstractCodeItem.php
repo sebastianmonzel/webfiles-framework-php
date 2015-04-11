@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration;
 
+use \simpleserv\webfilesframework\MItem;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

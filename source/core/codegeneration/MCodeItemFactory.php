@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration;
 
+use \simpleserv\webfilesframework\MItem;
+use \simpleserv\webfilesframework\core\codegeneration\java\MJavaWebfileClass;
+use \simpleserv\webfilesframework\core\codegeneration\php\MPhpWebfileClass;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps
@@ -25,9 +28,9 @@ class MCodeItemFactory extends MItem {
 	public static function createClass($programmingLanguage,$namespace,$className) {
 		
 		if ( $programmingLanguage == "php" ) {
-			return new MPhpClass($className);
+			return new MPhpWebfileClass($className);
 		} else if ( $programmingLanguage == "java" ) {
-			return new MJavaClass($className);
+			return new MJavaWebfileClass($className);
 		}
 		
 	}
@@ -35,9 +38,9 @@ class MCodeItemFactory extends MItem {
 	public static function createClassAttribute($programmingLanguage) {
 		
 		if ( $programmingLanguage == "php" ) {
-			return new MPhpClass();
+			return new MPhpWebfileClass();
 		} else if ( $programmingLanguage == "java" ) {
-			return new MJavaClass();
+			return new MJavaWebfileClass();
 		}
 		
 	}

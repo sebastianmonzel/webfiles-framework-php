@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\authentication;
 
+use \simpleserv\webfilesframework\MSite;
+
 /**
  * 
  * Enter description here ...

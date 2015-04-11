@@ -2,6 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\app;
 
+use \simpleserv\webfilesframework\MSite;
+use \simpleserv\webfilesframework\core\io\request\MUrl;
+use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

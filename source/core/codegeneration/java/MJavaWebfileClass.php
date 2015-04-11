@@ -20,7 +20,7 @@ use \simpleserv\webfilesframework\core\codegeneration\MAbstractClass;
  * @copyright  2009-2012 simpleserv company
  * @link       http://www.simpleserv.de/
  */
-class MJavaClass extends MAbstractClass {
+class MJavaWebfileClass extends MAbstractClass {
 	
 	
 	
