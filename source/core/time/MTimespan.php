@@ -4,6 +4,11 @@ namespace simpleserv\webfilesframework\core\time;
 
 use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
+/**
+ * @package simpleserv.webfilesframework.core.time
+ * @author sebastianmonzel
+ *
+ */
 class MTimespan extends MWebfile {
 
 	private $start;
