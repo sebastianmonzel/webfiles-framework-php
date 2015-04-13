@@ -39,7 +39,7 @@ class MBootstrap {
 			
 			
 			if ( MUrl::getInstance()->paramExists("site") ) {
-				$siteDirectory = new MDirectory(CUSTOM_SITE_FOLDER);
+				$siteDirectory = new MDirectory("./custom/site/");
 				$siteDirectoryFiles = $siteDirectory->getFileNames();
 			
 				$actualSiteFileName = MUrl::getInstance()->getParam("site") . ".site.php";
@@ -66,6 +66,15 @@ class MBootstrap {
 		}
 		
 		echo MSite::getInstance()->getCode();
+	}
+	
+	public function handleBatchjobRequest() {
+		
+		if ( MUrl::getInstance()->paramExists("batchjob") ) {
+			include("./custom/batchjob/" . MUrl::getInstance()->getParam("batchjob") . ".batchjob.php");
+		} else {
+			include("./custom/batchjob/index.batchjob.php");
+		}
 	}
 	
 	public function enableAuthentification(MTemplate $loginTemplate) {
