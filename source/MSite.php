@@ -39,8 +39,6 @@ class MSite {
 	
 	private $isBlank = false;
 	
-	private $isAuthorisationNeeded = false;
-	
 	private static $instance = null;
 	
 	public function __construct() {
@@ -96,14 +94,6 @@ class MSite {
 	
 	public function addContent($content) {
 		$this->content = $this->content . $content;
-	}
-	
-	public function isAuthorisationNeeded() {
-		return $this->isAuthorisationNeeded;
-	}
-	
-	public function setAuthorisationNeeded($isAuthorisationNeeded) {
-		$this->isAuthorisationNeeded = $isAuthorisationNeeded;
 	}
 	
 	public function setDefaultDatastore(MAbstractDatastore $defaultDatastore) {
