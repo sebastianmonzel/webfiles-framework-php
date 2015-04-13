@@ -69,11 +69,26 @@ class MBootstrap {
 	}
 	
 	public function handleBatchjobRequest() {
-		
-		if ( MUrl::getInstance()->paramExists("batchjob") ) {
-			include("./custom/batchjob/" . MUrl::getInstance()->getParam("batchjob") . ".batchjob.php");
-		} else {
-			include("./custom/batchjob/index.batchjob.php");
+		try {
+			
+			if ( $this->isAuthentificationEnabled ) {
+				$this->checkForAuthorization();
+			}
+			
+			if ( MUrl::getInstance()->paramExists("batchjob") ) {
+				include("./custom/batchjob/" . MUrl::getInstance()->getParam("batchjob") . ".batchjob.php");
+			} else {
+				include("./custom/batchjob/index.batchjob.php");
+			}
+		} catch (MNotEnoughRightsException $e) {
+			$loginTemplate = new MTemplate();
+			$loginTemplateFile = new MFile("./custom/login.tpl");
+			$loginTemplate->setContentByFile($loginTemplateFile);
+			MSite::getInstance()->setTemplate($loginTemplateFile);
+			
+		} catch (Exception $e) {
+			MSite::getInstance()->addContent("Exception occured: <b>" . $e->getMessage() . "</b><br />");
+			MSite::getInstance()->addContent("<pre>" . $e->getTraceAsString() . "</pre>");
 		}
 	}
 	
