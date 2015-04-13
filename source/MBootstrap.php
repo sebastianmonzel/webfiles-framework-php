@@ -55,10 +55,7 @@ class MBootstrap {
 			}
 			
 		} catch (MNotEnoughRightsException $e) {
-			$loginTemplate = new MTemplate();
-			$loginTemplateFile = new MFile("./custom/login.tpl");
-			$loginTemplate->setContentByFile($loginTemplateFile);
-			MSite::getInstance()->setTemplate($loginTemplateFile);
+			MSite::getInstance()->setTemplate($this->loginTemplate);
 			
 		} catch (Exception $e) {
 			MSite::getInstance()->addContent("Exception occured: <b>" . $e->getMessage() . "</b><br />");
@@ -81,10 +78,7 @@ class MBootstrap {
 				include("./custom/batchjob/index.batchjob.php");
 			}
 		} catch (MNotEnoughRightsException $e) {
-			$loginTemplate = new MTemplate();
-			$loginTemplateFile = new MFile("./custom/login.tpl");
-			$loginTemplate->setContentByFile($loginTemplateFile);
-			MSite::getInstance()->setTemplate($loginTemplateFile);
+			MSite::getInstance()->setTemplate($this->loginTemplate);
 			
 		} catch (Exception $e) {
 			MSite::getInstance()->addContent("Exception occured: <b>" . $e->getMessage() . "</b><br />");
