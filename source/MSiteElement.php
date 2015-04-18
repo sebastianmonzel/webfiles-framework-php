@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework;
 
-use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * #########################################################

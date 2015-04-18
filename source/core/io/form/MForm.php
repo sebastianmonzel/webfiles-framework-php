@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\io\form;
 
-use \simpleserv\webfilesframework\core\io\form\formItem\MAbstractFormItem;
+use simpleserv\webfilesframework\core\io\form\formItem\MAbstractFormItem;
 
 /**
  * #########################################################

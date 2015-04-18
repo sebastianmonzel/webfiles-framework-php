@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format;
 
-use \simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\MItem;
 
 /**
  * #########################################################

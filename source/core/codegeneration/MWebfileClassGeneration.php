@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration;
 
-use \simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\MItem;
 /**
  * 
  * Enter description here ...

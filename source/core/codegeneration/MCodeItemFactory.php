@@ -2,9 +2,9 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration;
 
-use \simpleserv\webfilesframework\MItem;
-use \simpleserv\webfilesframework\core\codegeneration\java\MJavaWebfileClass;
-use \simpleserv\webfilesframework\core\codegeneration\php\MPhpWebfileClass;
+use simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\core\codegeneration\java\MJavaWebfileClass;
+use simpleserv\webfilesframework\core\codegeneration\php\MPhpWebfileClass;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

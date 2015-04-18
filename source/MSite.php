@@ -2,10 +2,10 @@
 
 namespace simpleserv\webfilesframework;
 
-use \simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use \simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
-use \simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use \simpleserv\webfilesframework\template\MTemplate;
+use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
+use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+use simpleserv\webfilesframework\template\MTemplate;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

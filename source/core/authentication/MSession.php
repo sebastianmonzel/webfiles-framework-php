@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\authentication;
 
-use \simpleserv\webfilesframework\MSite;
+use simpleserv\webfilesframework\MSite;
 
 /**
  * 

@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration\java;
 
-use \simpleserv\webfilesframework\core\codegeneration\MAbstractClassAttribute;
+use simpleserv\webfilesframework\core\codegeneration\MAbstractClassAttribute;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps

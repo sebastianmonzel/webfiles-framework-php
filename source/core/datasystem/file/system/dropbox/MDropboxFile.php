@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\system\dropbox;
 
-use \simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 
 /**
  * #########################################################

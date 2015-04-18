@@ -2,11 +2,11 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
-use \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 
-use \simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use \simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use simpleserv\webfilesframework\MItem;
 
 /**
  * #########################################################

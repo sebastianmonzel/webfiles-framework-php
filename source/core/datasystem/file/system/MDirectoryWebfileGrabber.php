@@ -2,8 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\system;
 
-use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use \simpleserv\webfilesframework\core\datastore\MDatastoreException;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\core\datastore\MDatastoreException;
 
 /**
  * #########################################################

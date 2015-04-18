@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration\php;
 
-use \simpleserv\webfilesframework\core\codegeneration\MAbstractClassAttribute;
+use simpleserv\webfilesframework\core\codegeneration\MAbstractClassAttribute;
 
 /**
  * #########################################################

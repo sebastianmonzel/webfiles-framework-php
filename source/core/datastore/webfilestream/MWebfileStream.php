@@ -2,8 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datastore\webfilestream;
 
-use \simpleserv\webfilesframework\MItem;
-use \simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * 

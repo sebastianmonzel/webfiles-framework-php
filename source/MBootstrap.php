@@ -2,13 +2,13 @@
 
 namespace simpleserv\webfilesframework;
 
-use \simpleserv\webfilesframework\template\MTemplate;
-use \simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use \simpleserv\webfilesframework\core\authentication\MNotEnoughRightsException;
-use \simpleserv\webfilesframework\core\authentication\MSession;
-use \simpleserv\webfilesframework\core\authentication\MUser;
-use \simpleserv\webfilesframework\core\io\request\MUrl;
-use \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use simpleserv\webfilesframework\template\MTemplate;
+use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use simpleserv\webfilesframework\core\authentication\MNotEnoughRightsException;
+use simpleserv\webfilesframework\core\authentication\MSession;
+use simpleserv\webfilesframework\core\authentication\MUser;
+use simpleserv\webfilesframework\core\io\request\MUrl;
+use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 class MBootstrap {
 	

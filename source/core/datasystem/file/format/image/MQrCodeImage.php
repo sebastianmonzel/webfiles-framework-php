@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
-use \simpleserv\webfilesframework\core\io\request\MPostHttpRequest;
+use simpleserv\webfilesframework\core\io\request\MPostHttpRequest;
 
 /**
  * Creates a QR-Code with help of the google charts api.

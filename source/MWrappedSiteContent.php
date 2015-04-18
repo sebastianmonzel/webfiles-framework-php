@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework;
 
-use \simpleserv\webfilesframework\MSiteElement;
+use simpleserv\webfilesframework\MSiteElement;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps
