@@ -24,7 +24,7 @@ use simpleserv\webfilesframework\core\io\form\formItem\MHiddenFormItem;
  * @copyright  2009-2012 simpleserv company
  * @link       http://www.simpleserv.de/
  */
-class MWebfileFormVisualisizer {
+class MWebfileFormVisualizer {
 	
 	private $webfile;
 	
