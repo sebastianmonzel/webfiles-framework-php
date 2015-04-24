@@ -140,7 +140,7 @@ class MWebfile extends MItem {
     		$classname = (string)$root->attributes()->classname;
     		
     		// INSTANITE NEW 
-    		$ref = new ReflectionClass($classname);
+    		$ref = new \ReflectionClass($classname);
     		$item = $ref->newInstanceWithoutConstructor();
     		
     		// OLD VERSION
@@ -255,11 +255,11 @@ class MWebfile extends MItem {
      * @return array with attributes
      */
     public static function getAttributes($onlyAttributesOfSimpleDatatypes = false) {
-    	$oSelfReflection = new ReflectionClass(static::$m__sClassName);
+    	$oSelfReflection = new \ReflectionClass(static::$m__sClassName);
     	$oPropertyArray = $oSelfReflection->getProperties(
-    			ReflectionProperty::IS_PUBLIC |
-    			ReflectionProperty::IS_PROTECTED |
-    			ReflectionProperty::IS_PRIVATE);
+    			\ReflectionProperty::IS_PUBLIC |
+    			\ReflectionProperty::IS_PROTECTED |
+    			\ReflectionProperty::IS_PRIVATE);
     	 
     	$count = 0;
     	while ( $count < count($oPropertyArray) ) {
