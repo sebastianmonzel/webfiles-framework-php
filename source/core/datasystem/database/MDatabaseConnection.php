@@ -36,7 +36,11 @@ class MDatabaseConnection extends MItem {
     
     /**
      * 
-     * Enter description here ...
+     * @param string $host the host to connect to.
+     * @param string $database the database to connect to.
+     * @param string $tablePrefix the table prefix used for the actual connection to the database.
+     * @param string $username the username for the connection.
+     * @param string $password the password for the connection.
      */
 	public function __construct($host = null, $database = null, $tablePrefix = null , $username = null, $password = null ) {
 		
