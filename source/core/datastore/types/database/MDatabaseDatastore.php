@@ -322,7 +322,7 @@ class MDatabaseDatastore extends MAbstractDatastore
    		
     	$classname = $webfile::$m__sClassName;
     	
-    	if ( strpos($classname, "\\") != -1 ) {
+    	if ( strpos($classname, "\\") != -1 ) { // check if classname is given with namespace
     		
     		$lastBackslashOccurrence = strrpos($classname, "\\");
     		$classname = substr($classname, $lastBackslashOccurrence+1);
