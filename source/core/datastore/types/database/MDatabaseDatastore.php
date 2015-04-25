@@ -319,7 +319,16 @@ class MDatabaseDatastore extends MAbstractDatastore
      * @param unknown_type $p_sClassName
      */
     public function getDatabaseTableName($webfile) {
-   		$tableName = $this->databaseConnection->getTablePrefix() . $webfile::$m__sClassName;
+   		
+    	$classname = $webfile::$m__sClassName;
+    	
+    	if ( strpos($classname, "\\") != -1 ) {
+    		
+    		$lastBackslashOccurrence = strrpos($classname, "\\");
+    		$classname = substr($classname, $lastBackslashOccurrence+1);
+    	} 
+    	
+   		$tableName = $this->databaseConnection->getTablePrefix() . $classname;
     	return $tableName;
     }
     
