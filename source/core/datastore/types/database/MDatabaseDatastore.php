@@ -207,7 +207,14 @@ class MDatabaseDatastore extends MAbstractDatastore
 	}
 	
 	private function add(MWebfile $webfile, $p_bUseOnlySimpleDatatypes = 0) {
-    	
+		
+		$tablename = $this->getDatabaseTableName($webfile);
+		
+		if ( ! $this->metadataExist($tablename) ) {
+			$this->addMetadata($webfile::$m__sClassName, '1', $tablename);
+		}
+		
+		
 		$oAttributeArray = $webfile->getAttributes();
     	
         $sSqlFieldSetting = "";        
@@ -247,7 +254,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         	}
         }
         
-        $query = "INSERT INTO ". $this->getDatabaseTableName($webfile) . " ( " . $sSqlFieldSetting . " ) VALUES ( " . $sSqlValueSetting . " )";
+        $query = "INSERT INTO ". $tablename . " ( " . $sSqlFieldSetting . " ) VALUES ( " . $sSqlValueSetting . " )";
         $this->databaseConnection->query($query);
         
         return $this->databaseConnection->getInsertId();
@@ -660,8 +667,63 @@ class MDatabaseDatastore extends MAbstractDatastore
     		if ( !empty($condition) ) {
     			$query .= " WHERE " . $condition;
     		}
-    		//echo $query;
+    		
     		$this->databaseConnection->query($query);
     	}
     }
+    
+    /**
+     * 
+     */
+    private function createMetadataTable() {
+    	
+    	$table = new MDatabaseTable(
+    			$this->databaseConnection,
+    			$this->databaseConnection->getTablePrefix() . 'metadata');
+    	$table->setIdentifier("id", 10);
+    	
+    	
+    	$table->addColumn(
+    				"classname",
+    				MIDbDatatypes::varchar(),
+    				250);
+    	$table->addColumn(
+	    			"version",
+	    			MIDbDatatypes::int(),
+	    			50);
+    	$table->addColumn(
+	    			"tablename",
+	    			MIDbDatatypes::varchar(),
+	    			250);
+    	
+    	$table->create();
+    	
+    }
+    
+    private function metadataExist($tablename) {
+    	$oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'" );
+    	if ($oDatabaseResultSet->num_rows > 0) {
+    		return true;
+    	}
+    	return false;
+    }
+    
+    private function addMetadata($className, $version, $tablename) {
+    	$this->databaseConnection->query("INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . '" , "' . $tablename . "');" );
+    	
+    }
+    
+    private function getMetadataForTablename($tablename) {
+    	$oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'" );
+    	if ($oDatabaseResultSet->num_rows > 0) {
+    		$result = $oDatabaseResultSet->fetch_object();
+    	}
+    	return $result;
+    }
+    
+    private function getClassnameForTablename($tablename) {
+    	$metadata = $this->getMetadataForTablename($tablename);
+    	return $metadata->classname;
+    }
+    
 }
