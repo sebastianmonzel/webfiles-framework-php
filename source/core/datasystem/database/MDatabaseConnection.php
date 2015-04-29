@@ -89,7 +89,7 @@ class MDatabaseConnection extends MItem {
      * connects to the database server
      */
     public function connect() {
-    	$this->connection = @new mysqli(
+    	$this->connection = @new \mysqli(
     			$this->host,
     			$this->username,
     			$this->password,

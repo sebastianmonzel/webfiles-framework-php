@@ -114,9 +114,9 @@ class MDatabaseTable {
 	/**
 	 *
 	 * Enter description here ...
-	 * @param unknown_type $colName
+	 * @param unknown_type $name
 	 * @param unknown_type $type
-	 * @param unknown_type $size
+	 * @param unknown_type $length
 	 */
 	public function addColumn($name, $type, $length=null) {
 		$column = new MDatabaseTableColumn($name, $type, $length);
