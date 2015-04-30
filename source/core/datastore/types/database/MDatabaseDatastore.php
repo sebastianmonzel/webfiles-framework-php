@@ -120,21 +120,25 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function tableExists(MWebfile $webfile) {
     	
     	$tableName = $this->getDatabaseTableName($webfile);
-    	
+    	return $this->tableExistsByName($tableName);
+    }
+    
+    private function tableExistsByName($tableName) {
+    	 
     	$query = $this->databaseConnection->query("SHOW TABLES FROM `" . $this->databaseConnection->getDatabase() . "`");
-
+    
     	while ( $oDatabaseResultRow = $query->fetch_object() ) {
-    		
+    
     		$tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabase();
-		
-	    	if ( $oDatabaseResultRow->$tablesInVariableName == $tableName ) {	    		
-		    	return true;
-	    	}
+    
+    		if ( $oDatabaseResultRow->$tablesInVariableName == $tableName ) {
+    			return true;
+    		}
     		
-	    	
-	    }
+    	}
     	return false;
     }
+    
     
     private function getAllTableNames() {
     	$query = $this->databaseConnection->query("SHOW TABLES FROM " . $this->databaseConnection->getDatabase());
@@ -341,7 +345,9 @@ class MDatabaseDatastore extends MAbstractDatastore
     
     public function getClassNameFromTableName($tableName) {
     	$tablePrefix = $this->databaseConnection->getTablePrefix();
-    	return substr($tableName, strlen($tablePrefix));
+    	$metadata = $this->getMetadataForTablename($tableName);
+    	return $metadata->classname;
+    	//return substr($tableName, strlen($tablePrefix));
     }
 	
     /**
@@ -701,6 +707,9 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
     
     private function metadataExist($tablename) {
+    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    		$this->createMetadataTable();
+    	}
     	$oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'" );
     	if ($oDatabaseResultSet->num_rows > 0) {
     		return true;
@@ -709,11 +718,23 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
     
     private function addMetadata($className, $version, $tablename) {
-    	$this->databaseConnection->query("INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . '" , "' . $tablename . "');" );
+    	
+    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    		$this->createMetadataTable();
+    	}
+    	$className = str_replace('\\', '\\\\', $className);
+    	echo"INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . '" , "' . $tablename . "');" ;
+    	$this->databaseConnection->query("INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');" );
+    	
     	
     }
     
     private function getMetadataForTablename($tablename) {
+    	
+    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    		$this->createMetadataTable();
+    	}
+    	
     	$oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'" );
     	if ($oDatabaseResultSet->num_rows > 0) {
     		$result = $oDatabaseResultSet->fetch_object();
@@ -722,6 +743,11 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
     
     private function getClassnameForTablename($tablename) {
+    	
+    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    		$this->createMetadataTable();
+    	}
+    	
     	$metadata = $this->getMetadataForTablename($tablename);
     	return $metadata->classname;
     }
