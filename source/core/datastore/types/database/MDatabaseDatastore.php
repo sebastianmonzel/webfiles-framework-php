@@ -444,11 +444,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 	    		$query .= " ORDER BY " . $order;
 	    	}
 	    	
-	    	//echo $query . "<br />";
 	    	$oDatabaseResultSet = $this->databaseConnection->query($query);
 			
-	    	//$this->databaseConnection->printError();
-	    	    	
 	    	if ($oDatabaseResultSet != false) {
 	    		if ($oDatabaseResultSet->num_rows > 0) {
 				    while ( $oDatabaseResultRow = $oDatabaseResultSet->fetch_object() ) {
@@ -723,10 +720,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     		$this->createMetadataTable();
     	}
     	$className = str_replace('\\', '\\\\', $className);
-    	echo"INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . '" , "' . $tablename . "');" ;
     	$this->databaseConnection->query("INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');" );
-    	
-    	
     }
     
     private function getMetadataForTablename($tablename) {
