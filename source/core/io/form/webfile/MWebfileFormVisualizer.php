@@ -129,4 +129,8 @@ class MWebfileFormVisualizer {
 		return $this->form;
 	}
 	
+	public function setLabelWidthOnEachFormItem($labelWidth) {
+		$this->form->setLabelWidthOnEachFormItem($labelWidth);
+	}
+	
 }
