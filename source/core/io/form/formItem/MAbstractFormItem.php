@@ -17,7 +17,7 @@ abstract class MAbstractFormItem extends MWebfile {
 	protected $code;
 	protected $value;
 	
-	protected $labelWidth;
+	protected $labelWidth = 180;
 	
 	function __construct($name,$value,$localizedName = "") {
 		$this->name          = $name;
