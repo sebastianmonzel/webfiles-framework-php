@@ -174,6 +174,11 @@ class MDatabaseDatastore extends MAbstractDatastore
 		return $this->getByCondition();
 	}
 	
+	/**
+	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
+	 * @return Returns the id given in database (in case of a new webfile 
+	 * the generated id will be returned)
+	 */
 	public function storeWebfile(MWebfile $webfile) {
 		if ( ! $this->tableExists($webfile) ) {
 			$this->createTable($webfile);
