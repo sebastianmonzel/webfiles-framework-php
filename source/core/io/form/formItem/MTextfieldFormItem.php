@@ -11,7 +11,7 @@ class MTextfieldFormItem extends MAbstractFormItem {
 
 	public function init() {
 		$this->code = 	"<div style=\"margin-top:4px;\">" . 
-							"<label style=\"width:160px;display:block;float:left;\">";
+							"<label style=\"width:" . $this->getLabelWidth() . "px;display:block;float:left;\">";
 		if ( ! empty($this->localizedName) ) {
 			$this->code .= $this->localizedName;
 		} else {

@@ -174,7 +174,7 @@ class MForm {
 	public function setLabelWidthOnEachFormItem($labelWidth) {
 		
 		foreach ($this->formItems as $formItem) {
-			$formItem->getLabelWidth($labelWidth);
+			$formItem->setLabelWidth($labelWidth);
 		}
 	}
 }
