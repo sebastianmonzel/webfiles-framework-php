@@ -110,4 +110,16 @@ class MBootstrap {
 		
 		}
 	}
+	
+	
+	public static function getIpAddress() {
+		
+		return $_SERVER['REMOTE_ADDR'];
+	}
+	
+	
+	public static function getClientAgent() {
+		
+		return $_SERVER['HTTP_USER_AGENT'];
+	}
 }
