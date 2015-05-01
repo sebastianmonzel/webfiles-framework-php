@@ -35,7 +35,7 @@ class MCheckboxesFormItem extends MAbstractFormItem {
 		}
 		
 		$this->code = 	"<div style=\"margin-top:4px; width:600px;\">
-							<label style=\"width:160px;display:block;float:left;\">";
+							<label style=\"width:" . $this->getLabelWidth() . "px;display:block;float:left;\">";
 		if ( ! empty($this->localizedName) ) {
 			$this->code .= $this->localizedName;
 		} else {

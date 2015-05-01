@@ -96,4 +96,14 @@ class MMail extends MWebfile {
 				<div style=\"text-align:left; width:500px;margin-left: auto ;margin-right: auto ;\">".$this->getMessage()."</div>";
 	}
 	
+	public static function validateAdress($p_sEmail)
+	{
+		if(eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $p_sEmail)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+	}
+	
 }

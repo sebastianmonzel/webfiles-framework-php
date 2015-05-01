@@ -171,4 +171,10 @@ class MForm {
 		$this->useSubmitButton = $useSubmitButton;
 	}
 	
+	public function setLabelWidthOnEachFormItem($labelWidth) {
+		
+		foreach ($this->formItems as $formItem) {
+			$formItem->getLabelWidth($labelWidth);
+		}
+	}
 }

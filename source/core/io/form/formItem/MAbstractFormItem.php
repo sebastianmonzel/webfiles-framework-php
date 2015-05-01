@@ -17,6 +17,7 @@ abstract class MAbstractFormItem extends MWebfile {
 	protected $code;
 	protected $value;
 	
+	protected $labelWidth;
 	
 	function __construct($name,$value,$localizedName = "") {
 		$this->name          = $name;
@@ -30,5 +31,13 @@ abstract class MAbstractFormItem extends MWebfile {
 
 	public function getCode() {
 		return $this->code;
+	}
+	
+	public function getLabelWidth() {
+		return $this->labelWidth;
+	}
+	
+	public function setLabelWidth($labelWidth) {
+		$this->labelWidth = $labelWidth;
 	}
 }
