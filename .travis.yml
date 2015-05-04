@@ -11,4 +11,4 @@ before_script:
 
 script:
   - php bin/phpspec run -fpretty --verbose
-  - bin/phpunit
+  - vendor/bin/phpunit
