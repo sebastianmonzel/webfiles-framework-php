@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\io\form;
 
+use simpleserv\webfilesframework\MSite;
 use simpleserv\webfilesframework\core\io\form\formItem\MAbstractFormItem;
 
 /**
@@ -134,36 +135,44 @@ class MForm {
 	}
 	
 	public static function addFormHeadersToSite($site) {
+		
+		
 		$site->addHeader("<link rel=\"stylesheet\" href=\"http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dijit/themes/claro/claro.css\">");
-		$site->addHeader("<link rel=\"stylesheet\" href=\"./style.css\">");
 		$site->addHeader("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js\" data-dojo-config=\"isDebug: true, parseOnLoad: true\"></script>");
 		$site->addHeader("<script type=\"text/javascript\">
-			dojo.require('dojox.validate');
-			dojo.require('dojox.validate.us');
-			dojo.require('dojox.validate.web');
-			/* basic dijit classes */
-
-			dojo.require('dijit.dijit');
-			dojo.require('dijit.form.Form');
-			dojo.require('dijit.form.Button');
-			dojo.require('dijit.form.TextBox');
-			dojo.require('dijit.form.ValidationTextBox');
-			dojo.require('dijit.form.DateTextBox');
-			dojo.require('dijit.form.TimeTextBox');
-			dojo.require('dijit.form.Textarea');
-			dojo.require('dijit.Editor');
-			dojo.require('dojo.dom');
-			dojo.require('dojo.parser');
-			dojo.require('dojox.validate');
+		
+		
+		dojo.require(\"dojo.on\");
+		dojo.require(\"dojox.validate\");
+		dojo.require(\"dojox.validate.us\");
+		dojo.require(\"dojox.validate.web\");
+		
+		
+		/* basic dijit classes */
+		dojo.require(\"dijit.dijit\");
+		dojo.require(\"dijit.form.Form\");
+		dojo.require(\"dijit.form.Button\");
+		dojo.require(\"dijit.form.Select\");
+		dojo.require(\"dijit.form.FilteringSelect\");
+		dojo.require(\"dijit.form.TextBox\");
+		dojo.require(\"dijit.form.ValidationTextBox\");
+		dojo.require(\"dijit.form.DateTextBox\");
+		dojo.require(\"dijit.form.TimeTextBox\");
+		dojo.require(\"dijit.form.Textarea\");
+		dojo.require(\"dijit.form.CheckBox\");
+		
+		dojo.require(\"dijit.Dialog\");
+		dojo.require(\"dijit.Editor\");
 			
-			dojo.require('dijit._editor.plugins.TextColor');
-			dojo.require('dijit._editor.plugins.LinkDialog');
-			dojo.require('dijit._editor.plugins.FullScreen');
-			dojo.require('dijit._editor.plugins.ViewSource');
-			dojo.require('dijit._editor.plugins.NewPage');
-			
-</script>
+		
+		dojo.require(\"dojo.dom\");
+		dojo.require(\"dojo.parser\");
+		dojo.require(\"dojox.validate\");
+		</script>
 		");
+		
+		MSite::getInstance()->addBodyAttribute('id', 'ff-meridian');
+		MSite::getInstance()->addBodyAttribute('class', 'claro');
 
 	}
 	
