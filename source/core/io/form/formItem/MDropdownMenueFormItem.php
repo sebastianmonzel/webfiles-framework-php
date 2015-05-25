@@ -10,6 +10,13 @@ namespace simpleserv\webfilesframework\core\io\form\formItem;
 class MDropdownMenueFormItem extends MAbstractFormItem {
 	
 	protected $possibleValues;
+	protected $filtered;
+	
+	public function __construct($name,$value,$localizedName = "",$filtered=false) {
+		
+		$this->filtered = $filtered;
+		parent::__construct($name,$value,$localizedName);
+	}
 	
 	public function setPossibleValues($possibleValues) {
 		$this->possibleValues = $possibleValues;
@@ -43,7 +50,14 @@ class MDropdownMenueFormItem extends MAbstractFormItem {
 								<div style=\"float:right; width:440px;margin: 0px;\">";
 		}
 		
-		$this->code .="<div name=\"" . $this->name . "\" dojoType=\"dijit.form.Select\" style=\"margin: 0px;\">";
+		if ( ! $this->filtered ) {
+			$dojoType = "dijit.form.Select";
+		} else {
+			$dojoType = "dijit.form.FilteringSelect";
+		}
+		
+		$this->code .= "<div name=\"" . $this->name . "\" dojoType=\"" . $dojoType . "\" style=\"margin: 0px;\" ";
+		$this->code .= ">";
 		
 		if ( is_array($this->possibleValues)) {
 			foreach ($this->possibleValues as $value) {
