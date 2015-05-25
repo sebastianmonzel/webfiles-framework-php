@@ -184,6 +184,7 @@ class MForm {
 		
 		foreach ($this->formItems as $formItem) {
 			$formItem->setLabelWidth($labelWidth);
+			$formItem->init();
 		}
 	}
 }
