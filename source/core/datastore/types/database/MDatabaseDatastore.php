@@ -9,6 +9,7 @@ use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
 use simpleserv\webfilesframework\core\datasystem\database\MIDbDatatypes;
 use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
+use simpleserv\webfilesframework\core\datastore\functions\filter\MSubstringFiltering;
 
 /**
  * #########################################################
@@ -402,6 +403,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 		    			$condition .= ')';
 		    		} else if ( $value instanceof MTimespan ) {
 		    			$condition .= MWebfile::getSimplifiedAttributeName($name) . " BETWEEN '" . $value->getStart() . "' AND '" . $value->getEnd() . "'";
+		    		} else if ( $value instanceof MSubstringFiltering ) {
+		    			
+		    			$condition .= "LOWER(" . MWebfile::getSimplifiedAttributeName($name) . ") LIKE LOWER('" . $value->getValue() . "%')";
 		    		} else {
 		    			$condition .= MWebfile::getSimplifiedAttributeName($name) . " = '" . $value . "'";
 		    		}
