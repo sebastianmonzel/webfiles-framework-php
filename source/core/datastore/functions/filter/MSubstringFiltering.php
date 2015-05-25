@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\functions\sorting;
+namespace simpleserv\webfilesframework\core\datastore\functions\filter;
 
 use simpleserv\webfilesframework\core\datastore\functions\MIDatastoreFunction;
 
