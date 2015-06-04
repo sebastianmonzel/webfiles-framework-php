@@ -96,15 +96,17 @@ class MFormItemFactory {
 	
 	public static function getDropdownMenueFormItemByTemplate($formItemName,$template,$selectedValue, $isFiltered = false, $localizedName = "") {
 		
-		$webfiles = MSite::getInstance()->getDefaultDatastore()->getByTemplate($template);
 		
 		$formItem = new MDropdownMenueFormItem($formItemName,$selectedValue,$localizedName,$isFiltered);
 		
-		$possibleValues = array();
-		foreach ($webfiles as $webfile) {
-			array_push($possibleValues, $webfile);
+		if ( ! $isFiltered ) {
+			$webfiles = MSite::getInstance()->getDefaultDatastore()->getByTemplate($template);
+			$possibleValues = array();
+			foreach ($webfiles as $webfile) {
+				array_push($possibleValues, $webfile);
+			}
+			$formItem->setPossibleValues($possibleValues);
 		}
-		$formItem->setPossibleValues($possibleValues);
 		
 		return $formItem;
 		
