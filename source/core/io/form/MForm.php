@@ -137,8 +137,8 @@ class MForm {
 	public static function addFormHeadersToSite($site) {
 		
 		
-		$site->addHeader("<link rel=\"stylesheet\" href=\"http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dijit/themes/claro/claro.css\">");
-		$site->addHeader("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/dojo/1.7.2/dojo/dojo.js\" data-dojo-config=\"isDebug: true, parseOnLoad: true\"></script>");
+		$site->addHeader("<link rel=\"stylesheet\" href=\"http://ajax.googleapis.com/ajax/libs/dojo/1.8.10/dijit/themes/claro/claro.css\">");
+		$site->addHeader("<script type=\"text/javascript\" src=\"http://ajax.googleapis.com/ajax/libs/dojo/1.8.10/dojo/dojo.js\" data-dojo-config=\"isDebug: true, parseOnLoad: true\"></script>");
 		$site->addHeader("<script type=\"text/javascript\">
 		
 		
