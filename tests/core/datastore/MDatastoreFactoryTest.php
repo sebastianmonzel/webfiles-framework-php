@@ -18,7 +18,7 @@ class MDatastoreFactoryTest extends PHPUnit_Framework_TestCase {
      */
     protected function setUp()
     {
-        $this->object = new MDatastoreFactory;
+        $this->object = new MDatastoreFactory();
     }
 
     /**
