@@ -1,6 +1,6 @@
 <?php
 
-require'core/datastore/MDatastoreFactory.php';
+use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
 
 /**
  * Test class for MDatastoreFactory.
