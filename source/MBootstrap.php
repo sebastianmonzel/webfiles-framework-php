@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework;
+namespace simpleserv\webfilesframework; 
 
 use simpleserv\webfilesframework\template\MTemplate;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
