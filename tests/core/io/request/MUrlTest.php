@@ -1,6 +1,6 @@
 <?php
 
-use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
+use simpleserv\webfilesframework\core\io\request\MUrl;
 
 /**
  * Test class for MDatastoreFactory.
@@ -18,7 +18,7 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
      */
     protected function setUp()
     {
-        $this->object = new MDatastoreFactory();
+        $this->object = new MUrl("http://www.simpleserv.de/?paramone=foo&paramtoo=bar&");
     }
 
     /**
@@ -33,8 +33,14 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
      * @covers MDatastoreFactory::createDatastore
      * @todo Implement testCreateDatastore().
      */
-    public function testCreateDatastore()
-    {
-        echo "bla";
+    public function testGetParam() {
+    	
+        $this->assertEquals('foo',$this->object->getParam('paramone'));
+        $this->assertEquals('bar',$this->object->getParam('paramtoo'));
+    }
+    
+    public function testGetQueryString() {
+    	
+    	$this->assertEquals('paramone=foo&paramtoo=bar&',$this->object->getQueryString());
     }
 }
