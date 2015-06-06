@@ -35,7 +35,7 @@ class MDirectoryTest extends PHPUnit_Framework_TestCase {
     	
     	$givenFiles = $this->object->getFiles();
     	
-    	$referenceFile = new MFile('/home/semo/workspace/webfiles-framework/tests/core/datasystem/file/system/MDirectoryTest.php');
+    	$referenceFile = new MFile(__DIR__ . '/MDirectoryTest.php');
     	$referenceFiles = array();
     	$referenceFiles[] = $referenceFile;
     	
