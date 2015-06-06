@@ -4,6 +4,12 @@ php:
 - 5.4
 - 5.5
 - 5.6
+
+env:
+  global:
+    secure: GQf20oGeRoiDxez1HEs3b7rL5Nj3WIQ9WlenwTr8yi3iBKnPC9rKotWyz9NvJGs3P5lBkXodsmA6SEej9w8VtieKEaVLjFTnAcRwGFUKy6f2etpuzlmXNyn1V5Nz6uRWT+7Tl821KCFilg5xTsneuTQJfpTRPIxZmFWqBaK5HKrZxyRdKigOrhbMDDiIFk5fTJI/9F9XKwBQl8PmRDTKkHF24zsroLXII6RJVOf5BqrsrQSF83ufCFYalK9QTQqa13KQCA1ElCU7YZc1Hu7vwmo0kKyGY6qWbpVy4dXr1gqmBEa7kgBfH/dcFBma0HoTNo4kqyWRW/77SH7APKU9s2MiydBB54kq5G8L0pYHgFox6Rlx+/K1MrlxTvHv73oTVQVRml97gmbORnvfBcMqXwlgznj9WoHFmVWymNnloovMdCsIXiPLU1G9ehMl2J99uftjoeBa58NzWtMLNJT7RWKuSMNNj58mfBuHrFrTeoZkHKfOTSA47ZJjNk3EUhH6cXnEB+CsBE7GEzdmtCKBrhpHom0hZSQ4s4aCA7ajeIFqawOnbzR07aXQn6v+Nm7sHlBIYAUUUN6+NWKE/cSty8Zd02ZjBYg5rSxcEAxsD1+0pE+x0d4UeLLXVsRwE3aYyLkY4fFE4a3Nf9tL3qIdvSw9rSBzkrOKIVrsGVlb+gM=
+
+
 cache: 
   directories:
   - "$HOME/vendor"
@@ -12,8 +18,7 @@ before_script:
 - composer install --dev --prefer-source --no-interaction
 script:
 - phpunit --coverage-text tests
-env:
-  global:
-    secure: GQf20oGeRoiDxez1HEs3b7rL5Nj3WIQ9WlenwTr8yi3iBKnPC9rKotWyz9NvJGs3P5lBkXodsmA6SEej9w8VtieKEaVLjFTnAcRwGFUKy6f2etpuzlmXNyn1V5Nz6uRWT+7Tl821KCFilg5xTsneuTQJfpTRPIxZmFWqBaK5HKrZxyRdKigOrhbMDDiIFk5fTJI/9F9XKwBQl8PmRDTKkHF24zsroLXII6RJVOf5BqrsrQSF83ufCFYalK9QTQqa13KQCA1ElCU7YZc1Hu7vwmo0kKyGY6qWbpVy4dXr1gqmBEa7kgBfH/dcFBma0HoTNo4kqyWRW/77SH7APKU9s2MiydBB54kq5G8L0pYHgFox6Rlx+/K1MrlxTvHv73oTVQVRml97gmbORnvfBcMqXwlgznj9WoHFmVWymNnloovMdCsIXiPLU1G9ehMl2J99uftjoeBa58NzWtMLNJT7RWKuSMNNj58mfBuHrFrTeoZkHKfOTSA47ZJjNk3EUhH6cXnEB+CsBE7GEzdmtCKBrhpHom0hZSQ4s4aCA7ajeIFqawOnbzR07aXQn6v+Nm7sHlBIYAUUUN6+NWKE/cSty8Zd02ZjBYg5rSxcEAxsD1+0pE+x0d4UeLLXVsRwE3aYyLkY4fFE4a3Nf9tL3qIdvSw9rSBzkrOKIVrsGVlb+gM=
+
+
 after_success:
   - if  [ $TRAVIS_PHP_VERSION = '5.6' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST = 'false' ]; then sh generate-api.sh; fi
