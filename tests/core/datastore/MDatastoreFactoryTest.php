@@ -30,8 +30,7 @@ class MDatastoreFactoryTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers MDatastoreFactory::createDatastore
-     * @todo Implement testCreateDatastore().
+     * @covers simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore
      */
     public function testCreateDatastore()
     {

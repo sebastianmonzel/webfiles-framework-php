@@ -30,8 +30,7 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers MDatastoreFactory::createDatastore
-     * @todo Implement testCreateDatastore().
+     * @covers simpleserv\webfilesframework\core\io\request\MUrl::getParam
      */
     public function testGetParam() {
     	
@@ -39,6 +38,9 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals('bar',$this->object->getParam('paramtoo'));
     }
     
+    /**
+     * @covers simpleserv\webfilesframework\core\io\request\MUrl::getQueryString
+     */
     public function testGetQueryString() {
     	
     	$this->assertEquals('paramone=foo&paramtoo=bar&',$this->object->getQueryString());
