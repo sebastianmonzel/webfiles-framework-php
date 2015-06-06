@@ -51,9 +51,11 @@ class MUrl {
 			$queryParts = explode("&",$query);
 			foreach ($queryParts as $value) {			
 				$paramParts = explode("=", $value);
-				$key = $paramParts[0];
-				$value = $paramParts[1];
-				$this->params[$key]= $value;
+				if ( count($paramParts) == 2 ) {
+					$key = $paramParts[0];
+					$value = $paramParts[1];
+					$this->params[$key] = $value;
+				}
 			}
 		}
 		
