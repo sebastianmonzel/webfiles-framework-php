@@ -42,7 +42,6 @@ class MDirectory extends MItem {
             while (false !== ($sFileName = readdir($oDiractoryHandle))) {
                 if ( $sFileName != "." && $sFileName != ".." && ( ! is_dir($this->m_sPath . "/" . $sFileName) ) ) {
                     $file = new MFile($this->getPath() . "/" . $sFileName);
-                    $file->setDate(filemtime($file->getPath()));
                 	array_push($filesArray, $file);
                 }
             }

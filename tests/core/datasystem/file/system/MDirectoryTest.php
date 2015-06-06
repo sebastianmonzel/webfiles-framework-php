@@ -1,6 +1,7 @@
 <?php
 
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 
 /**
  * Test class for MDirectory.
@@ -16,9 +17,8 @@ class MDirectoryTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
-    {
-        $this->object = new MDirectory(".");
+    protected function setUp() {
+        $this->object = new MDirectory(__DIR__);
     }
 
     /**
@@ -33,6 +33,13 @@ class MDirectoryTest extends PHPUnit_Framework_TestCase {
      */
     public function testGetFiles() {
     	
+    	$givenFiles = $this->object->getFiles();
+    	
+    	$referenceFile = new MFile('/home/semo/workspace/webfiles-framework/tests/core/datasystem/file/system/MDirectoryTest.php');
+    	$referenceFiles = array();
+    	$referenceFiles[] = $referenceFile;
+    	
+    	$this->assertEquals($referenceFiles,$givenFiles);
     }
 
 }

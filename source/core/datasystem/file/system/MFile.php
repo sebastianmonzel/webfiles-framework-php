@@ -32,6 +32,7 @@ class MFile extends MWebfile {
 	
 	public function __construct($fileName) {
 		
+		// SET THE FILE NAME
 		if ( $this->containsFileseperator($fileName) ) {
 			$this->m_sFolderName = static::extractFolderName($fileName);
 			$this->m_sFileName = static::extractFileName($fileName);
@@ -39,6 +40,10 @@ class MFile extends MWebfile {
 			$this->m_sFileName = $fileName;
 		}
 		
+		// INITIALIZE THE DATE OF THE FILE
+		if ( $this->exists() ) {
+			$this->setDate(filemtime($this->getPath()));
+		}
 	}
 	
 	
