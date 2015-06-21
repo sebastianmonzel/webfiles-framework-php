@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\io\form\formItem;
 
+use simpleserv\webfilesframework\MSite;
 /**
  * 
  * @author semo
@@ -11,6 +12,8 @@ class MDropdownMenueFormItem extends MAbstractFormItem {
 	
 	protected $possibleValues;
 	protected $filtered;
+	
+	protected $initialized = false;
 	
 	public function __construct($name,$value,$localizedName = "",$filtered=false) {
 		
@@ -39,7 +42,7 @@ class MDropdownMenueFormItem extends MAbstractFormItem {
 				$this->code .= $this->name;
 			}
 		
-			$this->code = 	"<div style=\"margin-top:4px; width:600px;\">
+			$this->code = 	"<div style=\"margin-top:4px;\">
 								<label style=\"width:" . $this->getLabelWidth() . "px;display:block;float:left;\">";
 			if ( ! empty($this->localizedName) ) {
 				$this->code .= $this->localizedName;
@@ -47,32 +50,70 @@ class MDropdownMenueFormItem extends MAbstractFormItem {
 				$this->code .= $this->name;
 			}
 			$this->code .= "	</label>
-								<div style=\"float:right; width:440px;margin: 0px;\">";
+								";
 		}
 		
 		if ( ! $this->filtered ) {
-			$dojoType = "dijit.form.Select";
-		} else {
-			$dojoType = "dijit.form.FilteringSelect";
-		}
-		
-		$this->code .= "<div name=\"" . $this->name . "\" dojoType=\"" . $dojoType . "\" style=\"margin: 0px;\" ";
-		$this->code .= ">";
-		
-		if ( is_array($this->possibleValues)) {
-			foreach ($this->possibleValues as $value) {
-				$this->code .= "<span value=\"" . $value->getId() . "\"";
-				if ( $value->getId() == $this->value ) {
-					$this->code .= " selected=\"selected\"";
+			$this->code .= "<select name=\"" . $this->name . "\" dojoType=\"dijit.form.Select\"";
+			$this->code .= ">";
+			
+			if ( is_array($this->possibleValues)) {
+				foreach ($this->possibleValues as $value) {
+					$this->code .= "<option value=\"" . $value->getId() . "\"";
+					if ( $value->getId() == $this->value ) {
+						$this->code .= " selected=\"selected\"";
+					}
+					$this->code .= ">" . $value . "</option>";
 				}
-				$this->code .= "><span style=\"color:#000000;\">" . $value . "</span></span>";
 			}
+			$this->code .= "		</select>";
+		} else {
+			
+			
+			
+			if ( ! $this->initialized ) {
+				MSite::getInstance()->addHeader('<script type="text/javascript">
+		
+	require([
+	         "dijit/form/ComboBox", "dijit/form/FilteringSelect", "dojo/on","dojo/dom"
+	     ], function(ComboBox, FilteringSelect, on, dom){
+	
+	         new dijit.form.FilteringSelect({
+	             id: "' . $this->name .'",
+				 name: "' . $this->name .'",
+	             autoComplete: true,
+	             style: "width: 300px;",
+	             searchDelay: 1000
+	         }, "' . $this->name . '").startup();
+	         on(dom.byId("' . $this->name . '"), "keyup", function(event) {
+	        	
+	          	require([
+	                             "dojo/store/Memory","dojo/request/xhr", "dojo/dom", "dojo/dom-construct", "dojo/json","dojo/domReady!"
+	                         ], function(Memory, xhr, dom, domConst, JSON){
+							      	    
+	     	    xhr("index.php?site=makeAjaxRequest&searchstring=" + encodeURIComponent(dijit.byId("' . $this->name . '").get(\'displayedValue\')), {
+	     	    	preventCache: "true",
+	     	    }).then(function(data){
+	     	    	var datastore = new Memory(JSON.parse(data));
+	     	    	dijit.byId("' . $this->name . '").set("store",datastore);
+	     	      }, function(err){
+	     	        domConst.place("<p>error: <p>" + err.response.text + "</p></p>", "output");
+	     	      });
+	     	  })
+	         });
+	     });
+		</script>');
+			}
+			
+			$this->initialized = true;
+			
+			$this->code .= "<input id=\"" . $this->name . "\" />";
 		}
-		$this->code .= "		</div>";
+		
 		if ( $useLabel ) {
-			$this->code .= "</div>
-						<div style=\"clear:both;\"></div>
-					</div>";
+			$this->code .= "
+							<div style=\"clear:both;\"></div>
+						</div>";
 		}
 		
 	}
