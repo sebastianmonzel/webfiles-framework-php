@@ -13,7 +13,9 @@ use simpleserv\webfilesframework\MItem;
  */
 
 /**
- * Base cass for webfile class definitions.
+ * Base cass for all webfile class definitions.<br />
+ * On the following <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitionwebfile">link</a>
+ * you can find more information about the definition of webfiles.
  *
  * @package    de.simpleserv
  * @author     simpleserv company <info@simpleserv.de>
@@ -28,8 +30,8 @@ class MWebfile extends MItem {
 	/**
 	 * Converts the current webfile into its xml representation.
 	 * 
-	 * @param boolean $usePreamble
-	 * @return string returns the webfile as String.
+	 * @param boolean $usePreamble sets the option of using a preamble in xml - usually used for setting the version of xml an the encoding.
+	 * @return string returns the webfile as a marshalled String.
 	 */
     public function marshall($usePreamble = true) {
     	$out = "";
