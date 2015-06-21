@@ -3,6 +3,7 @@
 namespace simpleserv\webfilesframework\core\datasystem\file\system;
 
 use simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * #########################################################
@@ -13,7 +14,7 @@ use simpleserv\webfilesframework\MItem;
  */
 
 /**
- * description
+ * Encapsulates the access on directories. 
  *
  * @package    de.simpleserv.core.filesystem
  * @author     simpleserv company <info@simpleserv.de>
@@ -73,23 +74,34 @@ class MDirectory extends MItem {
         return $filenamesArray;
     }
 	
+    /**
+     * Returns the subdirectories of the current directory.
+     * 
+     * @return array list of directories
+     */
 	public function getSubdirectories() {
-        $oDirectories = array();
-        if ($oDiractoryHandle = opendir($this->m_sPath)) {
-            while (false !== ($sFileName = readdir($oDiractoryHandle))) {
+        $directories = array();
+        if ($directoryHandle = opendir($this->m_sPath)) {
+            while (false !== ($sFileName = readdir($directoryHandle))) {
                 if ( $sFileName != "." && $sFileName != ".." && ( is_dir($this->m_sFolderName . "/" . $sFileName) ) ) {
-                    array_push($oDirectories, $sFileName);
+                    array_push($directories, $sFileName);
                 }
             }
         }
-		sort($oDirectories);
-        return $oDirectories;
+		sort($directories);
+        return $directories;
     }
     
+    /**
+     * Creates the present directory.
+     */
     public function create() {
     	mkdir($this->m_sPath, 0700, TRUE);
     }
-
+	
+    /**
+     * Creates a subdirectory in the present directory.
+     */
     public function createSubDirectory($p_sName) {
     	
     	$subdirectoryPath = $this->m_sPath . "/" . $p_sName;
@@ -112,10 +124,68 @@ class MDirectory extends MItem {
     }
 
     /**
-     *
+     * Checks if the present directory exists or not.
+     * 
+     * @return boolean Returns if the present directory exists or not.
      */
     public function exists() {
         return file_exists($this->m_sPath);
+    }
+    
+    /**
+     * Grabs all webfiles that exist in file representation in the
+     * present directory.
+     * 
+     * @return array list of webfiles.
+     */
+    public function grabWebfiles() {
+    
+    	$filesArray = $this->getFiles();
+    	$webfilesArray = convertFilesToWebfileObjects($filesArray);
+    
+    	return $webfilesArray;
+    }
+    
+    public function grabLatestWebfiles($count) {
+    
+    	$filesArray = $this->getLatestFiles($count);
+    	$webfilesArray = convertFilesToWebfileObjects($filesArray);
+    
+    	return $webfilesArray;
+    }
+    
+    private function convertFilesToWebfileObjects($filesArray) {
+    	
+    	$webfilesArray = array();
+    	
+    	foreach ($filesArray as $file) {
+    	
+    		$fileContent = $file->getContent();
+    		$webfile = MWebfile::staticUnmarshall($fileContent);
+    		 
+    		$time = $file->getDate();
+    		$webfile->setTime($time);
+    		$webfilesArray[$time] = $webfile;
+    	}
+    	
+    	return $webfilesArray;
+    	
+    }
+    
+    /**
+     *
+     * Enter description here ...
+     */
+    public function grabDatasets() {
+    	$datasetsArray = array();
+    
+    	$webfilesArray = $this->grabWebfiles();
+    
+    	foreach ($webfilesArray as $webfile) {
+    		$webfileDataset = $webfile->getDataset();
+    		$datasetsArray[] = $webfileDataset;
+    	}
+    	return $datasetsArray;
     }
 
 }
