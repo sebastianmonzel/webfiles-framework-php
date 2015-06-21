@@ -2,10 +2,10 @@
 
 namespace simpleserv\webfilesframework\core\time;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\MItem;
 
 
-class MWeekday extends MWebfile {
+class MWeekday extends MItem {
 	
 	private $name;
 	

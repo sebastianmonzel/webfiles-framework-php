@@ -100,8 +100,8 @@ class MForm {
 	
 	/**
 	 * 
-	 * Enter description here ...
-	 * @param $formItem
+	 * @param MAbstractFormItem $formItem
+	 * @param string $precedingFormItemName
 	 */
 	function addFormItem(MAbstractFormItem $formItem,$precedingFormItemName = null) {
 		

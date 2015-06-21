@@ -104,7 +104,7 @@ class MDropboxDirectory extends MDirectory {
 			}
 		}
 		
-		return $files;
+		return $subdirectories;
 	}
 	
 	

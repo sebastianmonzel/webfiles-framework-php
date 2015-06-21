@@ -63,7 +63,6 @@ class MWebfileFormVisualizer {
 					&& ! in_array($attributeName, $this->ignoredFieldsList) ) {
 		
 				$attributeValue = $attribute->getValue($this->webfile);
-				$formItemFactory = new MFormItemFactory();
 				
 				if ( ! array_key_exists($attributeName, $this->hiddenFieldsList) 
 					&& ! in_array($attributeName, $this->hiddenFieldsList) ) {

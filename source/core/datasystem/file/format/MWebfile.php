@@ -13,11 +13,11 @@ use simpleserv\webfilesframework\MItem;
  */
 
 /**
- * description
+ * Base cass for webfile class definitions.
  *
  * @package    de.simpleserv
  * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
+ * @author     Sebastian Monzel <mail@sebastianmonzel.de>
  * @copyright  2009-2012 simpleserv company
  * @link       http://www.simpleserv.de/
  */
@@ -32,6 +32,10 @@ class MWebfile extends MItem {
 		return $this->time;
 	}
 	
+	/**
+	 * 
+	 * @param timestamp $time
+	 */
 	public function setTime($time) {
 		$this->time = $time;
 	}
@@ -41,9 +45,11 @@ class MWebfile extends MItem {
 	}
 	
 	/**
-     * 
-     * Enter description here ...
-     */
+	 * Converts the current webfile into its xml representation.
+	 * 
+	 * @param boolean $usePreamble
+	 * @return string returns the webfile as String.
+	 */
     public function marshall($usePreamble = true) {
     	$out = "";
 		$attributes = $this->getAttributes();
@@ -66,6 +72,11 @@ class MWebfile extends MItem {
 		return $out;
     }
     
+    /**
+     * In case of using the current webfile object for making a request
+     * on a datastore (getByTemplate()) this method helps to
+     * set the defaults for making the template request.
+     */
     public function presetDefaultForTemplate() {
     	$attributes = $this->getAttributes();
     	foreach ($attributes as $attribute) {
@@ -77,14 +88,14 @@ class MWebfile extends MItem {
     			$attribute->setValue($this,"?");
     		}
     	}
-    
     }
 	
 	
 	/**
+     * Converts the given xml into a webfile object.
      * 
-     * Enter description here ...
-     * @param $data
+     * @param string $data xml which represents a webfile.
+     * @return MWebfile converted webfile
      */
     public function unmarshall($data) {
     	
@@ -169,66 +180,15 @@ class MWebfile extends MItem {
     }
     
     /**
-     * returns all variables with name and value with prefix CONTENT_VAR_PREFIX
-     * in an array.
-     * @return array with variables
-     */
-    public function getContentVars() {
-    	$classVars = get_class_vars(get_class($this));
-    	$contentVars = array();
-    	foreach ( $classVars as $classVarName => $classVarValue ) {
-    		if ( substr($classVarName,0,strlen(CONTENT_VAR_PREFIX)) == CONTENT_VAR_PREFIX ) {
-    			$contentVarValue = substr($contentVarValue,strlen(CONTENT_VAR_PREFIX));
-    			array_push($contentVars,$classVarValue);
-    		}
-    	}
-    	return $contentVars;
-    }
-    
-    /**
-     * @todo write description
-     * @param MString $p_sName
-     * @return <type>
-     */
-    public function getSerializedValueByVariableName($p_sName) {
-    
-    	$contentVarName = CONTENT_VAR_PREFIX . $p_sName;
-    	$contentVarValue = $$contentVarName;
-    	$serialized_content_var_value = serialize($this->$content_var_value);
-    
-    	return $serialized_content_value;
-    
-    }
-    
-    /**
-     * setsTheValue of an contentValue with begins with the prefix
-     * CONTENT_VAR_PREFIX.
-     * @param <type> $name
-     * @param <type> $serializedContentVarValue
-     */
-    public function setSerializedValueByVariableName($name, $serializedContentVarValue ) {
-    	$$name = unserialize($serializedContentVarValue);
-    }
-    
-    
-    /**
-     * unique id of the item
-     * mapped to every item as "id" in the database
+     * returns true if attribute is a simple datatype (for example
+     * string, integer or boolean).
      *
-     * @var int
+     * @param string $datatypeName
+     * @return boolean
      */
-    
-    
-    /**
-     * returns true if attribute is simple datatype as string, integer
-     * or boolean.
-     *
-     * @param unknown_type $p_sDatatypeName
-     * @return unknown
-     */
-    public static function isSimpleDatatype($p_sDatatypeName)
+    public static function isSimpleDatatype($datatypeName)
     {
-    	if ( ! self::isObject($p_sDatatypeName) && substr($p_sDatatypeName,2,1) != "_" ) {
+    	if ( ! self::isObject($datatypeName) && substr($datatypeName,2,1) != "_" ) {
     		return true;
     	} else {
     		return false;
@@ -237,12 +197,12 @@ class MWebfile extends MItem {
     
     /**
      * returns true if attribute is object in the other case the returnvalue is false
-     * @param attribute $p_sDatatypeName
+     * @param string $attributeName
      * @return boolean
      */
-    public static function isObject($p_sAttributeName)
+    public static function isObject($attributeName)
     {
-    	if ( substr($p_sAttributeName,2,1) == "o" ) {
+    	if ( substr($attributeName,2,1) == "o" ) {
     		return true;
     	} else {
     		return false;
@@ -342,11 +302,7 @@ class MWebfile extends MItem {
     public function getDataset() {
     	$dataset = array();
     	 
-    	//var_dump($this);
-    	 
     	$attributes = $this->getAttributes();
-    
-    	//var_dump($attributes);
     
     	foreach ($attributes as $attribute) {
     		$attributeName = $attribute->getName();
@@ -357,7 +313,6 @@ class MWebfile extends MItem {
     			$dataset[$attributeFieldName] = $attribute->getValue($this);
     		}
     	}
-    	//var_dump($dataset);
     	return $dataset;
     }
     

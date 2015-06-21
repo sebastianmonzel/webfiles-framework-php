@@ -2,14 +2,14 @@
 
 namespace simpleserv\webfilesframework\core\io\form\formItem;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\MItem;
 
 /**
  * 
  * @author semo
  *
  */
-abstract class MAbstractFormItem extends MWebfile {
+abstract class MAbstractFormItem extends MItem {
 	
 	protected $name;
 	protected $localizedName;
