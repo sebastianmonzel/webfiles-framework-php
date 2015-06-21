@@ -58,7 +58,7 @@ class MDirectory extends MItem {
     
     /**
      * Returns the names of all files in the directory as an array.
-     * @return MArray - array with filenames
+     * @return array with filenames
      */
     public function getFileNames() {
     	
