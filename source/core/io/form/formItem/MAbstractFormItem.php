@@ -33,6 +33,10 @@ abstract class MAbstractFormItem extends MWebfile {
 		return $this->code;
 	}
 	
+	public function getName() {
+		return $this->name;
+	}
+	
 	public function getLabelWidth() {
 		return $this->labelWidth;
 	}

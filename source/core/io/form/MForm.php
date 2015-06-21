@@ -30,7 +30,7 @@ class MForm {
 	private $formItems;
 	
 	private $useSubmitButton = true;
-	
+	private $submitButtonText = "Submit";
 	/**
 	 * 
 	 * Enter description here ...
@@ -78,7 +78,7 @@ class MForm {
 		$out = "";
 		if ( $this->useSubmitButton ) {
 			$out = "<div>";
-			$out .= "<input type=\"submit\" value=\"absenden\" dojoType=\"dijit.form.Button\" id=\"submitButton\" label=\"Submit\">";
+			$out .= "<input type=\"submit\" value=\"absenden\" dojoType=\"dijit.form.Button\" id=\"submitButton\" label=\"" . $this->submitButtonText . "\">";
 			$out .= "</div>";
 			
 		}
@@ -103,8 +103,26 @@ class MForm {
 	 * Enter description here ...
 	 * @param $formItem
 	 */
-	function addFormItem(MAbstractFormItem $formItem) {
-		array_push($this->formItems, $formItem);
+	function addFormItem(MAbstractFormItem $formItem,$precedingFormItemName = null) {
+		
+		if ( $precedingFormItemName == null ) {
+			array_push($this->formItems, $formItem);
+		} else {
+			
+			$formItems = array();
+			
+			foreach ($this->formItems as $iteratingFormItem) {
+				
+				$formItems[] = $iteratingFormItem;
+				if ( $iteratingFormItem->getName() == $precedingFormItemName ) {
+					$formItems[] = $formItem;
+				}
+			}
+			
+			$this->formItems = $formItems;
+			
+		}
+		
 	}
 	
 	/**
@@ -178,6 +196,10 @@ class MForm {
 	
 	public function setUseSubmitButton($useSubmitButton) {
 		$this->useSubmitButton = $useSubmitButton;
+	}
+	
+	public function setSubmitButtonText($submitButtonText) {
+		$this->submitButtonText = $submitButtonText;
 	}
 	
 	public function setLabelWidthOnEachFormItem($labelWidth) {

@@ -15,7 +15,7 @@ class MDropdownMenueFormItem extends MAbstractFormItem {
 	
 	protected $initialized = false;
 	
-	public function __construct(string $name,$value,$localizedName = "",$filtered=false) {
+	public function __construct($name,$value,$localizedName = "",$filtered=false) {
 		
 		$this->filtered = $filtered;
 		parent::__construct($name,$value,$localizedName);
