@@ -42,7 +42,12 @@ class MDatabaseConnection extends MItem {
      * @param string $username the username for the connection.
      * @param string $password the password for the connection.
      */
-	public function __construct($host = null, $database = null, $tablePrefix = null , $username = null, $password = null ) {
+	public function __construct(
+				$host = null, 
+				$database = null, 
+				$tablePrefix = null , 
+				$username = null, 
+				$password = null ) {
 		
 		if ( $host != null ) {
 			$this->host = $host;
@@ -61,14 +66,6 @@ class MDatabaseConnection extends MItem {
 		} 
 		
 		$this->connect();
-	}
-	
-	/**
-	 * 
-	 * Enter description here ...
-	 */
-	public function __destruct() {
-		$this->close();
 	}
 	
 	/**
@@ -117,8 +114,8 @@ class MDatabaseConnection extends MItem {
      * @param String $p_sSqlCommand
      * @return unknown
      */
-	public function query($p_sSqlCommand) {
-    	return $this->connection->query($p_sSqlCommand);
+	public function query($sqlCommand) {
+    	return $this->connection->query($sqlCommand);
     }
     
     /**
@@ -148,17 +145,6 @@ class MDatabaseConnection extends MItem {
     }
 	
     /**
-     * sets the hostname of the databaseserver
-     *
-     * @access public
-     * @return void
-     */
-    public function setHost($host) {
-        $this->host = $host;
-    }
-    
-
-    /**
      * returns the name of the user connected to the database server
      *
      * @access public
@@ -168,16 +154,6 @@ class MDatabaseConnection extends MItem {
         return $this->user;
     }
 	
-    /**
-     * sets the name of the user connected to the database server
-     *
-     * @access public
-     * @return void
-     */
-    public function setUser($user) {
-        $this->user = $user;
-    }
-
     /**
      * returns the password of the database connection
      *
@@ -189,16 +165,6 @@ class MDatabaseConnection extends MItem {
         return $this->password;
     }
 
-    /**
-     * sets the password of the database connection
-     *
-     * @access public
-     * @return void
-     */
-    public function setPassword($password) {
-        $this->password = $password;
-    }
-    
 	/**
      *
      * @access public
@@ -209,7 +175,7 @@ class MDatabaseConnection extends MItem {
     }
 
     /**
-     *
+     * Sets the database for the given connection
      * @access public
      * @return void
      */
@@ -218,20 +184,11 @@ class MDatabaseConnection extends MItem {
     }
     
     /**
-     * 
-     * Enter description here ...
+     * Returns the table prefix used for the given 
+     * connection.
      */
     public function getTablePrefix() {
     	return $this->tablePrefix;
-    }
-    
-    /**
-     * 
-     * Enter description here ...
-     * @param unknown_type $tablePrefix
-     */
-	public function setTablePrefix($tablePrefix) {
-    	$this->tablePrefix = $tablePrefix;
     }
     
 }

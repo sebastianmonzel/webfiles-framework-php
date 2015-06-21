@@ -17,7 +17,9 @@ use simpleserv\webfilesframework\MItem;
  */
 
 /**
- * description
+ * Creates depending on the given type a datastore, which can
+ * be used to access and store webfiles.
+ * 
  *
  * @package    de.simpleserv.core.datastore
  * @author     simpleserv company <info@simpleserv.de>
@@ -27,6 +29,23 @@ use simpleserv\webfilesframework\MItem;
  */
 class MDatastoreFactory {
 	
+	/**
+	 * Creates a new datastore. The following input object types are 
+	 * actually supported:
+	 * <ul>
+	 * 		<li>MDirectory</li>
+	 * 		<li>MDatabaseConnection</li>
+	 * </ul>
+	 * 
+	 * @param MItem $item
+	 * @return MAbstractDatastore Returns a datastore depending on the
+	 * given item.
+	 */
+	
+	/**
+	 * 
+	 * @param MItem $item
+	 */
 	public static function createDatastore(MItem $item) {
 		if ( $item instanceof MDirectory ) {
 			return new MDirectoryDatastore($item);

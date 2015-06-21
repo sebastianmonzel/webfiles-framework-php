@@ -7,7 +7,8 @@ use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 
 /**
  * 
- * Transfers webfiles from one datastore to an other
+ * Transfers webfiles from one datastore to another.
+ * 
  * @author Sebastian Monzel <mail@sebastianmonzel.de>
  */
 class MDatastoreTransfer {

@@ -6,6 +6,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use simpleserv\webfilesframework\template\MTemplate;
+use simpleserv\webfilesframework\core\exception\MException;
 /**
  * #########################################################
  * ######################### devPHP - develop your webapps
@@ -15,7 +16,8 @@ use simpleserv\webfilesframework\template\MTemplate;
  */
 
 /**
- * description
+ * Represents a HTML-site which is rendered during bootstrapping
+ * and handling a site view request. 
  *
  * @package    de.simpleserv
  * @author     simpleserv company <info@simpleserv.de>
@@ -71,9 +73,10 @@ class MSite {
 	}
 	
 	public function addCssFile(MFile $file) {
-		//if ( $file->exists() ) {
-			$this->addHeader("<link rel=\"stylesheet\" href=\"" . $file->getName() . "\" type=\"text/css\" media=\"screen\" />");
-		//}
+		if ( ! $file->exists() ) {
+			throw new MException("The css-file " . $file->getName() . "cannot be found.");
+		}
+		$this->addHeader("<link rel=\"stylesheet\" href=\"" . $file->getName() . "\" type=\"text/css\" media=\"screen\" />");
 	}
 	
 	public function setTemplate(MTemplate $template) {

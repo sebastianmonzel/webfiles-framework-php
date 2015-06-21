@@ -16,7 +16,10 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
  */
 
 /**
- * description
+ * Base class for defining datastores to save and load webfiles
+ * on a standarized way.<br />
+ * More about the definition of a datastore can be found under
+ * the folling <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitiondatastore">link</a>.
  *
  * @package    de.simpleserv.core.datastore
  * @author     simpleserv company <info@simpleserv.de>
@@ -33,6 +36,7 @@ abstract class MAbstractDatastore extends MWebfile {
 	
 	/**
 	 * determines if the datastore is read-only or not.
+	 * @return boolean
 	 */
 	public abstract function isReadOnly();
 	
@@ -43,7 +47,7 @@ abstract class MAbstractDatastore extends MWebfile {
 	public abstract function getNextWebfileForTime($time);
 	
 	/**
-	 * Returns a webfilesStream from the actual datastore.
+	 * Returns a webfiles stream from the actual datastore.
 	 */
 	public abstract function getWebfilestream();
 	
@@ -59,14 +63,22 @@ abstract class MAbstractDatastore extends MWebfile {
 	public abstract function getLatestWebfiles($count = 5);
 	
 	/**
-	 * Returns a set of webfiles in the actual datastore which can be
-	 * applied to the given template.
+	 * Returns a set of webfiles in the actual datastore which matches
+	 * with the given template.<br />
+	 * Searching by template is devided in two steps:<br />
+	 * <ol>
+	 * 	<li>On the first step you define the template you want to search with</li>
+	 *  <li>On the second step you put the template to the datastore to start the search</li>
+	 * </ol>
+	 * 
 	 * @param MWebfile $template template to search for
 	 */
 	public abstract function getByTemplate(MWebfile $template);
 	
 	/**
-	 * Stores all webfiles from a given webfilestream in the datastore.
+	 * Stores all webfiles from a given webfilestream in the actual
+	 * datastore.
+	 * 
 	 * @param MWebfileStream $webfileStream
 	 * @throws MDatastoreException
 	 */
@@ -106,12 +118,18 @@ abstract class MAbstractDatastore extends MWebfile {
 		}
 	}
 	
-	
-	public static function resolveCustomDatastoreById($id) {
+	/**
+	 * Resolves a datastore which is localized in the folder
+	 * <b>"./custom/datastore"</b> according to the given id.
+	 * 
+	 * @param string $datastoreId
+	 * @throws MDatastoreException will be thrown if no datastore with
+	 * the given id is available.
+	 */
+	public static function resolveCustomDatastoreById($datastoreId) {
 		
 		$datastoreDirectory = new MDirectory("./custom/datastore/");
 		$datastoreHolder = new MDirectoryDatastore($datastoreDirectory,false);
-		echo "test";
 		
 		$webfiles = $datastoreHolder->getWebfilesFromDatastore();
 		
@@ -120,13 +138,13 @@ abstract class MAbstractDatastore extends MWebfile {
 		
 		
 		foreach ($webfiles as $webfile) {
-			if ( $webfile->getId() == $id ) {
+			if ( $webfile->getId() == $datastoreId ) {
 				$selectedWebfile = $webfile;
 			}
 		}
 		
 		if ( $selectedWebfile == null ) {
-			throw new MDatastoreException("Cannot find datastore for id '". $id . "'");
+			throw new MDatastoreException("Cannot find datastore for id '". $datastoreId . "'");
 		}
 		
 		

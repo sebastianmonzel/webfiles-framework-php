@@ -12,7 +12,8 @@ namespace simpleserv\webfilesframework\core\io\form\webfile;
  */
 
 /**
- * description
+ * Handles requests which are submitted through a form generated
+ * by MWebfileFormVisualizer.
  *
  * @package    de.simpleserv.core.form.handler
  * @author     simpleserv company <info@simpleserv.de>

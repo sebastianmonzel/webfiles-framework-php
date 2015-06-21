@@ -91,32 +91,32 @@ class MDatabaseTable {
 	/**
 	 *
 	 * Enter description here ...
-	 * @param unknown_type $colName
+	 * @param unknown_type $columnName
 	 * @param unknown_type $size
 	 */
-	public function setIdentifier($colName, $size) {
-		$this->identifier = $colName;
+	public function setIdentifier($columnName, $size) {
+		$this->identifier = $columnName;
 		$this->identifierSize = $size;
-		$this->setPrimaryKey($colName);
+		$this->setPrimaryKey($columnName);
 	}
 
 
 	/**
 	 *
 	 * Enter description here ...
-	 * @param unknown_type $colName
+	 * @param string $columnName
 	 */
-	public function setPrimaryKey($colName) {
-		$this->primaryKey = $colName;
+	public function setPrimaryKey($columnName) {
+		$this->primaryKey = $columnName;
 	}
 
 
 	/**
 	 *
 	 * Enter description here ...
-	 * @param unknown_type $name
-	 * @param unknown_type $type
-	 * @param unknown_type $length
+	 * @param string $name
+	 * @param string $type
+	 * @param int $length
 	 */
 	public function addColumn($name, $type, $length=null) {
 		$column = new MDatabaseTableColumn($name, $type, $length);
