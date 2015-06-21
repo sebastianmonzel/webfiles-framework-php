@@ -26,25 +26,6 @@ class MWebfile extends MItem {
 	protected $time;
 	
 	/**
-	 * 
-	 */
-	public function getTime() {
-		return $this->time;
-	}
-	
-	/**
-	 * 
-	 * @param timestamp $time
-	 */
-	public function setTime($time) {
-		$this->time = $time;
-	}
-		
-	public function getGeograficPosition() {
-		return NULL;
-	}
-	
-	/**
 	 * Converts the current webfile into its xml representation.
 	 * 
 	 * @param boolean $usePreamble
@@ -73,6 +54,92 @@ class MWebfile extends MItem {
     }
     
     /**
+     * Converts the given xml into a webfile object.
+     *
+     * @param string $data xml which represents a webfile.
+     * @return MWebfile converted webfile
+     */
+    public function unmarshall($data) {
+    	 
+    	$root = simplexml_load_string($data);
+    	 
+    	if ( $root->getName() == "reference" ) {
+    		$url = $root->url;
+    		$data = file_get_contents($url);
+    
+    		$root = simplexml_load_string($data);
+    	}
+    	 
+    	if ( $root != null ) {
+    
+    		$objectAttributes = $root->children();
+    		$attributes = $this->getAttributes();
+    
+    		foreach ( $objectAttributes as $value ) {
+    		  
+    			foreach ($attributes as $attribute) {
+    				$attributeName = $attribute->getName();
+    				$attribute->setAccessible(true);
+    
+    				if ( $value->getName() == static::getSimplifiedAttributeName($attributeName) ) {
+    					$attribute->setValue($this, $value->__toString());
+    				}
+    			}
+    		}
+    	} else {
+    		echo("Fehler beim Lesen des XML");
+    	}
+    }
+    
+    /**
+     *
+     * Enter description here ...
+     * @param unknown_type $data
+     */
+    public static function staticUnmarshall($data) {
+    	$root = simplexml_load_string($data);
+    	 
+    	if ( $root->getName() == "reference" ) {
+    		$url = $root->url;
+    		$data = file_get_contents($url);
+    
+    		$root = simplexml_load_string($data);
+    	}
+    	 
+    	if ( $root != null ) {
+    
+    		$classname = (string)$root->attributes()->classname;
+    
+    		// INSTANITE NEW
+    		$ref = new \ReflectionClass($classname);
+    		$item = $ref->newInstanceWithoutConstructor();
+    
+    		// OLD VERSION
+    		//$item = new $classname();
+    
+    		$objectAttributes = $root->children();
+    		$attributes = $item->getAttributes();
+    
+    		foreach ( $objectAttributes as $value ) {
+    		  
+    			foreach ($attributes as $attribute) {
+    
+    				$attribute->setAccessible(true);
+    				$attributeName = $attribute->getName();
+    				if ( $value->getName() == static::getSimplifiedAttributeName($attributeName) ) {
+    					$attribute->setValue($item, $value->__toString());
+    				}
+    			}
+    		  
+    		}
+    		return $item;
+    	} else {
+    		echo("Fehler beim Lesen des XML");
+    		return null;
+    	}
+    }
+    
+    /**
      * In case of using the current webfile object for making a request
      * on a datastore (getByTemplate()) this method helps to
      * set the defaults for making the template request.
@@ -90,95 +157,6 @@ class MWebfile extends MItem {
     	}
     }
 	
-	
-	/**
-     * Converts the given xml into a webfile object.
-     * 
-     * @param string $data xml which represents a webfile.
-     * @return MWebfile converted webfile
-     */
-    public function unmarshall($data) {
-    	
-    	$root = simplexml_load_string($data);
-    	
-   		if ( $root->getName() == "reference" ) {
-    		$url = $root->url;
-    		$data = file_get_contents($url);
-    		
-    		$root = simplexml_load_string($data);
-    	}
-    	
-    	if ( $root != null ) {
-		    
-    		$objectAttributes = $root->children();
-		    $attributes = $this->getAttributes();
-		    
-		    foreach ( $objectAttributes as $value ) {
-		    	
-		    	foreach ($attributes as $attribute) {
-		    		$attributeName = $attribute->getName();
-		 			$attribute->setAccessible(true);
-		 			
-		    		if ( $value->getName() == static::getSimplifiedAttributeName($attributeName) ) {		    			
-		    			$attribute->setValue($this, $value->__toString());
-		    		}
-		    	}
-		    }
-    	} else {
-    		echo("Fehler beim Lesen des XML");
-    	}
-		
-    }
-    
-    
-	/**
-     * 
-     * Enter description here ...
-     * @param unknown_type $data
-     */
-    public static function staticUnmarshall($data) {
-    	$root = simplexml_load_string($data);
-    	
-    	if ( $root->getName() == "reference" ) {
-    		$url = $root->url;
-    		$data = file_get_contents($url);
-    		
-    		$root = simplexml_load_string($data);
-    	}
-    	
-    	if ( $root != null ) {
-    		
-    		$classname = (string)$root->attributes()->classname;
-    		
-    		// INSTANITE NEW 
-    		$ref = new \ReflectionClass($classname);
-    		$item = $ref->newInstanceWithoutConstructor();
-    		
-    		// OLD VERSION
-    		//$item = new $classname();
-    		
-		    $objectAttributes = $root->children();
-		    $attributes = $item->getAttributes();
-		    
-		    foreach ( $objectAttributes as $value ) {
-		    	
-		    	foreach ($attributes as $attribute) {
-		    		
-		    		$attribute->setAccessible(true);
-		 			$attributeName = $attribute->getName();
-		    		if ( $value->getName() == static::getSimplifiedAttributeName($attributeName) ) {
-		    			$attribute->setValue($item, $value->__toString());
-		    		}
-		    	}
-		    	
-		    }
-		    return $item;
-    	} else {
-    		echo("Fehler beim Lesen des XML");
-    		return null;
-    	}
-    }
-    
     /**
      * returns true if attribute is a simple datatype (for example
      * string, integer or boolean).
@@ -211,8 +189,10 @@ class MWebfile extends MItem {
     }
     
     /**
-     * returns attributes of the actual class and the extended classes<br />
-     * @return array with attributes
+     * Returns the attributes of the actual class which are relevant for the
+     * webfile definition.
+     * 
+     * @return array array with attributes
      */
     public static function getAttributes($onlyAttributesOfSimpleDatatypes = false) {
     	$oSelfReflection = new \ReflectionClass(static::$m__sClassName);
@@ -237,8 +217,10 @@ class MWebfile extends MItem {
     }
     
     /**
-     *
-     * Returns a xml defined class information. It cotains classname
+     * Returns a xml defined class information. It contains the 
+     * classname and the given attributes.
+     * 
+     * @return string xml with information about the class
      */
     public static function getClassInformation() {
     	 
@@ -305,12 +287,14 @@ class MWebfile extends MItem {
     	$attributes = $this->getAttributes();
     
     	foreach ($attributes as $attribute) {
+    		
     		$attributeName = $attribute->getName();
     		$attribute->setAccessible(true);
     		$attributeValue = $attribute->getValue($this);
+    		
     		if ( MWebfile::isSimpleDatatype($attributeName) ) {
     			$attributeFieldName = static::getSimplifiedAttributeName($attributeName);
-    			$dataset[$attributeFieldName] = $attribute->getValue($this);
+    			$dataset[$attributeFieldName] = $attributeValue;
     		}
     	}
     	return $dataset;
@@ -328,6 +312,25 @@ class MWebfile extends MItem {
     	$sDatabaseFieldName = substr($p_sFieldName,3);
     	$sDatabaseFieldName = strtolower($sDatabaseFieldName);
     	return $sDatabaseFieldName;
+    }
+    
+    /**
+     *
+     */
+    public function getTime() {
+    	return $this->time;
+    }
+    
+    /**
+     *
+     * @param timestamp $time
+     */
+    public function setTime($time) {
+    	$this->time = $time;
+    }
+    
+    public function getGeograficPosition() {
+    	return NULL;
     }
     
 }
