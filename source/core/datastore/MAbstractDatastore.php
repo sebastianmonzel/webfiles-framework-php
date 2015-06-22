@@ -90,6 +90,7 @@ abstract class MAbstractDatastore extends MWebfile {
 	 * </ol>
 	 * 
 	 * @param MWebfile $template template to search for
+	 * @return array list of webfiles
 	 */
 	public abstract function getByTemplate(MWebfile $template);
 	
