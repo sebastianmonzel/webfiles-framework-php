@@ -14,21 +14,11 @@ use simpleserv\webfilesframework\core\io\form\formItem\MCheckboxesFormItem;
 
 
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
  * description
- *
- * @package    de.simpleserv.core.form
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
- * @copyright  2009-2012 simpleserv company
- * @link       http://www.simpleserv.de/
+ * 
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MFormItemFactory {
 	

@@ -5,9 +5,11 @@ namespace simpleserv\webfilesframework\core\time;
 use simpleserv\webfilesframework\MItem;
 
 /**
- * @package simpleserv.webfilesframework.core.time
- * @author sebastianmonzel
- *
+ * description
+ * 
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MTimespan extends MItem {
 

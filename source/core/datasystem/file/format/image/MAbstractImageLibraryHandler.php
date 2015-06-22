@@ -5,9 +5,11 @@ namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 use simpleserv\webfilesframework\MItem;
 
 /**
+ * description
  * 
- * @author semo
- *
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 abstract class MAbstractImageLibraryHandler extends MItem {
 	

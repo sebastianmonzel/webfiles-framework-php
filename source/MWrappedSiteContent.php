@@ -3,22 +3,13 @@
 namespace simpleserv\webfilesframework;
 
 use simpleserv\webfilesframework\MSiteElement;
-/**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
 
 /**
  * description
  *
- * @package    de.simpleserv
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
- * @copyright  2009-2013 simpleserv company
- * @link       http://www.simpleserv.de/
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MWrappedSiteContent extends MSiteElement {
 	

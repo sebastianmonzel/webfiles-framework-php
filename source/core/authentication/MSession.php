@@ -5,10 +5,11 @@ namespace simpleserv\webfilesframework\core\authentication;
 use simpleserv\webfilesframework\MSite;
 
 /**
- * 
- * Enter description here ...
- * @author Sebastian Monzel, <mail@sebastianmonzel.de>
+ * description
  *
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MSession {
 	

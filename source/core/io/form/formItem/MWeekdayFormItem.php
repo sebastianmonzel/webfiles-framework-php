@@ -5,9 +5,11 @@ namespace simpleserv\webfilesframework\core\io\form\formItem;
 use simpleserv\webfilesframework\core\time\MWeekday;
 
 /**
+ * description
  * 
- * @author semo
- *
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MWeekdayFormItem extends MDropdownMenueFormItem {
 	

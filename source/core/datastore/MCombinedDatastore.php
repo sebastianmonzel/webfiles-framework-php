@@ -7,21 +7,11 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
- * Combines different datastores in one datastore together. 
+ * Combines different datastores in one datastore together.
  *
- * @package    de.simpleserv.core.datastore
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
- * @copyright  2009-2012 simpleserv company
- * @link       http://www.simpleserv.de/
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MCombinedDatastore extends MAbstractDatastore {
 	

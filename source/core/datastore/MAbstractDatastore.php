@@ -8,24 +8,14 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
  * Base class for defining datastores to save and load webfiles
  * on a standarized way.<br />
  * More about the definition of a datastore can be found under
  * the folling <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitiondatastore">link</a>.
  *
- * @package    de.simpleserv.core.datastore
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
- * @copyright  2009-2012 simpleserv company
- * @link       http://www.simpleserv.de/
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 abstract class MAbstractDatastore extends MWebfile {
 	

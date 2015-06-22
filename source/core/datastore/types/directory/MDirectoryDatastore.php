@@ -11,28 +11,16 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 use simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
-
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
- * 
  * <b>Conventions on datastore:</b>
  * <ul>
  * 		<li>filename is equal to the id of the webfile</li>
  * 		<li></li>
  * </ul>
  *
- * @package    de.simpleserv.core.datastore.folder
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
- * @copyright  2009-2012 simpleserv company
- * @link       http://www.simpleserv.de/
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MDirectoryDatastore extends MAbstractCachableDatastore 
 							implements MISingleDatastore {

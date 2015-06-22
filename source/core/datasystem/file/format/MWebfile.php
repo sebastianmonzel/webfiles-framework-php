@@ -5,23 +5,13 @@ namespace simpleserv\webfilesframework\core\datasystem\file\format;
 use simpleserv\webfilesframework\MItem;
 
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
  * Base cass for all webfile class definitions.<br />
  * On the following <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitionwebfile">link</a>
  * you can find more information about the definition of webfiles.
  *
- * @package    de.simpleserv
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <mail@sebastianmonzel.de>
- * @copyright  2009-2012 simpleserv company
- * @link       http://www.simpleserv.de/
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MWebfile extends MItem {
 	

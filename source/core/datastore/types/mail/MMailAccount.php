@@ -5,9 +5,11 @@ namespace simpleserv\webfilesframework\core\datastore\types\mail;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
+ * description
  * 
- * @author semo
- *
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MMailAccount extends MWebfile {
 

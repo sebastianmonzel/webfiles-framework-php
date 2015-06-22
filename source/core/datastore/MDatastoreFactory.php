@@ -9,23 +9,12 @@ use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastor
 use simpleserv\webfilesframework\MItem;
 
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
  * Creates depending on the given type a datastore, which can
  * be used to access and store webfiles.
- * 
  *
- * @package    de.simpleserv.core.datastore
- * @author     simpleserv company <info@simpleserv.de>
- * @author     Sebastian Monzel <s_monzel@simpleserv.de>
- * @copyright  2009-2012 simpleserv company
- * @link       http://www.simpleserv.de/
+ * @author     simpleserv company < info@simpleserv.de >
+ * @author     Sebastian Monzel < mail@sebastianmonzel.de >
+ * @since      0.1.7
  */
 class MDatastoreFactory {
 	
