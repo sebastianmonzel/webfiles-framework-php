@@ -107,8 +107,7 @@ class MCombinedDatastore extends MAbstractDatastore {
 	}
 	
 	/**
-	 * (non-PHPdoc)
-	 * @see MAbstractDatastore::getWebfilestream()
+	 * @see MAbstractDatastore:getWebfilestream()
 	 */
 	public function getWebfilestream() {
 		

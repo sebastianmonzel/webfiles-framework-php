@@ -62,7 +62,7 @@ abstract class MAbstractDatastore extends MWebfile {
 	 * happen according to the time information of the webfiles.
 	 *
 	 * @param int $count Count of webfiles to be selected.
-	 * @return list of webfiles
+	 * @return array list of webfiles
 	 */
 	public abstract function getLatestWebfiles($count = 5);
 	
@@ -73,7 +73,7 @@ abstract class MAbstractDatastore extends MWebfile {
 	 * @param int $count Count of webfiles to be selected.
 	 * @param string $reverse Sorting of the given webfiles (Newest 
 	 * first or oldest firs).
-	 * @return list of datasets
+	 * @return array list of datasets
 	 */
 	public abstract function getLatestDatasets($count = 5, $reverse = true);
 	
