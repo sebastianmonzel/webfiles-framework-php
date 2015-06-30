@@ -11,7 +11,9 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
  * Base class for defining datastores to save and load webfiles
  * on a standarized way.<br />
  * More about the definition of a datastore can be found under
- * the folling <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitiondatastore">link</a>.
+ * the folling <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitiondatastore">link</a>.<br />
+ * <br />
+ * Implements the webfiles standard to be able to edit datastores with help of the webfile editor. 
  *
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
@@ -95,21 +97,6 @@ abstract class MAbstractDatastore extends MWebfile {
 	public abstract function getByTemplate(MWebfile $template);
 	
 	/**
-	 * Stores all webfiles from a given webfilestream in the actual
-	 * datastore.
-	 * 
-	 * @param MWebfileStream $webfileStream
-	 * @throws MDatastoreException
-	 */
-	public function storeWebfilesFromWebfilestream(MWebfileStream $webfileStream) {
-		if ( isReadOnly() ) {
-			throw new MDatastoreException("cannot modify data on read-only datastore.");
-		} else {
-			throw new MDatastoreException("not implemented yet.");
-		}
-	}
-	
-	/**
 	 * Stores a single webfile in the datastore.
 	 * 
 	 * @param MWebfile $webfile
@@ -120,6 +107,25 @@ abstract class MAbstractDatastore extends MWebfile {
 			throw new MDatastoreException("cannot modify data on read-only datastore.");
 		} else {
 			throw new MDatastoreException("not implemented yet.");
+		}
+	}
+	
+	/**
+	 * Stores all webfiles from a given webfilestream in the actual
+	 * datastore.
+	 *
+	 * @param MWebfileStream $webfileStream
+	 * @throws MDatastoreException
+	 */
+	public function storeWebfilesFromWebfilestream(MWebfileStream $webfileStream) {
+	
+		if ( isReadOnly() ) {
+			throw new MDatastoreException("cannot modify data on read-only datastore.");
+		}
+	
+		$webfiles = $webfileStream->getWebfiles();
+		foreach ($webfiles as $webfile) {
+			$this->storeWebfile($webfile);
 		}
 	}
 	

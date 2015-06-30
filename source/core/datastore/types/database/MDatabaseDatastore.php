@@ -12,7 +12,7 @@ use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
 use simpleserv\webfilesframework\core\datastore\functions\filter\MSubstringFiltering;
 
 /**
- * description
+ * Class to connect to a datastore based on a database.
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
@@ -22,6 +22,10 @@ class MDatabaseDatastore extends MAbstractDatastore
 							implements MISingleDatastore {
 	
 	private $databaseConnection;
+	
+	public function __construct(MDatabaseConnection $databaseConnection) {
+		$this->databaseConnection = $databaseConnection;
+	}
 	
 	public function tryConnect() {
 		return $this->databaseConnection->connect();
@@ -43,15 +47,12 @@ class MDatabaseDatastore extends MAbstractDatastore
 		return NULL;
 	}
 	
-	public function __construct(MDatabaseConnection $databaseConnection) {
-		$this->databaseConnection = $databaseConnection;
-	}
-	
 	/**
-     * Creates a database table to persist objects of this type.
-     * @return void
-     */
-    private function createTable(MWebfile $webfile) {
+	 * Creates a database table to persist objects of this type.
+	 * @param MWebfile $webfile
+	 * @param boolean $dropTableIfExists
+	 */
+    private function createTable(MWebfile $webfile, $dropTableIfExists = true) {
     	
     	$sAttributeArray = $webfile->getAttributes();
     	
@@ -67,7 +68,6 @@ class MDatabaseDatastore extends MAbstractDatastore
     		if ( MWebfile::isSimpleDatatype($sAttributeName)
     				&& MWebfile::getSimplifiedAttributeName($sAttributeName) != "id") {
     			
-    			// TODO um weitere Typen erweitern
     			$prefix = substr($sAttributeName, 2,1);
     			if ( $prefix == "s" ) {
     				$table->addColumn(
@@ -92,29 +92,33 @@ class MDatabaseDatastore extends MAbstractDatastore
     			}
     		}
     	}
-    	$table->drop();
+    	if ( $dropTableIfExists && $this->tableExistsByWebfile($webfile) ) {
+	    	$table->drop();
+    	}
     	$table->create();
     	
     }
     
     private function webfileExists(MWebfile $webfile) {
     	
+    	if ( ! tableExists($webfile) ) {
+    		return false;
+    	}
+    	
     	$tableName = $this->getDatabaseTableName($webfile);
-    	
-    	//echo "SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'";
-    	
-    	$query = $this->databaseConnection->query("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
-    	return ( $query->num_rows > 0 );
+	    
+	   	$query = $this->databaseConnection->query("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
+	   	return ( $query->num_rows > 0 );
     	
     }
     
-    private function tableExists(MWebfile $webfile) {
+    private function tableExistsByWebfile(MWebfile $webfile) {
     	
     	$tableName = $this->getDatabaseTableName($webfile);
-    	return $this->tableExistsByName($tableName);
+    	return $this->tableExistsByTablename($tableName);
     }
     
-    private function tableExistsByName($tableName) {
+    private function tableExistsByTablename($tableName) {
     	 
     	$query = $this->databaseConnection->query("SHOW TABLES FROM `" . $this->databaseConnection->getDatabase() . "`");
     
@@ -130,8 +134,12 @@ class MDatabaseDatastore extends MAbstractDatastore
     	return false;
     }
     
-    
+    /**
+     * Returns all tablenames of the current connected database matching to the table prefix
+     * in the used connection.
+     */
     private function getAllTableNames() {
+    	
     	$query = $this->databaseConnection->query("SHOW TABLES FROM " . $this->databaseConnection->getDatabase());
     	
     	$tableNames = array();
@@ -150,17 +158,16 @@ class MDatabaseDatastore extends MAbstractDatastore
     	return $tableNames;
     }
     
+    /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
+     */
     public function getWebfilestream() {
     	return new MWebfileStream($this->getWebfilesFromDatastore());
     }
     
-    public function addWebfilesFromWebfilestream(MWebfileStream $webfileStream) {
-    	$webfiles = $webfileStream->getWebfiles();
-    	foreach ($webfiles as $webfile) {
-    		$this->storeWebfile($webfile);
-    	}
-    }
-    
+    /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
+     */
 	public function getWebfilesFromDatastore() {
 		return $this->getByCondition();
 	}
@@ -171,11 +178,11 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * the generated id will be returned)
 	 */
 	public function storeWebfile(MWebfile $webfile) {
-		if ( ! $this->tableExists($webfile) ) {
+		if ( ! $this->tableExistsByWebfile($webfile) ) {
 			$this->createTable($webfile);
 		}
 		if ( ! $this->webfileExists($webfile) ) {
-			return $this->add($webfile);
+			return $this->store($webfile);
 		} else {
 			return $this->update($webfile);
 		}
@@ -206,7 +213,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	
 	}
 	
-	private function add(MWebfile $webfile, $p_bUseOnlySimpleDatatypes = 0) {
+	private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false) {
 		
 		$tablename = $this->getDatabaseTableName($webfile);
 		
@@ -238,7 +245,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 		        	$sSqlValueSetting .= "\"" . $oAttribute->getValue($webfile) . "\"";
 	        	} else if (MWebfile::isObject($sAttributeName)) {
 	        		
-					if ( ! $p_bUseOnlySimpleDatatypes ) {
+					if ( ! $useOnlySimpleDatatypes ) {
 						if ($this->$sAttributeName->getId() != 0) {
 							$this->$sAttributeName->update(1);
 							$sAttributeId = $this->$sAttributeName->getId();
@@ -261,12 +268,12 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 	
-	private function update(MWebfile $webfile, $p_bUseOnlySimpleDatatypes = 0) {
+	private function update(MWebfile $webfile, $useOnlySimpleDatatypes = false) {
     	
 		$oAttributeArray = $webfile->getAttributes();
     	
         $setValuesString = "";
-        $bIsFirstLoop = true;
+        $isFirstLoop = true;
        
         foreach ($oAttributeArray as $oAttribute) {
         	$oAttribute->setAccessible(true);
@@ -277,28 +284,28 @@ class MDatabaseDatastore extends MAbstractDatastore
         			MWebfile::isObject($sAttributeName) || 
         			MWebfile::isSimpleDatatype($sAttributeName) ) ) {
 	        	
-        		if ( ! $bIsFirstLoop ) {
+        		if ( ! $isFirstLoop ) {
 	        		$setValuesString .= ",";
 	        	}
-	        	$sAttributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
-	        	$setValuesString .= $sAttributeDatabaseFieldName;
+	        	$attributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
+	        	$setValuesString .= $attributeDatabaseFieldName;
 	        	if (MWebfile::isSimpleDatatype($sAttributeName)) {
 		        	$setValuesString .= " = '" . $oAttribute->getValue($webfile) . "'";
 	        	} else if (MWebfile::isObject($sAttributeName)) {
 	        		
-					if ( ! $p_bUseOnlySimpleDatatypes ) {
+					if ( ! $useOnlySimpleDatatypes ) {
 						if ($this->$sAttributeName->getId() != 0) {
-							$this->$sAttributeName->update(1);
+							$this->update($this->$sAttributeName,true);
 							$sAttributeId = $this->$sAttributeName->getId();
 						} else {
-							$sAttributeId = $this->$sAttributeName->add(1);
+							$sAttributeId = $this->store($this->$sAttributeName,true);
 						}
-						$setValuesString .= "id";
+						$setValuesString .= "_id";
 		        		$setValuesString .= " = \"" . $sAttributeId . "\"";
 					}
 	        	}
-	        	if ($bIsFirstLoop)
-	        		$bIsFirstLoop = false;
+	        	
+	        	$isFirstLoop = false;
         	}
         }
         
@@ -323,9 +330,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 	
 	/**
      * Enter description here ...
-     * @param unknown_type $p_sClassName
+     * @param MWebfile $webfile
      */
-    public function getDatabaseTableName($webfile) {
+    public function getDatabaseTableName(MWebfile $webfile) {
    		
     	$classname = $webfile::$m__sClassName;
     	
@@ -339,73 +346,31 @@ class MDatabaseDatastore extends MAbstractDatastore
     	return $tableName;
     }
     
-    public function getClassNameFromTableName($tableName) {
-    	$tablePrefix = $this->databaseConnection->getTablePrefix();
+    public function resolveClassNameFromTableName($tableName) {
     	$metadata = $this->getMetadataForTablename($tableName);
     	return $metadata->classname;
-    	//return substr($tableName, strlen($tablePrefix));
     }
 	
     /**
-     * Returns a set of webfiles added by a template.
-     * not setted attributes will be filled by a ?
-     * @param unknown_type $webfile
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
      */
     public function getByTemplate(MWebfile $webfile) {
     	
     	$webfileArray = array();
     	
-    	if ( $this->tableExists($webfile) ) {
+    	if ( $this->tableExistsByWebfile($webfile) ) {
     	
 	    	// determine table with webfile type
 	    	$tableName = $this->getDatabaseTableName($webfile);
 	    	
 	    	// translate template into a condition
+	    	$condition = $this->translateTemplateIntoCondition($webfile);
 	    	
-	    	$first = true;
-	    	$condition = "";
-	    	
-	    	$attributes = $webfile->getAttributes(true);
-	    	
-	    	foreach ($attributes as $attribute) {
-	    		
-	    		$attribute->setAccessible(true);
-	    		
-	    		$name  = $attribute->getName();
-	    		$value = $attribute->getValue($webfile);
-	    		
-	    		if ( $value != "?" && ! ($value instanceof MIDatastoreFunction) ) {
-		    		if ( ! $first ) {    			
-		    			$condition .= " AND ";
-		    		}
-		    		
-		    		if ( is_array($value) ) {
-		    			$condition .= MWebfile::getSimplifiedAttributeName($name) . " IN (";
-		    			 
-		    			$firstInnerValue = true;
-		    			foreach ($value as $innerValue) {
-		    				if ( ! $firstInnerValue ) {
-		    					$condition .= " , ";
-		    				}
-		    				$condition .= '\'' . $innerValue . '\'';
-		    				$firstInnerValue = false;
-		    			}
-		    			$condition .= ')';
-		    		} else if ( $value instanceof MTimespan ) {
-		    			$condition .= MWebfile::getSimplifiedAttributeName($name) . " BETWEEN '" . $value->getStart() . "' AND '" . $value->getEnd() . "'";
-		    		} else if ( $value instanceof MSubstringFiltering ) {
-		    			
-		    			$condition .= "LOWER(" . MWebfile::getSimplifiedAttributeName($name) . ") LIKE LOWER('" . $value->getValue() . "%')";
-		    		} else {
-		    			$condition .= MWebfile::getSimplifiedAttributeName($name) . " = '" . $value . "'";
-		    		}
-	    			$first = false;
-	    		}
-	    	}
 	    	
 	    	$first = true;
 	    	$order = "";
 	    	
+	    	$attributes = $webfile->getAttributes(true);
 	    	
 	    	// SORTING
 	    	foreach ($attributes as $attribute) {
@@ -447,9 +412,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 			
 	    	if ($oDatabaseResultSet != false) {
 	    		if ($oDatabaseResultSet->num_rows > 0) {
-				    while ( $oDatabaseResultRow = $oDatabaseResultSet->fetch_object() ) {
+				    while ( $databaseResultObject = $oDatabaseResultSet->fetch_object() ) {
 			    		
-			    		$className = $this->getClassNameFromTableName($tableName);
+			    		$className = $this->resolveClassNameFromTableName($tableName);
 			    		
 			    		$webfile = new $className();
 			    		foreach ($attributes as $oAttribute) {
@@ -459,17 +424,17 @@ class MDatabaseDatastore extends MAbstractDatastore
 			    			$sAttributeName = $oAttribute->getName();
 			    			if (MWebfile::isSimpleDatatype($sAttributeName)) {
 				    			$sDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
-			    				$oAttribute->setValue($webfile,$oDatabaseResultRow->$sDatabaseFieldName);
+			    				$oAttribute->setValue($webfile,$databaseResultObject->$sDatabaseFieldName);
 			    			} else if (MWebfile::isObject($sAttributeName)) {
 			    				eval("\$sClassName = static::\$s__oAggregation[\$sAttributeName];");
 			    				eval("\$oSubAttributeArray = $sClassName::getAttributes(1);");
-			    				foreach($oSubAttributeArray as $oSubAttribute)
-			    				{
+			    				foreach($oSubAttributeArray as $oSubAttribute) {
+			    					
 			    					$oSubAttributeName = $oSubAttribute->getName();
 			    					if ( MWebfile::isSimpleDatatype($oSubAttributeName) ) {
 			    						
 				    					$sDatabaseFieldName = $this->getDatabaseTableName(new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
-			    						$webfile->$sAttributeName->$oSubAttributeName = $oDatabaseResultRow->$sDatabaseFieldName;
+			    						$webfile->$sAttributeName->$oSubAttributeName = $databaseResultObject->$sDatabaseFieldName;
 			    					}
 			    				}
 			    			}
@@ -486,10 +451,10 @@ class MDatabaseDatastore extends MAbstractDatastore
     
     /**
      * Fetches all representatives of persistent objects of this type matching the given condition
-     * @param $p_sCondition condition to fetch objects
-     * @return all representatives of persitent objects matching the given condition
+     * @param $condition condition to fetch objects
+     * @return all representatives of persisted objects matching the given condition
      */
-    public function getByCondition($p_sCondition = "") {
+    /*public function getByCondition($condition = "") {
     	
     	$tableNames = $this->getAllTableNames();
     	
@@ -501,7 +466,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     	
     	$bIsFirst = 1;
     	foreach ( $tableNames as $tableName ) {
-    		$className = $this->getClassNameFromTableName($tableName);
+    		$className = $this->resolveClassNameFromTableName($tableName);
     		
 	    	foreach ( $sAttributeArray as $oAttribute ) {
 	    		$sAttributeName = $oAttribute->getName();
@@ -524,9 +489,6 @@ class MDatabaseDatastore extends MAbstractDatastore
 	    			//is subitem
 	    			eval("\$oDatabaseItemName = static::\$s__oAggregation[\$sAttributeName];");
 	    			
-	    			//var_export(MBlogEntry::$s__oAggregation);
-	    			
-	    			//var_export(MBlogEntry::$s__oAggregation[$sAttributeName]);
 	    			$oDatabaseItem = new $oDatabaseItemName();
 	    			
 	    			$oJoinTableName = self::getDatabaseTableName($oDatabaseItemName);
@@ -563,8 +525,8 @@ class MDatabaseDatastore extends MAbstractDatastore
     	
     	$sSqlQuery = "SELECT " . $sSqlSelectFields . " FROM " . $this->getDatabaseTableName(new MBlogEntry()) . $sSqlJoins;
 
-    	if ( $p_sCondition != "" ) {
-    		$sSqlQuery .= " WHERE " . $p_sCondition;
+    	if ( $condition != "" ) {
+    		$sSqlQuery .= " WHERE " . $condition;
     	}
     	
     	//array for saving result
@@ -613,57 +575,22 @@ class MDatabaseDatastore extends MAbstractDatastore
     		return false;
     	}
     	return $webfileArray;
-    }
+    }*/
     
+	/**
+	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+	 */
     public function deleteByTemplate(MWebfile $webfile) {
-    	$webfileArray = array();
-    	 
-    	if ( $this->tableExists($webfile) ) {
+    	
+    	
+    	if ( $this->tableExistsByWebfile($webfile) ) {
     		 
     		// determine table with webfile type
     		$tableName = $this->getDatabaseTableName($webfile);
     	
     		// translate template into a condition
-    	
-    		$first = true;
-    		$condition = "";
-    	
-    		$attributes = $webfile->getAttributes(true);
-    	
-    		foreach ($attributes as $attribute) {
-    			 
-    			$attribute->setAccessible(true);
-    			 
-    			$name  = $attribute->getName();
-    			$value = $attribute->getValue($webfile);
-    			 
-    			if ( $value != "?" ) {
-    				if ( ! $first ) {
-    					$condition .= " AND ";
-    				}
-    	
-    				if ( ! is_array($value) ) {
-    					$condition .= MWebfile::getSimplifiedAttributeName($name) . " = '" . $value . "'";
-    				} else {
-    						
-    					$condition .= MWebfile::getSimplifiedAttributeName($name) . " IN (";
-    			   
-    					$firstInnerValue = true;
-    					foreach ($value as $innerValue) {
-    						if ( ! $firstInnerValue ) {
-    							$condition .= " , ";
-    						}
-    						$condition .= '\'' . $innerValue . '\'';
-    						$innerValue = false;
-    					}
-    					$condition .= ')';
-    				}
-    				$first = false;
-    			}
-    		}
-    	
-    	
-    	
+    		$condition = $this->translateTemplateIntoCondition($webfile);
+    		
     		$query = "DELETE FROM " . $tableName;
     	
     		if ( !empty($condition) ) {
@@ -672,6 +599,53 @@ class MDatabaseDatastore extends MAbstractDatastore
     		
     		$this->databaseConnection->query($query);
     	}
+    }
+    
+    /**
+     * 
+     * @param MWebfile $webfile
+     * @return string
+     */
+    private function translateTemplateIntoCondition(MWebfile $webfile) {
+    	
+    	$first = true;
+    	$condition = "";
+    	 
+    	$attributes = $webfile->getAttributes(true);
+    	 
+    	foreach ($attributes as $attribute) {
+    	
+    		$attribute->setAccessible(true);
+    	
+    		$name  = $attribute->getName();
+    		$value = $attribute->getValue($webfile);
+    	
+    		if ( $value != "?" ) {
+    			if ( ! $first ) {
+    				$condition .= " AND ";
+    			}
+    			 
+    			if ( ! is_array($value) ) {
+    				$condition .= MWebfile::getSimplifiedAttributeName($name) . " = '" . $value . "'";
+    			} else {
+    	
+    				$condition .= MWebfile::getSimplifiedAttributeName($name) . " IN (";
+    	
+    				$firstInnerValue = true;
+    				foreach ($value as $innerValue) {
+    					if ( ! $firstInnerValue ) {
+    						$condition .= " , ";
+    					}
+    					$condition .= '\'' . $innerValue . '\'';
+    					$innerValue = false;
+    				}
+    				$condition .= ')';
+    			}
+    			$first = false;
+    		}
+    	}
+    	
+    	return $condition;
     }
     
     /**
@@ -703,7 +677,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
     
     private function metadataExist($tablename) {
-    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    	if ( ! $this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata") ) {
     		$this->createMetadataTable();
     	}
     	$oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'" );
@@ -715,7 +689,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     
     private function addMetadata($className, $version, $tablename) {
     	
-    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    	if ( ! $this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata") ) {
     		$this->createMetadataTable();
     	}
     	$className = str_replace('\\', '\\\\', $className);
@@ -724,7 +698,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     
     private function getMetadataForTablename($tablename) {
     	
-    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    	if ( ! $this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata") ) {
     		$this->createMetadataTable();
     	}
     	
@@ -737,7 +711,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     
     private function getClassnameForTablename($tablename) {
     	
-    	if ( ! $this->tableExistsByName($this->databaseConnection->getTablePrefix() . "metadata") ) {
+    	if ( ! $this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata") ) {
     		$this->createMetadataTable();
     	}
     	
