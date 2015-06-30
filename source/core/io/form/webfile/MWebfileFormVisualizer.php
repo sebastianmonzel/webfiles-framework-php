@@ -9,7 +9,9 @@ use simpleserv\webfilesframework\core\io\form\MFormItemFactory;
 use simpleserv\webfilesframework\core\io\form\formItem\MHiddenFormItem;
 
 /**
- * description
+ * Generates a form according to a given webfile.<br/>
+ * Uses the javascript-libary DojoToolkit for visualizing 
+ * form elements.
  *
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
