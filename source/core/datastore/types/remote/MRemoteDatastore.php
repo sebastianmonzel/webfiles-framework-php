@@ -9,7 +9,8 @@ use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * description
+ * Encapsulates the access to a datastore with help of the content 
+ * information service.
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >

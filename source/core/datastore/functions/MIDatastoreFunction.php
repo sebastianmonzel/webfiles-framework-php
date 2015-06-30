@@ -3,7 +3,10 @@
 namespace simpleserv\webfilesframework\core\datastore\functions;
 
 /**
- * description
+ * Datastore functions are used to filter and manipulate the the
+ * query result of a datastore.<br />
+ * The actual interface is a marker interface to build a capsule
+ * over all datastore functions.
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >

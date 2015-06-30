@@ -5,7 +5,7 @@ namespace simpleserv\webfilesframework\core\datastore\types\mail;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * description
+ * Representation of a mail used in the imap datastore.
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >

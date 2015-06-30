@@ -6,7 +6,7 @@ use simpleserv\webfilesframework\MItem;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * description
+ * Defines the representation of a list of webfiles.
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
