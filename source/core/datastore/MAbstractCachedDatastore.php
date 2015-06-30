@@ -6,7 +6,10 @@ use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
 
 /**
- * description
+ * Defines and provides basic functionality for caching a datastore.<br />
+ * Basically the cached datastore is a combination between a efficient
+ * datastore which can be used as cache and an slower datastore 
+ * (e.g. a directory datastore or a remote datastore).
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
