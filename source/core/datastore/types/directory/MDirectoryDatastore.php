@@ -12,7 +12,8 @@ use simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
 /**
- * <b>Conventions on datastore:</b>
+ * Class to connect to a datastore based on a directory.
+ * <b>Conventions on the datastore:</b>
  * <ul>
  * 		<li>filename is equal to the id of the webfile</li>
  * 		<li></li>
