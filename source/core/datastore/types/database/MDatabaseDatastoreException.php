@@ -5,7 +5,7 @@ namespace simpleserv\webfilesframework\core\datastore\types\database;
 use simpleserv\webfilesframework\core\datastore\MDatastoreException;
 
 /**
- * General Exception used in datastores.
+ * General Exception used in database datastore.
  * 
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
