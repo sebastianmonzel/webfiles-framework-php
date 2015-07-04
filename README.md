@@ -8,5 +8,5 @@ webfiles-framework
 Developer: Sebastian Monzel (github@sebastianmonzel.de)
 
 Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<br />
-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-doc/<br />
+Documentation: http://sebastianmonzel.github.io/webfiles-framework-doc/<br />
 Packagist: https://packagist.org/packages/simpleserv/webfiles-framework
