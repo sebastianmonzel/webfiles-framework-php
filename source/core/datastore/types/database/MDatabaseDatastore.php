@@ -35,7 +35,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 		return false;
 	}
 	
-	public function getNextWebfileForTime($time) {
+	public function getNextWebfileForTimestamp($time) {
 		
 	}
 	
@@ -161,14 +161,14 @@ class MDatabaseDatastore extends MAbstractDatastore
     /**
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
      */
-    public function getWebfilestream() {
-    	return new MWebfileStream($this->getWebfilesFromDatastore());
+    public function getWebfilesAsStream() {
+    	return new MWebfileStream($this->getWebfilesAsArray());
     }
     
     /**
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
      */
-	public function getWebfilesFromDatastore() {
+	public function getWebfilesAsArray() {
 		return $this->getByCondition();
 	}
 	
@@ -190,26 +190,6 @@ class MDatabaseDatastore extends MAbstractDatastore
 	
 
 	public function getLatestWebfiles($count = 5) {
-	
-	}
-	
-	public function getDatasetsFromDatastore() {
-	
-		$items = $this->getItemsFromDatastore();
-	
-		$datasets = array();
-		if ( $items != null ) {
-			foreach ($items as $item) {
-				array_push($datasets, $item->getDataset());
-			}
-			return $datasets;
-		} else {
-			return null;
-		}
-	
-	}
-	
-	public function getLatestDatasets($count = 5, $reverse = true) {
 	
 	}
 	

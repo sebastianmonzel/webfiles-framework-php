@@ -25,7 +25,7 @@ class MCombinedDatastore extends MAbstractDatastore {
 		return true;
 	}
 	
-	public function getNextWebfileForTime($time) {
+	public function getNextWebfileForTimestamp($time) {
 		// nothing todo
 	}
 	
@@ -109,9 +109,9 @@ class MCombinedDatastore extends MAbstractDatastore {
 	/**
 	 * @see MAbstractDatastore:getWebfilestream()
 	 */
-	public function getWebfilestream() {
+	public function getWebfilesAsStream() {
 		
-		$webfiles = $this->getWebfilesFromDatastore();
+		$webfiles = $this->getWebfilesAsArray();
 		return new MWebfileStream($webfiles);
 	}
 	
@@ -132,7 +132,7 @@ class MCombinedDatastore extends MAbstractDatastore {
 		
 	}
 	
-	public function getWebfilesFromDatastore() {
+	public function getWebfilesAsArray() {
 		if ( count($this->registeredDatastores) == 0 ) {
 			//throw new Exception
 		}

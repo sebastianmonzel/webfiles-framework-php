@@ -89,22 +89,6 @@ class MDirectoryWebfileGrabber {
 		
 	}
 	
-	/**
-	 * 
-	 * Enter description here ...
-	 */
-	public function grabDatasets() {
-		$datasetsArray = array();
-		
-		$objectsArray = $this->grabObjects();
-		
-		foreach ($objectsArray as $value) {
-			$dataset = $value->getDataset();
-			$datasetsArray[] = $dataset;
-		}
-		return $datasetsArray;
-	}
-	
 	
 }
 

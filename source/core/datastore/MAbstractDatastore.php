@@ -36,28 +36,30 @@ abstract class MAbstractDatastore extends MWebfile {
 	 * Returns the next webfile for the given timestamp
 	 * @param int $time timestamp in unix-format.
 	 * @return MWebfile webfile according to the given input.
+	 * old: getNextWebfileForTime - new getNextWebfileForTimestamp
+	 * DONE
 	 */
-	public abstract function getNextWebfileForTime($time);
+	public abstract function getNextWebfileForTimestamp($time);
 	
 	/**
 	 * Returns a webfiles stream with all webfiles from 
 	 * the actual datastore.
+	 * DONE
 	 */
-	public abstract function getWebfilestream();
+	public abstract function getWebfilesAsStream();
 	
 	/**
 	 * Returns all webfiles from the actual datastore.
 	 * @return array list of webfiles
+	 * DONE
 	 */
-	public abstract function getWebfilesFromDatastore();
+	public abstract function getWebfilesAsArray();
 	
 	/**
-	 * Returns all webfile datasets from the actual datastore.
-	 * @return array list of datasets
+	 * DELETED 
+	 * getDatasetsFromDatastore
+	 *getLatestDatasets
 	 */
-	public abstract function getDatasetsFromDatastore();
-	
-	
 	
 	/**
 	 * Returns the latests webfiles. Sorting will
@@ -67,19 +69,6 @@ abstract class MAbstractDatastore extends MWebfile {
 	 * @return array list of webfiles
 	 */
 	public abstract function getLatestWebfiles($count = 5);
-	
-	/**
-	 * Returns the latests webfile datasets. Sorting will 
-	 * happen according to the time information of the webfiles.
-	 *  
-	 * @param int $count Count of webfiles to be selected.
-	 * @param string $reverse Sorting of the given webfiles (Newest 
-	 * first or oldest firs).
-	 * @return array list of datasets
-	 */
-	public abstract function getLatestDatasets($count = 5, $reverse = true);
-	
-	
 	
 	
 	/**
@@ -116,8 +105,10 @@ abstract class MAbstractDatastore extends MWebfile {
 	 *
 	 * @param MWebfileStream $webfileStream
 	 * @throws MDatastoreException
+	 *
+	 * OLD storeWebfilesFromWebfilestream - new: storeWebfilesFromStream
 	 */
-	public function storeWebfilesFromWebfilestream(MWebfileStream $webfileStream) {
+	public function storeWebfilesFromStream(MWebfileStream $webfileStream) {
 	
 		if ( isReadOnly() ) {
 			throw new MDatastoreException("cannot modify data on read-only datastore.");
@@ -160,7 +151,7 @@ abstract class MAbstractDatastore extends MWebfile {
 		$datastoreDirectory = new MDirectory("./custom/datastore/");
 		$datastoreHolder = new MDirectoryDatastore($datastoreDirectory,false);
 		
-		$webfiles = $datastoreHolder->getWebfilesFromDatastore();
+		$webfiles = $datastoreHolder->getWebfilesAsArray();
 		
 		$selectedWebfile = null;
 		$webfile = new MWebfile();
@@ -177,6 +168,15 @@ abstract class MAbstractDatastore extends MWebfile {
 		}
 		
 		return $selectedWebfile;
+	}
+	
+	public static function extractDatasetsFromWebfilesArray($webfilesArray) {
+		
+		foreach ($webfilesArray as $webfile) {
+			$dataset = $webfile->getDataset();
+			$webfilesArray[] = $dataset;
+		}
+		return $webfilesArray;
 	}
 	
 }

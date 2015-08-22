@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\exception;
+namespace simpleserv\webfilesframework;
 
 /**
  * description
@@ -9,6 +9,6 @@ namespace simpleserv\webfilesframework\core\exception;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MException extends \Exception {
+class MWebfilesFrameworkException extends \Exception {
 	
 }

@@ -50,8 +50,8 @@ class MImapDatastore extends MAbstractDatastore
 		return true;
 	}
 	
-	public function getNextWebfileForTime($time) {
-		$webfiles = $this->getWebfilestream()->getWebfiles();
+	public function getNextWebfileForTimestamp($time) {
+		$webfiles = $this->getWebfilesAsStream()->getWebfiles();
 		
 		ksort($webfiles);
 		
@@ -63,7 +63,7 @@ class MImapDatastore extends MAbstractDatastore
 		
 	}
 	
-	public function getWebfilestream() {
+	public function getWebfilesAsStream() {
 		
 		$webfileArray = array();
 		
@@ -122,17 +122,8 @@ class MImapDatastore extends MAbstractDatastore
 		return strip_tags($value,"<p><br><br /><img><a>");
 	}
 	
-	public function getDatasetsFromDatastore() {
-		
-		// todooo
-	}
 	
-	public function getLatestDatasets($count = 5, $reverse = true) {
-		
-		// todoooo
-	}
-	
-	public function getWebfilesFromDatastore() {
+	public function getWebfilesAsArray() {
 		
 		// todoooo
 	}

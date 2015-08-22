@@ -6,7 +6,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use simpleserv\webfilesframework\template\MTemplate;
-use simpleserv\webfilesframework\core\exception\MException;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Represents a HTML-site which is rendered during bootstrapping
@@ -65,7 +65,7 @@ class MSite {
 	
 	public function addCssFile(MFile $file) {
 		if ( ! $file->exists() ) {
-			throw new MException("The css-file " . $file->getName() . "cannot be found.");
+			throw new MWebfilesFrameworkException("The css-file " . $file->getName() . "cannot be found.");
 		}
 		$this->addHeader("<link rel=\"stylesheet\" href=\"" . $file->getName() . "\" type=\"text/css\" media=\"screen\" />");
 	}

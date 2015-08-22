@@ -18,10 +18,10 @@ class MDatastoreTransfer {
 	
 	function __construct(MAbstractDatastore $source, MAbstractDatastore $target) {
 		if ( $source == null ) {
-			throw new Exception("source datastore cannot be null.");
+			throw new MDatastoreException("source datastore cannot be null.");
 		}
 		if ( $target == null ) {
-			throw new Exception("target datastore cannot be null.");
+			throw new MDatastoreException("target datastore cannot be null.");
 		}
 		
 		$this->source = $source;

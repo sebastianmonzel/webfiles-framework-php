@@ -46,7 +46,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 		return true;
 	}
 	
-	public function getNextWebfileForTime($time) {
+	public function getNextWebfileForTimestamp($time) {
 		
 		$itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
 		$webfiles = $itemGrabber->grabLatestWebfiles(4);
@@ -61,7 +61,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 		
 	}
 	
-	public function getWebfilestream() {
+	public function getWebfilesAsStream() {
 		
 		$files = $this->m_oDirectory->getFiles();
 		
@@ -90,24 +90,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 		return new MWebfileStream($webfileArray);
 	}
 	
-	public function getDatasetsFromDatastore() {
-		$itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
-		return $itemGrabber->grabDatasets();
-	}
-	
-	public function getLatestDatasets($count = 5, $reverse = true) {
-		
-		$itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
-		$items = $itemGrabber->grabLatestWebfiles($count);
-		
-		$items = array_slice($items, $count * -1);
-		if ( $reverse ) {
-			$items = array_reverse($items);
-		}
-		return $items;
-	}
-	
-	public function getWebfilesFromDatastore() {
+	public function getWebfilesAsArray() {
 		$itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
 		return $itemGrabber->grabWebfiles();
 	}
@@ -127,7 +110,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * (non-PHPdoc)
 	 * @see MAbstractDatastore::storeWebfilesFromWebfilestream()
 	 */
-	public function storeWebfilesFromWebfilestream(MWebfileStream $webfileStream) {
+	public function storeWebfilesFromStream(MWebfileStream $webfileStream) {
 		$webfiles = $webfileStream->getWebfiles();
 	
 		foreach ($webfiles as $webfile) {
@@ -150,7 +133,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 			}
 			$webfiles = $this->cachingDatastore->getByTemplate($template);
 		} else {
-			$webfiles = $this->getWebfilesFromDatastore();
+			$webfiles = $this->getWebfilesAsArray();
 			$webfiles = $this->filterWebfilesByTemplate($webfiles,$template);
 			return $webfiles;
 		}

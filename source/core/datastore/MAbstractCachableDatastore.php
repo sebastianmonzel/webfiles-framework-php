@@ -28,7 +28,7 @@ abstract class MAbstractCachableDatastore extends MAbstractDatastore {
 	public function setCachingDatastore(MAbstractDatastore $cachingDatastore) {
 		
 		if ( $cachingDatastore->isReadOnly() ) {
-			throw new Exception("Datastore for caching data cannot be readOnly.");
+			throw new MDatastoreException("Datastore for caching data cannot be readOnly.");
 		}
 		
 		$this->cachingDatastore = $cachingDatastore;

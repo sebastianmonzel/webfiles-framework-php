@@ -36,7 +36,7 @@ class MRemoteDatastore extends MAbstractDatastore {
 		return true;
 	}
 	
-	public function getWebfilestream($data = null) {
+	public function getWebfilesAsStream($data = null) {
 		
 		$requestResult = $this->makeRequest($data);
 		return new MWebfileStream($requestResult);
@@ -52,16 +52,8 @@ class MRemoteDatastore extends MAbstractDatastore {
 		return $webfilestreamContent;
 	}
 	
-	public function getDatasetsFromDatastore() {
-		
-	}
-	
-	public function getLatestDatasets($count = 5, $reverse = true) {
-		// TODO
-	}
-	
-	public function getWebfilesFromDatastore() {
-		return $this->getWebfilestream()->getWebfiles();
+	public function getWebfilesAsArray() {
+		return $this->getWebfilesAsStream()->getWebfiles();
 	}
 	
 	public function getLatestWebfiles($count = 5){
@@ -74,7 +66,7 @@ class MRemoteDatastore extends MAbstractDatastore {
 		$data['method'] = "getByTemplate";
 		$data['template'] = $webfile->marshall();
 		
-		return $this->getWebfilestream($data)->getWebfiles();
+		return $this->getWebfilesAsStream($data)->getWebfiles();
 	}
 	
 }

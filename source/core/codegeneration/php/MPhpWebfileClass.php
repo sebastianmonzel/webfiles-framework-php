@@ -3,7 +3,7 @@
 namespace simpleserv\webfilesframework\core\codegeneration\php;
 
 use simpleserv\webfilesframework\core\codegeneration\MAbstractClass;
-use simpleserv\webfilesframework\core\exception\MException;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description
@@ -40,7 +40,7 @@ class MPhpWebfileClass extends MAbstractClass {
 		foreach ($this->attributes as $attribute) {
 			
 			if ( ! $attribute instanceof MPhpClassAttribute) {
-				throw new MException("Cannot generate code for attribute which is not of type 'MPhpClassAttribute'.");
+				throw new MWebfilesFrameworkException("Cannot generate code for attribute which is not of type 'MPhpClassAttribute'.");
 			}
 			
 			// ADD "m_" BEFORE THE ATTRIBUTENAME TO MAKE IT POSSIBLE FOR WEBFILES FRAMEWORK TO RECOGNIZE RELEVANT ATTRIBUTES
