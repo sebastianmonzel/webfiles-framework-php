@@ -38,6 +38,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 		$this->m_oDirectory = $directory;
 	}
 	
+	public function isReadOnly() {
+		return false;
+	}
 	
 	public function tryConnect() {
 		return true;
