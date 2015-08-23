@@ -10,6 +10,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectoryWebfileGr
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 use simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
  * Class to connect to a datastore based on a directory.
@@ -26,11 +27,14 @@ use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 class MDirectoryDatastore extends MAbstractCachableDatastore 
 							implements MISingleDatastore {
 	
+	/**
+	 * @var MDirectory
+	 */
 	private $m_oDirectory;
 	public static $m__sClassName = __CLASS__;
 	
 	
-	public function __construct($directory, $isRemoteDatastore = false) {
+	public function __construct(MDirectory $directory, $isRemoteDatastore = false) {
 		echo "test";
 		if ( $directory == null ) {
 			throw new MDatastoreException("Cannot instantiate a DirectoryDatastore without valid directory.");
@@ -158,10 +162,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	    		
 	    		$attribute->setAccessible(true);
 	    		
-	    		$name  = $attribute->getName();
 	    		$templateValue = $attribute->getValue($webfile);
 	    		
-	    		if ( $value != "?" && ! ($value instanceof MIDatastoreFunction) ) {
+	    		if ( $templateValue != "?" && ! ($templateValue instanceof MIDatastoreFunction) ) {
 	    			
 	    			$webfileValue = $attribute->getValue($webfile);
 	    			if ( $templateValue != $webfileValue ) {
@@ -188,7 +191,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 		}
 		
 		foreach ($webfiles as $webfile) {
-			$file = new MFile($directoryPath . "/" . $webfile->getId() . ".webfile");
+			$file = new MFile($this->m_oDirectory->getPath() . "/" . $webfile->getId() . ".webfile");
 			$file->delete();
 		}
 	}

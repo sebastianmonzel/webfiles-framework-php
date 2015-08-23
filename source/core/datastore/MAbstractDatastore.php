@@ -127,7 +127,7 @@ abstract class MAbstractDatastore extends MWebfile {
 	 * @param MWebfile $webfile
 	 * @throws MDatastoreException
 	 */
-	public function deleteByTemplate(MWebfile $tempate) {
+	public function deleteByTemplate(MWebfile $template) {
 		if ( isReadOnly() ) {
 			throw new MDatastoreException("cannot modify data on read-only datastore.");
 		} else {
