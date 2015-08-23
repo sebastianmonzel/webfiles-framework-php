@@ -43,7 +43,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::tryConnect()
 	 */
 	public function tryConnect() {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->tryConnect();
 	}
 
@@ -51,7 +51,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::isReadOnly()
 	 */
 	public function isReadOnly() {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->isReadOnly();
 	}
 
@@ -59,7 +59,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getNextWebfileForTimestamp()
 	 */
 	public function getNextWebfileForTimestamp($time) {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->getNextWebfileForTimestamp($time);
 	}
 
@@ -67,7 +67,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsStream()
 	 */
 	public function getWebfilesAsStream() {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->getWebfilesAsStream();
 	}
 
@@ -75,7 +75,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
 	 */
 	public function getWebfilesAsArray() {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->getWebfilesAsArray();
 	}
 
@@ -83,7 +83,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getLatestWebfiles()
 	 */
 	public function getLatestWebfiles($count = 5) {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->getLatestWebfiles($count);
 	}
 
@@ -91,7 +91,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
 	 */
 	public function getByTemplate(MWebfile $template) {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->getByTemplate($template);
 	}
 
@@ -99,7 +99,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
 	 */
 	public function storeWebfile(MWebfile $webfile) {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->storeWebfile($webfile);
 	}
 
@@ -107,7 +107,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfilesFromStream()
 	 */
 	public function storeWebfilesFromStream(MWebfileStream $webfileStream) {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->storeWebfilesFromStream($webfileStream);
 	}
 
@@ -115,7 +115,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
 	 */
 	public function deleteByTemplate(MWebfile $template) {
-		initDatastore();
+		$this->initDatastore();
 		$this->directoryDatastore->deleteByTemplate($template);
 	}
 
