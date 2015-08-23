@@ -25,8 +25,7 @@ use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDirectoryDatastoreWebfile extends MWebfile
-								implements MAbstractDatastore {
+class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	
 	private $m_sDirectoryPath;
 	/**
