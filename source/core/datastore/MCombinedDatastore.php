@@ -48,7 +48,7 @@ class MCombinedDatastore extends MAbstractDatastore {
 		// FILL ARRAY "nextWebfiles" WITH INITIAL VALUES
 		foreach ($this->registeredDatastores as $datastore) {
 			
-			$nextWebfile = $datastore->getNextWebfileForTime($timeBeforeGivenDays);
+			$nextWebfile = $datastore->getNextWebfileForTimestamp($timeBeforeGivenDays);
 			if ( isset($nextWebfile) ) {
 				
 				
