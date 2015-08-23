@@ -44,7 +44,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function tryConnect() {
 		$this->initDatastore();
-		$this->directoryDatastore->tryConnect();
+		return $this->directoryDatastore->tryConnect();
 	}
 
 	/* (non-PHPdoc)
@@ -52,7 +52,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function isReadOnly() {
 		$this->initDatastore();
-		$this->directoryDatastore->isReadOnly();
+		return $this->directoryDatastore->isReadOnly();
 	}
 
 	/* (non-PHPdoc)
@@ -60,7 +60,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function getNextWebfileForTimestamp($time) {
 		$this->initDatastore();
-		$this->directoryDatastore->getNextWebfileForTimestamp($time);
+		return $this->directoryDatastore->getNextWebfileForTimestamp($time);
 	}
 
 	/* (non-PHPdoc)
@@ -68,7 +68,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function getWebfilesAsStream() {
 		$this->initDatastore();
-		$this->directoryDatastore->getWebfilesAsStream();
+		return $this->directoryDatastore->getWebfilesAsStream();
 	}
 
 	/* (non-PHPdoc)
@@ -76,7 +76,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function getWebfilesAsArray() {
 		$this->initDatastore();
-		$this->directoryDatastore->getWebfilesAsArray();
+		return $this->directoryDatastore->getWebfilesAsArray();
 	}
 
 	/* (non-PHPdoc)
@@ -84,7 +84,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function getLatestWebfiles($count = 5) {
 		$this->initDatastore();
-		$this->directoryDatastore->getLatestWebfiles($count);
+		return $this->directoryDatastore->getLatestWebfiles($count);
 	}
 
 	/* (non-PHPdoc)
@@ -92,7 +92,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function getByTemplate(MWebfile $template) {
 		$this->initDatastore();
-		$this->directoryDatastore->getByTemplate($template);
+		return $this->directoryDatastore->getByTemplate($template);
 	}
 
 	/* (non-PHPdoc)
@@ -100,7 +100,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function storeWebfile(MWebfile $webfile) {
 		$this->initDatastore();
-		$this->directoryDatastore->storeWebfile($webfile);
+		return $this->directoryDatastore->storeWebfile($webfile);
 	}
 
 	/* (non-PHPdoc)
@@ -108,7 +108,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function storeWebfilesFromStream(MWebfileStream $webfileStream) {
 		$this->initDatastore();
-		$this->directoryDatastore->storeWebfilesFromStream($webfileStream);
+		return $this->directoryDatastore->storeWebfilesFromStream($webfileStream);
 	}
 
 	/* (non-PHPdoc)
@@ -116,7 +116,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore {
 	 */
 	public function deleteByTemplate(MWebfile $template) {
 		$this->initDatastore();
-		$this->directoryDatastore->deleteByTemplate($template);
+		return $this->directoryDatastore->deleteByTemplate($template);
 	}
 
 	private function initDatastore() {
