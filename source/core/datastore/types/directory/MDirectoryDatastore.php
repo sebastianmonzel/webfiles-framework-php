@@ -35,7 +35,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	
 	
 	public function __construct(MDirectory $directory, $isRemoteDatastore = false) {
-		echo "test";
+		
 		if ( $directory == null ) {
 			throw new MDatastoreException("Cannot instantiate a DirectoryDatastore without valid directory.");
 		}
@@ -58,6 +58,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 		ksort($webfiles);
 		
 		foreach ($webfiles as $key => $value) {
+			
 			if ( $key > $time ) {
 				return $value;
 			}
