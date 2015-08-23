@@ -91,7 +91,7 @@ class MCombinedDatastore extends MAbstractDatastore {
 		}
 		
 		if ( isset($datastore) ) {
-			$nextWebfileTemp = $datastore->getNextWebfileForTime($oldestTimestamp);
+			$nextWebfileTemp = $datastore->getNextWebfileForTimestamp($oldestTimestamp);
 			if ( isset($nextWebfileTemp) ) {
 				
 				$nextWebfileTempTime = $nextWebfileTemp->getTime();
