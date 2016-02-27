@@ -102,6 +102,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function webfileExists(MWebfile $webfile) {
     	
     	if ( ! tableExists($webfile) ) {
+    		$this->createTable($webfile);
     		return false;
     	}
     	
@@ -423,7 +424,10 @@ class MDatabaseDatastore extends MAbstractDatastore
 			    	}
 		    	}
 	    	}
+    	} else {
+    		$this->createTable($webfile);
     	}
+    		
     	
     	return $webfileArray;
     	
