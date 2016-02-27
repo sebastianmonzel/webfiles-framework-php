@@ -70,9 +70,10 @@ class MSession {
 		}
 	}
 	
-	public function login(MUser $referenceObject,$username, $password) {
+	public function login($userSearchTemplate,$username, $password) {
 		
-		$webfiles = MSite::getInstance()->getDefaultDatastore()->getByTemplate($referenceObject);
+		
+		$webfiles = MSite::getInstance()->getDefaultDatastore()->getByTemplate($userSearchTemplate);
 		
 		if ( count($webfiles) != 1 ) {
 			return false;
@@ -83,15 +84,11 @@ class MSession {
 		$user = $webfiles[0];
 		$passwordHash = crypt($password,$user->getPasswordSalt());
 		
-		//echo $passwordHash . "<br />";
-		//echo $user->getPasswordHash();
-		
-		
 		if ( $passwordHash == $user->getPasswordHash() ) {
 			
 			$this->setValue('current_user', $username);
 			$this->setValue('current_password_hash',$passwordHash);
-			$this->setValue('current_user_object',$referenceObject->marshall());
+			$this->setValue('current_user_object',$userSearchTemplate->marshall());
 			
 			$this->sessionInitializer->initializeByUserObject($user);
 			
