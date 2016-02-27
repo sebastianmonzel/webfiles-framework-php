@@ -26,12 +26,12 @@ class MBootstrap {
 		$this->isAuthentificationEnabled = false;
 	}
 	
-	public function handleSiteRequest($siteTitle, MFile $siteTemplateFile) {
+	public function handleSiteRequest($siteTitle, MFile $siteTemplateFile, MUser $user = null) {
 		
 		try {
 			
 			if ( $this->isAuthentificationEnabled ) {
-				$this->checkForAuthorization();
+				$this->checkForAuthorization($user);
 			}
 			
 			MSite::getInstance()->setTitle($siteTitle);
@@ -101,23 +101,27 @@ class MBootstrap {
 		
 	}
 	
-	private function checkForAuthorization() {
+	private function checkForAuthorization(MUser $user) {
+		
+		if ( !isset($user) ) {
+			throw new MNotEnoughRightsException("user is not set.");
+		}
+		
+		
 		if ( ! MSession::getInstance()->isValid() ) {
 			
 			if ( isset($_POST['name']) ) {
 				
-				$servant = new MUser();
-				$servant->presetDefaultForTemplate();
-				$servant->setUsername($_POST['name']);
-					
-				if ( ! MSession::getInstance()->login($servant, $_POST['name'], $_POST['password']) ) {
-					throw new MNotEnoughRightsException("error");
+				$user->presetDefaultForTemplate();
+				$user->setUsername($_POST['name']);
+				
+				if ( ! MSession::getInstance()->login($user, $_POST['name'], $_POST['password']) ) {
+					throw new MNotEnoughRightsException("login not successful.");
 				}
 					
 			} else {
 				throw new MNotEnoughRightsException("error");
 			}
-		
 		}
 	}
 	
