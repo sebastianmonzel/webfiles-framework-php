@@ -26,7 +26,7 @@ class MBootstrap {
 		$this->isAuthentificationEnabled = false;
 	}
 	
-	public function handleSiteRequest($siteTitle,$siteTemplateFile) {
+	public function handleSiteRequest($siteTitle, MFile $siteTemplateFile) {
 		
 		try {
 			
@@ -39,8 +39,6 @@ class MBootstrap {
 			
 			//-- set main site template
 			$siteTemplate = new MTemplate();
-			
-			//$siteTemplateFile = new MFile("./custom/template/main.tpl");
 			$siteTemplate->setContentByFile($siteTemplateFile);
 			MSite::getInstance()->setTemplate($siteTemplate);
 			
@@ -93,9 +91,14 @@ class MBootstrap {
 		}
 	}
 	
-	public function enableAuthentification(MTemplate $loginTemplate) {
+	public function enableAuthentification(MFile $loginTemplateFile) {
+
 		$this->isAuthentificationEnabled = true;
+		
+		$loginTemplate = new MTemplate();
+		$loginTemplate->setContentByFile($loginTemplateFile);
 		$this->loginTemplate = $loginTemplate;
+		
 	}
 	
 	private function checkForAuthorization() {
