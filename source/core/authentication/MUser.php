@@ -19,8 +19,8 @@ class MUser extends MWebfile {
 	
 	public static $m__sClassName = __CLASS__;
 	
-	public function __construct($name) {
-		$this->name = $name;
+	public function __construct($name = null) {
+		$this->m_sUsername = $name;
 	}
 	
 	public function getUsername() {
