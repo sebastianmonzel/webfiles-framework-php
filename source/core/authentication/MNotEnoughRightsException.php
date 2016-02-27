@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\authentication;
 
+
 /**
  * description
  *
@@ -9,7 +10,7 @@ namespace simpleserv\webfilesframework\core\authentication;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MNotEnoughRightsException extends Exception {
+class MNotEnoughRightsException extends \Exception {
     
 	
     public function __construct($code = 0) {
