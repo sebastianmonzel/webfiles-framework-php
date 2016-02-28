@@ -40,7 +40,7 @@ class MDatabaseDatastoreTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore::
+     * 
      */
     public function testGetByTemplate() {
         
