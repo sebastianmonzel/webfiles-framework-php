@@ -30,6 +30,8 @@ class MBootstrap {
 		
 		try {
 			
+			MSession::getInstance()->init();
+			
 			if ( $this->isAuthentificationEnabled ) {
 				$this->checkForAuthorization($user);
 			}
