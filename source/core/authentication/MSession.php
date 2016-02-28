@@ -5,7 +5,11 @@ namespace simpleserv\webfilesframework\core\authentication;
 use simpleserv\webfilesframework\MSite;
 
 /**
- * description
+ * Values are managed locally and saved with store() to $_SESSION context and
+ * restored with restore().<br />
+ * <br />
+ * Session coupling is made to ip. In case of changing the ip, the session will be
+ * destroyed.
  *
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
@@ -47,7 +51,7 @@ class MSession {
 			$this->regenerateFormHash(false);
 		} else {
 			//SESSION PROBABLY HIJACKED - GENERATE NEW HASHES AND SESSION ID / DELETE SESSION FILE
-			session_regenerate_id(true);
+			session_destroy();
 			$this->regenerateFormHash(true);
 		}
 		$this->makeSystemCoupling();
