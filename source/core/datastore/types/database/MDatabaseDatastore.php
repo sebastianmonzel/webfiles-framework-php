@@ -54,14 +54,22 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
     private function createTable(MWebfile $webfile, $dropTableIfExists = true) {
     	
-    	$sAttributeArray = $webfile->getAttributes();
+    	$tableName = $this->getDatabaseTableName($webfile);
     	
+    	// CREATE METADATA
+    	if ( ! $this->metadataExist($tableName) ) {
+    		$this->addMetadata($webfile::$m__sClassName, '1', $tableName);
+    	}
+    	
+    	$attributeArray = $webfile->getAttributes();
+    	
+    	// CREATE DATABASETABLE
     	$table = new MDatabaseTable(
     						$this->databaseConnection ,
-    						$this->getDatabaseTableName($webfile));
+    						$tableName);
     	$table->setIdentifier("id", 10);
     	
-    	foreach ( $sAttributeArray as $oAttribute ) {
+    	foreach ( $attributeArray as $oAttribute ) {
     		
     		$sAttributeName = $oAttribute->getName();
     		
@@ -97,12 +105,13 @@ class MDatabaseDatastore extends MAbstractDatastore
     	}
     	$table->create();
     	
+    	
     }
     
     private function webfileExists(MWebfile $webfile) {
     	
     	if ( ! tableExists($webfile) ) {
-    		$this->createTable($webfile);
+    		$this->createTable($webfile, false);
     		return false;
     	}
     	
@@ -180,7 +189,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
 	public function storeWebfile(MWebfile $webfile) {
 		if ( ! $this->tableExistsByWebfile($webfile) ) {
-			$this->createTable($webfile);
+			$this->createTable($webfile, false);
 		}
 		if ( ! $this->webfileExists($webfile) ) {
 			return $this->store($webfile);
@@ -425,141 +434,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 		    	}
 	    	}
     	} else {
-    		$this->createTable($webfile);
+    		$this->createTable($webfile, false);
     	}
-    		
     	
     	return $webfileArray;
     	
     }
     
-    /**
-     * Fetches all representatives of persistent objects of this type matching the given condition
-     * @param $condition condition to fetch objects
-     * @return all representatives of persisted objects matching the given condition
-     */
-    /*public function getByCondition($condition = "") {
-    	
-    	$tableNames = $this->getAllTableNames();
-    	
-    	// TODO replace name with name derived from table name
-        $sAttributeArray = MBlogEntry::getAttributes();
-        
-    	$sSqlSelectFields = "";
-    	$sSqlJoins = "";
-    	
-    	$bIsFirst = 1;
-    	foreach ( $tableNames as $tableName ) {
-    		$className = $this->resolveClassNameFromTableName($tableName);
-    		
-	    	foreach ( $sAttributeArray as $oAttribute ) {
-	    		$sAttributeName = $oAttribute->getName();
-	    		if ( ! $bIsFirst && (MWebfile::isSimpleDatatype($sAttributeName) || MWebfile::isObject($sAttributeName) )  ) {
-		    			$sSqlSelectFields .= ",";
-		    	}
-	    		if (MWebfile::isSimpleDatatype($sAttributeName)) {
-	    			
-	    			//is attribute of this item
-	    			//select fields from table of this item
-	    			
-	    			$sSqlSelectFields .= $this->getDatabaseTableName(new $className()) . 
-	    						"."  . 
-	    						MWebfile::getSimplifiedAttributeName($sAttributeName) . 
-	    						" " . 
-	    						$this->getDatabaseTableName(new $className()) . 
-	    						"_" . 
-	    						MWebfile::getSimplifiedAttributeName($sAttributeName);
-	    		} else if (MWebfile::isObject($sAttributeName)) {
-	    			//is subitem
-	    			eval("\$oDatabaseItemName = static::\$s__oAggregation[\$sAttributeName];");
-	    			
-	    			$oDatabaseItem = new $oDatabaseItemName();
-	    			
-	    			$oJoinTableName = self::getDatabaseTableName($oDatabaseItemName);
-	    			eval("\$oJoinAttributeArray = " . $oDatabaseItemName . "::getAttributes();");
-					
-	    			//select fields from table of subitem
-	    			$bSubIsFirst = 1;
-	    			foreach ( $oJoinAttributeArray as $oJoinAttribute ) {
-	    				$sJoinAttributeName = $oJoinAttribute->getName();
-	    				
-	    				if (MWebfile::isObject($sJoinAttributeName) || self::isSimpleDatatype($sJoinAttributeName) ) {
-		    				if (!$bSubIsFirst) {    					
-		    							$sSqlSelectFields .= ",";
-		    				}
-	    					if (MWebfile::isObject($sJoinAttributeName))
-	    						$sSqlSelectFields .= $oJoinTableName . "." . MWebfile::getSimplifiedAttributeName($sJoinAttributeName) . "id " . $oJoinTableName . "_" . self::getDatabaseFieldName($sJoinAttributeName) . "id  ";
-	    					else if (MWebfile::isSimpleDatatype($sJoinAttributeName))
-	    						$sSqlSelectFields .= $oJoinTableName . "." . MWebfile::getSimplifiedAttributeName($sJoinAttributeName) . " " . $oJoinTableName . "_" . self::getDatabaseFieldName($sJoinAttributeName) . "  ";
-		    				if ($bSubIsFirst) {
-				    			$bSubIsFirst = 0;
-				    		}
-	    				}
-			    		
-	    			}
-	    			//create joins to table of subitem
-	    			$sSqlJoins .= " LEFT JOIN " . $oJoinTableName . " ON " . $this->getDatabaseTableName() . "." . $oJoinTableName . "id" . " = " . $oJoinTableName . ".id ";
-	    			
-	    		}
-	    		if ($bIsFirst && (MWebfile::isSimpleDatatype($sAttributeName) || self::isObject($sAttributeName) )) {
-	    			$bIsFirst = 0;
-	    		}
-	    	}
-    	}
-    	
-    	$sSqlQuery = "SELECT " . $sSqlSelectFields . " FROM " . $this->getDatabaseTableName(new MBlogEntry()) . $sSqlJoins;
-
-    	if ( $condition != "" ) {
-    		$sSqlQuery .= " WHERE " . $condition;
-    	}
-    	
-    	//array for saving result
-    	$webfileArray = array();
-    	
-    	$oDatabaseResultSet = $this->databaseConnection->query($sSqlQuery);
-		
-    	$this->databaseConnection->printError();
-    	    	
-    	if ($oDatabaseResultSet != false) {
-    		if ($oDatabaseResultSet->num_rows > 0) {
-			    while ( $oDatabaseResultRow = $oDatabaseResultSet->fetch_object() )
-		    	{
-		    		//var_export($oDatabaseResultRow);
-		    		
-		    		//TODO replace with classname derived by tablename
-		    		$webfile = new $className();
-		    		foreach ($sAttributeArray as $oAttribute) {
-		    			
-		    			$oAttribute->setAccessible(true);
-		    			
-		    			$sAttributeName = $oAttribute->getName();
-		    			if (MWebfile::isSimpleDatatype($sAttributeName)) {
-			    			$sDatabaseFieldName = $this->getDatabaseTableName(new $className()) . "_" . MWebfile::getSimplifiedAttributeName($sAttributeName);
-		    				$oAttribute->setValue($webfile,$oDatabaseResultRow->$sDatabaseFieldName);
-		    			} else if (MWebfile::isObject($sAttributeName)) {
-		    				eval("\$sClassName = static::\$s__oAggregation[\$sAttributeName];");
-		    				eval("\$oSubAttributeArray = $sClassName::getAttributes(1);");
-		    				foreach($oSubAttributeArray as $oSubAttribute)
-		    				{
-		    					$oSubAttributeName = $oSubAttribute->getName();
-		    					if ( MWebfile::isSimpleDatatype($oSubAttributeName) ) {
-		    						
-			    					$sDatabaseFieldName = $this->getDatabaseTableName(new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
-		    						$webfile->$sAttributeName->$oSubAttributeName = $oDatabaseResultRow->$sDatabaseFieldName;
-		    					}
-		    				}
-		    			}
-		    		}
-		    		array_push($webfileArray,$webfile); 
-		    	}
-	    	} else {
-	    		return false;
-	    	}
-    	}else {
-    		return false;
-    	}
-    	return $webfileArray;
-    }*/
     
 	/**
 	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
@@ -663,6 +544,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function metadataExist($tablename) {
     	if ( ! $this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata") ) {
     		$this->createMetadataTable();
+    		return false;
     	}
     	$oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'" );
     	if ($oDatabaseResultSet->num_rows > 0) {
