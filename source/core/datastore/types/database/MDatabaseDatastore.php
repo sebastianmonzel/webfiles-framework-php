@@ -79,9 +79,9 @@ class MDatabaseDatastore extends MAbstractDatastore
     			$prefix = substr($sAttributeName, 2,1);
     			if ( $prefix == "s" ) {
     				$table->addColumn(
-    							MWebfile::getSimplifiedAttributeName($sAttributeName), 
-    							MIDbDatatypes::varchar(),
-    							50);
+    						MWebfile::getSimplifiedAttributeName($sAttributeName), 
+    						MIDbDatatypes::varchar(),
+    						50);
     			} else if ( $prefix == "l" ) {
     				$table->addColumn(
     							MWebfile::getSimplifiedAttributeName($sAttributeName), 
@@ -89,14 +89,19 @@ class MDatabaseDatastore extends MAbstractDatastore
     							2000);
     			} else if ( $prefix == "i" ) {
     				$table->addColumn(
-    							MWebfile::getSimplifiedAttributeName($sAttributeName), 
-    							MIDbDatatypes::int(),
-    							20);
+    						MWebfile::getSimplifiedAttributeName($sAttributeName), 
+    						MIDbDatatypes::int(),
+    						24);
+    			} else if ( $prefix == "d" ) { //date
+    				$table->addColumn(
+    						MWebfile::getSimplifiedAttributeName($sAttributeName),
+    						MIDbDatatypes::varchar(),
+    						20);
     			} else if ( $prefix == "t" ) {
     				$table->addColumn(
-    							MWebfile::getSimplifiedAttributeName($sAttributeName), 
-    							MIDbDatatypes::varchar(),
-    							50);
+    						MWebfile::getSimplifiedAttributeName($sAttributeName), 
+    						MIDbDatatypes::varchar(),
+    						50);
     			}
     		}
     	}
