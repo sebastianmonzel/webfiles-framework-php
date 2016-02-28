@@ -25,15 +25,15 @@ class MDatastoreFactoryTest extends PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
-    {
+    protected function tearDown() {
     }
 
     /**
      * @covers simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore
      */
-    public function testCreateDatastore()
-    {
-        echo "bla";
+    public function testCreateDatastore() {
+        
+    	
+    	echo "bla";
     }
 }
