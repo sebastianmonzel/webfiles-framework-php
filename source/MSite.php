@@ -96,7 +96,7 @@ class MSite {
 	
 	/**
 	 * 
-	 * @return MAbstractDatastore
+	 * @return simpleserv\webfilesframework\core\datastore\MAbstractDatastore
 	 */
 	public function getDefaultDatastore() {
 		if ( $this->defaultDatastore == null ) {

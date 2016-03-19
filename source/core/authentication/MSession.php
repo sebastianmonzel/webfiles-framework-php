@@ -3,6 +3,7 @@
 namespace simpleserv\webfilesframework\core\authentication;
 
 use simpleserv\webfilesframework\MSite;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * Values are managed locally and saved with store() to $_SESSION context and
@@ -47,11 +48,11 @@ class MSession {
 		
 		$this->restore();
 		
-		if ( $this->checkActualSystemIsValidWithCoupling() ) {
+		if ( $this->checkActualSystemIsValidWithCoupling() || true ) {
 			$this->regenerateFormHash(false);
 		} else {
 			//SESSION PROBABLY HIJACKED - GENERATE NEW HASHES AND SESSION ID / DELETE SESSION FILE
-			session_destroy();
+			MSession::getInstance()->destroy();
 			$this->regenerateFormHash(true);
 		}
 		$this->makeSystemCoupling();
@@ -86,16 +87,18 @@ class MSession {
 		
 		
 		$user = $webfiles[0];
+		var_export($user);
 		$passwordHash = crypt($password,$user->getPasswordSalt());
 		
 		if ( $passwordHash == $user->getPasswordHash() ) {
 			
 			$this->setValue('current_user', $username);
 			$this->setValue('current_password_hash',$passwordHash);
-			$this->setValue('current_user_object',$userSearchTemplate->marshall());
+			$this->setValue('current_user_object',$user->marshall());
 			
 			$this->sessionInitializer->initializeByUserObject($user);
 			
+		echo "test";
 			return true;
 		}
 		return false;
@@ -122,7 +125,9 @@ class MSession {
 	}
 	
 	private function checkActualSystemIsValidWithCoupling() {
-		return ($this->getValue("_ident_ip") == getenv("REMOTE_ADDR"));
+		
+		$isValid = ($this->getValue("_ident_ip") == getenv("REMOTE_ADDR"));
+		return $isValid;
 	}
 	
 	/**
@@ -153,6 +158,8 @@ class MSession {
 	public function store() {
 		$this->setValue('formHash', $this->formHash);
 		$this->setValue('lastFormHashTime', $this->lastFormHashTime);
+		
+		
 	}
 	
 	public function restore() {
@@ -165,6 +172,10 @@ class MSession {
 		
 		if ( $this->hasValue('current_user') ) {
 			$this->username = $this->getValue('current_user');
+		}
+		
+		if ( $this->hasValue('current_password_hash') ) {
+			$this->passwordHash = $this->getValue('current_password_hash');
 		}
 		
 		if ( $this->hasValue('current_password_hash') ) {

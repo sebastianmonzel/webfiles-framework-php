@@ -181,11 +181,16 @@ class MTimestampHelper {
 	public static function getTimestampFromDojoFromatedDate($dojoDate) {
 		$dojoDate = explode("-", $dojoDate);
 		
-		$day = intval($dojoDate[2]);
-		$month = intval($dojoDate[1]);
-		$year = intval($dojoDate[0]);
+		if ( count($dojoDate) == 3 ) {
+			$day = intval($dojoDate[2]);
+			$month = intval($dojoDate[1]);
+			$year = intval($dojoDate[0]);
+			
+			$timestamp = mktime ( '0' , '0' , '0' , $month , $day , $year);
+		} else {
+			$timestamp = mktime ( '0' , '0' , '0' , '0', '0', '0');
+		}
 		
-		$timestamp = mktime ( '0' , '0' , '0' , $month , $day , $year);
 		
 		return $timestamp;
 	}

@@ -10,6 +10,9 @@ use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
 use simpleserv\webfilesframework\core\datasystem\database\MIDbDatatypes;
 use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
 use simpleserv\webfilesframework\core\datastore\functions\filter\MSubstringFiltering;
+use simpleserv\webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
+use simpleserv\webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
+use simpleserv\webfilesframework\core\time\MTimespan;
 
 /**
  * Class to connect to a datastore based on a database.
@@ -97,6 +100,11 @@ class MDatabaseDatastore extends MAbstractDatastore
     						MWebfile::getSimplifiedAttributeName($sAttributeName),
     						MIDbDatatypes::varchar(),
     						20);
+    			} else if ( $prefix == "w" ) { //weekday
+    				$table->addColumn(
+    						MWebfile::getSimplifiedAttributeName($sAttributeName),
+    						MIDbDatatypes::varchar(),
+    						1);
     			} else if ( $prefix == "t" ) {
     				$table->addColumn(
     						MWebfile::getSimplifiedAttributeName($sAttributeName), 
@@ -115,7 +123,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     
     private function webfileExists(MWebfile $webfile) {
     	
-    	if ( ! tableExists($webfile) ) {
+    	if ( ! $this->tableExistsByWebfile($webfile) ) {
     		$this->createTable($webfile, false);
     		return false;
     	}
@@ -257,6 +265,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
         
         $query = "INSERT INTO ". $tablename . " ( " . $sSqlFieldSetting . " ) VALUES ( " . $sSqlValueSetting . " )";
+		echo $query;
         $this->databaseConnection->query($query);
         
         return $this->databaseConnection->getInsertId();
@@ -409,7 +418,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	    		if ($oDatabaseResultSet->num_rows > 0) {
 				    while ( $databaseResultObject = $oDatabaseResultSet->fetch_object() ) {
 			    		
-			    		$className = $this->resolveClassNameFromTableName($tableName);
+			    		$className = $webfile::$m__sClassName;
 			    		
 			    		$webfile = new $className();
 			    		foreach ($attributes as $oAttribute) {
@@ -490,13 +499,18 @@ class MDatabaseDatastore extends MAbstractDatastore
     		$name  = $attribute->getName();
     		$value = $attribute->getValue($webfile);
     	
-    		if ( $value != "?" ) {
+    		if ( $value != "?" && !( $value instanceof MAscendingSorting ) 
+    					&& !( $value instanceof MDescendingSorting ) ) {
     			if ( ! $first ) {
     				$condition .= " AND ";
     			}
-    			 
-    			if ( ! is_array($value) ) {
+    			
+    			if ( $value instanceof MTimespan ) {
+    				$condition .= MWebfile::getSimplifiedAttributeName($name) . " BETWEEN '" . $value->getStart() . "' AND '" . $value->getEnd() . "'";
+    			} else if ( ! is_array($value) ) {
+	    			
     				$condition .= MWebfile::getSimplifiedAttributeName($name) . " = '" . $value . "'";
+    				
     			} else {
     	
     				$condition .= MWebfile::getSimplifiedAttributeName($name) . " IN (";
