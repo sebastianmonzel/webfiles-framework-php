@@ -18,7 +18,7 @@ before_script:
 script:
 - phpunit --coverage-text tests --coverage-clover build/logs/clover.xml
 after_script:
-  - ./vendor/bin/test-reporter
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then php vendor/bin/test-reporter --coverage-report=tests/_output/coverage.xml; fi;"
 after_success:
 - if  [ $TRAVIS_PHP_VERSION = '5.6' ] && [ $TRAVIS_BRANCH = 'master' ] && [ $TRAVIS_PULL_REQUEST
   = 'false' ]; then sh generate-api.sh; fi
