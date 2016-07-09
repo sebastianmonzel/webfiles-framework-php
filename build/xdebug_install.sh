@@ -9,7 +9,7 @@ tar zxvf xdebug -C xdebug-extension --strip-components=1
 
 ## Git master
 #git clone https://github.com/xdebug/xdebug.git xdebug-extension
-cd xdebug-2.4.0
+cd xdebug-extension
 
 phpize
 ./configure
