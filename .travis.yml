@@ -13,7 +13,7 @@ addons:
 -  - "$HOME/vendor"
 
 before_script:
-- sh -c "if [ '$TRAVIS_PHP_VERSION' = '7.0' ] && [ '$DB' = 'mysql' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi"
+- sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}/../core/apps/$APP_NAME; fi"
 
 # composer
 - composer self-update
