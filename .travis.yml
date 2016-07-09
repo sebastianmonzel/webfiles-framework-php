@@ -7,9 +7,7 @@ php:
 addons:
     code_climate:
         repo_token: 52756e59d36af6555a6aa32a7503258c0932bcfbdec8fe31f8a902f74811ef19
-cache:
-  directories:
-  - "$HOME/vendor"
+
 before_script:
 - composer self-update
 - composer install --dev --prefer-source --no-interaction
