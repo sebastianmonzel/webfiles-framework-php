@@ -29,7 +29,7 @@ class MQrCodeImage
     public function getImageResource()
     {
 
-        Header("Content-type: image/png");
+        header("Content-type: image/png");
 
         $url = 'https://chart.googleapis.com/chart?chid=' . time();
         $data = array(

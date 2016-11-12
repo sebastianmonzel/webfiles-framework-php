@@ -20,7 +20,6 @@ class MRemoteDatastore extends MAbstractDatastore
 {
 
     private $m_sWebfilesUrl;
-    private $datastoreId;
 
     public static $m__sClassName = __CLASS__;
 
@@ -78,4 +77,16 @@ class MRemoteDatastore extends MAbstractDatastore
         return $this->getWebfilesAsStream($data)->getWebfiles();
     }
 
+    /**
+     * Returns the next webfile for the given timestamp
+     * @param int $time timestamp in unix-format.
+     * @return MWebfile webfile according to the given input.
+     * old: getNextWebfileForTime - new getNextWebfileForTimestamp
+     * DONE
+     */
+    public function getNextWebfileForTimestamp($time)
+    {
+        // TODO: Implement getNextWebfileForTimestamp() method.
+        return null;
+    }
 }

@@ -27,8 +27,6 @@ class MSession
     private $formHash;
     private $lastFormHashTime = 0;
 
-    private $lastActionTime = 0;
-
     private $sessionInitializer;
 
     /**

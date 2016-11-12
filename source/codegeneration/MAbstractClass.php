@@ -25,7 +25,7 @@ abstract class MAbstractClass extends MAbstractCodeItem
      *
      * Enter description here ...
      */
-    public function __construct($className, $isAbstract, $visibility = "public")
+    public function __construct($className, $isAbstract = false, $visibility = "public")
     {
 
         $this->className = $className;

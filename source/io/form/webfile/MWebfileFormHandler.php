@@ -1,6 +1,7 @@
 <?php
 
 namespace simpleserv\webfilesframework\core\io\form\webfile;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * Handles requests which are submitted through a form generated
@@ -39,9 +40,11 @@ class MWebfileFormHandler
 
         $classnameWithoutPackagePath = substr($this->requestArray['classname'], $lastPositionOfPoint);
 
+        /** @var MWebfile $item */
         $item = new $classnameWithoutPackagePath;
         $attributes = $item->getAttributes();
 
+        /** @var \ReflectionProperty $attribute */
         foreach ($attributes as $attribute) {
             $attributeName = $attribute->getName();
             if (isset($this->requestArray[$attributeName])) {

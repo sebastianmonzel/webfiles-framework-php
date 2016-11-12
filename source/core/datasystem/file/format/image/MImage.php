@@ -49,8 +49,8 @@ class MImage extends MFile
                 }
             }
 
-            $this->m_oFontHeight = ImageFontHeight(3);
-            $this->m_oFontWidth = ImageFontWidth(3);
+            $this->m_oFontHeight = imagefontheight(3);
+            $this->m_oFontWidth = imagefontwidth(3);
         }
     }
 
@@ -62,8 +62,14 @@ class MImage extends MFile
     public static function isGdInstalled()
     {
         if (function_exists("gd_info")) {
-            // libary GD is installed
             return true;
+        }
+        return false;
+    }
+
+    public static function isGd2Installed()
+    {
+        if (function_exists("gd_info")) {
             $info = gd_info();
             if (substr_count($info["GD Version"], "2")) {
                 // version 2.x of libary GD is installed
@@ -88,7 +94,7 @@ class MImage extends MFile
      */
     public function writeTextLine($p_sFont, $p_sFontSize, $p_sText, $p_iY = 282, $p_iX = 210)
     {
-        $red = ImageColorAllocate($this->m_oImage, 197, 14, 30);
+        $red = imagecolorallocate($this->m_oImage, 197, 14, 30);
         imagettftext($this->m_oImage, $p_sFontSize, 0, $p_iX, $p_iY, $red, $p_sFont, utf8_decode($p_sText));
     }
 
@@ -108,10 +114,10 @@ class MImage extends MFile
     {
 
         if ($this->m_sType == "jpg") {
-            Header("Content-Type: image/jpeg");
+            header("Content-Type: image/jpeg");
             imagejpeg($this->m_oImage);
         } else if ($this->m_sType == "png") {
-            Header("Content-Type: image/png");
+            header("Content-Type: image/png");
             imagepng($this->m_oImage);
         }
 
@@ -125,10 +131,10 @@ class MImage extends MFile
     {
 
         if ($this->m_sType == "jpg") {
-            Header("Content-Type: image/jpeg");
+            header("Content-Type: image/jpeg");
             imagejpeg($this->m_oImage, $this->getPath());
         } else if ($this->m_sType == "png") {
-            Header("Content-Type: image/png");
+            header("Content-Type: image/png");
             imagepng($this->m_oImage, $this->getPath());
         }
 
@@ -285,19 +291,6 @@ class MImage extends MFile
     public function detroy()
     {
         imagedestroy($this->m_oImage);
-    }
-
-    public function fontSizeCheck($size)
-    {
-        imagettftext(
-            $this->m_oImage,
-            40,
-            0,
-            282,
-            210,
-            $black,
-            $p_sFont,
-            ".............................................................................................................................");
     }
 
     /**

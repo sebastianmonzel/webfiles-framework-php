@@ -18,6 +18,7 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
 abstract class MAbstractCachableDatastore extends MAbstractDatastore
 {
 
+    /** @var MAbstractDatastore $cachingDatastore **/
     protected $cachingDatastore;
 
     /**
