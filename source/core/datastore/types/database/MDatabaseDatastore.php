@@ -154,19 +154,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     private function tableExistsByTablename($tableName)
     {
-
-        $query = $this->databaseConnection->query("SHOW TABLES FROM `" . $this->databaseConnection->getDatabase() . "`");
-
-        while ($oDatabaseResultRow = $query->fetch_object()) {
-
-            $tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabase();
-
-            if ($oDatabaseResultRow->$tablesInVariableName == $tableName) {
-                return true;
-            }
-
-        }
-        return false;
+        $allTableNames = $this->getAllTableNames();
+        return in_array($tableName,$allTableNames);
     }
 
     /**
@@ -182,9 +171,15 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         if ($query->num_rows > 0) {
             while ($oDatabaseResultRow = $query->fetch_object()) {
-
+                $tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabase();
                 // add only tables with the current connection prefix
-                if (substr($oDatabaseResultRow->Tables_in_webfiles, 0, strlen($this->databaseConnection->getTablePrefix())) == $this->databaseConnection->getTablePrefix()) {
+                if (
+                    substr(
+                        $oDatabaseResultRow->$tablesInVariableName,
+                        0,
+                        strlen($this->databaseConnection->getTablePrefix()))
+                    == $this->databaseConnection->getTablePrefix()) {
+
                     array_push($tableNames, $oDatabaseResultRow->Tables_in_webfiles);
                 }
 
@@ -374,7 +369,10 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     public function resolveClassNameFromTableName($tableName)
     {
-        $metadata = $this->getMetadataForTablename($tableName);
+        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+            $this->createMetadataTable();
+        }
+        $metadata = $this->resolveMetadataForTablename($tableName);
         return $metadata->classname;
     }
 
@@ -486,7 +484,6 @@ class MDatabaseDatastore extends MAbstractDatastore
     public function deleteByTemplate(MWebfile $webfile)
     {
 
-
         if ($this->tableExistsByWebfile($webfile)) {
 
             // determine table with webfile type
@@ -548,7 +545,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                             $condition .= " , ";
                         }
                         $condition .= '\'' . $innerValue . '\'';
-                        $innerValue = false;
+                        $firstInnerValue = false;
                     }
                     $condition .= ')';
                 }
@@ -611,7 +608,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         $this->databaseConnection->query("INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');");
     }
 
-    private function getMetadataForTablename($tablename)
+    private function resolveMetadataForTablename($tablename)
     {
 
         if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
@@ -623,17 +620,6 @@ class MDatabaseDatastore extends MAbstractDatastore
             $result = $oDatabaseResultSet->fetch_object();
         }
         return $result;
-    }
-
-    private function getClassnameForTablename($tablename)
-    {
-
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
-            $this->createMetadataTable();
-        }
-
-        $metadata = $this->getMetadataForTablename($tablename);
-        return $metadata->classname;
     }
 
 }

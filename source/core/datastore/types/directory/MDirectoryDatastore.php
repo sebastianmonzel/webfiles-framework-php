@@ -149,7 +149,6 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
      */
     public function getByTemplate(MWebfile $template)
     {
-        $webfiles = array();
         if ($this->isDatastoreCached()) {
 
             if (!$this->isCacheActual()) {

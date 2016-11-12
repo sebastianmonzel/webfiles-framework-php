@@ -29,6 +29,15 @@ class MMail extends MWebfile
     private $m_bIsSeen;
     private $m_bIsDraft;
 
+    public function __construct()
+    {
+
+    }
+
+    public static function isMailAddressValid($p_sEmail)
+    {
+        return (eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $p_sEmail));
+    }
 
     public function getTime()
     {
@@ -38,11 +47,6 @@ class MMail extends MWebfile
     public function getGeograficPosition()
     {
         return NULL;
-    }
-
-    public function __construct()
-    {
-
     }
 
     public function getFrom()
@@ -95,19 +99,77 @@ class MMail extends MWebfile
         $this->m_lMessage = $message;
     }
 
+    /**
+     * @return bool
+     */
+    public function isAnswered()
+    {
+        return $this->m_bIsAnswered;
+    }
+
+    /**
+     * @param bool $answered
+     */
+    public function setAnswered($answered)
+    {
+        $this->m_bIsAnswered = $answered;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDeleted()
+    {
+        return $this->m_bIsDeleted;
+    }
+
+    /**
+     * @param bool $deleted
+     */
+    public function setDeleted($deleted)
+    {
+        $this->m_bIsDeleted = $deleted;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isSeen()
+    {
+        return $this->m_bIsSeen;
+    }
+
+    /**
+     * @param mixed $seen
+     */
+    public function setSeen($seen)
+    {
+        $this->m_bIsSeen = $seen;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDraft()
+    {
+        return $this->m_bIsDraft;
+    }
+
+    /**
+     * @param bool $draft
+     */
+    public function setDraft($draft)
+    {
+        $this->m_bIsDraft = $draft;
+    }
+
+
+    /**
+     * @return string
+     */
     public function __toString()
     {
         return $this->getDate() . "<br /><b>" . $this->m_sFrom . "</b><br />" . $this->m_sSubject . "<br /><br />
 				<div style=\"text-align:left; width:500px;margin-left: auto ;margin-right: auto ;\">" . $this->getMessage() . "</div>";
     }
-
-    public static function validateAdress($p_sEmail)
-    {
-        if (eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $p_sEmail)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }

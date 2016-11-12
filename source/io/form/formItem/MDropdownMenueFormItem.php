@@ -99,7 +99,7 @@ class MDropdownMenueFormItem extends MAbstractFormItem
 	                         ], function(Memory, xhr, dom, domConst, JSON){
 							      	    
 	     	    xhr("index.php?site=makeAjaxRequest&searchstring=" + encodeURIComponent(dijit.byId("' . $this->name . '").get(\'displayedValue\')), {
-	     	    	preventCache: "true",
+	     	    	preventCache: "true"
 	     	    }).then(function(data){
 	     	    	var datastore = new Memory(JSON.parse(data));
 	     	    	dijit.byId("' . $this->name . '").set("store",datastore);

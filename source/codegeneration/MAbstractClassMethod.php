@@ -9,7 +9,7 @@ namespace simpleserv\webfilesframework\core\codegeneration;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MAbstractClassMethod extends MAbstractCodeItem
+abstract class MAbstractClassMethod extends MAbstractCodeItem
 {
 
     protected $visibility = "public";

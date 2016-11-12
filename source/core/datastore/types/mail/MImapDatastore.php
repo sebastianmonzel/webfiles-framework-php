@@ -4,8 +4,6 @@ namespace simpleserv\webfilesframework\core\datastore\types\mail;
 
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\core\datastore\types\mail\MMail;
-use simpleserv\webfilesframework\core\datastore\types\mail\MMailAccount;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
@@ -23,6 +21,7 @@ class MImapDatastore extends MAbstractDatastore
     implements MISingleDatastore
 {
 
+    /**@var MMailAccount **/
     private $m_oMailAccount;
 
     private $connection;
@@ -32,8 +31,8 @@ class MImapDatastore extends MAbstractDatastore
 
     public function __construct(MMailAccount $mailAccount = null)
     {
-
         if ($mailAccount != null) {
+            $m_oMailAccount = $mailAccount;
             $this->connection = $this->imap_login(
                 $mailAccount->getHost(),
                 $mailAccount->getPort(),
@@ -299,7 +298,7 @@ class MImapDatastore extends MAbstractDatastore
      * @param unknown $message_number
      * @param unknown $part
      * @param unknown $prefix
-     * @return multitype:boolean string NULL
+     * @return array
      */
     private function mail_decode_part($connection, $message_number, $part, $prefix)
     {
@@ -331,6 +330,16 @@ class MImapDatastore extends MAbstractDatastore
         } elseif ($part->encoding == 4) { // 4 = QUOTED-PRINTABLE
             $attachment['data'] = quoted_printable_decode($attachment['data']);
         }
-        return ($attachment);
+        return $attachment;
     }
+
+    /**
+     * @return MMailAccount
+     */
+    public function getMailAccount()
+    {
+        return $this->m_oMailAccount;
+    }
+
+
 }
