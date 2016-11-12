@@ -54,21 +54,23 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return true;
     }
 
+    /**
+     * @param int $time
+     * @return MWebfile|null
+     */
     public function getNextWebfileForTimestamp($time)
     {
-
         $itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
         $webfiles = $itemGrabber->grabLatestWebfiles(4);
 
         ksort($webfiles);
 
-        foreach ($webfiles as $key => $value) {
-
+        foreach ($webfiles as $key => $webfile) {
             if ($key > $time) {
-                return $value;
+                return $webfile;
             }
         }
-
+        return null;
     }
 
     public function getWebfilesAsStream()
@@ -141,8 +143,13 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $file->exists();
     }
 
+    /**
+     * @param MWebfile $template
+     * @return array
+     */
     public function getByTemplate(MWebfile $template)
     {
+        $webfiles = array();
         if ($this->isDatastoreCached()) {
 
             if (!$this->isCacheActual()) {
@@ -152,15 +159,15 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         } else {
             $webfiles = $this->getWebfilesAsArray();
             $webfiles = $this->filterWebfilesByTemplate($webfiles, $template);
-            return $webfiles;
         }
+        return $webfiles;
     }
 
     /**
      *
-     * @param unknown $webfiles
+     * @param array $webfiles
      * @param MWebfile $template
-     * @return multitype:unknown
+     * @return array
      */
     private function filterWebfilesByTemplate($webfiles, MWebfile $template)
     {
@@ -184,9 +191,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
                     if ($templateValue != $webfileValue) {
                         $validWebfile = false;
                     }
-
                 }
-
             }
 
             if ($validWebfile) {

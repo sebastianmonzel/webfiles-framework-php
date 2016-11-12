@@ -155,11 +155,7 @@ class MDatabaseConnection extends MItem
     }
 
     /**
-     * returns the password of the database connection
-     *
-     * @access public
-     * @author firstname and lastname of author, <author@example.org>
-     * @return void
+     * @return null|string
      */
     public function getPassword()
     {
@@ -167,9 +163,7 @@ class MDatabaseConnection extends MItem
     }
 
     /**
-     *
-     * @access public
-     * @return void
+     * @return null|string
      */
     public function getDatabase()
     {

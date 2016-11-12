@@ -49,13 +49,10 @@ class MWebfile extends MItem
 
     /**
      * Converts the given xml into a webfile object.
-     *
      * @param string $data xml which represents a webfile.
-     * @return MWebfile converted webfile
      */
     public function unmarshall($data)
     {
-
         $root = simplexml_load_string($data);
 
         if ($root->getName() == "reference") {
@@ -88,18 +85,18 @@ class MWebfile extends MItem
 
     /**
      *
-     * Enter description here ...
-     * @param unknown_type $data
+     * Converts the given xml-String into a webfile object.
+     * @param string $xmlAsString
      */
-    public static function staticUnmarshall($data)
+    public static function staticUnmarshall($xmlAsString)
     {
-        $root = simplexml_load_string($data);
+        $root = simplexml_load_string($xmlAsString);
 
         if ($root->getName() == "reference") {
             $url = $root->url;
-            $data = file_get_contents($url);
+            $xmlAsString = file_get_contents($url);
 
-            $root = simplexml_load_string($data);
+            $root = simplexml_load_string($xmlAsString);
         }
 
         if ($root != null) {
@@ -278,8 +275,9 @@ class MWebfile extends MItem
     }
 
     /**
-     *
-     * Enter description here ...
+     * Transforms the actual webfile into an dataset. A dataset is represented by a key value array.
+     * The key is the attributes name. The value is the attributes value.
+     * @return array
      */
     public function getDataset()
     {
@@ -305,8 +303,8 @@ class MWebfile extends MItem
     /**
      * Returns database field name to a given attribute
      *
-     * @param unknown_type $p_sFieldName
-     * @return unknown
+     * @param string $p_sFieldName
+     * @return string
      */
     public static function getSimplifiedAttributeName($p_sFieldName)
     {

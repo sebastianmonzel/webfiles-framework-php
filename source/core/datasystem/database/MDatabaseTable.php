@@ -33,16 +33,8 @@ class MDatabaseTable
      */
     public function __construct(MDatabaseConnection $databaseConnection, $name)
     {
-
         $this->databaseConnection = $databaseConnection;
         $this->name = $name;
-
-        /*$this->setIdentifier("id", "10");
-        $this->addColumn("title",MIDbDatatypes::varchar(), 250);
-        $this->addColumn("content",MIDbDatatypes::text());
-        $this->addColumn("bla", MIDbDatatypes::int(),30);
-        $this->addColumn("postActionId",MIDbDatatypes::int(), 20);*/
-
     }
 
 
@@ -83,12 +75,11 @@ class MDatabaseTable
 
 
     /**
-     *
-     * Enter description here ...
-     * @param unknown_type $columnName
-     * @param unknown_type $size
+     * Spe
+     * @param string $columnName
+     * @param string $size
      */
-    public function setIdentifier($columnName, $size)
+    public function specifyIdentifier($columnName, $size)
     {
         $this->identifier = $columnName;
         $this->identifierSize = $size;
@@ -97,8 +88,7 @@ class MDatabaseTable
 
 
     /**
-     *
-     * Enter description here ...
+     * Sets the primary key of the table.
      * @param string $columnName
      */
     public function setPrimaryKey($columnName)
@@ -108,8 +98,8 @@ class MDatabaseTable
 
 
     /**
+     * Adds a new column to the actual database representation.
      *
-     * Enter description here ...
      * @param string $name
      * @param string $type
      * @param int $length

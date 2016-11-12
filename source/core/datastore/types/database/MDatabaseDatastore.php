@@ -7,12 +7,12 @@ use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
-use simpleserv\webfilesframework\core\datasystem\database\MIDbDatatypes;
+use simpleserv\webfilesframework\core\datasystem\database\MDatabaseDatatypes;
 use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
 use simpleserv\webfilesframework\core\datastore\functions\filter\MSubstringFiltering;
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
-use simpleserv\webfilesframework\core\time\MTimespan;
+use simpleserv\webfilesframework\core\datatypes\time\MTimespan;
 
 /**
  * Class to connect to a datastore based on a database.
@@ -78,7 +78,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         $table = new MDatabaseTable(
             $this->databaseConnection,
             $tableName);
-        $table->setIdentifier("id", 10);
+        $table->specifyIdentifier("id", 10);
 
         foreach ($attributeArray as $oAttribute) {
 
@@ -92,32 +92,32 @@ class MDatabaseDatastore extends MAbstractDatastore
                 if ($prefix == "s") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MIDbDatatypes::varchar(),
+                        MDatabaseDatatypes::varchar(),
                         50);
                 } else if ($prefix == "l") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MIDbDatatypes::varchar(),
+                        MDatabaseDatatypes::varchar(),
                         2000);
                 } else if ($prefix == "i") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MIDbDatatypes::int(),
+                        MDatabaseDatatypes::int(),
                         24);
                 } else if ($prefix == "d") { //date
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MIDbDatatypes::varchar(),
+                        MDatabaseDatatypes::varchar(),
                         20);
                 } else if ($prefix == "w") { //weekday
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MIDbDatatypes::varchar(),
+                        MDatabaseDatatypes::varchar(),
                         1);
                 } else if ($prefix == "t") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MIDbDatatypes::varchar(),
+                        MDatabaseDatatypes::varchar(),
                         50);
                 }
             }
@@ -568,20 +568,20 @@ class MDatabaseDatastore extends MAbstractDatastore
         $table = new MDatabaseTable(
             $this->databaseConnection,
             $this->databaseConnection->getTablePrefix() . 'metadata');
-        $table->setIdentifier("id", 10);
+        $table->specifyIdentifier("id", 10);
 
 
         $table->addColumn(
             "classname",
-            MIDbDatatypes::varchar(),
+            MDatabaseDatatypes::varchar(),
             250);
         $table->addColumn(
             "version",
-            MIDbDatatypes::int(),
+            MDatabaseDatatypes::int(),
             50);
         $table->addColumn(
             "tablename",
-            MIDbDatatypes::varchar(),
+            MDatabaseDatatypes::varchar(),
             250);
 
         $table->create();

@@ -39,13 +39,4 @@ class  MItem
         return $this->m_iId;
     }
 
-
-    /**
-     * Returns the registry Id of the actual object.
-     * @return registryId of object.
-     *
-     * public function getRegistryId() {
-     * return $this->m_sRegistryId;
-     * } */
-
 }
