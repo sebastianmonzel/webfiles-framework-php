@@ -11,10 +11,13 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MSiteElement extends MWebfile {
-	
-	
-	public function __construct(){}
-	
-	
+class MSiteElement extends MWebfile
+{
+
+
+    public function __construct()
+    {
+    }
+
+
 }

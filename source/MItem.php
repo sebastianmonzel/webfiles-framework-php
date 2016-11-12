@@ -9,13 +9,15 @@ namespace simpleserv\webfilesframework;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class  MItem {
+class  MItem
+{
 
     protected $m_iId = 0;
 
     public static $m__sClassName;
 
-    public function __constructItem() {
+    public function __constructItem()
+    {
 
         //sets the registryId on a uniqueValue.
         //$this->m_sRegistryId = md5(uniqid(rand()));
@@ -23,16 +25,17 @@ class  MItem {
 
         //$this->db = $__class_array['class_db'];
         //$this->right = $__class_array['class_right'];
-        
+
     }
 
-    
 
-    public function setId($itemId) {
-    	$this->m_iId = $itemId;
+    public function setId($itemId)
+    {
+        $this->m_iId = $itemId;
     }
 
-    public function getId() {
+    public function getId()
+    {
         return $this->m_iId;
     }
 
@@ -40,9 +43,9 @@ class  MItem {
     /**
      * Returns the registry Id of the actual object.
      * @return registryId of object.
-    
-    public function getRegistryId() {
-        return $this->m_sRegistryId;
-    } */
+     *
+     * public function getRegistryId() {
+     * return $this->m_sRegistryId;
+     * } */
 
 }

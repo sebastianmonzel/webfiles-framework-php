@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 namespace simpleserv\webfilesframework;
 
@@ -9,35 +9,42 @@ namespace simpleserv\webfilesframework;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MSiteContent extends MSiteElement {
-	
-	public $m_sTitle;
-	public $m_lContent;
+class MSiteContent extends MSiteElement
+{
 
-	public static $m__sClassName = __CLASS__;
+    public $m_sTitle;
+    public $m_lContent;
 
-	public function __construct() {
-		parent::__construct();
-	}
+    public static $m__sClassName = __CLASS__;
 
-	public function getTitle() {
-		return $this->m_sTitle;
-	}
+    public function __construct()
+    {
+        parent::__construct();
+    }
 
-	public function setTitle($p_sTitle) {
-		$this->m_sTitle = $p_sTitle;
-	}
+    public function getTitle()
+    {
+        return $this->m_sTitle;
+    }
 
-	public function getContent() {
-		return $this->m_lContent;
-	}
+    public function setTitle($p_sTitle)
+    {
+        $this->m_sTitle = $p_sTitle;
+    }
 
-	public function setContent($content) {
-		$this->m_lContent = $content;
-	}
+    public function getContent()
+    {
+        return $this->m_lContent;
+    }
 
-	public function addContent($content) {
-		$this->m_lContent .= $content;
-	}	
-	
+    public function setContent($content)
+    {
+        $this->m_lContent = $content;
+    }
+
+    public function addContent($content)
+    {
+        $this->m_lContent .= $content;
+    }
+
 }
