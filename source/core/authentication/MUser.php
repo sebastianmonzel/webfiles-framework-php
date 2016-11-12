@@ -50,7 +50,7 @@ class MUser extends MWebfile
         return $this->m_sPasswordSalt;
     }
 
-    public function setPasswortSalt($passwordSalt)
+    public function setPasswordSalt($passwordSalt)
     {
         $this->m_sPasswordSalt = $passwordSalt;
     }

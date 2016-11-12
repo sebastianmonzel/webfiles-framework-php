@@ -54,6 +54,11 @@ class MImapDatastore extends MAbstractDatastore
         return true;
     }
 
+    /**
+     * According to the given timestamp the next matching webfile will be searched and returned.
+     * @param int $time
+     * @return MWebfile
+     */
     public function getNextWebfileForTimestamp($time)
     {
         $webfiles = $this->getWebfilesAsStream()->getWebfiles();
@@ -65,9 +70,12 @@ class MImapDatastore extends MAbstractDatastore
                 return $value;
             }
         }
-
+        return null;
     }
 
+    /**
+     * @return MWebfileStream
+     */
     public function getWebfilesAsStream()
     {
 

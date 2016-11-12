@@ -83,6 +83,10 @@ class MFile extends MWebfile
         return (file_exists($this->getPath()) || @fopen($path, "r") == true);
     }
 
+    /**
+     * @param string $filePath
+     * @return string
+     */
     public static function extractFileName($filePath)
     {
         if (strrpos($filePath, "/") !== FALSE) {
@@ -90,9 +94,15 @@ class MFile extends MWebfile
             return substr($filePath, strrpos($filePath, "/") + 1);
         } else if (strrpos($filePath, "\\") !== FALSE) {
             return substr($filePath, strrpos($filePath, "\\") + 1);
+        } else {
+            return $filePath;
         }
     }
 
+    /**
+     * @param string $filePath
+     * @return string
+     */
     public static function extractFolderName($filePath)
     {
         if (strrpos($filePath, "/") !== FALSE) {
@@ -100,6 +110,8 @@ class MFile extends MWebfile
             return substr($filePath, 0, strrpos($filePath, "/") + 1);
         } else if (strrpos($filePath, "\\") !== FALSE) {
             return substr($filePath, 0, strrpos($filePath, "\\") + 1);
+        } else {
+            return $filePath;
         }
     }
 
