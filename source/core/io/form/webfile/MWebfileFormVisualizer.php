@@ -41,8 +41,10 @@ class MWebfileFormVisualizer {
 		if ( ! isset($this->hiddenFieldsList) ) {
 			$this->hiddenFieldsList = array();
 		}
-		
-		$this->form = new MForm("index.php?" . MUrl::getInstance()->getQueryString(), "POST");
+
+        $action = "index.php?" . MUrl::getInstance()->getQueryString();
+        $method = "POST";
+        $this->form = new MForm($action, $method);
 		
 		$attributes = $this->webfile->getAttributes();
 		

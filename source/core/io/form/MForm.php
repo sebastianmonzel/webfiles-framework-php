@@ -24,8 +24,8 @@ class MForm {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $action
-	 * @param unknown_type $method
+	 * @param String $action
+	 * @param String $method
 	 */
 	public function __construct($action,$method)
 	{
@@ -118,7 +118,7 @@ class MForm {
 	/**
 	 * 
 	 * Enter description here ...
-	 * @param unknown_type $action
+	 * @param String $action
 	 */
 	function setAction($action) {
 		$this->action = $action;

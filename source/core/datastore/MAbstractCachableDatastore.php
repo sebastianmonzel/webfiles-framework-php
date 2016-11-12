@@ -23,7 +23,7 @@ abstract class MAbstractCachableDatastore extends MAbstractDatastore {
 	 * sets the datastore used for caching data from the original datastore.
 	 * 
 	 * @param MAbstractDatastore $cachingDatastore
-	 * @throws Exception
+	 * @throws \Exception
 	 */
 	public function setCachingDatastore(MAbstractDatastore $cachingDatastore) {
 		
@@ -35,7 +35,7 @@ abstract class MAbstractCachableDatastore extends MAbstractDatastore {
 	}
 	
 	public function fillCachingDatastore() {
-		$datastoreTransfer = new MDatastoreTransfer($this, cachingDatastore);
+		$datastoreTransfer = new MDatastoreTransfer($this, $this->cachingDatastore);
 		$datastoreTransfer->transfer();
 	}
 	

@@ -25,27 +25,27 @@ class MPhpClassMethod extends MAbstractClassMethod {
 		
 		$parameterCode = "";
 		$parameterCount = 0;
-		$parametersSize = count($this->parameters);
-		
-		foreach ($this->parameters as $parameter) {
+
+        /* @var $parameter MPhpClassMethod */
+        foreach ($this->parameters as $parameter) {
 			
 			$parameterCode .= $parameter->generateCode();
 			
-			if ( $parametersSize > $parameterCount ) {
+			if ( count($this->parameters) > $parameterCount ) {
 				$parameterCode .= ",";
 			}
-			
-			$parametersCount++;
+
+            $parameterCount++;
 		}
 		
-		$code  = $this->visibility . " function " . $this->methodName . " (" . $parameterCode . ") {\n";
+		$code  = $this->visibility . " function " . $this->name . " (" . $parameterCode . ") {\n";
 		$code .= $this->content;
 		$code .= "}\n\n";
 		return $code;
 	}
 	
-	public function addParameter(MPhpClassMethodParameter $paramter) {
-		$this->parameters[] = $paramter;
+	public function addParameter(MPhpClassMethodParameter $parameter) {
+		$this->parameters[] = $parameter;
 	}
 	
 }
