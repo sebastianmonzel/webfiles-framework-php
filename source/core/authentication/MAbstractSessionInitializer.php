@@ -9,8 +9,9 @@ namespace simpleserv\webfilesframework\core\authentication;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-abstract class MAbstractSessionInitializer {
-	
-	public abstract function initializeByUserObject(MUser $user);
-	
+abstract class MAbstractSessionInitializer
+{
+
+    public abstract function initializeByUserObject(MUser $user);
+
 }

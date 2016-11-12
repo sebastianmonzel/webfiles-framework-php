@@ -9,4 +9,6 @@ namespace simpleserv\webfilesframework\core\datastore;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-interface MISingleDatastore {}
+interface MISingleDatastore
+{
+}

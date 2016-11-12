@@ -10,18 +10,22 @@ namespace simpleserv\webfilesframework\core\authentication;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MNotEnoughRightsException extends \Exception {
-    
-	
-    public function __construct($code = 0) {
+class MNotEnoughRightsException extends \Exception
+{
+
+
+    public function __construct($code = 0)
+    {
         parent::__construct($code);
     }
 
-    public function __toString() {
+    public function __toString()
+    {
         return __CLASS__;
     }
 
-    public function customFunction() {
+    public function customFunction()
+    {
         echo "Eine eigene Funktion dieses Exceptiontyps\n";
     }
 }

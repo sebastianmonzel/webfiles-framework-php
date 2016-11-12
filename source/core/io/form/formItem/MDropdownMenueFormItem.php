@@ -6,84 +6,88 @@ use simpleserv\webfilesframework\MSite;
 
 /**
  * description
- * 
+ *
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDropdownMenueFormItem extends MAbstractFormItem {
-	
-	protected $possibleValues;
-	protected $filtered;
-	
-	protected $initialized = false;
-	
-	public function __construct($name,$value,$localizedName = "",$filtered=false) {
-		
-		$this->filtered = $filtered;
-		parent::__construct($name,$value,$localizedName);
-	}
-	
-	public function setPossibleValues($possibleValues) {
-		$this->possibleValues = $possibleValues;
-	}
-	
-	public function getPossibleValues() {
-		return $this->possibleValues;
-	}
-	
-	public function init($useLabel = true) {
-		
-		$this->code = "";
-		
-		if ( $useLabel ) {
-			$this->code .= "<div style=\"margin-top:4px;\">";
-		
-			if ( ! empty($this->localizedName) ) {
-				$this->code .= $this->localizedName;
-			} else {
-				$this->code .= $this->name;
-			}
-		
-			$this->code = 	"<div style=\"margin-top:4px;\">
+class MDropdownMenueFormItem extends MAbstractFormItem
+{
+
+    protected $possibleValues;
+    protected $filtered;
+
+    protected $initialized = false;
+
+    public function __construct($name, $value, $localizedName = "", $filtered = false)
+    {
+
+        $this->filtered = $filtered;
+        parent::__construct($name, $value, $localizedName);
+    }
+
+    public function setPossibleValues($possibleValues)
+    {
+        $this->possibleValues = $possibleValues;
+    }
+
+    public function getPossibleValues()
+    {
+        return $this->possibleValues;
+    }
+
+    public function init($useLabel = true)
+    {
+
+        $this->code = "";
+
+        if ($useLabel) {
+            $this->code .= "<div style=\"margin-top:4px;\">";
+
+            if (!empty($this->localizedName)) {
+                $this->code .= $this->localizedName;
+            } else {
+                $this->code .= $this->name;
+            }
+
+            $this->code = "<div style=\"margin-top:4px;\">
 								<label style=\"width:" . $this->getLabelWidth() . "px;display:block;float:left;\">";
-			if ( ! empty($this->localizedName) ) {
-				$this->code .= $this->localizedName;
-			} else {
-				$this->code .= $this->name;
-			}
-			$this->code .= "	</label>
+            if (!empty($this->localizedName)) {
+                $this->code .= $this->localizedName;
+            } else {
+                $this->code .= $this->name;
+            }
+            $this->code .= "	</label>
 								";
-		}
-		
-		if ( ! $this->filtered ) {
-			$this->code .= "<select name=\"" . $this->name . "\" dojoType=\"dijit.form.Select\"";
-			$this->code .= ">";
-			
-			if ( is_array($this->possibleValues)) {
-				foreach ($this->possibleValues as $value) {
-					$this->code .= "<option value=\"" . $value->getId() . "\"";
-					if ( $value->getId() == $this->value ) {
-						$this->code .= " selected=\"selected\"";
-					}
-					$this->code .= ">" . $value . "</option>";
-				}
-			}
-			$this->code .= "		</select>";
-		} else {
-			
-			
-			
-			if ( ! $this->initialized ) {
-				MSite::getInstance()->addHeader('<script type="text/javascript">
+        }
+
+        if (!$this->filtered) {
+            $this->code .= "<select name=\"" . $this->name . "\" dojoType=\"dijit.form.Select\"";
+            $this->code .= ">";
+
+            if (is_array($this->possibleValues)) {
+                foreach ($this->possibleValues as $value) {
+                    $this->code .= "<option value=\"" . $value->getId() . "\"";
+                    if ($value->getId() == $this->value) {
+                        $this->code .= " selected=\"selected\"";
+                    }
+                    $this->code .= ">" . $value . "</option>";
+                }
+            }
+            $this->code .= "		</select>";
+        } else {
+
+
+            if (!$this->initialized) {
+                MSite::getInstance()->addHeader('<script type="text/javascript">
 		
 	require([
 	         "dijit/form/ComboBox", "dijit/form/FilteringSelect", "dojo/on","dojo/dom"
 	     ], function(ComboBox, FilteringSelect, on, dom){
 	
 	         new dijit.form.FilteringSelect({
-	             id: "' . $this->name .'",
-				 name: "' . $this->name .'",
+	             id: "' . $this->name . '",
+				 name: "' . $this->name . '",
 	             autoComplete: true,
 	             style: "width: 300px;",
 	             searchDelay: 1000
@@ -106,24 +110,25 @@ class MDropdownMenueFormItem extends MAbstractFormItem {
 	         });
 	     });
 		</script>');
-			}
-			
-			$this->initialized = true;
-			
-			$this->code .= "<input id=\"" . $this->name . "\" />";
-		}
-		
-		if ( $useLabel ) {
-			$this->code .= "
+            }
+
+            $this->initialized = true;
+
+            $this->code .= "<input id=\"" . $this->name . "\" />";
+        }
+
+        if ($useLabel) {
+            $this->code .= "
 							<div style=\"clear:both;\"></div>
 						</div>";
-		}
-		
-	}
-	
-	public function getCode($useLabel = true) {
-		$this->init($useLabel);
-		return parent::getCode();
-	}
+        }
+
+    }
+
+    public function getCode($useLabel = true)
+    {
+        $this->init($useLabel);
+        return parent::getCode();
+    }
 
 }
