@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\io\request;
+namespace simpleserv\webfilesframework\io\request;
 
 /**
  * description

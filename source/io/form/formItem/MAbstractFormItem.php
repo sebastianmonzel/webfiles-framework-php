@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\io\form\formItem;
+namespace simpleserv\webfilesframework\io\form\formItem;
 
 use simpleserv\webfilesframework\MItem;
 

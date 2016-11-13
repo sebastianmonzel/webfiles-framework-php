@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\io\form\webfile;
+namespace simpleserv\webfilesframework\io\form\webfile;
 
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\io\form\MForm;
