@@ -12,20 +12,21 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDirectory extends MItem
+class MDirectory extends MFile
 {
 
     protected $m_sPath;
 
     public function __construct($p_sPath)
     {
+        parent::__construct($p_sPath);
         $this->m_sPath = $p_sPath;
     }
 
 
     /**
      * Returns the names of all files in the directory as an array.
-     * @return array array with filenames
+     * @return array array with file objects
      */
     public function getFiles()
     {
@@ -83,7 +84,11 @@ class MDirectory extends MItem
         $directories = array();
         if ($directoryHandle = opendir($this->m_sPath)) {
             while (false !== ($sFileName = readdir($directoryHandle))) {
-                if ($sFileName != "." && $sFileName != ".." && (is_dir($this->m_sFolderName . "/" . $sFileName))) {
+                if (
+                    $sFileName != "."
+                        && $sFileName != ".."
+                        && (is_dir($this->m_sPath . "/" . $sFileName))) {
+
                     array_push($directories, $sFileName);
                 }
             }

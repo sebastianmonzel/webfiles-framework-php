@@ -6,14 +6,6 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\MDatastoreException;
 
 /**
- * #########################################################
- * ######################### devPHP - develop your webapps
- * #########################################################
- * ################## copyrights by simpleserv development
- * #########################################################
- */
-
-/**
  * Converts files in a directory into webfiles.
  *
  * @package    de.simpleserv.core.filesystem
@@ -28,9 +20,8 @@ class MDirectoryWebfileGrabber
     private $directory;
 
     /**
-     *
-     * Enter description here ...
-     * @param MString $path
+     * @param $directory
+     * @throws MDatastoreException
      */
     public function __construct($directory)
     {
@@ -57,12 +48,9 @@ class MDirectoryWebfileGrabber
 
             $fileContent = $file->getContent();
 
-            $root = simplexml_load_string($fileContent);
-            $className = $root->attributes()->classname->__toString();
-
             $item = MWebfile::staticUnmarshall($fileContent);
-
             $time = $file->getDate();
+
             $objectsArray[$time] = $item;
         }
 
@@ -79,20 +67,14 @@ class MDirectoryWebfileGrabber
 
             $fileContent = $file->getContent();
 
-            $root = simplexml_load_string($fileContent);
-            $className = $root->attributes()->classname->__toString();
-
             $item = MWebfile::staticUnmarshall($fileContent);
-
             $time = $file->getDate();
             $item->setTime($time);
+
             $objectsArray[$time] = $item;
         }
 
         return $objectsArray;
-
     }
-
-
 }
 

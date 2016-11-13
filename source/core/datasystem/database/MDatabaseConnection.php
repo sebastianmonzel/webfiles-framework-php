@@ -21,6 +21,7 @@ class MDatabaseConnection extends MItem
     private $username = 'root';
     private $password = '';
 
+    /** @var \mysqli $connection */
     private $connection;
 
     static private $instanceArray = array();
@@ -107,7 +108,7 @@ class MDatabaseConnection extends MItem
      * queries the database with the specified sql command
      *
      * @param String $p_sSqlCommand
-     * @return unknown
+     * @return \mysqli_result|boolean
      */
     public function query($sqlCommand)
     {
@@ -149,9 +150,9 @@ class MDatabaseConnection extends MItem
      * @access public
      * @return String
      */
-    public function getUser()
+    public function getUsername()
     {
-        return $this->user;
+        return $this->username;
     }
 
     /**

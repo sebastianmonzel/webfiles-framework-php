@@ -153,15 +153,15 @@ class MImage extends MFile
         if (!empty($filePath)) {
             $sFilePath = $filePath;
         } else {
-            $sFilePath = $this->m_sFilePath;
+            $sFilePath = $this->getPath();
         }
 
         if ($this->m_sType == "jpg") {
             //Header("Content-Type: image/jpeg");
-            imagejpeg($this->m_oImage, $this->getPath(), $quality);
+            imagejpeg($this->m_oImage, $sFilePath, $quality);
         } else if ($this->m_sType == "png") {
             //Header("Content-Type: image/png");
-            imagepng($this->m_oImage, $this->getPath());
+            imagepng($this->m_oImage, $sFilePath);
         }
 
     }

@@ -94,7 +94,7 @@ class MDropboxAccount
      */
     public function getStorage()
     {
-        return $storage;
+        return $this->storage;
     }
 
 }

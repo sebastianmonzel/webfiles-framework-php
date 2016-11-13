@@ -80,6 +80,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
         $webfileArray = array();
 
+        /** @var MFile $file */
         foreach ($files as $file) {
             $fileExtension = $file->getExtension();
 
@@ -178,6 +179,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
             $validWebfile = true;
 
+            /** @var \ReflectionProperty $attribute */
             foreach ($attributes as $attribute) {
 
                 $attribute->setAccessible(true);

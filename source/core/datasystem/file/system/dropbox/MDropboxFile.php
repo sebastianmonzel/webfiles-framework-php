@@ -15,6 +15,9 @@ class MDropboxFile extends MFile
 {
 
     var $dropboxAccount;
+    var $filename;
+    var $fileMetadata;
+    var $filePath;
 
     /**
      *
@@ -24,6 +27,7 @@ class MDropboxFile extends MFile
      */
     public function __construct(MDropboxAccount $account, $filePath, $initMetadata = true)
     {
+        parent::__construct($filePath);
         //echo "MDropboxFile->__contruct([account], ". $filePath . ", ";
         if ($initMetadata) {
             //echo "true";

@@ -25,7 +25,7 @@ class MDropboxDirectory extends MDirectory
      */
     public function __construct($path, MDropboxAccount $dropboxAccount)
     {
-
+        parent::__construct($path);
         $this->dropboxFolderPath = $path;
         $this->dropboxAccount = $dropboxAccount;
         $this->directoryMetadata = $this->dropboxAccount->getDropboxApi()->metaData($path);
@@ -164,7 +164,7 @@ class MDropboxDirectory extends MDirectory
 
     /**
      * Enter description here ...
-     * @param unknown_type $filePath
+     * @param string $filePath
      */
     private function downloadFile(MDirectory $rootFolder, $filePath)
     {
@@ -176,7 +176,7 @@ class MDropboxDirectory extends MDirectory
 
     /**
      * Enter description here ...
-     * @param unknown_type $filePath
+     * @param string $filePath
      */
     private function downloadImage(MDirectory $rootFolder, $filePath)
     {

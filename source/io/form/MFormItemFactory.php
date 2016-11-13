@@ -26,8 +26,8 @@ class MFormItemFactory
     /**
      * Creates a MFormItem by a given attributeName.
      *
-     * @param unknown_type $attributeName
-     * @param unknown_type $value
+     * @param string $attributeName
+     * @param string $value
      * @return MFormItem
      */
     public static function getFormItemByAttributeName($attributeName, $attributeValue, $localizedName = "")
@@ -57,9 +57,9 @@ class MFormItemFactory
 
     /**
      *
-     * @param unknown_type $attributeType
-     * @param unknown_type $attributeName
-     * @param unknown_type $attributeValue
+     * @param string $attributeType
+     * @param string $attributeName
+     * @param string $attributeValue
      * @return MAbstractFormItem
      */
     public static function getFormItemByAttributeType($attributeType, $attributeName, $attributeValue = "", $localizedName = "")

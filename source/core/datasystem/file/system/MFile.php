@@ -50,7 +50,7 @@ class MFile extends MWebfile
 
     /**
      * Returns the content of the given file.
-     * @return MString: file content
+     * @return string file content
      */
     public function getContent()
     {
@@ -60,8 +60,8 @@ class MFile extends MWebfile
     /**
      * Writes content to harddrive.
      *
-     * @param unknown_type $content
-     * @param unknown_type $overwrite
+     * @param string $content
+     * @param bool $overwrite
      */
     public function writeContent($content, $overwrite = false)
     {
@@ -80,7 +80,7 @@ class MFile extends MWebfile
      */
     public function exists()
     {
-        return (file_exists($this->getPath()) || @fopen($path, "r") == true);
+        return (file_exists($this->getPath()) || @fopen($this->getPath(), "r") == true);
     }
 
     /**

@@ -64,7 +64,7 @@ class MRssFeedItem
      */
     function getCode()
     {
-        $code .= "<item>\n";
+        $code = "<item>\n";
         $code .= "	<title>" . $this->title . "</title>\n";
         $code .= "	<link>" . $this->link . "</link>\n";
         $code .= "	<description>" . $this->description . "</description>\n";
