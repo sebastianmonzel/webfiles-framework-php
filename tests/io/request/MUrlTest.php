@@ -29,7 +29,7 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers simpleserv\webfilesframework\core\io\request\MUrl::getParam
+     * @covers simpleserv\webfilesframework\io\request\MUrl::getParam
      */
     public function testGetParam() {
     	
@@ -38,7 +38,7 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers simpleserv\webfilesframework\core\io\request\MUrl::getQueryString
+     * @covers simpleserv\webfilesframework\io\request\MUrl::getQueryString
      */
     public function testGetQueryString() {
     	
