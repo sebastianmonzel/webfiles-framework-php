@@ -54,6 +54,7 @@ class MWebfileStream extends MItem
 
             $webfilesChildren = $root->webfiles->children();
 
+            /** @var \SimpleXMLElement $webfileChild */
             foreach ($webfilesChildren as $webfileChild) {
                 array_push(
                     $webfiles,

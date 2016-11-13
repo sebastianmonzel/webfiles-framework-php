@@ -55,7 +55,6 @@ class MTimestampHelper
     {
         $duration = $duration % (24 * 3600);
         return floor($duration / 3600);
-
     }
 
 

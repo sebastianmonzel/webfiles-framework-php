@@ -80,6 +80,7 @@ class MDatabaseDatastore extends MAbstractDatastore
             $tableName);
         $table->specifyIdentifier("id", 10);
 
+        /** @var \ReflectionProperty $oAttribute */
         foreach ($attributeArray as $oAttribute) {
 
             $sAttributeName = $oAttribute->getName();
@@ -92,32 +93,32 @@ class MDatabaseDatastore extends MAbstractDatastore
                 if ($prefix == "s") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::varchar(),
+                        MDatabaseDatatypes::VARCHAR,
                         50);
                 } else if ($prefix == "l") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::varchar(),
+                        MDatabaseDatatypes::VARCHAR,
                         2000);
                 } else if ($prefix == "i") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::int(),
+                        MDatabaseDatatypes::INT,
                         24);
                 } else if ($prefix == "d") { //date
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::varchar(),
+                        MDatabaseDatatypes::VARCHAR,
                         20);
                 } else if ($prefix == "w") { //weekday
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::varchar(),
+                        MDatabaseDatatypes::VARCHAR,
                         1);
                 } else if ($prefix == "t") {
                     $table->addColumn(
                         MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::varchar(),
+                        MDatabaseDatatypes::VARCHAR,
                         50);
                 }
             }
@@ -207,7 +208,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     /**
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
-     * @return Returns the id given in database (in case of a new webfile
+     * @return int Returns the id given in database (in case of a new webfile
+     * the generated id will be returned)
+     */
+    /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
+     * @param MWebfile $webfile
+     * @return int Returns the id given in database (in case of a new webfile
      * the generated id will be returned)
      */
     public function storeWebfile(MWebfile $webfile)
@@ -453,7 +460,9 @@ class MDatabaseDatastore extends MAbstractDatastore
                                 $oAttribute->setValue($webfile, $databaseResultObject->$sDatabaseFieldName);
                             } else if (MWebfile::isObject($sAttributeName)) {
                                 eval("\$sClassName = static::\$s__oAggregation[\$sAttributeName];");
+                                /** @noinspection PhpUndefinedVariableInspection */
                                 eval("\$oSubAttributeArray = $sClassName::getAttributes(1);");
+                                /** @noinspection PhpUndefinedVariableInspection */
                                 foreach ($oSubAttributeArray as $oSubAttribute) {
 
                                     $oSubAttributeName = $oSubAttribute->getName();
@@ -618,8 +627,10 @@ class MDatabaseDatastore extends MAbstractDatastore
         $oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
         if ($oDatabaseResultSet->num_rows > 0) {
             $result = $oDatabaseResultSet->fetch_object();
+            return $result;
+        } else {
+            return null;
         }
-        return $result;
     }
 
 }

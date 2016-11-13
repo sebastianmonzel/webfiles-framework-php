@@ -13,7 +13,7 @@ use simpleserv\webfilesframework\MItem;
  */
 class MWeekday extends MItem
 {
-
+    /** @var  string $name */
     private $name;
 
     public function __construct($id, $name)

@@ -32,7 +32,7 @@ class MImapDatastore extends MAbstractDatastore
     public function __construct(MMailAccount $mailAccount = null)
     {
         if ($mailAccount != null) {
-            $m_oMailAccount = $mailAccount;
+            $this->m_oMailAccount = $mailAccount;
             $this->connection = $this->imap_login(
                 $mailAccount->getHost(),
                 $mailAccount->getPort(),
@@ -192,13 +192,12 @@ class MImapDatastore extends MAbstractDatastore
     }
 
     /**
-     *
-     * @param unknown $connection
-     * @param string $message
      * @return array
      */
     private function imap_getlist()
     {
+
+        $result = array();
 
         $MC = imap_check($this->connection);
 
@@ -211,9 +210,9 @@ class MImapDatastore extends MAbstractDatastore
         $range = $start . ":" . $end;
 
         $response = imap_fetch_overview($this->connection, $range);
-        foreach ($response as $msg)
+        foreach ($response as $msg) {
             $result[$msg->msgno] = (array)$msg;
-
+        }
         return $result;
     }
 
@@ -242,17 +241,20 @@ class MImapDatastore extends MAbstractDatastore
     }
 
     /**
-     *
-     * @param unknown $headers
-     * @return unknown
+     * @param $headers
+     * @return array
      */
     private function mail_parse_headers($headers)
     {
+        $result = array();
 
         $headers = preg_replace('/\r\n\s+/m', '', $headers);
         preg_match_all('/([^: ]+): (.+?(?:\r\n\s(?:.+?))*)?\r\n/m', $headers, $matches);
-        foreach ($matches[1] as $key => $value) $result[$value] = $matches[2][$key];
-        return ($result);
+        foreach ($matches[1] as $key => $value) {
+            $result[$value] = $matches[2][$key];
+        }
+
+        return $result;
     }
 
     /**

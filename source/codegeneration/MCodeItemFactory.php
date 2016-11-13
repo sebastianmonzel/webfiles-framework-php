@@ -46,7 +46,7 @@ class MCodeItemFactory extends MItem
         if ($programmingLanguage == MProgrammingLanguage::PHP) {
             return new MPhpClassAttribute();
         } else if ($programmingLanguage == MProgrammingLanguage::JAVA) {
-            return new MJavaWebfileClass();
+            return new MJavaClassAttribute();
         } else {
             throw new MWebfilesFrameworkException("Unknown programming language: " . $programmingLanguage);
         }

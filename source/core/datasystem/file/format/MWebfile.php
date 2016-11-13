@@ -67,6 +67,7 @@ class MWebfile extends MItem
             $objectAttributes = $root->children();
             $attributes = $this->getAttributes();
 
+            /** @var \SimpleXMLElement $value */
             foreach ($objectAttributes as $value) {
 
                 foreach ($attributes as $attribute) {
@@ -113,8 +114,9 @@ class MWebfile extends MItem
             $objectAttributes = $root->children();
             $attributes = $item->getAttributes();
 
+            /** @var \SimpleXMLElement $value */
             foreach ($objectAttributes as $value) {
-
+                /** @var \ReflectionProperty $attribute */
                 foreach ($attributes as $attribute) {
 
                     $attribute->setAccessible(true);
@@ -233,7 +235,7 @@ class MWebfile extends MItem
 
             if (MWebfile::isSimpleDatatype($attributeName)) {
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
-                $attributeFieldType = MItem::getDatatypeFromAttributeName($attributeName);
+                $attributeFieldType = MWebfile::getDatatypeFromAttributeName($attributeName);
                 $returnValue .= "\t\t<attribute name=\"" . $attributeFieldName . "\" type=\"" . $attributeFieldType . "\" />\n";
             }
 
@@ -248,7 +250,7 @@ class MWebfile extends MItem
     /**
      *
      * Enter description here ...
-     * @param unknown_type $attributeName
+     * @param string $attributeName
      */
     public static function getDatatypeFromAttributeName($attributeName)
     {
@@ -323,7 +325,7 @@ class MWebfile extends MItem
 
     /**
      *
-     * @param timestamp $time
+     * @param int $time
      */
     public function setTime($time)
     {

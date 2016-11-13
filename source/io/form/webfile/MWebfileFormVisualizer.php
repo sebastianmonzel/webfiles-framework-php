@@ -26,6 +26,7 @@ class MWebfileFormVisualizer
     private $localizedNamesList;
     private $hiddenFieldsList;
 
+    /** @var MForm $form */
     private $form;
 
     public function __construct(MWebfile $webfile)
@@ -51,6 +52,7 @@ class MWebfileFormVisualizer
 
         $attributes = $this->webfile->getAttributes();
 
+        /** @var \ReflectionProperty $attribute */
         foreach ($attributes as $attribute) {
             $attributeName = $attribute->getName();
 

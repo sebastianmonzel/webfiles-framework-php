@@ -43,7 +43,7 @@ class MDatabaseTableColumn
         } elseif ($this->type == MDatabaseDatatypes::INT) {
             return "`" . $this->name . "` int(" . $this->length . ") NOT NULL,";
         } else {
-            throw new MWebfilesFrameworkException("Unknown Datatype: " + $this->type);
+            throw new MWebfilesFrameworkException("Unknown Datatype: " . $this->type);
         }
     }
 

@@ -40,8 +40,8 @@ class MPhpWebfileClass extends MAbstractClass
     {
 
         $code = "";
-        $attribute = new MPhpClassAttribute();
 
+        /** @var MPhpClassAttribute $attribute */
         foreach ($this->attributes as $attribute) {
 
             if (!$attribute instanceof MPhpClassAttribute) {
@@ -81,8 +81,8 @@ class MPhpWebfileClass extends MAbstractClass
             // GETTER
             $getterMethodName = "get" . $firstLetterUppercaseAttribute;
             $getterContent = "return \$this->m_" . $attribute . ";";
-            $setterMethod = new MPhpClassMethod("public", $getterMethodName, $getterContent);
-            $this->addMethod($getterMethodName);
+            $getterMethod = new MPhpClassMethod("public", $getterMethodName, $getterContent);
+            $this->addMethod($getterMethod);
 
             // SETTER
             $setterMethodName = "set" . $firstLetterUppercaseAttribute;
