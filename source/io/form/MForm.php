@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\io\form;
+namespace simpleserv\webfilesframework\io\form;
 
 use simpleserv\webfilesframework\MSite;
 use simpleserv\webfilesframework\core\io\form\formItem\MAbstractFormItem;
