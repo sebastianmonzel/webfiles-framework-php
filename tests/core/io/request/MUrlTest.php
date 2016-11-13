@@ -1,6 +1,6 @@
 <?php
 
-use simpleserv\webfilesframework\core\io\request\MUrl;
+use simpleserv\webfilesframework\io\request\MUrl;
 
 /**
  * Test class for MDatastoreFactory.
