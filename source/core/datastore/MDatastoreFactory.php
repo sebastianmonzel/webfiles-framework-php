@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
+use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 
@@ -35,6 +36,7 @@ class MDatastoreFactory
     /**
      *
      * @param MItem $item
+     * @return null|MDatabaseDatastore|MDirectoryDatastore
      */
     public static function createDatastore(MItem $item)
     {

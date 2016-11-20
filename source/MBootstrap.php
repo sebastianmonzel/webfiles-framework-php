@@ -7,7 +7,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 use simpleserv\webfilesframework\core\authentication\MNotEnoughRightsException;
 use simpleserv\webfilesframework\core\authentication\MSession;
 use simpleserv\webfilesframework\core\authentication\MUser;
-use simpleserv\webfilesframework\core\io\request\MUrl;
+use simpleserv\webfilesframework\io\request\MUrl;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
@@ -75,12 +75,12 @@ class MBootstrap
         echo MSite::getInstance()->getCode();
     }
 
-    public function handleBatchjobRequest()
+    public function handleBatchjobRequest(MUser $user = null)
     {
         try {
 
             if ($this->isAuthentificationEnabled) {
-                $this->checkForAuthorization();
+                $this->checkForAuthorization($user);
             }
 
             if (MUrl::getInstance()->paramExists("batchjob")) {

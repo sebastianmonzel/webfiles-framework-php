@@ -16,9 +16,13 @@ class MMailAccount extends MWebfile
 
     public static $m__sClassName = __CLASS__;
 
+    /** @var string $m_sHost */
     private $m_sHost;
+    /** @var string $m_sPort */
     private $m_sPort;
+    /** @var string $m_sUser */
     private $m_sUser;
+    /** @var string $m_sPassword */
     private $m_sPassword;
 
     public function __construct($host, $port, $user, $password)

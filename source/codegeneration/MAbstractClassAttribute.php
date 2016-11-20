@@ -14,7 +14,7 @@ abstract class MAbstractClassAttribute extends MAbstractCodeItem
 
     protected $visibility = "public";
     protected $name;
-    protected $attributeType;
+    protected $type;
 
     public function getVisibility()
     {

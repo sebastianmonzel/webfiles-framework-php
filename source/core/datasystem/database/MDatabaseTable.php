@@ -2,9 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
-use simpleserv\webfilesframework\MItem;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTableColumn;
+
+
 
 /**
  * description
@@ -27,9 +26,9 @@ class MDatabaseTable
     var $databaseConnection;
 
     /**
-     *
-     * Enter description here ...
-     * @param unknown_type $name
+     * MDatabaseTable constructor.
+     * @param \simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection $databaseConnection
+     * @param string $name
      */
     public function __construct(MDatabaseConnection $databaseConnection, $name)
     {

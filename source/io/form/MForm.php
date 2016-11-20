@@ -3,7 +3,7 @@
 namespace simpleserv\webfilesframework\io\form;
 
 use simpleserv\webfilesframework\MSite;
-use simpleserv\webfilesframework\core\io\form\formItem\MAbstractFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MAbstractFormItem;
 
 /**
  * description
@@ -138,16 +138,6 @@ class MForm
     function setMethod($method)
     {
         $this->method = $method;
-    }
-
-    /**
-     *
-     * Enter description here ...
-     * @param $name
-     */
-    function setName($name)
-    {
-        $this->name = $name;
     }
 
     public static function addFormHeadersToSite($site)

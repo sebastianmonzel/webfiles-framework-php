@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\image\MAbstractImageLibraryHandler;
+
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 
 
@@ -86,11 +86,15 @@ class MImage extends MFile
 
     /**
      *
-     * @param <type> $p_sFont
-     * @param <type> $p_sText
-     * @param <type> $p_iY
-     * @param <type> $p_iX
-     *
+     * @param $p_sFont
+     * @param $p_sFontSize
+     * @param $p_sText
+     * @param int $p_iY
+     * @param int $p_iX
+     * @internal param $ <type> $p_sFont
+     * @internal param $ <type> $p_sText
+     * @internal param $ <type> $p_iY
+     * @internal param $ <type> $p_iX
      */
     public function writeTextLine($p_sFont, $p_sFontSize, $p_sText, $p_iY = 282, $p_iX = 210)
     {
@@ -145,7 +149,7 @@ class MImage extends MFile
     /**
      *
      * @param string $filePath
-     * @param number $quality
+     * @param int|number $quality
      */
     public function saveAsFile($filePath = "", $quality = 80)
     {
@@ -176,17 +180,20 @@ class MImage extends MFile
 
     /**
      *
-     * @param unknown $p_iWidth
-     * @param unknown $p_iHeight
-     * @param string $p_sFilePath
-     * @throws Exception
+     * @param $width
+     * @param $height
+     * @param string $filePath
+     * @throws \Exception
+     * @internal param unknown $p_iWidth
+     * @internal param unknown $p_iHeight
+     * @internal param string $p_sFilePath
      */
     public function saveScaledImgAsFile($width, $height, $filePath = "")
     {
 
         if (!$this->exists()) {
             $iErrorCode = 30;
-            throw new Exception(
+            throw new \Exception(
                 "File does not exists. Given File in the Image Object has to be created or has to be an existant file.",
                 $iErrorCode
             );
@@ -273,7 +280,7 @@ class MImage extends MFile
 
     /**
      *
-     * @param unknown $p_iPercent
+     * @param int $p_iPercent
      * @param string $p_sFilePath
      */
     public function saveScaledImgAsFileWithPercent($p_iPercent, $p_sFilePath = "")

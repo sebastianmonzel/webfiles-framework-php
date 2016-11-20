@@ -36,7 +36,7 @@ class MMail extends MWebfile
 
     public static function isMailAddressValid($p_sEmail)
     {
-        return (eregi("^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,3})$", $p_sEmail));
+        return (preg_match("/^[_\.0-9a-zA-Z-]+@([0-9a-zA-Z][0-9a-zA-Z-]+\.)+[a-zA-Z]{2,6}$/i", $p_sEmail));
     }
 
     public function getTime()

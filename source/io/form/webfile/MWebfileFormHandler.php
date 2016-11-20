@@ -17,7 +17,7 @@ class MWebfileFormHandler
     var $requestArray;
 
     /**
-     *
+     * @param $requestArray
      */
     public function __construct($requestArray)
     {

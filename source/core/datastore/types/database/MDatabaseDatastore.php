@@ -9,10 +9,10 @@ use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseDatatypes;
 use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
-use simpleserv\webfilesframework\core\datastore\functions\filter\MSubstringFiltering;
+
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
-use simpleserv\webfilesframework\core\datatypes\time\MTimespan;
+use simpleserv\webfilesframework\core\time\MTimespan;
 
 /**
  * Class to connect to a datastore based on a database.
@@ -358,6 +358,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     /**
      * Enter description here ...
      * @param MWebfile $webfile
+     * @return string
      */
     public function getDatabaseTableName(MWebfile $webfile)
     {
@@ -385,6 +386,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     /**
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+     * @param MWebfile $webfile
+     * @return array
      */
     public function getByTemplate(MWebfile $webfile)
     {
@@ -489,6 +492,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     /**
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+     * @param MWebfile $webfile
      */
     public function deleteByTemplate(MWebfile $webfile)
     {

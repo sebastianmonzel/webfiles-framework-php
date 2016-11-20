@@ -28,7 +28,9 @@ class MTimestampHelper
 
     /**
      * returns a timestamp of the end of a month
-     *
+     * @param int $month
+     * @param int $year
+     * @return false|int
      */
     public static function getMonthEnd($month = -1, $year = -1)
     {
@@ -50,6 +52,7 @@ class MTimestampHelper
     /**
      * returns the count of hours in the given duration
      * @param duration duration in seconds
+     * @return float
      */
     public static function getHours($duration)
     {
@@ -61,6 +64,7 @@ class MTimestampHelper
     /**
      * returns the count of minutes in the given duration
      * @param duration duration in seconds
+     * @return float
      */
     public static function getMinutes($duration)
     {
@@ -70,6 +74,9 @@ class MTimestampHelper
 
     /**
      * returns the number of the day
+     * @param $timestamp
+     * @param bool $leadingZero
+     * @return false|string
      */
     public static function getDay($timestamp, $leadingZero = true)
     {
@@ -83,6 +90,9 @@ class MTimestampHelper
 
     /**
      * returns the number of the month
+     * @param $timestamp
+     * @param bool $leadingZero
+     * @return false|string
      */
     public static function getMonth($timestamp, $leadingZero = true)
     {
@@ -95,6 +105,8 @@ class MTimestampHelper
 
     /**
      * returns the number of the year
+     * @param $timestamp
+     * @return false|string
      */
     public static function getYear($timestamp)
     {
@@ -104,6 +116,8 @@ class MTimestampHelper
 
     /**
      * returns the number of the year
+     * @param $timestamp
+     * @return false|string
      */
     public static function getHour($timestamp)
     {
@@ -113,6 +127,8 @@ class MTimestampHelper
 
     /**
      * returns the number of the year
+     * @param $timestamp
+     * @return false|string
      */
     public static function getMinute($timestamp)
     {
@@ -122,6 +138,7 @@ class MTimestampHelper
     /**
      * returns the given timestamp in a manner like
      * @param duration duration in seconds
+     * @return string
      */
     public static function getFormatedDate($timestamp)
     {
@@ -132,6 +149,7 @@ class MTimestampHelper
     /**
      * returns the count of minutes in the given duration
      * @param duration duration in seconds
+     * @return string
      */
     public static function getFormatedTime($timestamp)
     {
@@ -141,6 +159,7 @@ class MTimestampHelper
     /**
      * @param int $identifier weekday identifier between 0 and 6.
      * @return string the german name of the given weekday identifier.
+     * @throws MWebfilesFrameworkException
      */
     public static function getWeekdayName($identifier)
     {

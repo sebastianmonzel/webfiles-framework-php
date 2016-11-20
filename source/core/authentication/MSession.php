@@ -3,7 +3,7 @@
 namespace simpleserv\webfilesframework\core\authentication;
 
 use simpleserv\webfilesframework\MSite;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+
 
 /**
  * Values are managed locally and saved with store() to $_SESSION context and
@@ -118,11 +118,6 @@ class MSession
     public function isStarted()
     {
         return (session_id() != "");
-    }
-
-    private function isCoupledWithSystem()
-    {
-        return $this->hasValue("_ident_ip");
     }
 
     private function makeSystemCoupling()

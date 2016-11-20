@@ -68,7 +68,6 @@ class MWebfileStream extends MItem
         return $webfiles;
     }
 
-
     public function getXML()
     {
         return $this->marshall();

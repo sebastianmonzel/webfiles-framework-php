@@ -165,12 +165,12 @@ class MImapDatastore extends MAbstractDatastore
 
     /**
      *
-     * @param unknown $host
-     * @param unknown $port
-     * @param unknown $user
-     * @param unknown $pass
+     * @param string $host
+     * @param string $port
+     * @param string $user
+     * @param string $pass
      * @param string $folder
-     * @param string $ssl
+     * @param bool|string $ssl
      * @return resource
      */
     private function imap_login($host, $port, $user, $pass, $folder = "INBOX", $ssl = false)
@@ -261,7 +261,7 @@ class MImapDatastore extends MAbstractDatastore
      *
      * @param string $imap
      * @param string $mid
-     * @param string $parse_headers
+     * @param bool|string $parse_headers
      * @return unknown
      */
     private function mail_mime_to_array($imap, $mid, $parse_headers = false)

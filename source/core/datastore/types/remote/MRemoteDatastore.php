@@ -19,6 +19,7 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 class MRemoteDatastore extends MAbstractDatastore
 {
 
+    private $m_sDatastoreName;
     private $m_sWebfilesUrl;
 
     public static $m__sClassName = __CLASS__;
