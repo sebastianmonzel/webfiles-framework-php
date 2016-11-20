@@ -17,6 +17,7 @@ class MXmlParser
     /**
      *
      * Enter description here ...
+     * @param $input
      */
     public function __construct($input)
     {

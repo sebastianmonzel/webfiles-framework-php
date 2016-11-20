@@ -1,9 +1,8 @@
 <?php
 
-use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
+
 use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+
 
 /**
  * Test class for MDatastoreTransfer.

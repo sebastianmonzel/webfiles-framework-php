@@ -2,8 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
+
+
 
 /**
  * Defines and provides basic functionality for caching a datastore.<br />

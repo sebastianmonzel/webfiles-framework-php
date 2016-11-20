@@ -25,7 +25,7 @@ class MValidator
     /**
      *
      * @param unknown_type $comment
-     * @param unknown_type $len
+     * @param int|unknown_type $len
      * @return mixed
      */
     public static function cutLongWords($comment, $len = 25)

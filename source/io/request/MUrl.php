@@ -90,6 +90,7 @@ class MUrl
     /**
      * Checks if the param exists in the query part of the url.
      * @param MBoolean : true if param exists, false if not.
+     * @return bool
      */
     public function paramExists($paramName)
     {

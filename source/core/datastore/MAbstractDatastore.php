@@ -86,6 +86,7 @@ abstract class MAbstractDatastore extends MWebfile
      */
     public abstract function getByTemplate(MWebfile $template);/** @noinspection PhpUnusedParameterInspection */
 
+    /**@noinspection PhpUnusedParameterInspection*(
     /**
      * Stores a single webfile in the datastore.
      *
@@ -121,13 +122,18 @@ abstract class MAbstractDatastore extends MWebfile
         foreach ($webfiles as $webfile) {
             $this->storeWebfile($webfile);
         }
-    }/** @noinspection PhpUnusedParameterInspection */
+    }
+
 
     /**
      * Deletes a set of webfiles in the actual datastore which can be
      * applied to the given template.
      *
      * @param MWebfile $webfile
+     * @throws MDatastoreException
+     */
+    /** @noinspection PhpUnusedParameterInspection
+     * @param MWebfile $template
      * @throws MDatastoreException
      */
     public function deleteByTemplate(MWebfile $template)
@@ -149,6 +155,7 @@ abstract class MAbstractDatastore extends MWebfile
      * @param string $datastoreId
      * @throws MDatastoreException will be thrown if no datastore with
      * the given id is available.
+     * @return MWebfile returns the found datastore
      */
     public static function resolveCustomDatastoreById($datastoreId)
     {

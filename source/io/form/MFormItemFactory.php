@@ -3,14 +3,14 @@
 namespace simpleserv\webfilesframework\io\form;
 
 use simpleserv\webfilesframework\MSite;
-use simpleserv\webfilesframework\core\io\form\formItem\MTextfieldFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MTextareaFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MHtmlTextareaFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MTimeFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MDateFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MWeekdayFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MDropdownMenueFormItem;
-use simpleserv\webfilesframework\core\io\form\formItem\MCheckboxesFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MTextfieldFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MTextareaFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MHtmlTextareaFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MTimeFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MDateFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MWeekdayFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MDropdownMenueFormItem;
+use simpleserv\webfilesframework\io\form\formItem\MCheckboxesFormItem;
 
 
 /**
@@ -27,8 +27,10 @@ class MFormItemFactory
      * Creates a MFormItem by a given attributeName.
      *
      * @param string $attributeName
-     * @param string $value
+     * @param $attributeValue
+     * @param string $localizedName
      * @return MFormItem
+     * @internal param string $value
      */
     public static function getFormItemByAttributeName($attributeName, $attributeValue, $localizedName = "")
     {
@@ -60,6 +62,7 @@ class MFormItemFactory
      * @param string $attributeType
      * @param string $attributeName
      * @param string $attributeValue
+     * @param string $localizedName
      * @return MAbstractFormItem
      */
     public static function getFormItemByAttributeType($attributeType, $attributeName, $attributeValue = "", $localizedName = "")

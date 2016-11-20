@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\image\MAbstractImageLibraryHandler;
+
 
 
 /**
@@ -18,6 +18,8 @@ class MGdHandler extends MAbstractImageLibraryHandler
     /**
      * (non-PHPdoc)
      * @see MAbstractImageLibraryHandler::loadJpg()
+     * @param $p_sImage
+     * @return resource
      */
     public function loadJpg($p_sImage)
     {
@@ -27,6 +29,8 @@ class MGdHandler extends MAbstractImageLibraryHandler
     /**
      * (non-PHPdoc)
      * @see MAbstractImageLibraryHandler::loadPng()
+     * @param $p_sImage
+     * @return resource
      */
     public function loadPng($p_sImage)
     {

@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\system;
 
-use simpleserv\webfilesframework\MItem;
+
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
@@ -107,6 +107,8 @@ class MDirectory extends MFile
 
     /**
      * Creates a subdirectory in the present directory.
+     * @param $p_sName
+     * @return MDirectory
      */
     public function createSubDirectory($p_sName)
     {

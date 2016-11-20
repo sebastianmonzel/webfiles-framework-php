@@ -107,6 +107,8 @@ class MDropboxDirectory extends MDirectory
     /**
      * Enter description here ...
      * @param MDirectory $directory
+     * @param $recursivly
+     * @param $folder
      */
     public function syncToLocalDirectory(MDirectory $directory, $recursivly, $folder)
     {
@@ -164,6 +166,7 @@ class MDropboxDirectory extends MDirectory
 
     /**
      * Enter description here ...
+     * @param MDirectory $rootFolder
      * @param string $filePath
      */
     private function downloadFile(MDirectory $rootFolder, $filePath)
@@ -176,6 +179,7 @@ class MDropboxDirectory extends MDirectory
 
     /**
      * Enter description here ...
+     * @param MDirectory $rootFolder
      * @param string $filePath
      */
     private function downloadImage(MDirectory $rootFolder, $filePath)
@@ -188,6 +192,7 @@ class MDropboxDirectory extends MDirectory
 
     /**
      * Enter description here ...
+     * @param $filePath
      * @param unknown_type $file
      */
     private function saveToFilesystem($filePath, $file)

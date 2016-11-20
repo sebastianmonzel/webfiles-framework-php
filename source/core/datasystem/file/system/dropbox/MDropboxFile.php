@@ -13,29 +13,22 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
  */
 class MDropboxFile extends MFile
 {
-
-    var $dropboxAccount;
-    var $filename;
-    var $fileMetadata;
-    var $filePath;
+    protected $dropboxAccount;
+    protected $fileMetadata;
+    protected $filePath;
 
     /**
      *
      * Enter description here ...
      * @param MDropboxAccount $account
-     * @param unknown_type $fileName
+     * @param $filePath
+     * @param bool $initMetadata
+     * @internal param unknown_type $fileName
      */
     public function __construct(MDropboxAccount $account, $filePath, $initMetadata = true)
     {
         parent::__construct($filePath);
-        //echo "MDropboxFile->__contruct([account], ". $filePath . ", ";
-        if ($initMetadata) {
-            //echo "true";
-        } else {
-            //echo "false";
-        }
 
-        //echo")<br />";
         $this->filePath = $filePath;
         $this->dropboxAccount = $account;
         if ($initMetadata) {
@@ -45,7 +38,6 @@ class MDropboxFile extends MFile
 
     public function initMetadata()
     {
-        //echo "MDropboxFile->initMetadata()<br />";
         $this->fileMetadata = $this->dropboxAccount->getDropboxApi()->metaData($this->filePath);
         $lastSlash = strrpos($this->fileMetadata['body']->path, '/');
         $fileName = substr($this->fileMetadata['body']->path, $lastSlash + 1);
@@ -75,13 +67,14 @@ class MDropboxFile extends MFile
     /**
      *
      * Enter description here ...
+     * @param $overwriteIfExists
      */
     public function download($overwriteIfExists)
     {
-        $file = $this->dropboxAccount->getDropboxApi()->getFile($filePath);
+        $file = $this->dropboxAccount->getDropboxApi()->getFile($this->filePath);
 
-        if (!file_exists("." . $filePath)) {
-            $fp = fopen("." . $filePath, "w");
+        if (!file_exists("." . $this->filePath)) {
+            $fp = fopen("." . $this->filePath, "w");
             fputs($fp, $file['data']);
             fclose($fp);
         }
@@ -89,18 +82,12 @@ class MDropboxFile extends MFile
 
     public function downloadImageAsThumbnail()
     {
-        $file = $account->getDropbox()->thumbnails($filePath, 'JPEG', 'l');
+        $file = $this->dropboxAccount->getDropbox()->thumbnails($this->filePath, 'JPEG', 'l');
 
-        /*if ( file_exists(".".$filePath) ) {
-            unlink (".".$filePath);
-        }*/
-
-        if (!file_exists("." . $filePath)) {
-            $fp = fopen("." . $filePath, "w");
+        if (!file_exists("." . $this->filePath)) {
+            $fp = fopen("." . $this->filePath, "w");
             fputs($fp, $file['data']);
             fclose($fp);
         }
-
     }
-
 }

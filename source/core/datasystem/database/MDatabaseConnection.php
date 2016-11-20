@@ -107,8 +107,9 @@ class MDatabaseConnection extends MItem
     /**
      * queries the database with the specified sql command
      *
-     * @param String $p_sSqlCommand
-     * @return \mysqli_result|boolean
+     * @param $sqlCommand
+     * @return bool|\mysqli_result
+     * @internal param String $p_sSqlCommand
      */
     public function query($sqlCommand)
     {
@@ -174,7 +175,7 @@ class MDatabaseConnection extends MItem
     /**
      * Sets the database for the given connection
      * @access public
-     * @return void
+     * @param $database
      */
     public function setDatabase($database)
     {

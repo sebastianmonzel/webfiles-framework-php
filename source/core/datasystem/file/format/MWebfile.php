@@ -88,6 +88,7 @@ class MWebfile extends MItem
      *
      * Converts the given xml-String into a webfile object.
      * @param string $xmlAsString
+     * @return null|object
      */
     public static function staticUnmarshall($xmlAsString)
     {
@@ -188,6 +189,7 @@ class MWebfile extends MItem
      * Returns the attributes of the actual class which are relevant for the
      * webfile definition.
      *
+     * @param bool $onlyAttributesOfSimpleDatatypes
      * @return array array with attributes
      */
     public static function getAttributes($onlyAttributesOfSimpleDatatypes = false)
@@ -251,6 +253,7 @@ class MWebfile extends MItem
      *
      * Enter description here ...
      * @param string $attributeName
+     * @return null|string
      */
     public static function getDatatypeFromAttributeName($attributeName)
     {

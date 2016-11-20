@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datastore\types\directory;
 
+use simpleserv\webfilesframework\core\datastore\functions\MIDatastoreFunction;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\MAbstractCachableDatastore;
 use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
@@ -126,6 +127,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     /**
      * (non-PHPdoc)
      * @see MAbstractDatastore::storeWebfilesFromWebfilestream()
+     * @param MWebfileStream $webfileStream
      */
     public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
@@ -186,7 +188,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
                 $templateValue = $attribute->getValue($webfile);
 
-                if ($templateValue != "?" && !($templateValue instanceof MIDatastoreFunction)) {
+                if (
+                    $templateValue != "?"
+                    && !($templateValue instanceof MIDatastoreFunction)) {
 
                     $webfileValue = $attribute->getValue($webfile);
                     if ($templateValue != $webfileValue) {

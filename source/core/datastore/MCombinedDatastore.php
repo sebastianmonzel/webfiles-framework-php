@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
@@ -40,7 +40,8 @@ class MCombinedDatastore extends MAbstractDatastore
 
     /**
      *
-     * @param number $days
+     * @param int|number $days
+     * @return array webfiles from the aggregated datastores
      */
     private function aggregateDatastores($days = 500)
     {
@@ -56,7 +57,6 @@ class MCombinedDatastore extends MAbstractDatastore
 
             $nextWebfile = $datastore->getNextWebfileForTimestamp($timeBeforeGivenDays);
             if (isset($nextWebfile)) {
-
 
                 $nextWebfileTime = $nextWebfile->getTime();
 
@@ -80,7 +80,8 @@ class MCombinedDatastore extends MAbstractDatastore
 
     /**
      *
-     * @param unknown $nextWebfiles
+     * @param array $nextWebfiles
+     * @return MWebfile
      */
     private function selectNextWebfile(&$nextWebfiles)
     {
