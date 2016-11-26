@@ -129,7 +129,7 @@ class MCombinedDatastore extends MAbstractDatastore
 
     }
 
-    public function getByTemplate(MWebfile $webfile)
+    public function searchByTemplate(MWebfile $webfile)
     {
 
     }

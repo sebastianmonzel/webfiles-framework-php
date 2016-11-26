@@ -8,7 +8,7 @@ use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseDatatypes;
-use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
+use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
 
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
@@ -22,7 +22,7 @@ use simpleserv\webfilesframework\core\time\MTimespan;
  * @since      0.1.7
  */
 class MDatabaseDatastore extends MAbstractDatastore
-    implements MISingleDatastore
+    implements MISingleDatasourceDatastore
 {
 
     private $databaseConnection;
@@ -141,8 +141,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $tableName = $this->getDatabaseTableName($webfile);
 
-        $query = $this->databaseConnection->query("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
-        return ($query->num_rows > 0);
+        $query = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
+        return ($query->getResultSize() > 0);
 
     }
 
@@ -166,13 +166,13 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function getAllTableNames()
     {
 
-        $query = $this->databaseConnection->query("SHOW TABLES FROM " . $this->databaseConnection->getDatabase());
+        $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName());
 
         $tableNames = array();
 
-        if ($query->num_rows > 0) {
-            while ($oDatabaseResultRow = $query->fetch_object()) {
-                $tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabase();
+        if ($handler->getResultSize() > 0) {
+            while ($oDatabaseResultRow = $handler->fetchNextResultObject()) {
+                $tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabaseName();
                 // add only tables with the current connection prefix
                 if (
                     substr(
@@ -286,7 +286,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
 
         $query = "INSERT INTO " . $tablename . " ( " . $sSqlFieldSetting . " ) VALUES ( " . $sSqlValueSetting . " )";
-        echo $query;
         $this->databaseConnection->query($query);
 
         return $this->databaseConnection->getInsertId();
@@ -372,6 +371,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
 
         $tableName = $this->databaseConnection->getTablePrefix() . $classname;
+        echo $tableName;
         return $tableName;
     }
 
@@ -385,22 +385,17 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::searchByTemplate()
      * @param MWebfile $webfile
      * @return array
      */
-    public function getByTemplate(MWebfile $webfile)
+    public function searchByTemplate(MWebfile $webfile)
     {
 
         $webfileArray = array();
 
         if ($this->tableExistsByWebfile($webfile)) {
-
-            // determine table with webfile type
-            $tableName = $this->getDatabaseTableName($webfile);
-
-            // translate template into a condition
-            $condition = $this->translateTemplateIntoCondition($webfile);
+            echo "test";
 
 
             $first = true;
@@ -432,10 +427,11 @@ class MDatabaseDatastore extends MAbstractDatastore
                     $first = false;
                 }
             }
-
+            $tableName = $this->getDatabaseTableName($webfile);
             $query = "SELECT * FROM " . $tableName;
 
 
+            $condition = $this->translateTemplateIntoCondition($webfile);
             if (!empty($condition)) {
                 $query .= " WHERE " . $condition;
             }
@@ -443,12 +439,16 @@ class MDatabaseDatastore extends MAbstractDatastore
             if (!empty($order)) {
                 $query .= " ORDER BY " . $order;
             }
+            echo "\nbla\n";
+            $resultHandler = $this->databaseConnection->queryAndHandle($query);
+            var_export($resultHandler);
+            echo $query;
+            echo "test:" . $resultHandler->getResultSize();
+            if ($resultHandler != false) {
+                if ($resultHandler->getResultSize() > 0) {
+                    while ($databaseResultObject = $resultHandler->fetchNextResultObject()) {
 
-            $oDatabaseResultSet = $this->databaseConnection->query($query);
-
-            if ($oDatabaseResultSet != false) {
-                if ($oDatabaseResultSet->num_rows > 0) {
-                    while ($databaseResultObject = $oDatabaseResultSet->fetch_object()) {
+                        var_export($databaseResultObject);
 
                         $className = $webfile::$m__sClassName;
 
@@ -583,15 +583,15 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $table->addColumn(
             "classname",
-            MDatabaseDatatypes::varchar(),
+            MDatabaseDatatypes::VARCHAR,
             250);
         $table->addColumn(
             "version",
-            MDatabaseDatatypes::int(),
+            MDatabaseDatatypes::INT,
             50);
         $table->addColumn(
             "tablename",
-            MDatabaseDatatypes::varchar(),
+            MDatabaseDatatypes::VARCHAR,
             250);
 
         $table->create();
@@ -604,8 +604,8 @@ class MDatabaseDatastore extends MAbstractDatastore
             $this->createMetadataTable();
             return false;
         }
-        $oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
-        if ($oDatabaseResultSet->num_rows > 0) {
+        $oDatabaseResultSet = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        if ($oDatabaseResultSet->getResultSize() > 0) {
             return true;
         }
         return false;
@@ -614,7 +614,9 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function addMetadata($className, $version, $tablename)
     {
 
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+        if (!$this->tableExistsByTablename(
+            $this->databaseConnection->getTablePrefix() . "metadata")) {
+
             $this->createMetadataTable();
         }
         $className = str_replace('\\', '\\\\', $className);
@@ -628,9 +630,9 @@ class MDatabaseDatastore extends MAbstractDatastore
             $this->createMetadataTable();
         }
 
-        $oDatabaseResultSet = $this->databaseConnection->query("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
-        if ($oDatabaseResultSet->num_rows > 0) {
-            $result = $oDatabaseResultSet->fetch_object();
+        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        if ($oDatabaseResultHandler->getResultSize() > 0) {
+            $result = $oDatabaseResultHandler->fetchNextResultObject();
             return $result;
         } else {
             return null;

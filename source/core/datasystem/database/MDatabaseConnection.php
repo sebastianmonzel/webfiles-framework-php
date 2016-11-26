@@ -2,6 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
+use simpleserv\webfilesframework\core\datastore\types\database\MMysqlResultHandler;
 use simpleserv\webfilesframework\MItem;
 
 /**
@@ -15,7 +16,7 @@ class MDatabaseConnection extends MItem
 {
     private $host = '127.0.0.1';
 
-    private $database = 'webfiles';
+    private $databaseName = 'webfiles';
     private $tablePrefix = 'default_';
 
     private $username = 'root';
@@ -113,7 +114,19 @@ class MDatabaseConnection extends MItem
      */
     public function query($sqlCommand)
     {
+        print($sqlCommand);
         return $this->connection->query($sqlCommand);
+    }
+
+    /**
+     * @param $sqlCommand
+     * @return MMysqlResultHandler
+     */
+    public function queryAndHandle($sqlCommand)
+    {
+        echo "test QUERY AND HANDLE";
+        $result = $this->query($sqlCommand);
+        return new MMysqlResultHandler($result);
     }
 
     /**
@@ -167,19 +180,19 @@ class MDatabaseConnection extends MItem
     /**
      * @return null|string
      */
-    public function getDatabase()
+    public function getDatabaseName()
     {
-        return $this->database;
+        return $this->databaseName;
     }
 
     /**
      * Sets the database for the given connection
      * @access public
-     * @param $database
+     * @param $databaseName
      */
-    public function setDatabase($database)
+    public function setDatabaseName($databaseName)
     {
-        $this->database = $database;
+        $this->databaseName = $databaseName;
     }
 
     /**

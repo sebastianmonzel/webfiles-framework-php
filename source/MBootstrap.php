@@ -120,7 +120,7 @@ class MBootstrap
 
             if (isset($_POST['name'])) {
 
-                $user->presetDefaultForTemplate();
+                $user->presetForTemplateSearch();
                 $user->setUsername($_POST['name']);
 
                 if (!MSession::getInstance()->login($user, $_POST['name'], $_POST['password'])) {
