@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\codegeneration\php;
 
-use simpleserv\webfilesframework\core\codegeneration\MAbstractClassMethodParameter;
+use simpleserv\webfilesframework\codegeneration\MAbstractClassMethodParameter;
 
 /**
  * description
