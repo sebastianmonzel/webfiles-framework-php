@@ -27,7 +27,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     private $m_sDirectoryPath;
     /**
      *
-     * @var MDirectoryDatastore
+     * @var MDirectoryDatasourceDatastore
      */
     private $directoryDatastore;
 
@@ -91,10 +91,10 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     /* (non-PHPdoc)
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
      */
-    public function getByTemplate(MWebfile $template)
+    public function searchByTemplate(MWebfile $template)
     {
         $this->initDatastore();
-        return $this->directoryDatastore->getByTemplate($template);
+        return $this->directoryDatastore->searchByTemplate($template);
     }
 
     /* (non-PHPdoc)
@@ -128,7 +128,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     {
         if (!isset($this->directoryDatastore)) {
             $directory = new MDirectory($this->m_sDirectoryPath);
-            $this->directoryDatastore = new MDirectoryDatastore($directory);
+            $this->directoryDatastore = new MDirectoryDatasourceDatastore($directory);
         }
     }
 

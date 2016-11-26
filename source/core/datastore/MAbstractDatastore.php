@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatasourceDatastore;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
@@ -84,7 +84,7 @@ abstract class MAbstractDatastore extends MWebfile
      * @param MWebfile $template template to search for
      * @return array list of webfiles
      */
-    public abstract function getByTemplate(MWebfile $template);/** @noinspection PhpUnusedParameterInspection */
+    public abstract function searchByTemplate(MWebfile $template);/** @noinspection PhpUnusedParameterInspection */
 
     /**@noinspection PhpUnusedParameterInspection*(
     /**
@@ -161,7 +161,7 @@ abstract class MAbstractDatastore extends MWebfile
     {
 
         $datastoreDirectory = new MDirectory("./custom/datastore/");
-        $datastoreHolder = new MDirectoryDatastore($datastoreDirectory, false);
+        $datastoreHolder = new MDirectoryDatasourceDatastore($datastoreDirectory, false);
 
         $webfiles = $datastoreHolder->getWebfilesAsArray();
 

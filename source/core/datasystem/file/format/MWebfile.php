@@ -140,7 +140,7 @@ class MWebfile extends MItem
      * on a datastore (getByTemplate()) this method helps to
      * set the defaults for making the template request.
      */
-    public function presetDefaultForTemplate()
+    public function presetForTemplateSearch()
     {
         $attributes = $this->getAttributes();
         foreach ($attributes as $attribute) {

@@ -7,7 +7,7 @@ use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
+use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
 use simpleserv\webfilesframework\core\datastore\MDatastoreException;
 
 /**
@@ -17,8 +17,8 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreException;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MImapDatastore extends MAbstractDatastore
-    implements MISingleDatastore
+class MImapDatasourceDatastore extends MAbstractDatastore
+    implements MISingleDatasourceDatastore
 {
 
     /**@var MMailAccount **/
@@ -156,7 +156,7 @@ class MImapDatastore extends MAbstractDatastore
         return $file->exists();
     }
 
-    public function getByTemplate(MWebfile $webfile)
+    public function searchByTemplate(MWebfile $webfile)
     {
         if (!$webfile instanceof MMail) {
             throw new MDatastoreException("Cannot search in imap datastore for webfiles appart of type 'MMail'.");

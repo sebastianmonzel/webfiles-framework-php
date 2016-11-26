@@ -5,7 +5,7 @@ namespace simpleserv\webfilesframework\core\datastore\types\directory;
 use simpleserv\webfilesframework\core\datastore\functions\MIDatastoreFunction;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\MAbstractCachableDatastore;
-use simpleserv\webfilesframework\core\datastore\MISingleDatastore;
+use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
 use simpleserv\webfilesframework\core\datastore\MDatastoreException;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
@@ -25,8 +25,8 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDirectoryDatastore extends MAbstractCachableDatastore
-    implements MISingleDatastore
+class MDirectoryDatasourceDatastore extends MAbstractCachableDatastore
+    implements MISingleDatasourceDatastore
 {
 
     /**
@@ -150,14 +150,14 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
      * @param MWebfile $template
      * @return array
      */
-    public function getByTemplate(MWebfile $template)
+    public function searchByTemplate(MWebfile $template)
     {
         if ($this->isDatastoreCached()) {
 
             if (!$this->isCacheActual()) {
                 $this->fillCachingDatastore();
             }
-            $webfiles = $this->cachingDatastore->getByTemplate($template);
+            $webfiles = $this->cachingDatastore->searchByTemplate($template);
         } else {
             $webfiles = $this->getWebfilesAsArray();
             $webfiles = $this->filterWebfilesByTemplate($webfiles, $template);
@@ -209,7 +209,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     public function deleteByTemplate(MWebfile $template)
     {
-        $webfiles = $this->getByTemplate($template);
+        $webfiles = $this->searchByTemplate($template);
 
         if ($this->isDatastoreCached()) {
             $this->cachingDatastore->deleteByTemplate($template);
