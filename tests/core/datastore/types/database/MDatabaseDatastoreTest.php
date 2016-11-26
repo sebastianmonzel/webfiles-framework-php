@@ -132,10 +132,6 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         // TODO erweitern
         $showTablesResultHandler = $this->createShowTablesResultHandlerMock();
 
-        $tablesMetaInformationResturnObject = new class{};
-        //$tablesMetaInformationResturnObject->Tables_in_webfiles = 'MSampleWebfile';
-        $tablesMetaInformationResturnObject->Tables_in_webfiles = 'test';
-
         $databaseConnectionMock = $this
             ->createMock('simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection');
         $databaseConnectionMock->method('queryAndHandle')->with('SHOW TABLES FROM webfiles')->willReturn($showTablesResultHandler);
