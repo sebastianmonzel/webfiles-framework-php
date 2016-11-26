@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\database\resultHandler;
+namespace simpleserv\webfilesframework\core\datastore\types\database;
 
 
 class MMysqlResultHandler implements MIResultHandler
@@ -23,7 +23,7 @@ class MMysqlResultHandler implements MIResultHandler
     /**
      * @return int
      */
-    public function getResultSize(): int
+    public function getResultSize()
     {
         return $this->result->num_rows;
     }
@@ -33,6 +33,9 @@ class MMysqlResultHandler implements MIResultHandler
      */
     public function fetchNextResultObject() {
         $nextResultObject = $this->result->fetch_object();
+        if ( $nextResultObject ) {
+
+        }
         return $nextResultObject;
     }
 
