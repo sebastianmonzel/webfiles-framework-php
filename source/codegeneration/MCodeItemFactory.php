@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\codegeneration;
+namespace simpleserv\webfilesframework\codegeneration;
 
 use simpleserv\webfilesframework\core\codegeneration\php\MPhpClassAttribute;
 use simpleserv\webfilesframework\MItem;
