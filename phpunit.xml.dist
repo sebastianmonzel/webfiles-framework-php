@@ -3,18 +3,18 @@
 <phpunit bootstrap="./tests/bootstrap.php" colors="true">
 
     <testsuites>
-        <testsuite name="LiipHyphantorBundle test suite">
-            <directory suffix="Test.php">./Tests</directory>
+        <testsuite name="webfiles framework test suite">
+            <directory suffix="Test.php">./tests</directory>
         </testsuite>
     </testsuites>
 
     <filter>
-        <whitelist>
-            <directory>./</directory>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory>./source</directory>
             <exclude>
-                <directory>./Resources</directory>
-                <directory>./Tests</directory>
-                <directory>./vendor</directory>
+                <directory>./build/</directory>
+                <directory>./tests/</directory>
+                <directory>./vendor/</directory>
             </exclude>
         </whitelist>
     </filter>
