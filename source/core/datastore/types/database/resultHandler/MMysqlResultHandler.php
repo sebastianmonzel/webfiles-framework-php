@@ -3,6 +3,8 @@
 namespace simpleserv\webfilesframework\core\datastore\types\database;
 
 
+use simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MIResultHandler;
+
 class MMysqlResultHandler implements MIResultHandler
 {
     /**
