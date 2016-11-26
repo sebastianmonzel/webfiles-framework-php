@@ -58,6 +58,112 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
+     */
+    public function getWebfilesAsStream()
+    {
+        return new MWebfileStream($this->getWebfilesAsArray());
+    }
+
+    /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
+     */
+    public function getWebfilesAsArray()
+    {
+        return $this->getByCondition();
+    }
+
+    /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
+     * @param MWebfile $webfile
+     * @return int Returns the id given in database (in case of a new webfile
+     * the generated id will be returned)
+     */
+    public function storeWebfile(MWebfile $webfile)
+    {
+        if (!$this->tableExistsByWebfile($webfile)) {
+            $this->createTable($webfile, false);
+            return $this->store($webfile);
+        } else {
+            if (!$this->webfileExists($webfile)) {
+                return $this->store($webfile);
+            } else {
+                return $this->update($webfile);
+            }
+        }
+    }
+
+    private function tableExistsByWebfile(MWebfile $webfile)
+    {
+
+        $tableName = $this->resolveTableNameFromWebfile($webfile);
+        return $this->tableExistsByTablename($tableName);
+    }
+
+    /**
+     * Enter description here ...
+     * @param MWebfile $webfile
+     * @return string
+     */
+    public function resolveTableNameFromWebfile(MWebfile $webfile)
+    {
+
+        $classname = $webfile::$m__sClassName;
+
+        if (strpos($classname, "\\") != -1) { // check if classname is given with namespace
+
+            $lastBackslashOccurrence = strrpos($classname, "\\");
+            $classname = substr($classname, $lastBackslashOccurrence + 1);
+        }
+
+        $tableName = $this->databaseConnection->getTablePrefix() . $classname;
+        return $tableName;
+    }
+
+    private function tableExistsByTablename($tableName)
+    {
+        $allTableNames = $this->getAllTableNames();
+        return in_array($tableName,$allTableNames);
+    }
+
+    /**
+     * Returns all tablenames of the current connected database matching to the table prefix
+     * in the used connection.
+     */
+    private function getAllTableNames()
+    {
+
+        $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName());
+
+        $tableNames = array();
+
+        if ($handler->getResultSize() > 0) {
+            while ($oDatabaseResultRow = $handler->fetchNextResultObject()) {
+                $tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabaseName();
+                // add only tables with the current connection prefix
+                if (
+                    substr(
+                        $oDatabaseResultRow->$tablesInVariableName,
+                        0,
+                        strlen($this->databaseConnection->getTablePrefix()))
+                    == $this->databaseConnection->getTablePrefix()) {
+
+                    array_push($tableNames, $oDatabaseResultRow->Tables_in_webfiles);
+                }
+
+            }
+        }
+
+        return $tableNames;
+    }
+
+    /**
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
+     * @return int Returns the id given in database (in case of a new webfile
+     * the generated id will be returned)
+     */
+
+    /**
      * Creates a database table to persist objects of this type.
      * @param MWebfile $webfile
      * @param boolean $dropTableIfExists
@@ -65,7 +171,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
     {
 
-        $tableName = $this->getDatabaseTableName($webfile);
+        $tableName = $this->resolveTableNameFromWebfile($webfile);
 
         // CREATE METADATA
         if (!$this->metadataExist($tableName)) {
@@ -131,114 +237,68 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
-    private function webfileExists(MWebfile $webfile)
+    private function metadataExist($tablename)
     {
-
-        if (!$this->tableExistsByWebfile($webfile)) {
-            $this->createTable($webfile, false);
+        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+            $this->createMetadataTable();
             return false;
         }
-
-        $tableName = $this->getDatabaseTableName($webfile);
-
-        $query = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
-        return ($query->getResultSize() > 0);
-
-    }
-
-    private function tableExistsByWebfile(MWebfile $webfile)
-    {
-
-        $tableName = $this->getDatabaseTableName($webfile);
-        return $this->tableExistsByTablename($tableName);
-    }
-
-    private function tableExistsByTablename($tableName)
-    {
-        $allTableNames = $this->getAllTableNames();
-        return in_array($tableName,$allTableNames);
-    }
-
-    /**
-     * Returns all tablenames of the current connected database matching to the table prefix
-     * in the used connection.
-     */
-    private function getAllTableNames()
-    {
-
-        $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName());
-
-        $tableNames = array();
-
-        if ($handler->getResultSize() > 0) {
-            while ($oDatabaseResultRow = $handler->fetchNextResultObject()) {
-                $tablesInVariableName = "Tables_in_" . $this->databaseConnection->getDatabaseName();
-                // add only tables with the current connection prefix
-                if (
-                    substr(
-                        $oDatabaseResultRow->$tablesInVariableName,
-                        0,
-                        strlen($this->databaseConnection->getTablePrefix()))
-                    == $this->databaseConnection->getTablePrefix()) {
-
-                    array_push($tableNames, $oDatabaseResultRow->Tables_in_webfiles);
-                }
-
-            }
+        $oDatabaseResultSet = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        if ($oDatabaseResultSet->getResultSize() > 0) {
+            return true;
         }
-
-        return $tableNames;
+        return false;
     }
 
     /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
+     *
      */
-    public function getWebfilesAsStream()
+    private function createMetadataTable()
     {
-        return new MWebfileStream($this->getWebfilesAsArray());
+
+        $table = new MDatabaseTable(
+            $this->databaseConnection,
+            $this->databaseConnection->getTablePrefix() . 'metadata');
+        $table->specifyIdentifier("id", 10);
+
+
+        $table->addColumn(
+            "classname",
+            MDatabaseDatatypes::VARCHAR,
+            250);
+        $table->addColumn(
+            "version",
+            MDatabaseDatatypes::INT,
+            50);
+        $table->addColumn(
+            "tablename",
+            MDatabaseDatatypes::VARCHAR,
+            250);
+
+        $table->create();
+
     }
 
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
-     */
-    public function getWebfilesAsArray()
+    private function addMetadata($className, $version, $tablename)
     {
-        return $this->getByCondition();
-    }
 
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
-     * @return int Returns the id given in database (in case of a new webfile
-     * the generated id will be returned)
-     */
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
-     * @param MWebfile $webfile
-     * @return int Returns the id given in database (in case of a new webfile
-     * the generated id will be returned)
-     */
-    public function storeWebfile(MWebfile $webfile)
-    {
-        if (!$this->tableExistsByWebfile($webfile)) {
-            $this->createTable($webfile, false);
+        if (!$this->tableExistsByTablename(
+            $this->databaseConnection->getTablePrefix() . "metadata")) {
+
+            $this->createMetadataTable();
         }
-        if (!$this->webfileExists($webfile)) {
-            return $this->store($webfile);
-        } else {
-            return $this->update($webfile);
-        }
-    }
-
-
-    public function getLatestWebfiles($count = 5)
-    {
-
+        $className = str_replace('\\', '\\\\', $className);
+        $this->databaseConnection->query(
+            "INSERT INTO " .
+                $this->databaseConnection->getTablePrefix() . "metadata" .
+            "(classname, version, tablename)" .
+            " VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');");
     }
 
     private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false)
     {
 
-        $tablename = $this->getDatabaseTableName($webfile);
+        $tablename = $this->resolveTableNameFromWebfile($webfile);
 
         if (!$this->metadataExist($tablename)) {
             $this->addMetadata($webfile::$m__sClassName, '1', $tablename);
@@ -292,6 +352,21 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+    private function webfileExists(MWebfile $webfile)
+    {
+
+        if (!$this->tableExistsByWebfile($webfile)) {
+            $this->createTable($webfile, false);
+            return false;
+        }
+
+        $tableName = $this->resolveTableNameFromWebfile($webfile);
+
+        $query = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
+        return ($query->getResultSize() > 0);
+
+    }
+
     private function update(MWebfile $webfile, $useOnlySimpleDatatypes = false)
     {
 
@@ -336,7 +411,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
 
         $query = "UPDATE 
-        			" . $this->getDatabaseTableName($webfile) . " 
+        			" . $this->resolveTableNameFromWebfile($webfile) . " 
         		 SET 
         			" . $setValuesString . " 
         		 WHERE 
@@ -353,25 +428,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
-
-    /**
-     * Enter description here ...
-     * @param MWebfile $webfile
-     * @return string
-     */
-    public function getDatabaseTableName(MWebfile $webfile)
+    public function getLatestWebfiles($count = 5)
     {
 
-        $classname = $webfile::$m__sClassName;
-
-        if (strpos($classname, "\\") != -1) { // check if classname is given with namespace
-
-            $lastBackslashOccurrence = strrpos($classname, "\\");
-            $classname = substr($classname, $lastBackslashOccurrence + 1);
-        }
-
-        $tableName = $this->databaseConnection->getTablePrefix() . $classname;
-        return $tableName;
     }
 
     public function resolveClassNameFromTableName($tableName)
@@ -381,6 +440,22 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
         $metadata = $this->resolveMetadataForTablename($tableName);
         return $metadata->classname;
+    }
+
+    private function resolveMetadataForTablename($tablename)
+    {
+
+        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+            $this->createMetadataTable();
+        }
+
+        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        if ($oDatabaseResultHandler->getResultSize() > 0) {
+            $result = $oDatabaseResultHandler->fetchNextResultObject();
+            return $result;
+        } else {
+            return null;
+        }
     }
 
     /**
@@ -424,7 +499,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                     $first = false;
                 }
             }
-            $tableName = $this->getDatabaseTableName($webfile);
+            $tableName = $this->resolveTableNameFromWebfile($webfile);
             $query = "SELECT * FROM " . $tableName;
 
 
@@ -464,7 +539,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                                     $oSubAttributeName = $oSubAttribute->getName();
                                     if (MWebfile::isSimpleDatatype($oSubAttributeName)) {
 
-                                        $sDatabaseFieldName = $this->getDatabaseTableName(new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
+                                        $sDatabaseFieldName = $this->resolveTableNameFromWebfile(new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
                                         $webfile->$sAttributeName->$oSubAttributeName = $databaseResultObject->$sDatabaseFieldName;
                                     }
                                 }
@@ -480,32 +555,6 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         return $webfileArray;
 
-    }
-
-
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
-     * @param MWebfile $webfile
-     */
-    public function deleteByTemplate(MWebfile $webfile)
-    {
-
-        if ($this->tableExistsByWebfile($webfile)) {
-
-            // determine table with webfile type
-            $tableName = $this->getDatabaseTableName($webfile);
-
-            // translate template into a condition
-            $condition = $this->translateTemplateIntoCondition($webfile);
-
-            $query = "DELETE FROM " . $tableName;
-
-            if (!empty($condition)) {
-                $query .= " WHERE " . $condition;
-            }
-
-            $this->databaseConnection->query($query);
-        }
     }
 
     /**
@@ -563,72 +612,27 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
-     *
+     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+     * @param MWebfile $webfile
      */
-    private function createMetadataTable()
+    public function deleteByTemplate(MWebfile $webfile)
     {
 
-        $table = new MDatabaseTable(
-            $this->databaseConnection,
-            $this->databaseConnection->getTablePrefix() . 'metadata');
-        $table->specifyIdentifier("id", 10);
+        if ($this->tableExistsByWebfile($webfile)) {
 
+            // determine table with webfile type
+            $tableName = $this->resolveTableNameFromWebfile($webfile);
 
-        $table->addColumn(
-            "classname",
-            MDatabaseDatatypes::VARCHAR,
-            250);
-        $table->addColumn(
-            "version",
-            MDatabaseDatatypes::INT,
-            50);
-        $table->addColumn(
-            "tablename",
-            MDatabaseDatatypes::VARCHAR,
-            250);
+            // translate template into a condition
+            $condition = $this->translateTemplateIntoCondition($webfile);
 
-        $table->create();
+            $query = "DELETE FROM " . $tableName;
 
-    }
+            if (!empty($condition)) {
+                $query .= " WHERE " . $condition;
+            }
 
-    private function metadataExist($tablename)
-    {
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
-            $this->createMetadataTable();
-            return false;
-        }
-        $oDatabaseResultSet = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
-        if ($oDatabaseResultSet->getResultSize() > 0) {
-            return true;
-        }
-        return false;
-    }
-
-    private function addMetadata($className, $version, $tablename)
-    {
-
-        if (!$this->tableExistsByTablename(
-            $this->databaseConnection->getTablePrefix() . "metadata")) {
-
-            $this->createMetadataTable();
-        }
-        $className = str_replace('\\', '\\\\', $className);
-        $this->databaseConnection->query("INSERT INTO " . $this->databaseConnection->getTablePrefix() . "metadata (classname, version, tablename) VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');");
-    }
-
-    private function resolveMetadataForTablename($tablename)
-    {
-
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
-            $this->createMetadataTable();
-        }
-
-        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
-        if ($oDatabaseResultHandler->getResultSize() > 0) {
-            $result = $oDatabaseResultHandler->fetchNextResultObject();
-            return $result;
-        } else {
-            return null;
+            $this->databaseConnection->query($query);
         }
     }
 
