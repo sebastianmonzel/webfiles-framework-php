@@ -22,7 +22,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
      * @param $tablesMetaInformationResturnObject
      * @return PHPUnit_Framework_MockObject_MockObject
      */
-    public function createWebfilesResultHandlerMock():PHPUnit_Framework_MockObject_MockObject
+    public function createWebfilesResultHandlerMock()
     {
 
         $webfilesResultHandler = $this
@@ -56,7 +56,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
     /**
      * @return array
      */
-    public function createShowTablesResultHandlerMock():PHPUnit_Framework_MockObject_MockObject
+    public function createShowTablesResultHandlerMock()
     {
         // TODO umbauen wenn unten aufgeführte erzeugung von klasse in alten php versionen probleme macht
 
