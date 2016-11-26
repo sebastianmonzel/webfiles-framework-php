@@ -1,9 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\database;
-
-
-use simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MIResultHandler;
+namespace simpleserv\webfilesframework\core\datastore\types\database\resultHandler;
 
 class MMysqlResultHandler implements MIResultHandler
 {
