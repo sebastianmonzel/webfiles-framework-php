@@ -29,20 +29,15 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             ->createMock(
                 'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
 
-
-
-
-        $webfilesReturnObject = new class
-        {
-        };
-
-        $webfilesReturnObject->id = '1';
-        $webfilesReturnObject->firstname = 'Peter';
-        $webfilesReturnObject->lastname = 'Schmidt';
-        $webfilesReturnObject->street = '';
-        $webfilesReturnObject->housenumber = '';
-        $webfilesReturnObject->postcode = '67433';
-        $webfilesReturnObject->city = 'Neustadt';
+        $webfilesReturnObject = (object) [
+            'id' => '1',
+            'firstname' => 'Peter',
+            'lastname' => 'Schmidt',
+            'street' => '',
+            'housenumber' => '',
+            'postcode' => '67433',
+            'city' => 'Neustadt'
+        ];
 
 
         $webfilesResultHandler->method('getResultSize')->willReturn(1);
@@ -58,17 +53,9 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
      */
     public function createShowTablesResultHandlerMock()
     {
-        // TODO umbauen wenn unten aufgeführte erzeugung von klasse in alten php versionen probleme macht
-
-        /*$object = (object) [
-            'propertyOne' => 'foo',
-            'propertyTwo' => 42,
-        ];*/
-
-        $tablesMetaInformationResturnObject = new class
-        {
-        };
-        $tablesMetaInformationResturnObject->Tables_in_webfiles = 'MSampleWebfile';
+        $tablesMetaInformationResturnObject = (object) [
+            'Tables_in_webfiles' => 'MSampleWebfile',
+        ];
 
         $showTablesResultHandler = $this
             ->createMock(
