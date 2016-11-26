@@ -130,29 +130,11 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
 
     public function testCreationOfNewDatabaseInCaseNoTableExists2() {
         // TODO erweitern
-        $showTablesResultHandler = $this
-            ->createMock(
-                'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
-
-        $showTablesResultHandler->method('getResultSize')->willReturn(1);
-
-        // TODO umbauen wenn unten aufgeführte erzeugung von klasse in alten php versionen probleme macht
-
-        /*$object = (object) [
-            'propertyOne' => 'foo',
-            'propertyTwo' => 42,
-        ];*/
+        $showTablesResultHandler = $this->createShowTablesResultHandlerMock();
 
         $tablesMetaInformationResturnObject = new class{};
         //$tablesMetaInformationResturnObject->Tables_in_webfiles = 'MSampleWebfile';
         $tablesMetaInformationResturnObject->Tables_in_webfiles = 'test';
-
-
-
-
-        $showTablesResultHandler
-            ->method('fetchNextResultObject')
-            ->willReturn($tablesMetaInformationResturnObject,null);
 
         $databaseConnectionMock = $this
             ->createMock('simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection');
