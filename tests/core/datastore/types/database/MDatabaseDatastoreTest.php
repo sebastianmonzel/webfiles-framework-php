@@ -127,7 +127,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             //->with($this->greaterThan(0), $this->stringContains('Something'));
     }
 
-
+/*
     public function testCreationOfNewDatabaseInCaseNoTableExists2() {
         // TODO erweitern
         $showTablesResultHandler = $this->createShowTablesResultHandlerMock();
@@ -163,7 +163,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         //->method('query');
         //->with($this->stringContains('CREATE TABLE'));
         //->with($this->greaterThan(0), $this->stringContains('Something'));
-    }
+    }*/
 
 
     public function testCreationOfNewDatabaseInCaseNoTableExists() {
