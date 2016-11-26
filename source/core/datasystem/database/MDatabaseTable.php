@@ -55,7 +55,7 @@ class MDatabaseTable
         if ($this->primaryKey != null) {
             $query .= "PRIMARY KEY (`" . $this->primaryKey . "`)";
         }
-        $query .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;";
+        $query .= ") ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;";
 
         $this->databaseConnection->query($query);
     }
