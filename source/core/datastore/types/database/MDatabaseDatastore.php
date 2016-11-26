@@ -371,7 +371,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
 
         $tableName = $this->databaseConnection->getTablePrefix() . $classname;
-        echo $tableName;
         return $tableName;
     }
 
@@ -395,8 +394,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         $webfileArray = array();
 
         if ($this->tableExistsByWebfile($webfile)) {
-            echo "test";
-
 
             $first = true;
             $order = "";
@@ -439,16 +436,12 @@ class MDatabaseDatastore extends MAbstractDatastore
             if (!empty($order)) {
                 $query .= " ORDER BY " . $order;
             }
-            echo "\nbla\n";
+
             $resultHandler = $this->databaseConnection->queryAndHandle($query);
-            var_export($resultHandler);
-            echo $query;
-            echo "test:" . $resultHandler->getResultSize();
+
             if ($resultHandler != false) {
                 if ($resultHandler->getResultSize() > 0) {
                     while ($databaseResultObject = $resultHandler->fetchNextResultObject()) {
-
-                        var_export($databaseResultObject);
 
                         $className = $webfile::$m__sClassName;
 
