@@ -38,4 +38,12 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
     	$referencedSimplifiedAttributename = "name";
     	$this->assertEquals($referencedSimplifiedAttributename,$calculatedSimplifiedAttributename);
     }
+
+    public function testMarshallWebfile() {
+        $sample = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $marshalledWebfile = $sample->marshall(true);
+        //self::assertXmlFileEqualsXmlFile();
+
+    }
+
 }

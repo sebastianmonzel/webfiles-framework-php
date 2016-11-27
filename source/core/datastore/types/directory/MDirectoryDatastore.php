@@ -25,7 +25,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDirectoryDatasourceDatastore extends MAbstractCachableDatastore
+class MDirectoryDatastore extends MAbstractCachableDatastore
     implements MISingleDatasourceDatastore
 {
 
@@ -185,8 +185,7 @@ class MDirectoryDatasourceDatastore extends MAbstractCachableDatastore
             foreach ($attributes as $attribute) {
 
                 $attribute->setAccessible(true);
-
-                $templateValue = $attribute->getValue($webfile);
+                $templateValue = $attribute->getValue($template);
 
                 if (
                     $templateValue != "?"
