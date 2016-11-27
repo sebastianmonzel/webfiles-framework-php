@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<phpunit bootstrap="./tests/bootstrap.php" colors="true">
+<phpunit bootstrap="./tests/source/bootstrap.php" colors="true">
 
     <testsuites>
         <testsuite name="webfiles framework test suite">
-            <directory suffix="Test.php">./tests</directory>
+            <directory suffix="Test.php">./tests/source</directory>
         </testsuite>
     </testsuites>
 
