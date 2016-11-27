@@ -21,7 +21,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     public function createDirectoryDatastore()
     {
         $directoryDatastore = new \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(__DIR__ . '\..\..\..\..\..\resources\folderDatastore'));
+            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(__DIR__ . '/../../../../../resources/folderDatastore'));
         return $directoryDatastore;
     }
 
