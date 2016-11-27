@@ -121,6 +121,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     public function testCreateAndDeleteByTemplate() {
 
         $databaseDatastore = $this->createDirectoryDatastore();
+        var_export($databaseDatastore->getWebfilesAsArray());
         self::assertEquals(2,count($databaseDatastore->getWebfilesAsArray()));
         $databaseDatastore->storeWebfile($this->createReferenceSampleObject3());
         self::assertEquals(3,count($databaseDatastore->getWebfilesAsArray()));
