@@ -42,7 +42,6 @@ class MDirectoryWebfileGrabber
     {
 
         $filesArray = $this->directory->getFiles();
-        var_dump($filesArray);
         $objectsArray = array();
 
         foreach ($filesArray as $file) {
@@ -50,9 +49,15 @@ class MDirectoryWebfileGrabber
             $fileContent = $file->getContent();
 
             $item = MWebfile::staticUnmarshall($fileContent);
-            $time = $file->getDate();
+            $arrayKey = $file->getDate();
+            $arrayKeyCount = 1;
 
-            $objectsArray[$time] = $item;
+            // make sure files with the same timestamp have an unique array key
+            while (isset($objectsArray[$arrayKey])) {
+                $arrayKeyCount++;
+                $arrayKey = $arrayKey . "," . $arrayKeyCount;
+            }
+            $objectsArray[$arrayKey] = $item;
         }
 
         return $objectsArray;
