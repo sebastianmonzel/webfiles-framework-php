@@ -26,7 +26,7 @@ class MDirectoryWebfileGrabber
     public function __construct($directory)
     {
 
-        if ($directory == null) {
+        if ($directory == null || !$directory instanceof MDirectory) {
             throw new MDatastoreException("Cannot instantiate a DirectoryItemGrabber without valid directory.");
         }
 
@@ -42,6 +42,7 @@ class MDirectoryWebfileGrabber
     {
 
         $filesArray = $this->directory->getFiles();
+        var_dump($filesArray);
         $objectsArray = array();
 
         foreach ($filesArray as $file) {
