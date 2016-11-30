@@ -129,8 +129,8 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setLastname("Hauber");
-        $databaseDatastore->deleteByTemplate($template);
-        self::assertEquals(2,count($databaseDatastore->getWebfilesAsArray()));
+        //$databaseDatastore->deleteByTemplate($template);
+        //self::assertEquals(2,count($databaseDatastore->getWebfilesAsArray()));
     }
 
 
