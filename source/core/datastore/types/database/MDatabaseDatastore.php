@@ -70,7 +70,26 @@ class MDatabaseDatastore extends MAbstractDatastore
      */
     public function getWebfilesAsArray()
     {
-        return $this->getByCondition();
+        $result = array();
+        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+            return $result;
+        }
+
+        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata");
+
+        if ($oDatabaseResultHandler->getResultSize() > 0) {
+            throw new \Exception("no tables given in metadata.");
+        }
+        while ( $result = $oDatabaseResultHandler->fetchNextResultObject() ) {
+
+            $webfilesForTable = $this->getWebfilesByTableName($result->tablename, $result->classname);
+
+            foreach ( $webfilesForTable as $webfile ) {
+                array_push($result,$webfile);
+            }
+
+        }
+        return $result;
     }
 
     /**
@@ -132,8 +151,10 @@ class MDatabaseDatastore extends MAbstractDatastore
      */
     private function getAllTableNames()
     {
-
+        echo "SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName();
         $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName());
+
+        //var_dump($this->databaseConnection);
 
         $tableNames = array();
 
@@ -460,101 +481,87 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     /**
      * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::searchByTemplate()
-     * @param MWebfile $webfile
+     * @param MWebfile $template
      * @return array
      */
-    public function searchByTemplate(MWebfile $webfile)
+    public function searchByTemplate(MWebfile $template)
     {
 
         $webfileArray = array();
 
-        if ($this->tableExistsByWebfile($webfile)) {
+        if ($this->tableExistsByWebfile($template)) {
 
-            $first = true;
-            $order = "";
+            $tableName = $this->resolveTableNameFromWebfile($template);
 
-            $attributes = $webfile->getAttributes(true);
+            $sorting = $this->translateTemplateIntoSorting($template);
+            $condition = $this->translateTemplateIntoCondition($template);
 
-            // SORTING
-            foreach ($attributes as $attribute) {
+            $webfileArray = $this->getWebfilesByTablename(
+                $tableName,$template::$m__sClassName,$condition,$sorting);
 
-                $attribute->setAccessible(true);
-
-                $name = $attribute->getName();
-                $value = $attribute->getValue($webfile);
-
-                if ($value instanceof MAscendingSorting) {
-
-                    if (!$first) {
-                        $order .= " , ";
-                    }
-                    $order .= " " . MWebfile::getSimplifiedAttributeName($name) . " ASC ";
-                    $first = false;
-                } else if ($value instanceof MDescendingSorting) {
-
-                    if (!$first) {
-                        $order .= " , ";
-                    }
-                    $order .= " " . MWebfile::getSimplifiedAttributeName($name) . " DESC ";
-                    $first = false;
-                }
-            }
-            $tableName = $this->resolveTableNameFromWebfile($webfile);
-            $query = "SELECT * FROM " . $tableName;
-
-
-            $condition = $this->translateTemplateIntoCondition($webfile);
-            if (!empty($condition)) {
-                $query .= " WHERE " . $condition;
-            }
-
-            if (!empty($order)) {
-                $query .= " ORDER BY " . $order;
-            }
-
-            $resultHandler = $this->databaseConnection->queryAndHandle($query);
-
-            if ($resultHandler != false) {
-                if ($resultHandler->getResultSize() > 0) {
-                    while ($databaseResultObject = $resultHandler->fetchNextResultObject()) {
-
-                        $className = $webfile::$m__sClassName;
-
-                        $webfile = new $className();
-                        foreach ($attributes as $oAttribute) {
-
-                            $oAttribute->setAccessible(true);
-
-                            $sAttributeName = $oAttribute->getName();
-                            if (MWebfile::isSimpleDatatype($sAttributeName)) {
-                                $sDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
-                                $oAttribute->setValue($webfile, $databaseResultObject->$sDatabaseFieldName);
-                            } else if (MWebfile::isObject($sAttributeName)) {
-                                eval("\$sClassName = static::\$s__oAggregation[\$sAttributeName];");
-                                /** @noinspection PhpUndefinedVariableInspection */
-                                eval("\$oSubAttributeArray = $sClassName::getAttributes(1);");
-                                /** @noinspection PhpUndefinedVariableInspection */
-                                foreach ($oSubAttributeArray as $oSubAttribute) {
-
-                                    $oSubAttributeName = $oSubAttribute->getName();
-                                    if (MWebfile::isSimpleDatatype($oSubAttributeName)) {
-
-                                        $sDatabaseFieldName = $this->resolveTableNameFromWebfile(new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
-                                        $webfile->$sAttributeName->$oSubAttributeName = $databaseResultObject->$sDatabaseFieldName;
-                                    }
-                                }
-                            }
-                        }
-                        array_push($webfileArray, $webfile);
-                    }
-                }
-            }
         } else {
-            $this->createTable($webfile, false);
+            $this->createTable($template, false);
         }
 
         return $webfileArray;
+    }
 
+    private function getWebfilesByTablename($tableName,$className = null,$condition = null,$order = null)
+    {
+        $webfileArray = array();
+        $query = "SELECT * FROM " . $tableName;
+
+        if (!empty($condition)) {
+            $query .= " WHERE " . $condition;
+        }
+
+        if (!empty($order)) {
+            $query .= " ORDER BY " . $order;
+        }
+
+        $resultHandler = $this->databaseConnection->queryAndHandle($query);
+
+        if ($resultHandler != false) {
+            if ($resultHandler->getResultSize() > 0) {
+                while ($databaseResultObject = $resultHandler->fetchNextResultObject()) {
+
+                    if ( $className == null ) {
+                        $className = $this->resolveClassNameFromTableName($tableName);
+                    }
+
+                    $targetWebfile = new $className();
+                    $attributes = $targetWebfile->getAttributes(true);
+
+                    foreach ($attributes as $oAttribute) {
+
+                        $oAttribute->setAccessible(true);
+
+                        $sAttributeName = $oAttribute->getName();
+                        if (MWebfile::isSimpleDatatype($sAttributeName)) {
+                            $sDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
+                            $oAttribute->setValue($targetWebfile, $databaseResultObject->$sDatabaseFieldName);
+                        } else if (MWebfile::isObject($sAttributeName)) {
+                            eval("\$sClassName = static::\$s__oAggregation[\$sAttributeName];");
+                            /** @noinspection PhpUndefinedVariableInspection */
+                            eval("\$oSubAttributeArray = $sClassName::getAttributes(1);");
+                            /** @noinspection PhpUndefinedVariableInspection */
+                            foreach ($oSubAttributeArray as $oSubAttribute) {
+
+                                $oSubAttributeName = $oSubAttribute->getName();
+                                if (MWebfile::isSimpleDatatype($oSubAttributeName)) {
+
+                                    $sDatabaseFieldName = $this->resolveTableNameFromWebfile(
+                                        new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
+                                    $targetWebfile->$sAttributeName->$oSubAttributeName = $databaseResultObject->$sDatabaseFieldName;
+                                }
+                            }
+                        }
+                    }
+                    array_push($webfileArray, $targetWebfile);
+                }
+            }
+        }
+        return $webfileArray;
     }
 
     /**
@@ -634,6 +641,45 @@ class MDatabaseDatastore extends MAbstractDatastore
 
             $this->databaseConnection->query($query);
         }
+    }
+
+    /**
+     * @param MWebfile $template
+     * @param $first
+     * @param $order
+     * @return string
+     */
+    public function translateTemplateIntoSorting(MWebfile $template)
+    {
+        $attributes = $template->getAttributes(true);
+
+        $order = "";
+        $first = true;
+
+        foreach ($attributes as $attribute) {
+
+            $attribute->setAccessible(true);
+
+            $name = $attribute->getName();
+            $value = $attribute->getValue($template);
+
+            if ($value instanceof MAscendingSorting) {
+
+                if (!$first) {
+                    $order .= " , ";
+                }
+                $order .= " " . MWebfile::getSimplifiedAttributeName($name) . " ASC ";
+                $first = false;
+            } else if ($value instanceof MDescendingSorting) {
+
+                if (!$first) {
+                    $order .= " , ";
+                }
+                $order .= " " . MWebfile::getSimplifiedAttributeName($name) . " DESC ";
+                $first = false;
+            }
+        }
+        return $order;
     }
 
 }

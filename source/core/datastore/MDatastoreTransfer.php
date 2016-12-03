@@ -37,7 +37,7 @@ class MDatastoreTransfer
             throw new MDatastoreException("Cannot transfer data to a read-only datastore.");
         }
 
-        $webfiles = $this->source->getWebfilesFromDatastore();
+        $webfiles = $this->source->getWebfilesAsArray();
 
         foreach ($webfiles as $webfile) {
             $this->target->storeWebfile($webfile);

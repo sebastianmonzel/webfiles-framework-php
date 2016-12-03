@@ -15,6 +15,8 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
      */
     protected $object;
 
+
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
@@ -53,6 +55,31 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
     {
         $databaseConnectionMock = $this
             ->createMock('simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection');
+        return $databaseConnectionMock;
+    }
+
+    /**
+     * @return PHPUnit_Framework_MockObject_MockObject
+     */
+    public function createPreparedDatabaseConnectionMock()
+    {
+        $databaseConnectionMock = $this->createDatabaseConnectionMock();
+        $showTablesResultHandler = $this->createMockForShowTablesResultHandler();
+        $webfilesResultHandler = $this->createMockForWebfilesResultHandler();
+
+        // TODO möglichkeit finden hier ohne at() zu operieren, da refactorings sonst schnell tests brechnen können
+        $databaseConnectionMock
+            ->expects($this->at(2))
+            ->method('queryAndHandle')
+            ->with('SHOW TABLES FROM webfiles')
+            ->willReturn($showTablesResultHandler);
+        $databaseConnectionMock
+            ->expects($this->at(7))
+            ->method('queryAndHandle')
+            ->with('SELECT * FROM MSampleWebfile')
+            ->willReturn($webfilesResultHandler);
+
+        $databaseConnectionMock->method('getDatabaseName')->willReturn('webfiles');
         return $databaseConnectionMock;
     }
 
@@ -109,23 +136,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
 
     public function testSearchByTemplate() {
 
-        $databaseConnectionMock = $this->createDatabaseConnectionMock();
-        $showTablesResultHandler = $this->createMockForShowTablesResultHandler();
-        $webfilesResultHandler = $this->createMockForWebfilesResultHandler();
-
-        // TODO möglichkeit finden hier ohne at() zu operieren, da refactorings sonst schnell tests brechnen können
-        $databaseConnectionMock
-            ->expects($this->at(2))
-            ->method('queryAndHandle')
-            ->with('SHOW TABLES FROM webfiles')
-            ->willReturn($showTablesResultHandler);
-        $databaseConnectionMock
-            ->expects($this->at(7))
-            ->method('queryAndHandle')
-            ->with('SELECT * FROM MSampleWebfile')
-            ->willReturn($webfilesResultHandler);
-
-        $databaseConnectionMock->method('getDatabaseName')->willReturn('webfiles');
+        $databaseConnectionMock = $this->createPreparedDatabaseConnectionMock();
 
         $databaseDatastore = new MDatabaseDatastore($databaseConnectionMock);
         $template = new MSampleWebfile();
