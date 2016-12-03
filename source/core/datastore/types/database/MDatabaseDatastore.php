@@ -70,26 +70,27 @@ class MDatabaseDatastore extends MAbstractDatastore
      */
     public function getWebfilesAsArray()
     {
-        $result = array();
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
-            return $result;
+        $webfilesResult = array();
+
+        $metadataTableName = $this->databaseConnection->getTablePrefix() . "metadata";
+
+        if (!$this->tableExistsByTablename($metadataTableName)) {
+            return $webfilesResult;
         }
 
-        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata");
-
-        if ($oDatabaseResultHandler->getResultSize() > 0) {
+        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $metadataTableName);
+        if (!$oDatabaseResultHandler->getResultSize() > 0) {
             throw new \Exception("no tables given in metadata.");
         }
         while ( $result = $oDatabaseResultHandler->fetchNextResultObject() ) {
-
             $webfilesForTable = $this->getWebfilesByTableName($result->tablename, $result->classname);
 
             foreach ( $webfilesForTable as $webfile ) {
-                array_push($result,$webfile);
+                array_push($webfilesResult,$webfile);
             }
 
         }
-        return $result;
+        return $webfilesResult;
     }
 
     /**
@@ -151,11 +152,7 @@ class MDatabaseDatastore extends MAbstractDatastore
      */
     private function getAllTableNames()
     {
-        echo "SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName();
         $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName());
-
-        //var_dump($this->databaseConnection);
-
         $tableNames = array();
 
         if ($handler->getResultSize() > 0) {
@@ -509,8 +506,9 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function getWebfilesByTablename($tableName,$className = null,$condition = null,$order = null)
     {
         $webfileArray = array();
-        $query = "SELECT * FROM " . $tableName;
 
+
+        $query = "SELECT * FROM " . $tableName;
         if (!empty($condition)) {
             $query .= " WHERE " . $condition;
         }
@@ -524,7 +522,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         if ($resultHandler != false) {
             if ($resultHandler->getResultSize() > 0) {
                 while ($databaseResultObject = $resultHandler->fetchNextResultObject()) {
-
                     if ( $className == null ) {
                         $className = $this->resolveClassNameFromTableName($tableName);
                     }
