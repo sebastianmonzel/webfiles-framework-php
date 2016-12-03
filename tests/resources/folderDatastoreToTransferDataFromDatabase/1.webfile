@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?><object classname="simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile">
+	<firstname><![CDATA[dummy]]></firstname>
+	<lastname><![CDATA[dummy]]></lastname>
+	<street><![CDATA[dummy]]></street>
+	<housenumber><![CDATA[]]></housenumber>
+	<postcode><![CDATA[67433]]></postcode>
+	<city><![CDATA[dummy]]></city>
+	<id><![CDATA[1]]></id>
+</object>
