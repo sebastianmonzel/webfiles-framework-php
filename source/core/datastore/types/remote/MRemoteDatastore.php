@@ -68,12 +68,12 @@ class MRemoteDatastore extends MAbstractDatastore
         // TODO
     }
 
-    public function searchByTemplate(MWebfile $webfile)
+    public function searchByTemplate(MWebfile $template)
     {
 
         $data = array();
         $data['method'] = "getByTemplate";
-        $data['template'] = $webfile->marshall();
+        $data['template'] = $template->marshall();
 
         return $this->getWebfilesAsStream($data)->getWebfiles();
     }

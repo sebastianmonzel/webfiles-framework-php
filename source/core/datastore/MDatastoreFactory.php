@@ -2,11 +2,10 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
+use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatasourceDatastore;
-
-use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatasourceDatastore;
 use simpleserv\webfilesframework\MItem;
 
 /**
@@ -36,16 +35,16 @@ class MDatastoreFactory
     /**
      *
      * @param MItem $item
-     * @return null|MDatabaseDatasourceDatastore|MDirectoryDatasourceDatastore
+     * @return MAbstractDatastore
      */
     public static function createDatastore(MItem $item)
     {
         if ($item instanceof MDirectory) {
-            return new MDirectoryDatasourceDatastore($item);
+            return new MDirectoryDatastore($item);
         } else if ($item instanceof MDatabaseConnection) {
-            return new MDatabaseDatasourceDatastore($item);
+            return new MDatabaseDatastore($item);
         } else {
-            return null;
+            throw new Exeption("Unsupported type to create datastore.");
         }
     }
 }

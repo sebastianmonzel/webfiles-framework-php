@@ -156,9 +156,9 @@ class MImapDatasourceDatastore extends MAbstractDatastore
         return $file->exists();
     }
 
-    public function searchByTemplate(MWebfile $webfile)
+    public function searchByTemplate(MWebfile $template)
     {
-        if (!$webfile instanceof MMail) {
+        if (!$template instanceof MMail) {
             throw new MDatastoreException("Cannot search in imap datastore for webfiles appart of type 'MMail'.");
         }
     }

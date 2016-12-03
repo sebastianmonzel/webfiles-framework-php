@@ -33,8 +33,12 @@ class MDirectory extends MFile
 
         $filenames = array();
 
-        if ($oDiractoryHandle = opendir($this->m_sPath)) {
-            while (false !== ($filename = readdir($oDiractoryHandle))) {
+        if ( ! $this->exists() ) {
+            throw new \Exception("file '" . $this->m_sPath . "' does not exist.");
+        }
+
+        if ($oDirectoryHandle = opendir($this->m_sPath)) {
+            while (false !== ($filename = readdir($oDirectoryHandle))) {
                 if ($filename != "." && $filename != ".." && (!is_dir($this->m_sPath . "/" . $filename))) {
                     $file = new MFile($this->getPath() . "/" . $filename);
                     array_push($filenames, $file);
