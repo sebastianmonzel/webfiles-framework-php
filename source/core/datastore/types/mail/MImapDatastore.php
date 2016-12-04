@@ -17,7 +17,7 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreException;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MImapDatasourceDatastore extends MAbstractDatastore
+class MImapDatastore extends MAbstractDatastore
     implements MISingleDatasourceDatastore
 {
 
