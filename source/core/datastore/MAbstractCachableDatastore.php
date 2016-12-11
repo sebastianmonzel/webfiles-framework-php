@@ -21,6 +21,8 @@ abstract class MAbstractCachableDatastore extends MAbstractDatastore
     /** @var MAbstractDatastore $cachingDatastore **/
     protected $cachingDatastore;
 
+    protected $latestCachingTime;
+
     /**
      * sets the datastore used for caching data from the original datastore.
      *
@@ -48,8 +50,27 @@ abstract class MAbstractCachableDatastore extends MAbstractDatastore
         return isset($this->cachingDatastore);
     }
 
-    public abstract function getLatestCachingTime();
+    public function getLatestCachingTime() {
+        return $this->latestCachingTime;
+    }
 
-    public abstract function isCacheActual();
+    /**
+     * Define a criteria which indicates the actual datastore
+     * with cache is not outdated.
+     *
+     * Default implemention checks if last caching was more than one day ago.
+     *
+     * @return mixed
+     */
+    public function isCacheActual() {
+
+        if ( !isset($this->latestCachingTime) ) {
+            return false;
+        }
+
+        return
+            ((time() - $this->latestCachingTime)
+                > (24 * 60 * 60));
+    }
 
 }

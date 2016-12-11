@@ -159,7 +159,8 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
             'street' => 'from',
             'city' => 'databaseDatastore',
             'housenumber' => '',
-            'postcode' => '67433'
+            'postcode' => '67433',
+            'time' => 4711
         ];
 
         $webfilesResultHandler->method('getResultSize')->willReturn(1);

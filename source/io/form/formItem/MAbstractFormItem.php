@@ -2,8 +2,6 @@
 
 namespace simpleserv\webfilesframework\io\form\formItem;
 
-use simpleserv\webfilesframework\MItem;
-
 /**
  * description
  *
@@ -11,7 +9,7 @@ use simpleserv\webfilesframework\MItem;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-abstract class MAbstractFormItem extends MItem
+abstract class MAbstractFormItem
 {
 
     protected $name;

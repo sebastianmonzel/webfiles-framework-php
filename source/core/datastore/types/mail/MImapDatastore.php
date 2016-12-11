@@ -116,8 +116,6 @@ class MImapDatastore extends MAbstractDatastore
             $webfileArray[$time] = $mail;
         }
 
-        //$webfileArray = array_reverse($webfileArray);
-
         return new MWebfileStream($webfileArray);
     }
 

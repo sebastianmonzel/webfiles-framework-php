@@ -3,7 +3,6 @@
 namespace simpleserv\webfilesframework\codegeneration;
 
 use simpleserv\webfilesframework\core\codegeneration\php\MPhpClassAttribute;
-use simpleserv\webfilesframework\MItem;
 use simpleserv\webfilesframework\core\codegeneration\java\MJavaWebfileClass;
 use simpleserv\webfilesframework\core\codegeneration\php\MPhpWebfileClass;
 use simpleserv\webfilesframework\MWebfilesFrameworkException;
@@ -15,7 +14,7 @@ use simpleserv\webfilesframework\MWebfilesFrameworkException;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MCodeItemFactory extends MItem
+class MCodeItemFactory
 {
 
     /**

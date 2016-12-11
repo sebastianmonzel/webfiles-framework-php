@@ -6,7 +6,6 @@ use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastor
 use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\MItem;
 
 /**
  * Creates depending on the given type a datastore, which can
@@ -27,17 +26,11 @@ class MDatastoreFactory
      *        <li>MDatabaseConnection</li>
      * </ul>
      *
-     * @param MItem $item
+     * @param MDirectory|MDatabaseConnection $item
      * @return MAbstractDatastore Returns a datastore depending on the
      * given item.
      */
-
-    /**
-     *
-     * @param MItem $item
-     * @return MAbstractDatastore
-     */
-    public static function createDatastore(MItem $item)
+    public static function createDatastore($item)
     {
         if ($item instanceof MDirectory) {
             return new MDirectoryDatastore($item);

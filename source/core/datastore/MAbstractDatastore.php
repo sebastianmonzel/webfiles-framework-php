@@ -8,10 +8,9 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
- * Base class for defining datastores to save and load webfiles
- * on a standarized way.<br />
+ * Base class for defining datastores to save and load webfiles on a standardized way.<br />
  * More about the definition of a datastore can be found under
- * the folling <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitiondatastore">link</a>.<br />
+ * the following <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitiondatastore">link</a>.<br />
  * <br />
  * Implements the webfiles standard to be able to edit datastores with help of the webfile editor.
  *
@@ -34,13 +33,19 @@ abstract class MAbstractDatastore extends MWebfile
     public abstract function isReadOnly();
 
     /**
-     * Returns the next webfile for the given timestamp
+     * Some datastore cannot be sorted by time due to performance issues.
+     * In this time cache can solve the problem. For letting the developer
+     * decide if implementing sorting by timestamp this function sets
+     * the sorting to true or false.
+     *
      * @param int $time timestamp in unix-format.
      * @return MWebfile webfile according to the given input.
      * old: getNextWebfileForTime - new getNextWebfileForTimestamp
      * DONE
      */
-    public abstract function getNextWebfileForTimestamp($time);
+    public function getNextWebfileForTimestamp($time) {
+        throw new MDatastoreException("datastore cannot be sorted by timestamp.");
+    }
 
     /**
      * Returns a webfiles stream with all webfiles from
@@ -57,12 +62,6 @@ abstract class MAbstractDatastore extends MWebfile
     public abstract function getWebfilesAsArray();
 
     /**
-     * DELETED
-     * getDatasetsFromDatastore
-     *getLatestDatasets
-     */
-
-    /**
      * Returns the latests webfiles. Sorting will
      * happen according to the time information of the webfiles.
      *
@@ -77,8 +76,9 @@ abstract class MAbstractDatastore extends MWebfile
      * with the given template.<br />
      * Searching by template is devided in two steps:<br />
      * <ol>
-     *    <li>On the first step you define the template you want to search with. Here can help you the method <b>presetDefaultForTemplate</b> on the class <b>MWebfile</b>.</li>
-     *  <li>On the second step you put the template to the datastore to start the search</li>
+     *    <li>On the first step you define the template you want to search with. Here can help you the method
+     *        <b>presetDefaultForTemplate</b> on the class <b>MWebfile</b>.</li>
+     *    <li>On the second step you put the template to the datastore to start the search</li>
      * </ol>
      *
      * @param MWebfile $template template to search for
@@ -86,7 +86,49 @@ abstract class MAbstractDatastore extends MWebfile
      */
     public abstract function searchByTemplate(MWebfile $template);/** @noinspection PhpUnusedParameterInspection */
 
-    /**@noinspection PhpUnusedParameterInspection*(
+
+    /**
+     *
+     * @param array $webfiles
+     * @param MWebfile $template
+     * @return array
+     */
+    protected function filterWebfilesArrayByTemplate($webfiles, MWebfile $template)
+    {
+
+        $filteredWebfiles = array();
+        $attributes = $template->getAttributes(true);
+
+        foreach ($webfiles as $webfile) {
+
+            $validWebfile = true;
+
+            /** @var \ReflectionProperty $attribute */
+            foreach ($attributes as $attribute) {
+
+                $attribute->setAccessible(true);
+                $templateValue = $attribute->getValue($template);
+
+                if (
+                    $templateValue != "?"
+                    && !($templateValue instanceof MIDatastoreFunction)) {
+
+                    $webfileValue = $attribute->getValue($webfile);
+                    if ($templateValue != $webfileValue) {
+                        $validWebfile = false;
+                    }
+                }
+            }
+
+            if ($validWebfile) {
+                $filteredWebfiles[] = $webfile;
+            }
+        }
+
+        return $filteredWebfiles;
+    }
+
+    /**@noinspection PhpUnusedParameterInspection*/
     /**
      * Stores a single webfile in the datastore.
      *
@@ -124,15 +166,11 @@ abstract class MAbstractDatastore extends MWebfile
         }
     }
 
-
+    /**@noinspection PhpUnusedParameterInspection*/
     /**
      * Deletes a set of webfiles in the actual datastore which can be
      * applied to the given template.
      *
-     * @param MWebfile $webfile
-     * @throws MDatastoreException
-     */
-    /** @noinspection PhpUnusedParameterInspection
      * @param MWebfile $template
      * @throws MDatastoreException
      */

@@ -2,6 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datastore\types\database;
 
+use simpleserv\webfilesframework\core\datastore\MDatastoreException;
+use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTableColumn;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
@@ -42,17 +44,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         return false;
     }
 
-    public function getNextWebfileForTimestamp($time)
-    {
-
-    }
-
     public function getTime()
-    {
-        return NULL;
-    }
-
-    public function getGeograficPosition()
     {
         return NULL;
     }
@@ -88,7 +80,6 @@ class MDatabaseDatastore extends MAbstractDatastore
             foreach ( $webfilesForTable as $webfile ) {
                 array_push($webfilesResult,$webfile);
             }
-
         }
         return $webfilesResult;
     }
@@ -211,48 +202,62 @@ class MDatabaseDatastore extends MAbstractDatastore
 
             if (MWebfile::isSimpleDatatype($sAttributeName)
                 && MWebfile::getSimplifiedAttributeName($sAttributeName) != "id"
+                // ignore id as long as its set seperatly as primary key directly after creation of table
             ) {
 
-                $prefix = substr($sAttributeName, 2, 1);
-                if ($prefix == "s") {
-                    $table->addColumn(
-                        MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::VARCHAR,
-                        50);
-                } else if ($prefix == "l") {
-                    $table->addColumn(
-                        MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::VARCHAR,
-                        2000);
-                } else if ($prefix == "i") {
-                    $table->addColumn(
-                        MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::INT,
-                        24);
-                } else if ($prefix == "d") { //date
-                    $table->addColumn(
-                        MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::VARCHAR,
-                        20);
-                } else if ($prefix == "w") { //weekday
-                    $table->addColumn(
-                        MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::VARCHAR,
-                        1);
-                } else if ($prefix == "t") {
-                    $table->addColumn(
-                        MWebfile::getSimplifiedAttributeName($sAttributeName),
-                        MDatabaseDatatypes::VARCHAR,
-                        50);
-                }
+                $tableColum = $this->createTableColumFromAttributeName($sAttributeName);
+                $table->addColumnByObject($tableColum);
             }
         }
         if ($dropTableIfExists && $this->tableExistsByWebfile($webfile)) {
             $table->drop();
         }
         $table->create();
+    }
 
-
+    /**
+     * @param $sAttributeName
+     * @param $table
+     */
+    private function createTableColumFromAttributeName($sAttributeName)
+    {
+        $prefix = substr($sAttributeName, 2, 1);
+        if ($prefix == "s") {
+            return new MDatabaseTableColumn(
+                MWebfile::getSimplifiedAttributeName($sAttributeName),
+                MDatabaseDatatypes::VARCHAR,
+                50);
+        } else if ($prefix == "l") {
+            return new MDatabaseTableColumn(
+                MWebfile::getSimplifiedAttributeName($sAttributeName),
+                MDatabaseDatatypes::VARCHAR,
+                2000);
+        } else if ($prefix == "i") {
+            return new MDatabaseTableColumn(
+                MWebfile::getSimplifiedAttributeName($sAttributeName),
+                MDatabaseDatatypes::INT,
+                24);
+        } else if ($prefix == "d") { //date
+            return new MDatabaseTableColumn(
+                MWebfile::getSimplifiedAttributeName($sAttributeName),
+                MDatabaseDatatypes::VARCHAR,
+                20);
+        } else if ($prefix == "w") { //weekday
+            return new MDatabaseTableColumn(
+                MWebfile::getSimplifiedAttributeName($sAttributeName),
+                MDatabaseDatatypes::VARCHAR,
+                1);
+        } else if ($prefix == "t") {
+            return new MDatabaseTableColumn(
+                MWebfile::getSimplifiedAttributeName($sAttributeName),
+                MDatabaseDatatypes::VARCHAR,
+                50);
+        } else {
+            echo "blaaa";
+            print("Unknown datatype prefix '" . $prefix . "' for database datastore on attribute name '" . $sAttributeName . "'.");
+            throw new MDatastoreException(
+                "Unknown datatype prefix '" . $prefix . "' for database datastore on attribute name '" . $sAttributeName . "'.");
+        }
     }
 
     private function metadataExist($tablename)
@@ -448,7 +453,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     public function getLatestWebfiles($count = 5)
     {
-
+        // TODO
     }
 
     public function resolveClassNameFromTableName($tableName)
@@ -467,7 +472,9 @@ class MDatabaseDatastore extends MAbstractDatastore
             $this->createMetadataTable();
         }
 
-        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle(
+            "SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+
         if ($oDatabaseResultHandler->getResultSize() > 0) {
             $result = $oDatabaseResultHandler->fetchNextResultObject();
             return $result;
@@ -525,7 +532,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                     if ( $className == null ) {
                         $className = $this->resolveClassNameFromTableName($tableName);
                     }
-
+                    /** @var MWebfile $targetWebfile */
                     $targetWebfile = new $className();
                     $attributes = $targetWebfile->getAttributes(true);
 
@@ -646,7 +653,7 @@ class MDatabaseDatastore extends MAbstractDatastore
      * @param $order
      * @return string
      */
-    public function translateTemplateIntoSorting(MWebfile $template)
+    private function translateTemplateIntoSorting(MWebfile $template)
     {
         $attributes = $template->getAttributes(true);
 

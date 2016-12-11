@@ -47,12 +47,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     public function isReadOnly()
     {
-        return false;
+        return !$this->m_oDirectory->isWritable();
     }
 
     public function tryConnect()
     {
-        return true;
+        return $this->m_oDirectory->exists();
     }
 
     /**
@@ -160,50 +160,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $webfiles = $this->cachingDatastore->searchByTemplate($template);
         } else {
             $webfiles = $this->getWebfilesAsArray();
-            $webfiles = $this->filterWebfilesByTemplate($webfiles, $template);
+            $webfiles = $this->filterWebfilesArrayByTemplate($webfiles, $template);
         }
         return $webfiles;
-    }
-
-    /**
-     *
-     * @param array $webfiles
-     * @param MWebfile $template
-     * @return array
-     */
-    private function filterWebfilesByTemplate($webfiles, MWebfile $template)
-    {
-
-        $filteredWebfiles = array();
-        $attributes = $template->getAttributes(true);
-
-        foreach ($webfiles as $webfile) {
-
-            $validWebfile = true;
-
-            /** @var \ReflectionProperty $attribute */
-            foreach ($attributes as $attribute) {
-
-                $attribute->setAccessible(true);
-                $templateValue = $attribute->getValue($template);
-
-                if (
-                    $templateValue != "?"
-                    && !($templateValue instanceof MIDatastoreFunction)) {
-
-                    $webfileValue = $attribute->getValue($webfile);
-                    if ($templateValue != $webfileValue) {
-                        $validWebfile = false;
-                    }
-                }
-            }
-
-            if ($validWebfile) {
-                $filteredWebfiles[] = $webfile;
-            }
-        }
-
-        return $filteredWebfiles;
     }
 
     public function deleteByTemplate(MWebfile $template)
@@ -219,15 +178,4 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $file->delete();
         }
     }
-
-    public function getLatestCachingTime()
-    {
-
-    }
-
-    public function isCacheActual()
-    {
-        return false;
-    }
-
 }

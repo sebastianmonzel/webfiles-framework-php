@@ -2,8 +2,6 @@
 
 namespace simpleserv\webfilesframework\core\time;
 
-use simpleserv\webfilesframework\MItem;
-
 /**
  * description
  *
@@ -11,7 +9,7 @@ use simpleserv\webfilesframework\MItem;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MTimespan extends MItem
+class MTimespan
 {
 
     private $start;

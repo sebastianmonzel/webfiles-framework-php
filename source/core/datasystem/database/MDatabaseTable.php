@@ -109,4 +109,12 @@ class MDatabaseTable
         array_push($this->columns, $column);
     }
 
+    /**
+     * @param MDatabaseTableColumn $column
+     */
+    public function addColumnByObject($column) {
+        array_push($this->columns,$column);
+    }
+
+
 }

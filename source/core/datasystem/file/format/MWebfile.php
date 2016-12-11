@@ -2,8 +2,6 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format;
 
-use simpleserv\webfilesframework\MItem;
-
 /**
  * Base cass for all webfile class definitions.<br />
  * On the following <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitionwebfile">link</a>
@@ -13,10 +11,22 @@ use simpleserv\webfilesframework\MItem;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MWebfile extends MItem
-{
+class MWebfile {
 
-    protected $time;
+    protected $m_iId = 0;
+
+    /**
+     * @var int sets the time of the main context of the given webfile.
+     * Example:<br />
+     * An event would have the point when it takes place. An news entry
+     * would have the creation time as context time.
+     */
+    public $m_iTime;
+
+    /**
+     * @var string
+     */
+    public static $m__sClassName;
 
     /**
      * Converts the current webfile into its xml representation.
@@ -204,6 +214,7 @@ class MWebfile extends MItem
         while ($count < count($oPropertyArray)) {
             $sAttributeName = $oPropertyArray[$count]->getName();
             if (
+                // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
                 substr($sAttributeName, 1, 1) != "_" ||
                 substr($sAttributeName, 2, 1) == "_" ||
                 ($onlyAttributesOfSimpleDatatypes && substr($sAttributeName, 2, 1) == "o")
@@ -257,23 +268,24 @@ class MWebfile extends MItem
      */
     public static function getDatatypeFromAttributeName($attributeName)
     {
+        // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
+        $datatypeToken = substr($attributeName, 2, 1);
 
-        $token = substr($attributeName, 2, 1);
-        if ($token == "s") {
+        if ($datatypeToken == "s") {
             return "shorttext";
-        } else if ($token == "l") {
+        } else if ($datatypeToken == "l") {
             return "longtext";
-        } else if ($token == "h") {
+        } else if ($datatypeToken == "h") {
             return "htmllongtext";
-        } else if ($token == "d") {
+        } else if ($datatypeToken == "d") {
             return "date";
-        } else if ($token == "t") {
+        } else if ($datatypeToken == "t") {
             return "time";
-        } else if ($token == "i") {
+        } else if ($datatypeToken == "i") {
             return "integer";
-        } else if ($token == "f") {
+        } else if ($datatypeToken == "f") {
             return "float";
-        } else if ($token == "o") {
+        } else if ($datatypeToken == "o") {
             return "object";
         }
         return null;
@@ -313,9 +325,20 @@ class MWebfile extends MItem
      */
     public static function getSimplifiedAttributeName($p_sFieldName)
     {
+        // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
         $sDatabaseFieldName = substr($p_sFieldName, 3);
         $sDatabaseFieldName = strtolower($sDatabaseFieldName);
         return $sDatabaseFieldName;
+    }
+
+    public function getId()
+    {
+        return $this->m_iId;
+    }
+
+    public function setId($itemId)
+    {
+        $this->m_iId = $itemId;
     }
 
     /**
@@ -323,16 +346,15 @@ class MWebfile extends MItem
      */
     public function getTime()
     {
-        return $this->time;
+        return $this->m_iTime;
     }
 
     /**
-     *
-     * @param int $time
+     * @param $time unix timestamp of the context time.
      */
     public function setTime($time)
     {
-        $this->time = $time;
+        $this->m_iTime = $time;
     }
 
     public function getGeograficPosition()

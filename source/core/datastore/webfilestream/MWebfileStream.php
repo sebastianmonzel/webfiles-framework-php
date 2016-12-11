@@ -2,8 +2,8 @@
 
 namespace simpleserv\webfilesframework\core\datastore\webfilestream;
 
-use simpleserv\webfilesframework\MItem;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Defines the representation of a list of webfiles.
@@ -12,7 +12,7 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MWebfileStream extends MItem
+class MWebfileStream
 {
 
     private $webfiles;
@@ -27,6 +27,8 @@ class MWebfileStream extends MItem
         } else if ($input instanceof MWebfile) {
             $this->webfiles = array();
             array_push($this->webfiles, $input);
+        } else if (isset($input)) {
+            throw new MWebfilesFrameworkException("Cannot handle input for creating webfile stream.");
         }
     }
 
@@ -62,7 +64,8 @@ class MWebfileStream extends MItem
             }
 
         } else {
-            echo("Fehler beim Lesen des XML");
+            throw new MWebfilesFrameworkException(
+                "Error on reading xml of webfile stream: No root element given.");
         }
 
         return $webfiles;

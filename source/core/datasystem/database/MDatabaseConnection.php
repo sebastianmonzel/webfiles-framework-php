@@ -2,8 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
-use simpleserv\webfilesframework\core\datastore\types\database\MMysqlResultHandler;
-use simpleserv\webfilesframework\MItem;
+use simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 
 /**
  * description
@@ -12,7 +11,7 @@ use simpleserv\webfilesframework\MItem;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDatabaseConnection extends MItem
+class MDatabaseConnection
 {
     private $host = '127.0.0.1';
 
@@ -47,7 +46,7 @@ class MDatabaseConnection extends MItem
             $this->host = $host;
         }
         if ($database != null) {
-            $this->database = $database;
+            $this->databaseName = $database;
         }
         if ($tablePrefix != null) {
             $this->tablePrefix = $tablePrefix;
@@ -86,7 +85,7 @@ class MDatabaseConnection extends MItem
             $this->host,
             $this->username,
             $this->password,
-            $this->database
+            $this->databaseName
         );
 
         if (!$this->connection->connect_errno) {

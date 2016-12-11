@@ -147,6 +147,11 @@ class MDirectory extends MFile
         return file_exists($this->m_sPath);
     }
 
+    public function isWritable()
+    {
+        return is_writable($this->m_sPath);
+    }
+
     /**
      * Grabs all webfiles that exist in file representation in the
      * present directory.

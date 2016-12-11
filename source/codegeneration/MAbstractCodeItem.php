@@ -2,8 +2,6 @@
 
 namespace simpleserv\webfilesframework\codegeneration;
 
-use simpleserv\webfilesframework\MItem;
-
 /**
  * description
  *
@@ -11,7 +9,7 @@ use simpleserv\webfilesframework\MItem;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-abstract class MAbstractCodeItem extends MItem
+abstract class MAbstractCodeItem
 {
     /**
      * Specifies a method which has to be implemented in all subclasses

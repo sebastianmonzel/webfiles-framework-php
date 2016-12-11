@@ -10,7 +10,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 
 /**
- * Class to connect to a datastore based on a directory.
+ * Wrapper class to connect to a datastore based on a directory.
  * <b>Conventions on the datastore:</b>
  * <ul>
  *        <li>filename is equal to the id of the webfile</li>
@@ -27,7 +27,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     private $m_sDirectoryPath;
     /**
      *
-     * @var MDirectoryDatasourceDatastore
+     * @var MDirectoryDatastore
      */
     private $directoryDatastore;
 
@@ -128,7 +128,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     {
         if (!isset($this->directoryDatastore)) {
             $directory = new MDirectory($this->m_sDirectoryPath);
-            $this->directoryDatastore = new MDirectoryDatasourceDatastore($directory);
+            $this->directoryDatastore = new MDirectoryDatastore($directory);
         }
     }
 

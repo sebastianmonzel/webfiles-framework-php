@@ -45,6 +45,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         $reference->setStreet('');
         $reference->setPostcode('67433');
         $reference->setCity('Neustadt');
+        $reference->setTime(4711);
         return $reference;
     }
 
@@ -123,7 +124,8 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             'street' => '',
             'housenumber' => '',
             'postcode' => '67433',
-            'city' => 'Neustadt'
+            'city' => 'Neustadt',
+            'time' => 4711
         ];
 
         $webfilesResultHandler->method('getResultSize')->willReturn(1);
@@ -207,7 +209,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             ->willReturn(null);
 
         $stub->expects(self::at(16))->method('query')
-            ->with('CREATE TABLE IF NOT EXISTS `MSampleWebfile` (`id` int(10) NOT NULL AUTO_INCREMENT,`firstname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`lastname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`street` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`housenumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`postcode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;')
+            ->with('CREATE TABLE IF NOT EXISTS `MSampleWebfile` (`id` int(10) NOT NULL AUTO_INCREMENT,`firstname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`lastname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`street` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`housenumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`postcode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`time` int(24) NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;')
             ->willReturn(null);
 
         $result = $databaseDatastore->searchByTemplate($template);

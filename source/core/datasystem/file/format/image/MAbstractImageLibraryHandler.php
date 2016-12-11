@@ -2,8 +2,6 @@
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
-use simpleserv\webfilesframework\MItem;
-
 /**
  * description
  *
@@ -11,7 +9,7 @@ use simpleserv\webfilesframework\MItem;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-abstract class MAbstractImageLibraryHandler extends MItem
+abstract class MAbstractImageLibraryHandler
 {
 
     public abstract function loadJpg($p_sImage);
