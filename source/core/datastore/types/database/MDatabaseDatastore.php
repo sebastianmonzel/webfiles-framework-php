@@ -266,7 +266,8 @@ class MDatabaseDatastore extends MAbstractDatastore
             $this->createMetadataTable();
             return false;
         }
-        $oDatabaseResultSet = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        $oDatabaseResultSet = $this->databaseConnection->queryAndHandle(
+            "SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
         if ($oDatabaseResultSet->getResultSize() > 0) {
             return true;
         }
@@ -385,7 +386,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $tableName = $this->resolveTableNameFromWebfile($webfile);
 
-        $query = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
+        $query = $this->databaseConnection->queryAndHandle(
+            "SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
         return ($query->getResultSize() > 0);
 
     }
@@ -561,7 +563,8 @@ class MDatabaseDatastore extends MAbstractDatastore
                             }
                         }
                     }
-                    array_push($webfileArray, $targetWebfile);
+
+                    $webfileArray = $this->addWebfileSafetyToArray($targetWebfile->getTime(),$targetWebfile,$webfileArray);
                 }
             }
         }

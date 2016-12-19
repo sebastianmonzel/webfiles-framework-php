@@ -98,7 +98,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         $referenceObject = $this->createReferenceSampleObject1();
 
-        self::assertEquals($referenceObject,$result[0]);
+        self::assertEquals($referenceObject,array_values($result)[0]);
 
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
@@ -111,7 +111,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         $referenceObject = $this->createReferenceSampleObject2();
 
-        self::assertEquals($referenceObject,$result[0]);
+        self::assertEquals($referenceObject,array_values($result)[0]);
 
     }
 

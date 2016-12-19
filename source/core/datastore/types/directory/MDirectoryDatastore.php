@@ -38,10 +38,10 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     public function __construct(MDirectory $directory, $isRemoteDatastore = false)
     {
-
-        if ($directory == null) {
+        if ($directory == null || !$directory instanceof MDirectory) {
             throw new MDatastoreException("Cannot instantiate a DirectoryDatastore without valid directory.");
         }
+
         $this->m_oDirectory = $directory;
     }
 
@@ -61,9 +61,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
      */
     public function getNextWebfileForTimestamp($time)
     {
-        $itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
-        $webfiles = $itemGrabber->grabLatestWebfiles(4);
-
+        $webfiles = $this->getLatestWebfiles(4);
         ksort($webfiles);
 
         foreach ($webfiles as $key => $webfile) {
@@ -107,14 +105,38 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     public function getWebfilesAsArray()
     {
-        $itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
-        return $itemGrabber->grabWebfiles();
+        $filesArray = $this->m_oDirectory->getFiles();
+        $objectsArray = array();
+
+        /** @var MFile $file */
+        foreach ($filesArray as $file) {
+
+            $fileContent = $file->getContent();
+            $item = MWebfile::staticUnmarshall($fileContent);
+
+            $objectsArray = $this->addWebfileSafetyToArray($file->getDate(),$item,$objectsArray);
+        }
+
+        return $objectsArray;
     }
 
     public function getLatestWebfiles($count = 5)
     {
-        $itemGrabber = new MDirectoryWebfileGrabber($this->m_oDirectory);
-        return $itemGrabber->grabLatestWebfiles($count);
+        $filesArray = $this->m_oDirectory->getLatestFiles($count);
+        $objectsArray = array();
+
+        foreach ($filesArray as $file) {
+
+            $fileContent = $file->getContent();
+
+            $item = MWebfile::staticUnmarshall($fileContent);
+            $time = $file->getDate();
+            $item->setTime($time);
+
+            $objectsArray[$time] = $this->addWebfileSafetyToArray($file->getDate(),$item,$objectsArray);;
+        }
+
+        return $objectsArray;
     }
 
     public function storeWebfile(MWebfile $webfile)
@@ -178,4 +200,5 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $file->delete();
         }
     }
+
 }

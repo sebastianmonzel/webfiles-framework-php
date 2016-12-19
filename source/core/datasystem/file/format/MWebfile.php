@@ -115,7 +115,7 @@ class MWebfile {
 
             $classname = (string)$root->attributes()->classname;
 
-            // INSTANITE NEW
+            // INSTANCIATE NEW
             $ref = new \ReflectionClass($classname);
             $item = $ref->newInstanceWithoutConstructor();
 

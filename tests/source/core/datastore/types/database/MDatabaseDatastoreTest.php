@@ -153,7 +153,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         $referenceObject = $this->createReferenceSampleObject();
 
         // TODO im MDirectoryDatastore wird der timestamp als array index gesetzt - hier ist das anders
-        self::assertEquals($referenceObject,$result[0]);
+        self::assertEquals($referenceObject,array_values($result)[0]);
     }
 
     /**
