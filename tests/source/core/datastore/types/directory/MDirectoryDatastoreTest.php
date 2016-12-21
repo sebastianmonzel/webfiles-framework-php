@@ -124,15 +124,15 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         $databaseDatastore = $this->createDirectoryDatastore();
         var_export($databaseDatastore->getWebfilesAsArray());
-        self::assertEquals(2,count($databaseDatastore->getWebfilesAsArray()));
-        $databaseDatastore->storeWebfile($this->createReferenceSampleObject3());
         self::assertEquals(3,count($databaseDatastore->getWebfilesAsArray()));
+        $databaseDatastore->storeWebfile($this->createReferenceSampleObject3());
+        self::assertEquals(4,count($databaseDatastore->getWebfilesAsArray()));
 
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setLastname("Hauber");
         $databaseDatastore->deleteByTemplate($template);
-        self::assertEquals(2,count($databaseDatastore->getWebfilesAsArray()));
+        self::assertEquals(3,count($databaseDatastore->getWebfilesAsArray()));
     }
 
 
@@ -144,10 +144,10 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
 
         self::assertTrue(is_array($webfilesArray));
-        self::assertEquals(2,count($webfilesArray));
-        $webfile1 = @array_shift(array_slice($webfilesArray,0,1));
+        self::assertEquals(3,count($webfilesArray));
+        $webfile1 = @array_shift(array_slice($webfilesArray,1,1));
         self::assertEquals($this->createReferenceSampleObject1(),$webfile1);
-        $webfile2 = @array_shift(array_slice($webfilesArray,1,1));
+        $webfile2 = @array_shift(array_slice($webfilesArray,2,1));
         self::assertEquals($this->createReferenceSampleObject2(),$webfile2);
 
     }

@@ -25,6 +25,8 @@ class MImage extends MFile
 
     protected $handler;
 
+    public static $m__sClassName = __CLASS__;
+
     public function __construct($filePath, $lazy = true, $type = "jpg")
     {
 
