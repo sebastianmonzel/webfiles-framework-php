@@ -562,7 +562,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                         }
                     }
 
-                    $webfileArray = $this->addWebfileSafetyToArray($targetWebfile->getTime(),$targetWebfile,$webfileArray);
+                    $webfileArray = $this->addWebfileSafetyToArray($targetWebfile,$webfileArray);
                 }
             }
         }

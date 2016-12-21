@@ -53,6 +53,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $reference->setHousenumber('4');
         $reference->setPostcode('67433');
         $reference->setCity('Neustadt an der Weinstraße');
+        $reference->setTime('4711');
         return $reference;
     }
 
@@ -66,6 +67,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $reference->setHousenumber('8');
         $reference->setPostcode('67433');
         $reference->setCity('Neustadt an der Weinstraße');
+        $reference->setTime('4712');
         return $reference;
     }
 

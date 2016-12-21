@@ -122,7 +122,7 @@ abstract class MAbstractDatastore extends MWebfile
             }
 
             if ($validWebfile) {
-                $filteredWebfiles = $this->addWebfileSafetyToArray($webfile->getTime(),$webfile,$filteredWebfiles);
+                $filteredWebfiles = $this->addWebfileSafetyToArray($webfile,$filteredWebfiles);
             }
         }
 
@@ -236,9 +236,9 @@ abstract class MAbstractDatastore extends MWebfile
         return $webfilesDatasets;
     }
 
-    protected function addWebfileSafetyToArray($timestamp, $item, $objectsArray) {
+    protected function addWebfileSafetyToArray(MWebfile $item, $objectsArray) {
 
-        $arrayKey = $timestamp;
+        $arrayKey = $item->getTime();
         $arrayKeyCount = 1;
 
         // make sure files with the same key (normally timetamp) have an unique array key

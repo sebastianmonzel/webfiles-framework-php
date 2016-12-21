@@ -74,69 +74,59 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     public function getWebfilesAsStream()
     {
-
-        $files = $this->m_oDirectory->getFiles();
-
-        $webfileArray = array();
-
-        /** @var MFile $file */
-        foreach ($files as $file) {
-            $fileExtension = $file->getExtension();
-
-            if (strtolower($fileExtension) == "jpg" || strtolower($fileExtension) == "jpeg") {
-
-                $normalizedFile = new MFile($file->getFolder() . "/normal/" . $file->getName());
-
-                if ($normalizedFile->exists()) {
-                    array_push($webfileArray, new MImage($normalizedFile->getPath()));
-                } else {
-                    array_push($webfileArray, new MImage($file->getPath()));
-                }
-            } else if ($fileExtension == "webfile") {
-                $fileContent = $file->getContent();
-                array_push($webfileArray, MWebfile::staticUnmarshall($fileContent));
-            } else {
-                array_push($webfileArray, $file);
-            }
-        }
-
+        $webfileArray = $this->getWebfilesAsArray();
         return new MWebfileStream($webfileArray);
     }
 
     public function getWebfilesAsArray()
     {
-        $filesArray = $this->m_oDirectory->getFiles();
-        $objectsArray = array();
-
-        /** @var MFile $file */
-        foreach ($filesArray as $file) {
-
-            $fileContent = $file->getContent();
-            $item = MWebfile::staticUnmarshall($fileContent);
-
-            $objectsArray = $this->addWebfileSafetyToArray($file->getDate(),$item,$objectsArray);
-        }
-
-        return $objectsArray;
+        $files = $this->m_oDirectory->getFiles();
+        return $this->transformFilesIntoWebfilesArray($files);
     }
 
     public function getLatestWebfiles($count = 5)
     {
         $filesArray = $this->m_oDirectory->getLatestFiles($count);
-        $objectsArray = array();
+        return $this->transformFilesIntoWebfilesArray($filesArray);
+    }
 
-        foreach ($filesArray as $file) {
+    private function transformFilesIntoWebfilesArray($files) {
 
-            $fileContent = $file->getContent();
+        $webfileArray = array();
 
-            $item = MWebfile::staticUnmarshall($fileContent);
-            $time = $file->getDate();
-            $item->setTime($time);
+        /** @var MFile $file */
+        /** @var MWebfile $item */
+        foreach ($files as $file) {
+            $lowerCaseFileExtension = strtolower($file->getExtension());
 
-            $objectsArray[$time] = $this->addWebfileSafetyToArray($file->getDate(),$item,$objectsArray);;
+            if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
+
+                $normalizedFile = new MFile($file->getFolder() . "/normal/" . $file->getName());
+
+                if ($normalizedFile->exists()) {
+                    // TODO exif-aufnahmedatum auslesen und im webfile objekt setzen
+                    $item = new MImage($normalizedFile->getPath());
+                } else {
+                    $item = new MImage($file->getPath());
+                }
+            } else if ($lowerCaseFileExtension == "webfile") {
+                $fileContent = $file->getContent();
+                $item = MWebfile::staticUnmarshall($fileContent);
+
+            } else {
+                // TODO write warn to log that file is ignored
+                continue;
+            }
+
+            if ( $item->getTime() == null) {
+                $item->setTime($file->getDate());
+            }
+
+            $webfileArray = $this->addWebfileSafetyToArray($item,$webfileArray);
+
         }
 
-        return $objectsArray;
+        return $webfileArray;
     }
 
     public function storeWebfile(MWebfile $webfile)
