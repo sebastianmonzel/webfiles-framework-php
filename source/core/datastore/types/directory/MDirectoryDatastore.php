@@ -132,6 +132,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     public function storeWebfile(MWebfile $webfile)
     {
         $directoryPath = $this->m_oDirectory->getPath();
+        // TODO implizite annahme, dass dateiname immer gleich id ist lösen
         $file = new MFile($directoryPath . "/" . $webfile->getId() . ".webfile");
         $file->writeContent($webfile->marshall(), true);
     }
@@ -149,13 +150,6 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $this->storeWebfile($webfile);
         }
 
-    }
-
-    public function hasItem(MWebfile $item)
-    {
-        $directoryPath = $this->m_oDirectory->getPath();
-        $file = new MFile($directoryPath . "/" . $item->getId() . ".webfile");
-        return $file->exists();
     }
 
     /**
@@ -186,6 +180,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
 
         foreach ($webfiles as $webfile) {
+            // TODO implizite annahme, dass dateiname immer gleich id ist lösen
             $file = new MFile($this->m_oDirectory->getPath() . "/" . $webfile->getId() . ".webfile");
             $file->delete();
         }
