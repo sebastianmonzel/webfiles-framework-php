@@ -205,8 +205,8 @@ class MDatabaseDatastore extends MAbstractDatastore
                 // ignore id as long as its set seperatly as primary key directly after creation of table
             ) {
 
-                $tableColum = $this->createTableColumFromAttributeName($sAttributeName);
-                $table->addColumnByObject($tableColum);
+                $tableColum = $this->createTableColumnFromAttributeName($sAttributeName);
+                $table->addColumnObject($tableColum);
             }
         }
         if ($dropTableIfExists && $this->tableExistsByWebfile($webfile)) {
@@ -219,7 +219,7 @@ class MDatabaseDatastore extends MAbstractDatastore
      * @param $sAttributeName
      * @param $table
      */
-    private function createTableColumFromAttributeName($sAttributeName)
+    private function createTableColumnFromAttributeName($sAttributeName)
     {
         $prefix = substr($sAttributeName, 2, 1);
         if ($prefix == "s") {
@@ -253,8 +253,6 @@ class MDatabaseDatastore extends MAbstractDatastore
                 MDatabaseDatatypes::VARCHAR,
                 50);
         } else {
-            echo "blaaa";
-            print("Unknown datatype prefix '" . $prefix . "' for database datastore on attribute name '" . $sAttributeName . "'.");
             throw new MDatastoreException(
                 "Unknown datatype prefix '" . $prefix . "' for database datastore on attribute name '" . $sAttributeName . "'.");
         }
