@@ -90,44 +90,65 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $this->transformFilesIntoWebfilesArray($filesArray);
     }
 
-    private function transformFilesIntoWebfilesArray($files) {
+    private function transformFilesIntoWebfilesArray($files)
+    {
 
         $webfileArray = array();
 
         /** @var MFile $file */
         /** @var MWebfile $item */
         foreach ($files as $file) {
-            $lowerCaseFileExtension = strtolower($file->getExtension());
 
-            if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
-
-                $normalizedFile = new MFile($file->getFolder() . "/normal/" . $file->getName());
-
-                if ($normalizedFile->exists()) {
-                    // TODO exif-aufnahmedatum auslesen und im webfile objekt setzen
-                    $item = new MImage($normalizedFile->getPath());
-                } else {
-                    $item = new MImage($file->getPath());
-                }
-            } else if ($lowerCaseFileExtension == "webfile") {
-                $fileContent = $file->getContent();
-                $item = MWebfile::staticUnmarshall($fileContent);
-
-            } else {
-                // TODO write warn to log that file is ignored
-                continue;
+            $item = $this->transformFileIntoWebfile($file);
+            if ( $item != null ) {
+                $webfileArray = $this->addWebfileSafetyToArray($item,$webfileArray);
             }
-
-            if ( $item->getTime() == null) {
-                $item->setTime($file->getDate());
-            }
-
-            $webfileArray = $this->addWebfileSafetyToArray($item,$webfileArray);
-
         }
 
         return $webfileArray;
     }
+
+    /**
+     * @param MFile $file
+     * @param bool $forceTransformation
+     * @return MWebfile|null
+     */
+    private function transformFileIntoWebfile(MFile $file, $forceTransformation = false)
+    {
+
+        $webfileArray = array();
+
+        /** @var MWebfile $item */
+        $lowerCaseFileExtension = strtolower($file->getExtension());
+
+        if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
+
+            $normalizedFile = new MFile($file->getFolder() . "/normal/" . $file->getName());
+
+            if ($normalizedFile->exists()) {
+                // TODO exif-aufnahmedatum auslesen und im webfile objekt setzen
+                $item = new MImage($normalizedFile->getPath());
+            } else {
+                $item = new MImage($file->getPath());
+            }
+        } else if ($lowerCaseFileExtension == "webfile" || $forceTransformation) {
+            $fileContent = $file->getContent();
+            $item = MWebfile::staticUnmarshall($fileContent);
+
+        } else {
+            // TODO write warn to log that file is ignored
+            return null;
+        }
+
+        if ( $item->getTime() == null) {
+            $item->setTime($file->getDate());
+        }
+
+        return $item;
+    }
+
+
+
 
     public function storeWebfile(MWebfile $webfile)
     {
@@ -184,6 +205,60 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $file = new MFile($this->m_oDirectory->getPath() . "/" . $webfile->getId() . ".webfile");
             $file->delete();
         }
+    }
+
+
+    /**
+     * Normalizes directory datastore:
+     *  - normalizes filenames
+     * @param bool $useHumanReadableTimestamp attention - timezones are actually not , merging webfile datastores from
+     * different timezones can lead to mismatches.
+     */
+    public function normalize($useHumanReadableTimestamp = false) {
+        $filesArray = $this->m_oDirectory->getFiles();
+
+        /** @var MFile $file */
+        /** @var MWebfile $webfile */
+        foreach ($filesArray as $file) {
+            $webfile = $this->transformFileIntoWebfile($file);
+
+            $timestamp = null;
+            if (!$useHumanReadableTimestamp || true) {
+                // make sure timestamp has always same count of letters, as filenames are handled
+                // alphanumerically by filesystem -> sorting will not work if not normalized
+                $timestampAsString = strval($webfile->getTime());
+                $timestampAsStringLength = strlen($timestampAsString);
+
+                $targetLength = 10;
+                $difference = $targetLength - $timestampAsStringLength;
+
+                $filler = "";
+                while (strlen($filler) < $difference) {
+                    $filler .= "0";
+                }
+
+                $timestamp = $filler . $timestampAsString;
+
+            }
+
+            $file->renameTo($timestamp . '_wf_' . $file->getName());
+        }
+    }
+
+    private function readMetaInformation() {
+        $file = new MFile(".metainformation");
+        $metaInformationWebfile = $this->transformFileIntoWebfile($file,true);
+
+        // TODO define metaInformation
+        // - normalized true/false
+        // - human readable timestamps true/false
+        // - timezone
+
+
+    }
+
+    private function normalizeFile(MFile $file) {
+
     }
 
 }

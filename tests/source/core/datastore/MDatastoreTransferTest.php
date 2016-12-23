@@ -7,24 +7,24 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
 /**
  * Test class for MDatastoreTransfer.
  */
-class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
+class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
+{
     /**
      * @var MDatastoreTransfer
      */
     protected $object;
 
 
-
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp()
+    {
 
 
+        //new MDirectoryDatastore(new MDirectory("."));
 
-    	//new MDirectoryDatastore(new MDirectory("."));
-    	
         //$this->object = new MDatastoreTransfer($source, $target);
     }
 
@@ -97,11 +97,11 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
      */
     public function createMockForShowTablesResultHandler()
     {
-        $tablesMetaInformationResturnObject = (object) [
+        $tablesMetaInformationResturnObject = (object)[
             'Tables_in_webfiles' => 'MSampleWebfile',
         ];
 
-        $tablesMetaInformationResturnObject2 = (object) [
+        $tablesMetaInformationResturnObject2 = (object)[
             'Tables_in_webfiles' => 'metadata',
         ];
 
@@ -114,14 +114,14 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
         //needed
         $showTablesResultHandler
             ->method('fetchNextResultObject')
-            ->willReturn($tablesMetaInformationResturnObject,$tablesMetaInformationResturnObject2);
+            ->willReturn($tablesMetaInformationResturnObject, $tablesMetaInformationResturnObject2);
 
         return $showTablesResultHandler;
     }
 
     public function createMockForMetadataResultHandler()
     {
-        $tablesMetaInformationResturnObject = (object) [
+        $tablesMetaInformationResturnObject = (object)[
             'classname' => 'simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile',
             'tablename' => 'samplewebfile'
         ];
@@ -152,7 +152,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
             ->createMock(
                 'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
 
-        $webfilesReturnObject = (object) [
+        $webfilesReturnObject = (object)[
             'id' => '1',
             'firstname' => 'transfered',
             'lastname' => 'webfile',
@@ -166,23 +166,35 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
         $webfilesResultHandler->method('getResultSize')->willReturn(1);
         $webfilesResultHandler
             ->method('fetchNextResultObject')
-            ->willReturn($webfilesReturnObject,null);
+            ->willReturn($webfilesReturnObject, null);
 
         return $webfilesResultHandler;
     }
 
     /**
-     * @return null|\simpleserv\webfilesframework\core\datastore\MAbstractDatastore
+     * @return \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
      */
-    private function createDirectoryDatastore() {
+    private function createDirectoryDatastore()
+    {
 
         $directory = new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
-            __DIR__ . '/../../../resources/folderDatastoreToTransferDataFromDatabase');
+            __DIR__ . '/../../../resources/targetTransferDirectoryDatstore');
 
         return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
     }
 
-    private function createDatabaseDatastore() {
+    private function createSourceDirectoryDatastore()
+    {
+
+        $directory = new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
+            __DIR__ . '/../../../resources/folderDatastore');
+
+        return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
+    }
+
+
+    private function createDatabaseDatastore()
+    {
         $connection = $this->createPreparedDatabaseConnectionMock();
         return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($connection);
     }
@@ -190,7 +202,8 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
     /**
      * @covers simpleserv\webfilesframework\core\datastore\MDatastoreTransfer::transfer
      */
-    public function testTransfer() {
+    public function testTransferFromDatabaseToDirectory()
+    {
 
         echo "test1";
         $source = $this->createDatabaseDatastore();
@@ -201,17 +214,46 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase {
         $target->deleteByTemplate($template);
 
         $transfer = new MDatastoreTransfer(
-            $source,$target
+            $source, $target
         );
         $transfer->transfer();
         echo "test2";
 
         self::assertEquals(
-            1,
+            2,
             count($target->getWebfilesAsArray()));
 
         /*self::assertEquals(
             count($target->getWebfilesAsArray()),
             count($source->getWebfilesAsArray()));*/
+    }
+
+    public function testTransferFromDirectoryToDirectory()
+    {
+
+        echo "test1";
+        $source = $this->createSourceDirectoryDatastore();
+        $target = $this->createDirectoryDatastore();
+
+        $template = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $template->presetForTemplateSearch();
+        $target->deleteByTemplate($template);
+
+        $transfer = new MDatastoreTransfer(
+            $source, $target
+        );
+        $transfer->transfer();
+        echo "test2";
+
+        self::assertEquals(
+            3,
+            count($target->getWebfilesAsArray()));
+
+        //$target->normalize();
+
+        /*self::assertEquals(
+            count($target->getWebfilesAsArray()),
+            count($source->getWebfilesAsArray()));*/
+
     }
 }

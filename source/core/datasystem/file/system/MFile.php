@@ -115,6 +115,23 @@ class MFile extends MWebfile
         }
     }
 
+    public function renameTo($newFileName) {
+        $oldPath = $this->getPath();
+        $newPath = $this->m_sFolderName . "/" . $newFileName;
+
+        rename($oldPath,$newPath);
+
+        $this->m_sFileName = $newFileName;
+    }
+
+    /**
+     * Deletes the specified file.
+     */
+    public function delete()
+    {
+        unlink($this->getPath());
+    }
+
     /**
      *
      */
@@ -153,14 +170,6 @@ class MFile extends MWebfile
             return substr($this->m_sFileName, $pointPosition + 1);
         }
 
-    }
-
-    /**
-     * Deletes the specified file.
-     */
-    public function delete()
-    {
-        unlink($this->getPath());
     }
 
     public function getDate()
