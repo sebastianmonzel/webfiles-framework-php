@@ -178,7 +178,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
     {
 
         $directory = new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
-            __DIR__ . '/../../../resources/targetTransferDirectoryDatstore');
+            __DIR__ . '/../../../resources/targetTransferDirectoryDatastore');
 
         return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
     }
