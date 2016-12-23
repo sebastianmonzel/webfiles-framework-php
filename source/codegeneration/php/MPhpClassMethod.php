@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\codegeneration\php;
+namespace simpleserv\webfilesframework\codegeneration\php;
 
 use simpleserv\webfilesframework\codegeneration\MAbstractClassMethod;
 

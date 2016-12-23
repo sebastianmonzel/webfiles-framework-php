@@ -121,6 +121,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         /** @var MWebfile $item */
         $lowerCaseFileExtension = strtolower($file->getExtension());
 
+        // AUTOBOXING for MImage-Definition
         if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
 
             $normalizedFile = new MFile($file->getFolder() . "/normal/" . $file->getName());
@@ -131,7 +132,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             } else {
                 $item = new MImage($file->getPath());
             }
+
         } else if ($lowerCaseFileExtension == "webfile" || $forceTransformation) {
+
             $fileContent = $file->getContent();
             $item = MWebfile::staticUnmarshall($fileContent);
 
