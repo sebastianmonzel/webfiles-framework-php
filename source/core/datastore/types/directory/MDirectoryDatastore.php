@@ -210,6 +210,17 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
+    public function deleteAll()
+    {
+        $webfiles = $this->getWebfilesAsArray();
+
+        foreach ($webfiles as $webfile) {
+            // TODO implizite annahme, dass dateiname immer gleich id ist lösen
+            $file = new MFile($this->m_oDirectory->getPath() . "/" . $webfile->getId() . ".webfile");
+            $file->delete();
+        }
+    }
+
 
     /**
      * Normalizes directory datastore:

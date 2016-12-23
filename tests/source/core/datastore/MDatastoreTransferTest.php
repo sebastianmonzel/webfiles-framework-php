@@ -211,7 +211,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
 
         $template = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
         $template->presetForTemplateSearch();
-        $target->deleteByTemplate($template);
+        $target->deleteAll();
 
         $transfer = new MDatastoreTransfer(
             $source, $target
@@ -220,7 +220,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
         echo "test2";
 
         self::assertEquals(
-            2,
+            1,
             count($target->getWebfilesAsArray()));
 
         /*self::assertEquals(
@@ -237,7 +237,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
 
         $template = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
         $template->presetForTemplateSearch();
-        $target->deleteByTemplate($template);
+        $target->deleteAll();
 
         $transfer = new MDatastoreTransfer(
             $source, $target
