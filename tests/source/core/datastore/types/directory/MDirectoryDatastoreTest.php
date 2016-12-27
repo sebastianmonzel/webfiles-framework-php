@@ -63,10 +63,10 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $reference->setId(1);
         $reference->setFirstname('Sebastian');
         $reference->setLastname('Monzel');
-        $reference->setStreet('Blumenstraße');
+        $reference->setStreet('Blumenstrasse');
         $reference->setHousenumber('4');
         $reference->setPostcode('67433');
-        $reference->setCity('Neustadt an der Weinstraße');
+        $reference->setCity('Neustadt an der Weinstrasse');
         $reference->setTime('4711');
         return $reference;
     }
@@ -169,6 +169,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     }
 
     public function testDoNormalizeFileOnlyOnce() {
+
         $directoryDatastore = $this->createDirectoryDatastore();
         $tmpDatastore = $this->createTempDirectoryDatastore();
         $tmpDatastore->deleteAll();
