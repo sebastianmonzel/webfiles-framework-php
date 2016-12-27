@@ -289,23 +289,27 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
         $timestamp = null;
         if ( $webfile != null ) {
-            if (!$useHumanReadableTimestamps || true) {
-                // make sure timestamp has always same count of letters, as filenames are handled
-                // alphanumerically by filesystem -> sorting will not work if not normalized
-                $timestampAsString = strval($webfile->getTime());
-                $timestampAsStringLength = strlen($timestampAsString);
 
-                $targetLength = 10;
-                $difference = $targetLength - $timestampAsStringLength;
+            if ( !$this->isFilenameNormalized($file) ) { // normalize only once
 
-                $filler = "";
-                while (strlen($filler) < $difference) {
-                    $filler .= "0";
+                if ( !$useHumanReadableTimestamps || true ) {
+                    // make sure timestamp has always same count of letters, as filenames are handled
+                    // alphanumerically by filesystem -> sorting will not work if not normalized
+                    $timestampAsString = strval($webfile->getTime());
+                    $timestampAsStringLength = strlen($timestampAsString);
+
+                    $targetLength = 10;
+                    $difference = $targetLength - $timestampAsStringLength;
+
+                    $filler = "";
+                    while (strlen($filler) < $difference) {
+                        $filler .= "0";
+                    }
+
+                    $timestamp = $filler . $timestampAsString;
                 }
-
-                $timestamp = $filler . $timestampAsString;
+                $file->renameTo($timestamp . '_wf_' . $file->getName());
             }
-            $file->renameTo($timestamp . '_wf_' . $file->getName());
 
             if ( $webfile instanceof MImage && $saveThumbnailsForImages) {
                 $this->createThumbnailsForFile($webfile);
@@ -313,7 +317,26 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
+    /**
+     * Checks if filename was normalized with a regex:
+     * http://www.phpliveregex.com/p/imN
+     */
+    private function isFilenameNormalized(MFile $file) {
+        //
+        return preg_match("/(\d*)_wf_(.*[.].*)/", $file->getName(), $output_array);
+    }
+
+    private function denormalizeFile(MFile $file) {
+        //
+        if ( $this->isFilenameNormalized($file) ) {
+            preg_match("/(\d*)_wf_(.*[.].*)/", $file->getName(), $output_array);
+
+            $file->renameTo($output_array[2]);
+        }
+    }
+
     private function createThumbnailsForFile(MImage $image) {
+
         $this->m_oDirectory->createSubDirectoryIfNotExists($this->THUMB_IMAGES_FOLDER_NAME);
         $this->m_oDirectory->createSubDirectoryIfNotExists($this->NORMAL_IMAGES_FOLDER_NAME);
 
