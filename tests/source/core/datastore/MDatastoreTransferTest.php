@@ -204,52 +204,39 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
      */
     public function testTransferFromDatabaseToDirectory()
     {
-
-        echo "test1";
         $source = $this->createDatabaseDatastore();
         $target = $this->createDirectoryDatastore();
 
-        $template = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
-        $template->presetForTemplateSearch();
         $target->deleteAll();
 
         $transfer = new MDatastoreTransfer(
             $source, $target
         );
         $transfer->transfer();
-        echo "test2";
 
         self::assertEquals(
             1,
             count($target->getWebfilesAsArray()));
 
-        /*self::assertEquals(
-            count($target->getWebfilesAsArray()),
-            count($source->getWebfilesAsArray()));*/
     }
 
     public function testTransferFromDirectoryToDirectory()
     {
-
-        echo "test1";
         $source = $this->createSourceDirectoryDatastore();
         $target = $this->createDirectoryDatastore();
 
-        $template = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
-        $template->presetForTemplateSearch();
         $target->deleteAll();
 
         $transfer = new MDatastoreTransfer(
             $source, $target
         );
         $transfer->transfer();
-        echo "test2";
 
         self::assertEquals(
             3,
             count($target->getWebfilesAsArray()));
 
-        //$target->normalize();
+        $target->normalize();
 
         /*self::assertEquals(
             count($target->getWebfilesAsArray()),

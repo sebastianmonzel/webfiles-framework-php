@@ -29,6 +29,7 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
     {
     }
 
+
     /**
      * @covers simpleserv\webfilesframework\core\datasystem\file\format\MWebfile::getSimplifiedAttributeName
      */
@@ -39,11 +40,25 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
     	$this->assertEquals($referencedSimplifiedAttributename,$calculatedSimplifiedAttributename);
     }
 
-    public function testMarshallWebfile() {
-        $sample = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
-        $marshalledWebfile = $sample->marshall(true);
-        //self::assertXmlFileEqualsXmlFile();
+    public function testUnmarshallingAndMarshallingWebfile() {
 
+        // UNMARSHALL
+        $file = new \simpleserv\webfilesframework\core\datasystem\file\system\MFile(
+            __DIR__ . '/../../../../../resources/folderDatastore/sampleWebfile1.webfile');
+        $sample = MWebfile::staticUnmarshall($file->getContent());
+
+        // MARSHALL
+        $marshalledWebfile = $sample->marshall(true);
+
+        $this->assertXmlStringEqualsXmlFile(
+            __DIR__ . '/../../../../../resources/folderDatastore/sampleWebfile1.webfile',
+            $marshalledWebfile
+            );
+    }
+
+    public function checkConventionsOnEveryGivenWebfileInClasspath() {
+        // TODO probably https://github.com/hanneskod/classtools fits for
+        // searching classes in classpath
     }
 
 }

@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\time;
+namespace simpleserv\webfilesframework\core\datatypes\time;
 use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -247,6 +247,28 @@ class MTimestampHelper
         $minute = substr($dojoTime, 4, 2);;
 
         $timestamp = mktime($hour, $minute, '0', $month, $day, $year);
+
+        return $timestamp;
+    }
+
+    /**
+     * Converts a time from exif (f.e. '2016:12:22 14:49:07') to unix timestamp.
+     */
+    public static function getTimestampFromExifFormatedDateTime($exifDateTime) {
+
+        $exifDateTimeSplitted = explode(" ", $exifDateTime);
+
+        $exifDateSplitted = explode(":",$exifDateTimeSplitted[0]);
+        $year = $exifDateSplitted[0];
+        $month = $exifDateSplitted[1];
+        $day = $exifDateSplitted[2];
+
+        $exifTimeSplitted = explode(":",$exifDateTimeSplitted[1]);
+        $hour = $exifTimeSplitted[0];
+        $minute = $exifTimeSplitted[1];
+        $second = $exifTimeSplitted[2];
+
+        $timestamp = mktime($hour, $minute, $second, $month, $day, $year);
 
         return $timestamp;
     }

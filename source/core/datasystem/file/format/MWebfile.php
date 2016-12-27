@@ -39,7 +39,7 @@ class MWebfile {
         $out = "";
         $attributes = $this->getAttributes();
         if ($usePreamble) {
-            $out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
+            $out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         }
         $out .= "<object classname=\"" . static::$m__sClassName . "\">\n";
         foreach ($attributes as $attribute) {
@@ -98,7 +98,7 @@ class MWebfile {
      *
      * Converts the given xml-String into a webfile object.
      * @param string $xmlAsString
-     * @return null|object
+     * @return MWebfile
      */
     public static function staticUnmarshall($xmlAsString)
     {
@@ -162,6 +162,36 @@ class MWebfile {
                 $attribute->setValue($this, "?");
             }
         }
+    }
+
+    public function matchesTemplate(MWebfile $template) {
+
+        if ( $template::$m__sClassName == static::$m__sClassName ) {
+
+            $attributes = $template->getAttributes(true);
+
+            /** @var \ReflectionProperty $attribute */
+            foreach ($attributes as $attribute) {
+
+                $attribute->setAccessible(true);
+                $templateValue = $attribute->getValue($template);
+
+                if (
+                    $templateValue != "?"
+                    && !($templateValue instanceof MIDatastoreFunction)
+                ) {
+
+                    $webfileValue = $attribute->getValue($this);
+                    if ($templateValue != $webfileValue) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        } else {
+            return false;
+        }
+
     }
 
     /**

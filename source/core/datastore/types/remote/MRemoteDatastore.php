@@ -19,15 +19,13 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 class MRemoteDatastore extends MAbstractDatastore
 {
 
-    private $m_sDatastoreName;
-    private $m_sWebfilesUrl;
+    private $m_sDatastoreUrl;
 
     public static $m__sClassName = __CLASS__;
 
-    public function __construct($contentInfoServiceUrl, $datastoreId)
+    public function __construct($datastoreUrl)
     {
-        $this->m_sWebfilesUrl = $contentInfoServiceUrl;
-        $this->m_sDatastoreName = $datastoreId;
+        $this->m_sDatastoreUrl = $datastoreUrl;
     }
 
     public function tryConnect()
@@ -40,22 +38,19 @@ class MRemoteDatastore extends MAbstractDatastore
         return true;
     }
 
+    private function doRemoteCall($data = null)
+    {
+        $request = new MPostHttpRequest($this->m_sDatastoreUrl, $data);
+        $response = $request->makeRequest();
+
+        return $response;
+    }
+
     public function getWebfilesAsStream($data = null)
     {
 
-        $requestResult = $this->makeRequest($data);
-        return new MWebfileStream($requestResult);
-    }
-
-
-    private function makeRequest($data = null)
-    {
-
-        $requestUrl = $this->m_sWebfilesUrl . "/services/contentInformationService/?datastoreId=" . $this->m_sDatastoreName;
-        $request = new MPostHttpRequest($requestUrl, $data);
-        $webfilestreamContent = $request->makeRequest();
-
-        return $webfilestreamContent;
+        $callResult = $this->doRemoteCall($data);
+        return new MWebfileStream($callResult);
     }
 
     public function getWebfilesAsArray()
@@ -72,10 +67,20 @@ class MRemoteDatastore extends MAbstractDatastore
     {
 
         $data = array();
-        $data['method'] = "getByTemplate";
-        $data['template'] = $template->marshall();
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
         return $this->getWebfilesAsStream($data)->getWebfiles();
+    }
+
+    public function storeWebfile(MWebfile $webfile)
+    {
+
+        $data = array();
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_STORE_WEBFILE;
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_WEBFILE] = $webfile->marshall();
+
+        $this->doRemoteCall($data);
     }
 
     /**

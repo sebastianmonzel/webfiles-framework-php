@@ -97,36 +97,11 @@ abstract class MAbstractDatastore extends MWebfile
     {
 
         $filteredWebfiles = array();
-        $attributes = $template->getAttributes(true);
 
         /** @var MWebfile $webfile */
         foreach ($webfiles as $webfile) {
-
-            $validWebfile = true;
-
-            if ( $template::$m__sClassName == $webfile::$m__sClassName ) {
-
-                /** @var \ReflectionProperty $attribute */
-                foreach ($attributes as $attribute) {
-
-                    $attribute->setAccessible(true);
-                    $templateValue = $attribute->getValue($template);
-
-                    if (
-                        $templateValue != "?"
-                        && !($templateValue instanceof MIDatastoreFunction)
-                    ) {
-
-                        $webfileValue = $attribute->getValue($webfile);
-                        if ($templateValue != $webfileValue) {
-                            $validWebfile = false;
-                        }
-                    }
-                }
-
-                if ($validWebfile) {
-                    $filteredWebfiles = $this->addWebfileSafetyToArray($webfile, $filteredWebfiles);
-                }
+            if ($webfile->matchesTemplate($template)) {
+                $filteredWebfiles = $this->addWebfileSafetyToArray($webfile, $filteredWebfiles);
             }
         }
 

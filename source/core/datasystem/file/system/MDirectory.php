@@ -114,7 +114,7 @@ class MDirectory extends MFile
      * @param $p_sName
      * @return MDirectory
      */
-    public function createSubDirectory($p_sName)
+    public function createSubDirectoryIfNotExists($p_sName)
     {
 
         $subdirectoryPath = $this->m_sPath . "/" . $p_sName;

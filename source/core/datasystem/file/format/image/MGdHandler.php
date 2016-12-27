@@ -23,7 +23,9 @@ class MGdHandler extends MAbstractImageLibraryHandler
      */
     public function loadJpg($p_sImage)
     {
-        return imagecreatefromjpeg($p_sImage);
+        // workaround for: "Invalid SOS parameters for sequential JPEG" - actually ignoring it
+        ini_set ('gd.jpeg_ignore_warning', 1);
+        return @imagecreatefromjpeg($p_sImage);
     }
 
     /**

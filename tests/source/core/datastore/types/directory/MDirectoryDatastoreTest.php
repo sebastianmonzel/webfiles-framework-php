@@ -21,9 +21,23 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     public function createDirectoryDatastore()
     {
         $directoryDatastore = new \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(__DIR__ . '/../../../../../resources/folderDatastore'));
+            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
+                __DIR__ . '/../../../../../resources/folderDatastore'));
         return $directoryDatastore;
     }
+
+    /**
+     * @return \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+     */
+    private function createTempDirectoryDatastore()
+    {
+
+        $directory = new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
+            __DIR__ . '/../../../../../resources/targetTransferDirectoryDatastore');
+
+        return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
+    }
+
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -94,6 +108,8 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $template->setFirstname('Sebastian');
         $result = $directoryDatastore->searchByTemplate($template);
 
+        var_export($result);
+
         self::assertNotNull($result);
         self::assertTrue(is_array($result));
         self::assertEquals(1,count($result));
@@ -149,6 +165,46 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         self::assertEquals($this->createReferenceSampleObject1(),$webfile1);
         $webfile2 = @array_shift(array_slice($webfilesArray,2,1));
         self::assertEquals($this->createReferenceSampleObject2(),$webfile2);
+
+    }
+
+    public function testDoNormalizeFileOnlyOnce() {
+        $directoryDatastore = $this->createDirectoryDatastore();
+        $tmpDatastore = $this->createTempDirectoryDatastore();
+        $tmpDatastore->deleteAll();
+
+        $transfer = new \simpleserv\webfilesframework\core\datastore\MDatastoreTransfer(
+            $directoryDatastore,$tmpDatastore);
+
+        $transfer->transfer();
+
+        $tmpDatastore->normalize();
+        $filenamesAfterFirstNormalisation = $tmpDatastore->getDirectory()->getFileNames();
+
+        $tmpDatastore->normalize();
+        $filenamesAfterSecondNormalisation = $tmpDatastore->getDirectory()->getFileNames();
+
+        var_export($filenamesAfterFirstNormalisation);
+        var_export($filenamesAfterSecondNormalisation);
+
+        self::assertEquals($filenamesAfterFirstNormalisation[3],$filenamesAfterSecondNormalisation[3]);
+
+    }
+
+
+    public function testNormalizeLocalDirectory() {
+
+        /*$directoryDatastore = $this->createDirectoryDatastore();
+
+        $directoryDatastore = new \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
+            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory('E:\owncloud\familie\bilder\2016_12_24__weihnachten-bei-drochterts-test'));
+
+        $webfilesArray = $directoryDatastore->getWebfilesAsArray();
+
+        self::assertTrue(is_array($webfilesArray));
+        self::assertEquals(11,count($webfilesArray));
+*/
+        //$directoryDatastore->normalize(false,true);
 
     }
 

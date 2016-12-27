@@ -2,16 +2,15 @@
 
 namespace simpleserv\webfilesframework\core\datastore\types\directory;
 
-use simpleserv\webfilesframework\core\datastore\functions\MIDatastoreFunction;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datastore\MAbstractCachableDatastore;
-use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
 use simpleserv\webfilesframework\core\datastore\MDatastoreException;
+use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
+use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
  * Class to connect to a datastore based on a directory.
@@ -29,11 +28,15 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     implements MISingleDatasourceDatastore
 {
 
-    /**
-     * @var MDirectory
-     */
+    /** @var MDirectory */
     private $m_oDirectory;
     public static $m__sClassName = __CLASS__;
+
+    /** @var MDirectoryDatastoreMetainformation */
+    private $metaInformationWebfile;
+
+    private $THUMB_IMAGES_FOLDER_NAME = "images-thumbssize";
+    private $NORMAL_IMAGES_FOLDER_NAME = "images-normalsize";
 
 
     public function __construct(MDirectory $directory, $isRemoteDatastore = false)
@@ -41,8 +44,13 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         if ($directory == null || !$directory instanceof MDirectory) {
             throw new MDatastoreException("Cannot instantiate a DirectoryDatastore without valid directory.");
         }
-
         $this->m_oDirectory = $directory;
+
+        if ($this->metaInformationExist()) {
+            $this->metaInformationWebfile = $this->readMetaInformation();
+        } else {
+            $this->metaInformationWebfile = new MDirectoryDatastoreMetainformation();
+        }
     }
 
     public function isReadOnly()
@@ -124,14 +132,14 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         // AUTOBOXING for MImage-Definition
         if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
 
-            $normalizedFile = new MFile($file->getFolder() . "/normal/" . $file->getName());
+            $normalizedFile = new MFile($file->getFolder() . "/" . $this->NORMAL_IMAGES_FOLDER_NAME . "/" . $file->getName());
 
-            if ($normalizedFile->exists()) {
-                // TODO exif-aufnahmedatum auslesen und im webfile objekt setzen
+            if ($normalizedFile->exists() && false) { // TODO as long as exif information not copied use the original image
                 $item = new MImage($normalizedFile->getPath());
             } else {
                 $item = new MImage($file->getPath());
             }
+            $item->setTime($item->readExifDate());
 
         } else if ($lowerCaseFileExtension == "webfile" || $forceTransformation) {
 
@@ -144,21 +152,33 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
 
         if ( $item->getTime() == null) {
-            $item->setTime($file->getDate());
+            if ( $file->getDate() != null ) {
+                $item->setTime($file->getDate());
+            } else {
+                $item->setTime(time());
+            }
         }
 
         return $item;
     }
 
 
-
-
     public function storeWebfile(MWebfile $webfile)
     {
         $directoryPath = $this->m_oDirectory->getPath();
         // TODO implizite annahme, dass dateiname immer gleich id ist lösen
+        // TODO normalize hier anwenden
         $file = new MFile($directoryPath . "/" . $webfile->getId() . ".webfile");
+
         $file->writeContent($webfile->marshall(), true);
+
+        if ( $this->metaInformationWebfile->isNormalized() ) {
+            $this->normalizeFile(
+                $file,
+                $this->metaInformationWebfile->isUseHumanReadableTimestamps(),
+                $this->metaInformationWebfile->containsThumbnails()
+                );
+        }
     }
 
     /**
@@ -198,14 +218,16 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     public function deleteByTemplate(MWebfile $template)
     {
         $webfiles = $this->searchByTemplate($template);
+        var_dump($webfiles);
+        $mapping = $this->createWebfileIdToFilenameMapping();
 
         if ($this->isDatastoreCached()) {
             $this->cachingDatastore->deleteByTemplate($template);
         }
 
         foreach ($webfiles as $webfile) {
-            // TODO implizite annahme, dass dateiname immer gleich id ist lösen
-            $file = new MFile($this->m_oDirectory->getPath() . "/" . $webfile->getId() . ".webfile");
+            $webfileId = $webfile->getId();
+            $file = new MFile($this->m_oDirectory->getPath() . "/" . $mapping[$webfileId]);
             $file->delete();
         }
     }
@@ -213,31 +235,61 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     public function deleteAll()
     {
         $webfiles = $this->getWebfilesAsArray();
+        $mapping = $this->createWebfileIdToFilenameMapping();
 
         foreach ($webfiles as $webfile) {
-            // TODO implizite annahme, dass dateiname immer gleich id ist lösen
-            $file = new MFile($this->m_oDirectory->getPath() . "/" . $webfile->getId() . ".webfile");
+            $webfileId = $webfile->getId();
+            $file = new MFile($this->m_oDirectory->getPath() . "/" . $mapping[$webfileId]);
             $file->delete();
         }
+    }
+
+    private function createWebfileIdToFilenameMapping()
+    {
+        $filesArray = $this->m_oDirectory->getFiles();
+
+        $mapping = array();
+        /** @var MFile $file */
+        /** @var MWebfile $webfile */
+        foreach ($filesArray as $file) {
+            $webfile = $this->transformFileIntoWebfile($file);
+            if ( $webfile != null ) {
+                $webfileId = $webfile->getId();
+                $mapping[$webfileId] = $file->getName();
+            }
+        }
+
+        return $mapping;
     }
 
 
     /**
      * Normalizes directory datastore:
      *  - normalizes filenames
-     * @param bool $useHumanReadableTimestamp attention - timezones are actually not , merging webfile datastores from
+     * @param bool $useHumanReadableTimestamps attention - timezones are actually not , merging webfile datastores from
      * different timezones can lead to mismatches.
      */
-    public function normalize($useHumanReadableTimestamp = false) {
+    public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
         $filesArray = $this->m_oDirectory->getFiles();
 
         /** @var MFile $file */
         /** @var MWebfile $webfile */
         foreach ($filesArray as $file) {
-            $webfile = $this->transformFileIntoWebfile($file);
+            $this->normalizeFile($file,$useHumanReadableTimestamps, $saveThumbnailsForImages);
+        }
 
-            $timestamp = null;
-            if (!$useHumanReadableTimestamp || true) {
+        $this->metaInformationWebfile->setNormalized(true);
+        $this->metaInformationWebfile->setUseHumanReadableTimestamps($useHumanReadableTimestamps);
+        $this->metaInformationWebfile->setContainsThumbnails($saveThumbnailsForImages);
+        $this->writeMetaInformation($this->metaInformationWebfile);
+    }
+
+    private function normalizeFile(MFile $file, $useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
+        $webfile = $this->transformFileIntoWebfile($file);
+
+        $timestamp = null;
+        if ( $webfile != null ) {
+            if (!$useHumanReadableTimestamps || true) {
                 // make sure timestamp has always same count of letters, as filenames are handled
                 // alphanumerically by filesystem -> sorting will not work if not normalized
                 $timestampAsString = strval($webfile->getTime());
@@ -252,27 +304,50 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
                 }
 
                 $timestamp = $filler . $timestampAsString;
-
             }
-
             $file->renameTo($timestamp . '_wf_' . $file->getName());
+
+            if ( $webfile instanceof MImage && $saveThumbnailsForImages) {
+                $this->createThumbnailsForFile($webfile);
+            }
         }
     }
 
-    private function readMetaInformation() {
-        $file = new MFile(".metainformation");
-        $metaInformationWebfile = $this->transformFileIntoWebfile($file,true);
+    private function createThumbnailsForFile(MImage $image) {
+        $this->m_oDirectory->createSubDirectoryIfNotExists($this->THUMB_IMAGES_FOLDER_NAME);
+        $this->m_oDirectory->createSubDirectoryIfNotExists($this->NORMAL_IMAGES_FOLDER_NAME);
 
-        // TODO define metaInformation
-        // - normalized true/false
-        // - human readable timestamps true/false
-        // - timezone
+        $image->loadImage();
 
+        $image->saveScaledImgAsFileWithBiggerSize(
+            160, $this->m_oDirectory->getPath() . "/" . $this->THUMB_IMAGES_FOLDER_NAME . "/" . $image->getName());
+        $image->saveScaledImgAsFileWithBiggerSize(
+            600, $this->m_oDirectory->getPath() . "/" . $this->NORMAL_IMAGES_FOLDER_NAME . "/" . $image->getName());
 
+        flush();
+        $image->destroy();
     }
 
-    private function normalizeFile(MFile $file) {
+    private function metaInformationExist() {
+        $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
+        return $file->exists();
+    }
 
+    private function readMetaInformation() {
+        $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
+        return $this->transformFileIntoWebfile($file,true);
+    }
+
+    private function writeMetaInformation(MDirectoryDatastoreMetainformation $metainformation) {
+        $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
+        $file->writeContent($metainformation->marshall(),true);
+    }
+
+    /**
+     * @return MDirectory
+     */
+    public function getDirectory() {
+        return $this->m_oDirectory;
     }
 
 }

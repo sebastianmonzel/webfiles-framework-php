@@ -4,14 +4,17 @@ engines:
     enabled: true
     config:
       languages:
-      - ruby
       - javascript
-      - python
       - php
   fixme:
     enabled: true
   phpmd:
     enabled: true
+    exclude_fingerprints:
+      - 198ae1c2482f981371e220d3ade1e79f
+      - 36483e445683cef90da294d7ea2390c4
+      - 9a35eb42925d8ff099a35cf079cf7c63
+
 ratings:
   paths:
   - "**.inc"

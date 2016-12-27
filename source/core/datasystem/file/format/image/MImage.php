@@ -4,6 +4,7 @@ namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
 
 
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use simpleserv\webfilesframework\core\datatypes\time\MTimestampHelper;
 
 
 /**
@@ -18,41 +19,39 @@ class MImage extends MFile
 
     protected $m_oImage;
 
-    protected $m_oFontHeight;
-    protected $m_oFontWidth;
-
     protected $m_sType;
 
     protected $handler;
 
     public static $m__sClassName = __CLASS__;
 
-    public function __construct($filePath, $lazy = true, $type = "jpg")
-    {
+    public function __construct($filePath, $loadImageResourceOnCreation = false, $type = "jpg") {
 
         parent::__construct($filePath);
 
         $this->m_sType = $type;
 
-        if (!$lazy) {
-            if (MImage::isImageMagickInstalled() && false) {
-                $this->handler = new MImageMagickHandler();
-            } else if (MImage::isGdInstalled()) {
-                $this->handler = new MGdHandler();
-            } else {
+        if ($loadImageResourceOnCreation) {
+            $this->loadImage();
+        }
+    }
 
+    public function loadImage() {
+
+        if (MImage::isImageMagickInstalled() && false) {
+            $this->handler = new MImageMagickHandler();
+        } else if (MImage::isGdInstalled()) {
+            $this->handler = new MGdHandler();
+        } else {
+
+        }
+
+        if ($this->exists()) {
+            if ($this->m_sType == "jpg") {
+                $this->m_oImage = $this->handler->loadJpg($this->getPath());
+            } else if ($this->m_sType == "png") {
+                $this->m_oImage = $this->handler->loadPng($this->getPath());
             }
-
-            if ($this->exists()) {
-                if ($this->m_sType == "jpg") {
-                    $this->m_oImage = $this->handler->loadJpg($this->getPath());
-                } else if ($this->m_sType == "png") {
-                    $this->m_oImage = $this->handler->loadPng($this->getPath());
-                }
-            }
-
-            $this->m_oFontHeight = imagefontheight(3);
-            $this->m_oFontWidth = imagefontwidth(3);
         }
     }
 
@@ -88,33 +87,6 @@ class MImage extends MFile
 
     /**
      *
-     * @param $p_sFont
-     * @param $p_sFontSize
-     * @param $p_sText
-     * @param int $p_iY
-     * @param int $p_iX
-     * @internal param $ <type> $p_sFont
-     * @internal param $ <type> $p_sText
-     * @internal param $ <type> $p_iY
-     * @internal param $ <type> $p_iX
-     */
-    public function writeTextLine($p_sFont, $p_sFontSize, $p_sText, $p_iY = 282, $p_iX = 210)
-    {
-        $red = imagecolorallocate($this->m_oImage, 197, 14, 30);
-        imagettftext($this->m_oImage, $p_sFontSize, 0, $p_iX, $p_iY, $red, $p_sFont, utf8_decode($p_sText));
-    }
-
-    public function writeTextLines($p_sFont, $p_sFontSize, $p_sTextArray, $p_iY = 296, $p_iX = 210)
-    {
-        $sWritingText = "";
-        foreach ($p_sTextArray as $sText) {
-            $sWritingText .= $sText . "\n";
-        }
-        $this->writeTextLine($p_sFont, $p_sFontSize, $sWritingText, $p_iY, $p_iX);
-    }
-
-    /**
-     *
      */
     public function outputInBrowser()
     {
@@ -128,6 +100,22 @@ class MImage extends MFile
         }
 
         imagedestroy($this->m_oImage);
+    }
+
+    public function readExifDate() {
+        $exifData = @exif_read_data($this->getPath());
+
+        if ( isset($exifData['DateTimeDigitized']) ) {
+            return MTimestampHelper::getTimestampFromExifFormatedDateTime(
+                $exifData['DateTimeDigitized']); //e.g. 2016:12:22 14:49:07
+        } else if ( isset($exifData['DateTimeOriginal']) ) {
+            return MTimestampHelper::getTimestampFromExifFormatedDateTime(
+                $exifData['DateTimeOriginal']); //e.g. 2016:12:22 14:49:07
+        } else {
+            echo "warn: " . $this->getPath() . " does not have defined exifdate.\n";
+            //var_dump($exifData);
+        }
+        return null;
     }
 
     /**
@@ -173,14 +161,6 @@ class MImage extends MFile
     }
 
     /**
-     * convert to a normalized format (jpeg or png)
-     */
-    public function normalize()
-    {
-
-    }
-
-    /**
      *
      * @param $width
      * @param $height
@@ -196,7 +176,7 @@ class MImage extends MFile
         if (!$this->exists()) {
             $iErrorCode = 30;
             throw new \Exception(
-                "File does not exists. Given File in the Image Object has to be created or has to be an existant file.",
+                "File does not exists. Given File in the Image Object has to be created or has to be an existent file.",
                 $iErrorCode
             );
         }
@@ -233,8 +213,6 @@ class MImage extends MFile
 
     public function getImageHeight()
     {
-
-        echo "getImageHeight";
 
         $oImageSize = getimagesize($this->getPath());
 
@@ -273,6 +251,8 @@ class MImage extends MFile
     public function saveScaledImgAsFileWithBiggerSize($p_iBiggerSize, $p_sFilePath = "")
     {
 
+        // TODO exif informationen mitkopieren
+        ini_set ('gd.jpeg_ignore_warning', 1);
         if ($this->getImageWidth() > $this->getImageHeight()) {
             $this->saveScaledImgAsFileWithWidth($p_iBiggerSize, $p_sFilePath);
         } else {
