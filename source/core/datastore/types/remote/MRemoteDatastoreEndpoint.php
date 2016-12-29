@@ -29,11 +29,11 @@ class MRemoteDatastoreEndpoint
 
     public function handleRemoteCall() {
 
-        if ( isset($_POST[static::PAYLOAD_FIELD_NAME_METHOD])) {
+        if ( isset($_POST[static::$PAYLOAD_FIELD_NAME_METHOD])) {
 
             if (
-                $_POST[static::PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
-                    && isset($_POST[static::PAYLOAD_FIELD_NAME_TEMPLATE]) ) {
+                $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
+                && isset($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]) ) {
 
                 // GET BY TEMPLATE
                 $template = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]);
@@ -42,11 +42,11 @@ class MRemoteDatastoreEndpoint
                 $webfilesStream = new MWebfileStream($webfiles);
 
             } else if (
-                $_POST[static::PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_STORE_WEBFILE
-                    && isset($_POST[static::PAYLOAD_FIELD_NAME_WEBFILE])) {
+                $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_STORE_WEBFILE
+                && isset($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE])) {
 
                 // STORE
-                $webfile = MWebfile::staticUnmarshall($_POST[static::PAYLOAD_FIELD_NAME_WEBFILE]);
+                $webfile = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE]);
                 $this->m_oDatastore->storeWebfile($webfile);
 
             } else {

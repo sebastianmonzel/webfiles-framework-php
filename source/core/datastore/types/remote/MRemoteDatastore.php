@@ -30,12 +30,14 @@ class MRemoteDatastore extends MAbstractDatastore
 
     public function tryConnect()
     {
+        // TODO
         return true;
     }
 
     public function isReadOnly()
     {
-        return true;
+        // TODO
+        return false;
     }
 
     private function doRemoteCall($data = null)
@@ -58,11 +60,6 @@ class MRemoteDatastore extends MAbstractDatastore
         return $this->getWebfilesAsStream()->getWebfiles();
     }
 
-    public function getLatestWebfiles($count = 5)
-    {
-        // TODO
-    }
-
     public function searchByTemplate(MWebfile $template)
     {
 
@@ -72,6 +69,18 @@ class MRemoteDatastore extends MAbstractDatastore
 
         return $this->getWebfilesAsStream($data)->getWebfiles();
     }
+
+    public function getLatestWebfiles($count = 5)
+    {
+        // TODO
+    }
+
+    public function getNextWebfileForTimestamp($time)
+    {
+        // TODO: Implement getNextWebfileForTimestamp() method.
+        return null;
+    }
+
 
     public function storeWebfile(MWebfile $webfile)
     {
@@ -83,16 +92,5 @@ class MRemoteDatastore extends MAbstractDatastore
         $this->doRemoteCall($data);
     }
 
-    /**
-     * Returns the next webfile for the given timestamp
-     * @param int $time timestamp in unix-format.
-     * @return MWebfile webfile according to the given input.
-     * old: getNextWebfileForTime - new getNextWebfileForTimestamp
-     * DONE
-     */
-    public function getNextWebfileForTimestamp($time)
-    {
-        // TODO: Implement getNextWebfileForTimestamp() method.
-        return null;
-    }
+
 }
