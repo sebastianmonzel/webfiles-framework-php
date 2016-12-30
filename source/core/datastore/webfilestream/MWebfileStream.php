@@ -21,6 +21,7 @@ class MWebfileStream
     {
 
         if (is_array($input)) {
+            $this->validateWebfilesArray($input);
             $this->webfiles = $input;
         } else if (is_string($input)) {
             $this->webfiles = $this->unmarshall($input);
@@ -28,8 +29,21 @@ class MWebfileStream
             $this->webfiles = array();
             array_push($this->webfiles, $input);
         } else if (isset($input)) {
-            throw new MWebfilesFrameworkException("Cannot handle input for creating webfile stream.");
+            throw new MWebfilesFrameworkException("Cannot handle input for creating webfile stream. input: " . $input);
         }
+    }
+
+    /**
+     * @param array $webfiles
+     */
+    private function validateWebfilesArray($webfiles) {
+
+        foreach ($webfiles as $webfile) {
+            if ( ! $webfile instanceof MWebfile) {
+                throw new MWebfilesFrameworkException("Not all elements in array are from type MWebfile.");
+            }
+        }
+        
     }
 
     private function marshall()
@@ -48,27 +62,39 @@ class MWebfileStream
     private function unmarshall($input)
     {
 
-        $webfiles = array();
+        $webfilesResultArray = array();
 
-        $root = simplexml_load_string($input);
+        $root = @simplexml_load_string($input);
 
-        if ($root != null) {
+        if ($root != null && $root != false) {
+
+            $rootChildren = $root->children();
+
+            if ( count($rootChildren) != 1 ) {
+                throw new MWebfilesFrameworkException("Root element has not exactly one child. Input: " . $input);
+            }
+
+            /** @var \SimpleXMLElement $rootChild */
+            foreach ($rootChildren as $rootChild) {
+                if ( $rootChild->getName() != "webfiles" ) {
+                    throw new MWebfilesFrameworkException("No webfiles child exists on root element. Input: " . $input);
+                }
+            }
 
             $webfilesChildren = $root->webfiles->children();
 
             /** @var \SimpleXMLElement $webfileChild */
             foreach ($webfilesChildren as $webfileChild) {
                 array_push(
-                    $webfiles,
-                    MWebfile::staticUnmarshall($webfileChild->asXML()));
+                    $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild->asXML()));
             }
 
         } else {
             throw new MWebfilesFrameworkException(
-                "Error on reading xml of webfile stream: No root element given.");
+                "Error on reading xml of webfile stream: No root element given. Input: " . $input);
         }
 
-        return $webfiles;
+        return $webfilesResultArray;
     }
 
     public function getXML()

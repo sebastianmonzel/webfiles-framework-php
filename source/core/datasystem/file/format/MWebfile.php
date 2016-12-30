@@ -1,6 +1,7 @@
 <?php
 
 namespace simpleserv\webfilesframework\core\datasystem\file\format;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Base cass for all webfile class definitions.<br />
@@ -63,86 +64,62 @@ class MWebfile {
      */
     public function unmarshall($data)
     {
-        $root = simplexml_load_string($data);
-
-        if ($root->getName() == "reference") {
-            $url = $root->url;
-            $data = file_get_contents($url);
-
-            $root = simplexml_load_string($data);
-        }
-
-        if ($root != null) {
-
-            $objectAttributes = $root->children();
-            $attributes = $this->getAttributes();
-
-            /** @var \SimpleXMLElement $value */
-            foreach ($objectAttributes as $value) {
-
-                foreach ($attributes as $attribute) {
-                    $attributeName = $attribute->getName();
-                    $attribute->setAccessible(true);
-
-                    if ($value->getName() == static::getSimplifiedAttributeName($attributeName)) {
-                        $attribute->setValue($this, $value->__toString());
-                    }
-                }
-            }
-        } else {
-            echo("Fehler beim Lesen des XML");
-        }
+        static::genericUnmarshall($data,$this);
     }
 
     /**
-     *
-     * Converts the given xml-String into a webfile object.
+     * Converts the given xml-String into a new webfile object.
      * @param string $xmlAsString
      * @return MWebfile
      */
     public static function staticUnmarshall($xmlAsString)
     {
+        return static::genericUnmarshall($xmlAsString);
+    }
+
+
+    private static function genericUnmarshall($xmlAsString, &$targetObject = null) {
+
         $root = simplexml_load_string($xmlAsString);
+
+        if ($root == null) {
+            throw new MWebfilesFrameworkException("Error on reading initial xml: " . $xmlAsString);
+        }
 
         if ($root->getName() == "reference") {
             $url = $root->url;
             $xmlAsString = file_get_contents($url);
-
             $root = simplexml_load_string($xmlAsString);
+
+            if ($root == null) {
+                throw new MWebfilesFrameworkException("Error on reading reference xml: " . $xmlAsString);
+            }
         }
 
-        if ($root != null) {
-
+        if ( $targetObject == null ) {
             $classname = (string)$root->attributes()->classname;
 
             // INSTANCIATE NEW
             $ref = new \ReflectionClass($classname);
-            $item = $ref->newInstanceWithoutConstructor();
-
-            // OLD VERSION
-            //$item = new $classname();
-
-            $objectAttributes = $root->children();
-            $attributes = $item->getAttributes();
-
-            /** @var \SimpleXMLElement $value */
-            foreach ($objectAttributes as $value) {
-                /** @var \ReflectionProperty $attribute */
-                foreach ($attributes as $attribute) {
-
-                    $attribute->setAccessible(true);
-                    $attributeName = $attribute->getName();
-                    if ($value->getName() == static::getSimplifiedAttributeName($attributeName)) {
-                        $attribute->setValue($item, $value->__toString());
-                    }
-                }
-
-            }
-            return $item;
-        } else {
-            echo("Fehler beim Lesen des XML");
-            return null;
+            $targetObject = $ref->newInstanceWithoutConstructor();
         }
+
+        $objectAttributes = $root->children();
+        $attributes = $targetObject->getAttributes();
+
+        /** @var \SimpleXMLElement $value */
+        foreach ($objectAttributes as $value) {
+            /** @var \ReflectionProperty $attribute */
+            foreach ($attributes as $attribute) {
+
+                $attribute->setAccessible(true);
+                $attributeName = $attribute->getName();
+                if ($value->getName() == static::getSimplifiedAttributeName($attributeName)) {
+                    $attribute->setValue($targetObject, $value->__toString());
+                }
+            }
+        }
+        return $targetObject;
     }
 
     /**
