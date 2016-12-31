@@ -17,6 +17,7 @@ class MRemoteDatastoreEndpoint
 
     public static $METHOD_NAME_SEARCH_BY_TEMPLATE = "searchByTemplate";
     public static $METHOD_NAME_STORE_WEBFILE = "storeWebfile";
+    public static $METHOD_NAME_DELETE_BY_TEMPLATE = "deleteByTemplate";
 
     public static $PAYLOAD_FIELD_NAME_WEBFILE = "webfile";
     public static $PAYLOAD_FIELD_NAME_TEMPLATE = "template";
@@ -33,7 +34,7 @@ class MRemoteDatastoreEndpoint
 
             if (
                 $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
-                && isset($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]) ) {
+                    && isset($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]) ) {
 
                 // GET BY TEMPLATE
                 $template = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]);
@@ -43,11 +44,19 @@ class MRemoteDatastoreEndpoint
 
             } else if (
                 $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_STORE_WEBFILE
-                && isset($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE])) {
+                    && isset($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE])) {
 
                 // STORE
                 $webfile = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE]);
                 $this->m_oDatastore->storeWebfile($webfile);
+
+            } else if (
+                $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_DELETE_BY_TEMPLATE
+                    && isset($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE])) {
+
+                // DELETE
+                $webfile = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]);
+                $this->m_oDatastore->deleteByTemplate($webfile);
 
             } else {
                 $webfilesStream = $this->m_oDatastore->getWebfilesAsStream();

@@ -92,5 +92,13 @@ class MRemoteDatastore extends MAbstractDatastore
         $this->doRemoteCall($data);
     }
 
+    public function deleteByTemplate(MWebfile $template)
+    {
+        $data = array();
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_DELETE_BY_TEMPLATE;
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
+
+        $this->doRemoteCall($data);
+    }
 
 }
