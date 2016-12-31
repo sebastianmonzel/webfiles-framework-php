@@ -45,7 +45,7 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 $directoryDatastore = new MDirectoryDatastore(new MDirectory("dir"));
 $directoryDatastore->getWebfilesAsArray();
 ```
-#### Read from DatabaseDatastore
+#### Read from DatabaseDatastore (actually mysql only)
 ```php
 <?php
 use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
@@ -97,11 +97,11 @@ $remoteDatastoreEndpoint->handleRemoteCall();
 *Clientside to access the datastore:*
 ```php
 <?php
+use simpleserv\webfilesframework\core\datastore\types\remote\MRemoteDatastore;
+
 // url on which the method $remoteDatastoreEndpoint->handleRemoteCall(); is reachable:
 $datastoreUrl = "http://localhost:1234/datastore/";
 
-$remoteDatastore = new \simpleserv\webfilesframework\core\datastore\types\remote\MRemoteDatastore(
-    $datastoreUrl);
-
+$remoteDatastore = new MRemoteDatastore($datastoreUrl);
 $remoteDatastore->getWebfilesAsArray();
 ```
