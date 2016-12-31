@@ -26,7 +26,7 @@ class MGetHttpRequest extends MAbstractHttpRequest
         $http['header'] = "Content-type: application/x-www-form-urlencoded\r\n";
         $http['method'] = 'GET';
         if (isset($data)) {
-            $http['content'] = $data;
+            $http['content'] = http_build_query($data);
         }
 
         $options = array(
