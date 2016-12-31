@@ -89,7 +89,7 @@ use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatast
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 $remoteDatastoreEndpoint = new MRemoteDatastoreEndpoint(
-    new MDirectoryDatastore(new MDirectory("localDirector"))
+    new MDirectoryDatastore(new MDirectory("localDirectory"))
 );
 $remoteDatastoreEndpoint->handleRemoteCall();
 ```
@@ -98,10 +98,10 @@ $remoteDatastoreEndpoint->handleRemoteCall();
 ```php
 <?php
 // url on which the method $remoteDatastoreEndpoint->handleRemoteCall(); is reachable:
-$datastoreUrl = "http://localhost:1234/datastore/"
+$datastoreUrl = "http://localhost:1234/datastore/";
 
 $remoteDatastore = new \simpleserv\webfilesframework\core\datastore\types\remote\MRemoteDatastore(
     $datastoreUrl);
-```
 
- 
+$remoteDatastore->getWebfilesAsArray();
+```
