@@ -11,6 +11,7 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Class to connect to a datastore based on a directory.
@@ -255,6 +256,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $webfile = $this->transformFileIntoWebfile($file);
             if ( $webfile != null ) {
                 $webfileId = $webfile->getId();
+                if ( isset($mapping[$webfileId]) ) {
+                    throw new MWebfilesFrameworkException("id '" . $webfileId . "' exists twice or more in the actual datastore.");
+                }
                 $mapping[$webfileId] = $file->getName();
             }
         }
