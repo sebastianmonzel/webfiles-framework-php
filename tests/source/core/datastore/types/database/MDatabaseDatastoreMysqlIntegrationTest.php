@@ -1,7 +1,7 @@
 <?php
 /**
- * @covers \simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore
- * @covers MDatabaseConnection
+ * @covers simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore
+ * @covers simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection
  *
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.

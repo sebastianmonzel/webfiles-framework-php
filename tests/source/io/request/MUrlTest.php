@@ -3,7 +3,7 @@
 use simpleserv\webfilesframework\io\request\MUrl;
 
 /**
- * @covers MUrl
+ * @covers simpleserv\webfilesframework\io\request\MUrl
  */
 class MUrlTest extends PHPUnit_Framework_TestCase {
     /**

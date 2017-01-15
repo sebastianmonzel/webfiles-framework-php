@@ -5,7 +5,7 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
 
 
 /**
- * @covers MDatastoreTransfer
+ * @covers simpleserv\webfilesframework\core\datastore\MDatastoreTransfer
  */
 class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
 {

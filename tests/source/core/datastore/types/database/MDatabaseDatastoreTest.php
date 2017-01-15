@@ -6,7 +6,7 @@ use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
 
 /**
- * @covers MDatabaseDatastore
+ * @covers simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore
  */
 class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
     /**

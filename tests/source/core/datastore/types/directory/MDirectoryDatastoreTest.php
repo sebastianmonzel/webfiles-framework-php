@@ -1,17 +1,13 @@
 <?php
 
 
-use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
 
 /**
- * @covers MDatabaseDatastore
+ * @covers simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
  */
 class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
-    /**
-     * @var MDatabaseDatasourceDatastore
-     */
+
     protected $object;
 
     /**

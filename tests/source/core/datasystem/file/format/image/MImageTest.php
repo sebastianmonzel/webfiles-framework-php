@@ -6,7 +6,7 @@ use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
 use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
 
 /**
- * @covers MImage
+ * @covers simpleserv\webfilesframework\core\datasystem\file\format\image\MImage
  */
 class MImageTest extends \PHPUnit_Framework_TestCase {
     /**

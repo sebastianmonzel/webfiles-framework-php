@@ -4,7 +4,7 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * @covers MWebfile
+ * @covers simpleserv\webfilesframework\core\datasystem\file\format\MWebfile
  *
  * Test class for MWebfileTest.
  */
