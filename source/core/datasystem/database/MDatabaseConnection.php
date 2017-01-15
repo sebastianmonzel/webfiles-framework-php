@@ -3,6 +3,7 @@
 namespace simpleserv\webfilesframework\core\datasystem\database;
 
 use simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description
@@ -113,8 +114,12 @@ class MDatabaseConnection
      */
     public function query($sqlCommand)
     {
-        print($sqlCommand);
-        return $this->connection->query($sqlCommand);
+        $result = $this->connection->query($sqlCommand);
+        if ($this->getError() != null ) {
+            throw new MWebfilesFrameworkException("Error orrured on executing sql: " . $this->getError() .", SQL: " . $sqlCommand);
+        }
+
+        return $result;
     }
 
     /**
@@ -123,8 +128,10 @@ class MDatabaseConnection
      */
     public function queryAndHandle($sqlCommand)
     {
-        echo "test QUERY AND HANDLE";
         $result = $this->query($sqlCommand);
+        if ($this->getError() != null ) {
+            throw new MWebfilesFrameworkException("Error orrured on executing sql: " . $this->getError() .", SQL: " . $sqlCommand);
+        }
         return new MMysqlResultHandler($result);
     }
 

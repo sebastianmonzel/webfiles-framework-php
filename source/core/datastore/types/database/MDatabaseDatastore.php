@@ -93,6 +93,11 @@ class MDatabaseDatastore extends MAbstractDatastore
      */
     public function storeWebfile(MWebfile $webfile)
     {
+
+        if ( $webfile->getTime() == null ) {
+            $webfile->setTime(time());
+        }
+
         if (!$this->tableExistsByWebfile($webfile)) {
             $this->createTable($webfile, false);
             return $this->store($webfile);
@@ -158,7 +163,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                         strlen($this->databaseConnection->getTablePrefix()))
                     == $this->databaseConnection->getTablePrefix()) {
 
-                    array_push($tableNames, $oDatabaseResultRow->Tables_in_webfiles);
+                    array_push($tableNames, $oDatabaseResultRow->$tablesInVariableName);
                 }
 
             }
@@ -459,7 +464,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $handler = $this->databaseConnection->queryAndHandle(
             "SELECT webfileid,time,classname FROM " .
-            $this->databaseConnection->getTablePrefix() . "metadata-normalization" .
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization" .
             "ORDER BY time DESC LIMIT " . $count);// TODO prevent sql injection
 
         while ($object = $handler->fetchNextResultObject() ) {
@@ -475,7 +480,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $handler = $this->databaseConnection->queryAndHandle(
             "SELECT webfileid,time,classname FROM " .
-            $this->databaseConnection->getTablePrefix() . "metadata-normalization" .
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization" .
             "WHERE time > " . $time . " ORDER BY time DESC LIMIT 1");// TODO prevent sql injection
 
         if ( $handler->getResultSize() == 0 ) {
@@ -765,16 +770,18 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function addMetadataNormalizationEntry($webfileid, $time, $classname) {
 
         if (!$this->tableExistsByTablename(
-            $this->databaseConnection->getTablePrefix() . "metadata-normalization")) {
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
 
             $this->createMetadataNormalizationTable();
         }
         $className = str_replace('\\', '\\\\', $classname);
-        $this->databaseConnection->query(
-            "INSERT INTO " .
-                $this->databaseConnection->getTablePrefix() . "metadata-normalization" .
+        $sqlCommand = "INSERT INTO " .
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization " .
             "(webfileid, time, classname)" .
-                " VALUES ('" . $webfileid . "' , " . $time . " , '" . $className . "');");
+            " VALUES ('" . $webfileid . "' , " . $time . " , '" . $className . "');";
+        $this->databaseConnection->query(
+            $sqlCommand);
+        echo "\n\n" . $this->databaseConnection->getError() . "\n\n";
     }
 
     private function createMetadataNormalizationTable()
@@ -782,7 +789,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $table = new MDatabaseTable(
             $this->databaseConnection,
-            $this->databaseConnection->getTablePrefix() . 'metadata-normalization');
+            $this->databaseConnection->getTablePrefix() . 'metadatanormalization');
         $table->specifyIdentifier("id", 10);
 
         $table->addColumn(
@@ -799,6 +806,18 @@ class MDatabaseDatastore extends MAbstractDatastore
             250);
 
         $table->create();
+
+    }
+
+    /**
+     * Deletes all webfiles in the store and all metadata
+     */
+    public function deleteAll() {
+
+        $tablenames = $this->getAllTableNames();
+        foreach ($tablenames as $tablename) {
+            $this->databaseConnection->query("DROP TABLE " . $tablename);
+        }
 
     }
 
