@@ -15,6 +15,7 @@ use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
 use simpleserv\webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
 use simpleserv\webfilesframework\core\time\MTimespan;
+use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Class to connect to a datastore based on a database.
@@ -453,7 +454,64 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     public function getLatestWebfiles($count = 5)
     {
-        // TODO
+
+        $result = array();
+
+        $handler = $this->databaseConnection->queryAndHandle(
+            "SELECT webfileid,time,classname FROM " .
+            $this->databaseConnection->getTablePrefix() . "metadata-normalization" .
+            "ORDER BY time DESC LIMIT " . $count);// TODO prevent sql injection
+
+        while ($object = $handler->fetchNextResultObject() ) {
+
+            $webfile = $this->transformMetadataObjectToWebfile($object);
+            $result = $this->addWebfileSafetyToArray($webfile,$result);
+        }
+
+    }
+
+    public function getNextWebfileForTimestamp($time)
+    {
+
+        $handler = $this->databaseConnection->queryAndHandle(
+            "SELECT webfileid,time,classname FROM " .
+            $this->databaseConnection->getTablePrefix() . "metadata-normalization" .
+            "WHERE time > " . $time . " ORDER BY time DESC LIMIT 1");// TODO prevent sql injection
+
+        if ( $handler->getResultSize() == 0 ) {
+            return null;
+        }
+
+        $object = $handler->fetchNextResultObject();
+        return $this->transformMetadataObjectToWebfile($object);
+    }
+
+    /**
+     * @param $object
+     * @return MWebfile
+     */
+    private function transformMetadataObjectToWebfile($object) {
+
+        $template = $this->createWebfileByClassname($object->classname);
+        $template->presetForTemplateSearch();
+        $template->setId($object->webfileid);
+
+        $webfiles = $this->searchByTemplate($template);
+        return $webfiles[0];
+    }
+
+    /**
+     * @param $classname
+     * @return MWebfile
+     * @throws MWebfilesFrameworkException
+     */
+    private function createWebfileByClassname($classname) {
+        $ref = new \ReflectionClass($classname);
+        $webfile = $ref->newInstanceWithoutConstructor();
+        if (! $webfile instanceof MWebfile ) {
+            throw new MWebfilesFrameworkException("given class '" . $classname . " does not extend MWebfile.");
+        }
+        return $webfile;
     }
 
     public function resolveClassNameFromTableName($tableName)
@@ -685,6 +743,63 @@ class MDatabaseDatastore extends MAbstractDatastore
             }
         }
         return $order;
+    }
+
+    /**
+     * Normalizes database datastore:
+     *  - collect all webfiles in one table to sort after timestamp over all
+     *  -
+     */
+    public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
+
+        $webfiles = $this->getWebfilesAsArray();
+
+        /** @var MWebfile $webfile */
+        foreach ($webfiles as $webfile) {
+            $this->addMetadataNormalizationEntry(
+                $webfile->getId(), $webfile->getTime(), $webfile::$m__sClassName);
+        }
+
+    }
+
+    private function addMetadataNormalizationEntry($webfileid, $time, $classname) {
+
+        if (!$this->tableExistsByTablename(
+            $this->databaseConnection->getTablePrefix() . "metadata-normalization")) {
+
+            $this->createMetadataNormalizationTable();
+        }
+        $className = str_replace('\\', '\\\\', $classname);
+        $this->databaseConnection->query(
+            "INSERT INTO " .
+                $this->databaseConnection->getTablePrefix() . "metadata-normalization" .
+            "(webfileid, time, classname)" .
+                " VALUES ('" . $webfileid . "' , " . $time . " , '" . $className . "');");
+    }
+
+    private function createMetadataNormalizationTable()
+    {
+
+        $table = new MDatabaseTable(
+            $this->databaseConnection,
+            $this->databaseConnection->getTablePrefix() . 'metadata-normalization');
+        $table->specifyIdentifier("id", 10);
+
+        $table->addColumn(
+            "webfileid",
+            MDatabaseDatatypes::VARCHAR,
+            250);
+        $table->addColumn(
+            "time",
+            MDatabaseDatatypes::INT,
+            12);
+        $table->addColumn(
+            "classname",
+            MDatabaseDatatypes::VARCHAR,
+            250);
+
+        $table->create();
+
     }
 
 }
