@@ -4,6 +4,8 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
+ * @covers MWebfile
+ *
  * Test class for MWebfileTest.
  */
 class MWebfileTest extends PHPUnit_Framework_TestCase {

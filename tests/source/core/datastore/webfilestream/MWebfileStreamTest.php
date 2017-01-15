@@ -3,7 +3,7 @@
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
 /**
- * Test class for MWebfileStreamTest.
+ * @covers MWebfileStream
  */
 class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     /**

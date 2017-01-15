@@ -3,7 +3,7 @@
 use simpleserv\webfilesframework\io\request\MUrl;
 
 /**
- * Test class for MDatastoreFactory.
+ * @covers MUrl
  */
 class MUrlTest extends PHPUnit_Framework_TestCase {
     /**

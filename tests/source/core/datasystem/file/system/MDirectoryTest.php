@@ -4,7 +4,8 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
 
 /**
- * Test class for MDirectory.
+ * @covers MDirectory
+ * @covers MFile
  */
 class MDirectoryTest extends PHPUnit_Framework_TestCase {
     /**
