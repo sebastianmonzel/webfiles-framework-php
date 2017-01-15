@@ -48,7 +48,7 @@ class MIntegrationTestMysql extends PHPUnit_Framework_TestCase
             "sql11153903",
             "prefix_",
             "sql11153903",
-            "saTTMEYWt4"); // yes i know it's the password of the database... ;)
+            "saTTMEYWt4"); // yes i know it's the password of the database... ;) - please don't make any jokes.
         $databaseDatastore = new \simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
         return $databaseDatastore;
     }
