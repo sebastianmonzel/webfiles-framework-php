@@ -2,7 +2,7 @@
 
 namespace simpleserv\webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatasourceDatastore;
+use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
@@ -38,10 +38,8 @@ abstract class MAbstractDatastore extends MWebfile
      * decide if implementing sorting by timestamp this function sets
      * the sorting to true or false.
      *
-     * @param int $time timestamp in unix-format.
-     * @return MWebfile webfile according to the given input.
-     * old: getNextWebfileForTime - new getNextWebfileForTimestamp
-     * DONE
+     * @param $time
+     * @throws MDatastoreException
      */
     public function getNextWebfileForTimestamp($time) {
         throw new MDatastoreException("datastore cannot be sorted by timestamp.");
@@ -50,14 +48,13 @@ abstract class MAbstractDatastore extends MWebfile
     /**
      * Returns a webfiles stream with all webfiles from
      * the actual datastore.
-     * DONE
+     * @return MWebfileStream
      */
     public abstract function getWebfilesAsStream();
 
     /**
      * Returns all webfiles from the actual datastore.
      * @return array list of webfiles
-     * DONE
      */
     public abstract function getWebfilesAsArray();
 
@@ -117,7 +114,7 @@ abstract class MAbstractDatastore extends MWebfile
      */
     public function storeWebfile(MWebfile $webfile)
     {
-        if (isReadOnly()) {
+        if ($this->isReadOnly()) {
             throw new MDatastoreException("cannot modify data on read-only datastore.");
         } else {
             throw new MDatastoreException("not implemented yet.");
@@ -125,18 +122,15 @@ abstract class MAbstractDatastore extends MWebfile
     }
 
     /**
-     * Stores all webfiles from a given webfilestream in the actual
-     * datastore.
+     * Stores all webfiles from a given webfilestream in the actual datastore
      *
      * @param MWebfileStream $webfileStream
      * @throws MDatastoreException
-     *
-     * OLD storeWebfilesFromWebfilestream - new: storeWebfilesFromStream
      */
     public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
 
-        if (isReadOnly()) {
+        if ($this->isReadOnly()) {
             throw new MDatastoreException("cannot modify data on read-only datastore.");
         }
 
@@ -156,7 +150,7 @@ abstract class MAbstractDatastore extends MWebfile
      */
     public function deleteByTemplate(MWebfile $template)
     {
-        if (isReadOnly()) {
+        if ($this->isReadOnly()) {
             throw new MDatastoreException("cannot modify data on read-only datastore.");
         } else {
             throw new MDatastoreException("not implemented yet.");
@@ -179,7 +173,7 @@ abstract class MAbstractDatastore extends MWebfile
     {
 
         $datastoreDirectory = new MDirectory("./custom/datastore/");
-        $datastoreHolder = new MDirectoryDatasourceDatastore($datastoreDirectory, false);
+        $datastoreHolder = new MDirectoryDatastore($datastoreDirectory, false);
 
         $webfiles = $datastoreHolder->getWebfilesAsArray();
 
@@ -215,9 +209,9 @@ abstract class MAbstractDatastore extends MWebfile
         return $webfilesDatasets;
     }
 
-    protected function addWebfileSafetyToArray(MWebfile $item, $objectsArray) {
+    protected function addWebfileSafetyToArray(MWebfile $webfile, $objectsArray) {
 
-        $arrayKey = $item->getTime();
+        $arrayKey = $webfile->getTime();
         $arrayKeyCount = 1;
 
         // make sure files with the same key (normally timetamp) have an unique array key
@@ -225,7 +219,7 @@ abstract class MAbstractDatastore extends MWebfile
             $arrayKeyCount++;
             $arrayKey = $arrayKey . "," . $arrayKeyCount;
         }
-        $objectsArray[$arrayKey] = $item;
+        $objectsArray[$arrayKey] = $webfile;
 
         return $objectsArray;
     }
