@@ -229,7 +229,6 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     public function deleteByTemplate(MWebfile $template)
     {
         $webfiles = $this->searchByTemplate($template);
-        var_dump($webfiles);
         $mapping = $this->createWebfileIdToFilenameMapping();
 
         if ($this->isDatastoreCached()) {
