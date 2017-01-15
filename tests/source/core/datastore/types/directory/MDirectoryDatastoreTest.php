@@ -104,8 +104,6 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $template->setFirstname('Sebastian');
         $result = $directoryDatastore->searchByTemplate($template);
 
-        var_export($result);
-
         self::assertNotNull($result);
         self::assertTrue(is_array($result));
         self::assertEquals(1,count($result));
@@ -135,7 +133,6 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     public function testCreateAndDeleteByTemplate() {
 
         $databaseDatastore = $this->createDirectoryDatastore();
-        var_export($databaseDatastore->getWebfilesAsArray());
         self::assertEquals(3,count($databaseDatastore->getWebfilesAsArray()));
         $databaseDatastore->storeWebfile($this->createReferenceSampleObject3());
         self::assertEquals(4,count($databaseDatastore->getWebfilesAsArray()));
@@ -180,9 +177,6 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         $tmpDatastore->normalize();
         $filenamesAfterSecondNormalisation = $tmpDatastore->getDirectory()->getFileNames();
-
-        var_export($filenamesAfterFirstNormalisation);
-        var_export($filenamesAfterSecondNormalisation);
 
         self::assertEquals($filenamesAfterFirstNormalisation[3],$filenamesAfterSecondNormalisation[3]);
 
