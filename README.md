@@ -27,9 +27,15 @@ Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<
 Documentation: http://sebastianmonzel.github.io/webfiles-framework-doc/<br />
 Packagist: https://packagist.org/packages/simpleserv/webfiles-framework
 
-### First Steps for Users
+### What is webfiles framework for?
+The webfiles framework manages access to database system (creates tables on the fly and 
+read/write data in database) and to file system (read and write files).  
+Through an webfile definition and the standarized api you can access the different systems
+in the same way. Remote datastores enable you to access locally defined datastores via HTTP.
+
+### First Steps
  - add webfiles-framework as dependency to your `package.json`
- - define your datastucture
+ - define your datastucture as webfile definition
  - connect to your datastore
  - save and read data from your store
 
