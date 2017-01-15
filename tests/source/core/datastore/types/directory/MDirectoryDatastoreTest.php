@@ -2,6 +2,8 @@
 
 
 use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
+use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
 
 /**
  * @covers simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
@@ -22,7 +24,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @return \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+     * @return \simpleserv\webfilesframework\core\datastore\MAbstractDatastore
      */
     private function createTempDirectoryDatastore()
     {
@@ -39,7 +41,6 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
      * This method is called before a test is executed.
      */
     protected function setUp() {
-        $connection = new MDatabaseConnection();
     }
 
     /**
