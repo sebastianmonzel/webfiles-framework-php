@@ -3,7 +3,7 @@
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.
  */
-class MIntegrationTestMysql extends PHPUnit_Framework_TestCase
+class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 {
 
 
