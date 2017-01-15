@@ -64,23 +64,6 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $this->m_oDirectory->exists();
     }
 
-    /**
-     * @param int $time
-     * @return MWebfile|null
-     */
-    public function getNextWebfileForTimestamp($time)
-    {
-        $webfiles = $this->getLatestWebfiles(4);
-        ksort($webfiles);
-
-        foreach ($webfiles as $key => $webfile) {
-            if ($key > $time) {
-                return $webfile;
-            }
-        }
-        return null;
-    }
-
     public function getWebfilesAsStream()
     {
         $webfileArray = $this->getWebfilesAsArray();
@@ -95,8 +78,35 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     public function getLatestWebfiles($count = 5)
     {
+        if (! $this->metaInformationWebfile->isNormalized() ) {
+            throw new MWebfilesFrameworkException(
+                "searching for latest webfiles only possible when datastore is normalized.");
+        }
         $filesArray = $this->m_oDirectory->getLatestFiles($count);
         return $this->transformFilesIntoWebfilesArray($filesArray);
+    }
+
+    /**
+     * @param int $time
+     * @return MWebfile|null
+     */
+    public function getNextWebfileForTimestamp($time)
+    {
+
+        if (! $this->metaInformationWebfile->isNormalized() ) {
+            throw new MWebfilesFrameworkException(
+                "searching for next webfile only possible when datastore is normalized.");
+        }
+
+        $webfiles = $this->getWebfilesAsArray();
+        ksort($webfiles);
+
+        foreach ($webfiles as $key => $webfile) {
+            if ($key > $time) {
+                return $webfile;
+            }
+        }
+        return null;
     }
 
     private function transformFilesIntoWebfilesArray($files)
