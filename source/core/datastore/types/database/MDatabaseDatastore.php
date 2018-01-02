@@ -149,7 +149,7 @@ class MDatabaseDatastore extends MAbstractDatastore
      */
     private function getAllTableNames()
     {
-        $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM " . $this->databaseConnection->getDatabaseName());
+        $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM `" . $this->databaseConnection->getDatabaseName() . "`");
         $tableNames = array();
 
         if ($handler->getResultSize() > 0) {
