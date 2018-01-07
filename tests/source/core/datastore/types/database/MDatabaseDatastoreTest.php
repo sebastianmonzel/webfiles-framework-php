@@ -71,7 +71,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         $databaseConnectionMock
             ->expects($this->at(2))
             ->method('queryAndHandle')
-            ->with('SHOW TABLES FROM webfiles')
+            ->with('SHOW TABLES FROM `webfiles`')
             ->willReturn($showTablesResultHandler);
         $databaseConnectionMock
             ->expects($this->at(7))
@@ -195,7 +195,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         // TODO warum wird die query so oft ausgeführt? prüfung metadaten + webfiletabelle
         $stub->expects(self::exactly(3))
             ->method('queryAndHandle')
-            ->with('SHOW TABLES FROM webfiles')
+            ->with('SHOW TABLES FROM `webfiles`')
             ->willReturn($resultHandler);
 
         $databaseDatastore = new MDatabaseDatastore($stub);

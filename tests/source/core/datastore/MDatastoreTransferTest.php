@@ -59,7 +59,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
         $databaseConnectionMock
             ->expects($this->at(2))
             ->method('queryAndHandle')
-            ->with('SHOW TABLES FROM webfiles')
+            ->with('SHOW TABLES FROM `webfiles`')
             ->willReturn($this->createMockForShowTablesResultHandler());
 
         $databaseConnectionMock
