@@ -30,6 +30,10 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     private $databaseConnection;
 
+    const WEBFILEID = "webfileid";
+    const TIME = "time";
+    const CLASSNAME = "classname";
+
     public function __construct(MDatabaseConnection $databaseConnection)
     {
         $this->databaseConnection = $databaseConnection;
@@ -291,7 +295,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 
         $table->addColumn(
-            "classname",
+            self::CLASSNAME,
             MDatabaseDatatypes::VARCHAR,
             250);
         $table->addColumn(
@@ -793,15 +797,15 @@ class MDatabaseDatastore extends MAbstractDatastore
         $table->specifyIdentifier("id", 10);
 
         $table->addColumn(
-            "webfileid",
+            self::WEBFILEID,
             MDatabaseDatatypes::VARCHAR,
             250);
         $table->addColumn(
-            "time",
+            self::TIME,
             MDatabaseDatatypes::INT,
             12);
         $table->addColumn(
-            "classname",
+            self::CLASSNAME,
             MDatabaseDatatypes::VARCHAR,
             250);
 

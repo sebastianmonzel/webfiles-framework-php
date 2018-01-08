@@ -97,13 +97,13 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
      */
     public function createMockForShowTablesResultHandler()
     {
-        $tablesMetaInformationResturnObject = (object)[
+        $tablesMetaInformationResturnObject = (object)array(
             'Tables_in_webfiles' => 'MSampleWebfile',
-        ];
+        );
 
-        $tablesMetaInformationResturnObject2 = (object)[
+        $tablesMetaInformationResturnObject2 = (object)array(
             'Tables_in_webfiles' => 'metadata',
-        ];
+        );
 
         $showTablesResultHandler = $this
             ->createMock(
@@ -121,10 +121,10 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
 
     public function createMockForMetadataResultHandler()
     {
-        $tablesMetaInformationResturnObject = (object)[
+        $tablesMetaInformationResturnObject = (object)array(
             'classname' => 'simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile',
             'tablename' => 'samplewebfile'
-        ];
+        );
 
         $showTablesResultHandler = $this
             ->createMock(
@@ -152,7 +152,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
             ->createMock(
                 'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
 
-        $webfilesReturnObject = (object)[
+        $webfilesReturnObject = (object)array(
             'id' => '1',
             'firstname' => 'transfered',
             'lastname' => 'webfile',
@@ -161,7 +161,7 @@ class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
             'housenumber' => '',
             'postcode' => '67433',
             'time' => 4711
-        ];
+        );
 
         $webfilesResultHandler->method('getResultSize')->willReturn(1);
         $webfilesResultHandler
