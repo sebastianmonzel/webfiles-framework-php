@@ -15,6 +15,7 @@
 		"php" : ">=5.3.0",
 		"itbz/fpdf" : "1.7.2",
 		"swiftmailer/swiftmailer" : "v5.0.2",
+		"google/apiclient" : "^2.0",
 		"katzgrau/klogger" : "dev-master"
 	},
 	"require-dev" : {
