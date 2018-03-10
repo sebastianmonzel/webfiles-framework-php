@@ -88,9 +88,9 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
      */
     public function createMockForShowTablesResultHandler()
     {
-        $tablesMetaInformationResturnObject = (object) [
+        $tablesMetaInformationResturnObject = (object) array(
             'Tables_in_webfiles' => 'MSampleWebfile',
-        ];
+        );
 
         $showTablesResultHandler = $this
             ->createMock(
@@ -116,7 +116,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             ->createMock(
                 'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
 
-        $webfilesReturnObject = (object) [
+        $webfilesReturnObject = (object) array(
             'id' => '1',
             'firstname' => 'Peter',
             'lastname' => 'Schmidt',
@@ -125,7 +125,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             'postcode' => '67433',
             'city' => 'Neustadt',
             'time' => 4711
-        ];
+        );
 
         $webfilesResultHandler->method('getResultSize')->willReturn(1);
         $webfilesResultHandler
