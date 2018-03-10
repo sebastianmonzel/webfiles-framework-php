@@ -163,7 +163,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         $databaseConnectionMock = $this->createDatabaseConnectionMock();
 
         $showTablesResultHandler = $this->createMockForShowTablesResultHandler();
-        $databaseConnectionMock->expects($this->once())->method('queryAndHandle')->with('SHOW TABLES FROM webfiles')->willReturn($showTablesResultHandler);
+        $databaseConnectionMock->expects($this->once())->method('queryAndHandle')->with('SHOW TABLES FROM `webfiles`')->willReturn($showTablesResultHandler);
 
         $webfilesResultHandler = $this->createMockForWebfilesResultHandler();
         $databaseConnectionMock->expects($this->once())->method('query')->with('DELETE FROM MSampleWebfile')->willReturn($webfilesResultHandler);
