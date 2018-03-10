@@ -83,17 +83,24 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
         $client = new Google_Client();
         $this->initClient($client);
 
-        $credentialsPath = "credentials.json";
-        if (file_exists($credentialsPath)) {
-            $accessToken = json_decode(file_get_contents($credentialsPath), true);
-        } else {
-            $accessToken = $this->requestAccessToken($client, $credentialsPath);
-        }
-        $client->setAccessToken($accessToken);
-
-        $this->refreshAccessTokenIfExpired($client, $credentialsPath);
-
         return $client;
+    }
+
+    public function getClientWithToken() {
+
+    	$client = $this->getClient();
+
+	    $credentialsPath = "credentials.json";
+
+	    if (file_exists($credentialsPath)) {
+		    $accessToken = json_decode(file_get_contents($credentialsPath), true);
+	    } else {
+		    $accessToken = $this->requestAccessToken($client, $credentialsPath);
+	    }
+	    $client->setAccessToken($accessToken);
+
+	    $this->refreshAccessTokenIfExpired($client, $credentialsPath);
+
     }
 
     /**
@@ -118,7 +125,7 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
     {
         // Request authorization from the user.
         //
-        //echo $authUrl;
+	    //echo $authUrl;
         //printf("Open the following link in your browser:\n%s\n", $authUrl);
         //print 'Enter verification code: ';
         $authCode = "";
@@ -136,6 +143,7 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
     }
 
     public function getAuthUrl() {
+
 
 
 		//$authUrl = $client->createAuthUrl();
