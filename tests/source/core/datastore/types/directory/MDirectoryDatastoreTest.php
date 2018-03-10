@@ -4,6 +4,7 @@
 use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
 use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
  * @covers simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
@@ -17,9 +18,8 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
      */
     public function createDirectoryDatastore()
     {
-        $directoryDatastore = new \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
-                __DIR__ . '/../../../../../resources/folderDatastore'));
+        $directoryDatastore = new MDirectoryDatastore(
+            new MDirectory(__DIR__ . '/../../../../../resources/folderDatastore'));
         return $directoryDatastore;
     }
 
@@ -29,7 +29,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     private function createTempDirectoryDatastore()
     {
 
-        $directory = new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(
+        $directory = new MDirectory(
             __DIR__ . '/../../../../../resources/targetTransferDirectoryDatastore');
 
         return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);

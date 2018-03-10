@@ -74,11 +74,11 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
     private function createDatabaseDatastore()
     {
         $connection = new \simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection(
-            "sql11.freemysqlhosting.net",
-            "sql11153903",
+            "wp481.webpack.hosteurope.de",
+            "db13012651-wfint",
             "prefix_",
-            "sql11153903",
-            "saTTMEYWt4"); // yes i know it's the password of the database... ;) - you don't trick me. I trust you... :)
+            "db13012651-wfint",
+            "wfint007"); // yes i know it's the password of the database... ;) - you don't trick me. I trust you... :)
 
         $databaseDatastore = new \simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
         return $databaseDatastore;
