@@ -14,18 +14,23 @@ use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 
-class GoogleCalendarDatastore extends MAbstractCachableDatastore
+class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	implements MISingleDatasourceDatastore
 {
 	// https://developers.google.com/google-apps/calendar/quickstart/php#step_2_install_the_google_client_library
 	/** @var string */
 	private $m_sCalendarId;
 	private $authConfigAsJsonString;
+	private $redirectUrl;
+	private $secretStore;
 
-	public function __construct($calendarId, $authConfigAsJsonString)
+	public function __construct($calendarId, $authConfigAsJsonString, $redirectUrl, MISecretStore $secretStore)
 	{
 		$this->m_sCalendarId = $calendarId;
 		$this->authConfigAsJsonString = $authConfigAsJsonString;
+		$this->redirectUrl = $redirectUrl;
+		$this->secretStore = $secretStore;
+
 	}
 
 	/**
@@ -52,7 +57,7 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
 	 */
 	public function getWebfilesAsStream()
 	{
-		$client = $this->getClient();
+		$client = $this->getClientWithToken();
 		$service = new Google_Service_Calendar($client);
 
 		// Print the next 10 events on the user's calendar.
@@ -90,69 +95,60 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
 
 		$client = $this->getClient();
 
-		$credentialsPath = "credentials.json";
+		$secret = $this->secretStore->read();
 
-		if (file_exists($credentialsPath)) {
-			$accessToken = json_decode(file_get_contents($credentialsPath), true);
+		if (isset($secret)) {
+			$accessToken = json_decode($secret,true);
 		} else {
 			throw new MDatastoreException("No credentials set. Please request new Credentials.");
 		}
 		$client->setAccessToken($accessToken);
 
-		$this->refreshAccessTokenIfExpired($client, $credentialsPath);
+		$this->refreshAccessTokenIfExpired($client);
+
+		return $client;
 
 	}
 
 	/**
 	 * @param $client
-	 * @param $credentialsPath
 	 */
-	public function refreshAccessTokenIfExpired($client, $credentialsPath)
+	public function refreshAccessTokenIfExpired($client)
 	{
 		if ($client->isAccessTokenExpired()) {
 			$client->fetchAccessTokenWithRefreshToken($client->getRefreshToken());
-			file_put_contents($credentialsPath, json_encode($client->getAccessToken()));
+			$this->secretStore->store(json_encode($client->getAccessToken()));
 		}
 	}
 
 
 	/**
 	 * @param $client
-	 * @param $credentialsPath
 	 * @return mixed
 	 */
-	private function requestAccessToken($authCode, $credentialsPath)
+	private function requestAccessToken($authCode)
 	{
 		$client = $this->getClient();
-
-
-		// Exchange authorization code for an access token.
 		$accessToken = $client->fetchAccessTokenWithAuthCode($authCode);
-
-		// Store the credentials to disk.
-		if (!file_exists(dirname($credentialsPath))) {
-			mkdir(dirname($credentialsPath), 0700, true);
-		}
-		file_put_contents($credentialsPath, json_encode($accessToken));
-		printf("Credentials saved to %s\n", $credentialsPath);
+		$this->secretStore->store(json_encode($accessToken));
 		return $accessToken;
 	}
 
 	public function initAccessToken($authcode) {
-		$this->requestAccessToken($authcode, "credentials.json");
+		$this->requestAccessToken($authcode);
 	}
 
 	/**
 	 * @param Google_Client $client
 	 * @throws \Google_Exception
 	 */
-	public function initClient(Google_Client $client)
+	private function initClient(Google_Client $client)
 	{
 		$client->setApplicationName("webfiles-framework");
 		$client->setScopes(array(Google_Service_Calendar::CALENDAR_READONLY, Google_Service_Calendar::CALENDAR));
 		$client->setAuthConfig(json_decode($this->authConfigAsJsonString, true));
 		$client->setAccessType('offline');
-		$client->setRedirectUri("http://localhost");
+		$client->setRedirectUri($this->redirectUrl);
 	}
 
 	public function storeWebfile(MWebfile $webfile)
@@ -164,7 +160,7 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
 
 		$nativeGoogleEvent = $this->toNativeGoogleEvent($webfile);
 
-		$client = $this->getClient();
+		$client = $this->getClientWithToken();
 		$service = new Google_Service_Calendar($client);
 
 		$service->events->insert($this->m_sCalendarId, $nativeGoogleEvent);
@@ -183,10 +179,10 @@ class GoogleCalendarDatastore extends MAbstractCachableDatastore
 		$start->setDateTime($webfile->getStart());
 
 		$end = new Google_Service_Calendar_EventDateTime();
-		$end->setDateTime("2018-02-26T10:00:00+01:00");
+		$end->setDateTime($webfile->getEnd());
 
-		$event->setSummary("summary");
-		$event->setDescription("description");
+		$event->setSummary($webfile->getSummary());
+		$event->setDescription($webfile->getDescription());
 
 		$event->setStart($start);
 		$event->setEnd($end);
