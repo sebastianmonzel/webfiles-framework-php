@@ -10,7 +10,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 {
 
 
-    public function testGetWebfiles()
+    public function IGNORE_testGetWebfiles()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -25,7 +25,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testNormalizeWebfiles()
+    public function IGNORE_testNormalizeWebfiles()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -39,7 +39,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         self::assertEquals(1,count($result));
     }
 
-    public function testSearchByTemplate()
+    public function IGNORE_testSearchByTemplate()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
