@@ -9,7 +9,8 @@ namespace simpleserv\webfilesframework\core\datastore;
  * Defines and provides basic functionality for caching a datastore.<br />
  * Basically the cached datastore is a combination between a efficient
  * datastore which can be used as cache and an slower datastore
- * (e.g. a directory datastore or a remote datastore).
+ * (e.g. a directory datastore or a remote datastore).<br />
+ * Actually cache is invalidated after one day.
  *
  * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
@@ -17,8 +18,9 @@ namespace simpleserv\webfilesframework\core\datastore;
  */
 abstract class MAbstractCachableDatastore extends MAbstractDatastore
 {
+	const ONE_DAY_IN_SECONDS = 86400;
 
-    /** @var MAbstractDatastore $cachingDatastore **/
+	/** @var MAbstractDatastore $cachingDatastore **/
     protected $cachingDatastore;
 
     protected $latestCachingTime;
@@ -69,8 +71,8 @@ abstract class MAbstractCachableDatastore extends MAbstractDatastore
         }
 
         return
-            ((time() - $this->latestCachingTime)
-                > (24 * 60 * 60));
+            ( (time() - $this->latestCachingTime)
+              > self::ONE_DAY_IN_SECONDS );
     }
 
 }

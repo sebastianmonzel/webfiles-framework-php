@@ -7,7 +7,12 @@ use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * Class MRemoteDatastoreEndpoint
+ * Handles incoming calls to access remote datastores. RemoteDatastoreEndpoint
+ * encapsulates a local datastore to access data from remote.
+ *
+ * For example: you can encapsulate a DatabaseDatastore or an DirectoryDatastore
+ * to access it from remote.
+ *
  * @package simpleserv\webfilesframework\core\datastore\types\remote
  */
 class MRemoteDatastoreEndpoint
