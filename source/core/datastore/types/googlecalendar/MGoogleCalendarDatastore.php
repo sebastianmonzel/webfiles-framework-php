@@ -148,6 +148,7 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 		$client->setScopes(array(Google_Service_Calendar::CALENDAR_READONLY, Google_Service_Calendar::CALENDAR));
 		$client->setAuthConfig(json_decode($this->authConfigAsJsonString, true));
 		$client->setAccessType('offline');
+		$client->setApprovalPrompt('force');
 		$client->setRedirectUri($this->redirectUrl);
 	}
 
