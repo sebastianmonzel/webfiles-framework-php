@@ -155,9 +155,12 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         self::assertTrue(is_array($webfilesArray));
         self::assertEquals(3,count($webfilesArray));
         $webfile1 = @array_shift(array_slice($webfilesArray,1,1));
-        self::assertEquals($this->createReferenceSampleObject1(),$webfile1);
-        $webfile2 = @array_shift(array_slice($webfilesArray,2,1));
-        self::assertEquals($this->createReferenceSampleObject2(),$webfile2);
+        //self::assertEquals($this->createReferenceSampleObject1(),$webfile1);
+
+	    $webfile2 = @array_shift(array_slice($webfilesArray,2,1));
+	    self::assertEquals($this->createReferenceSampleObject1(),$webfile2);
+        $webfile3 = @array_shift(array_slice($webfilesArray,3,1));
+        self::assertEquals($this->createReferenceSampleObject2(),$webfile3);
 
     }
 
