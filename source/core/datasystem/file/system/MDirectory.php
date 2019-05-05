@@ -40,12 +40,20 @@ class MDirectory extends MFile
         if ($oDirectoryHandle = opendir($this->m_sPath)) {
             while (false !== ($filename = readdir($oDirectoryHandle))) {
                 if ($filename != "." && $filename != ".." && (!is_dir($this->m_sPath . "/" . $filename))) {
-                    $file = new MFile($this->getPath() . "/" . $filename);
-                    array_push($filenames, $file);
+	                array_push($filenames, $filename);
                 }
             }
+	        asort($filenames);
+
+	        $filewebfiles = array();
+	        foreach ($filenames as $filename) {
+		        $filewebfile = new MFile($this->getPath() . "/" . $filename);
+		        array_push($filewebfiles, $filewebfile);
+	        }
+	        return $filewebfiles;
         }
-        return $filenames;
+
+
     }
 
     /**
