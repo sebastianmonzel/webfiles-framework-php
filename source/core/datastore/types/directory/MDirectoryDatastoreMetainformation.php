@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\directory;
+namespace webfilesframework\core\datastore\types\directory;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 class MDirectoryDatastoreMetainformation extends MWebfile
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\googlecalendar;
+namespace webfilesframework\core\datastore\types\googlecalendar;
 
 
 interface MISecretStore {

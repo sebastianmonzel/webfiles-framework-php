@@ -1,7 +1,7 @@
 <?php
 
-namespace simpleserv\webfilesframework\io\form\webfile;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+namespace webfilesframework\io\form\webfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * Handles requests which are submitted through a form generated

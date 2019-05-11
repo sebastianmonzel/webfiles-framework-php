@@ -1,12 +1,12 @@
 <?php
 
-namespace simpleserv\webfilesframework\io\form\webfile;
+namespace webfilesframework\io\form\webfile;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\core\io\form\MForm;
-use simpleserv\webfilesframework\core\io\request\MUrl;
-use simpleserv\webfilesframework\core\io\form\MFormItemFactory;
-use simpleserv\webfilesframework\core\io\form\formItem\MHiddenFormItem;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\io\form\MForm;
+use webfilesframework\core\io\request\MUrl;
+use webfilesframework\core\io\form\MFormItemFactory;
+use webfilesframework\core\io\form\formItem\MHiddenFormItem;
 
 /**
  * Generates a form according to a given webfile.<br/>

@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\database;
+namespace webfilesframework\core\datastore\types\database;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 class MSampleWebfile extends MWebfile
 {

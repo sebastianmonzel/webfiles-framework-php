@@ -1,9 +1,9 @@
 <?php
 
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
 /**
- * @covers simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream
+ * @covers webfilesframework\core\datastore\webfilestream\MWebfileStream
  */
 class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     /**
@@ -49,7 +49,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream::getXML
+     * @covers webfilesframework\core\datastore\webfilestream\MWebfileStream::getXML
      */
     public function testGetXML()
     {
@@ -63,7 +63,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream::getWebfiles
+     * @covers webfilesframework\core\datastore\webfilestream\MWebfileStream::getWebfiles
      */
     public function testGetWebfilesOnStringInput() {
 
@@ -74,7 +74,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \simpleserv\webfilesframework\MWebfilesFrameworkException
+     * @expectedException \webfilesframework\MWebfilesFrameworkException
      * @expectedExceptionMessageRegExp /Error: test that it not works/
      */
     public function testInstantiationWithMalformedStringThrowsException() {
@@ -84,7 +84,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \simpleserv\webfilesframework\MWebfilesFrameworkException
+     * @expectedException \webfilesframework\MWebfilesFrameworkException
      * @expectedExceptionMessageRegExp /No webfiles child exists on root element./
      */
     public function testInstantiationWithWrongXmlThrowsException() {
@@ -99,13 +99,13 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @expectedException \simpleserv\webfilesframework\MWebfilesFrameworkException
+     * @expectedException \webfilesframework\MWebfilesFrameworkException
      * @expectedExceptionMessageRegExp /Not all elements in array are from type MWebfile./
      */
     public function testInstantiationWithWrongArrayArgumentThrowsException() {
 
         $webfiles = array();
-        $webfiles[0] = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $webfiles[0] = new \webfilesframework\core\datastore\types\database\MSampleWebfile();
         $webfiles[1] = "test";
 
         $webfileStream = new MWebfileStream($webfiles);

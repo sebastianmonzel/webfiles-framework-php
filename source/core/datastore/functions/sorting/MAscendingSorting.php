@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\functions\sorting;
+namespace webfilesframework\core\datastore\functions\sorting;
 
-use simpleserv\webfilesframework\core\datastore\functions\MIDatastoreFunction;
+use webfilesframework\core\datastore\functions\MIDatastoreFunction;
 
 /**
  * description

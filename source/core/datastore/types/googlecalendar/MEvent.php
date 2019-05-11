@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\googlecalendar;
+namespace webfilesframework\core\datastore\types\googlecalendar;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 class MEvent extends MWebfile
 {

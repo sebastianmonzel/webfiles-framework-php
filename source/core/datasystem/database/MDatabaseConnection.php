@@ -1,9 +1,9 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\database;
+namespace webfilesframework\core\datasystem\database;
 
-use simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description

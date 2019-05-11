@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\functions\filter;
+namespace webfilesframework\core\datastore\functions\filter;
 
-use simpleserv\webfilesframework\core\datastore\functions\MIDatastoreFunction;
+use webfilesframework\core\datastore\functions\MIDatastoreFunction;
 
 /**
  * description

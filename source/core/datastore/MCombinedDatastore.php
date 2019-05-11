@@ -1,10 +1,10 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore;
+namespace webfilesframework\core\datastore;
 
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 
 /**
  * Combines different datastores in one datastore together.

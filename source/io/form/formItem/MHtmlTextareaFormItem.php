@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\io\form\formItem;
+namespace webfilesframework\io\form\formItem;
 
 /**
  * description

@@ -1,7 +1,7 @@
 <?php
 /**
- * @covers simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore
- * @covers simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection
+ * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
+ * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
  *
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.
@@ -16,7 +16,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $databaseDatastore->storeWebfile(new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
 
 
         $result = $databaseDatastore->getWebfilesAsArray();
@@ -31,7 +31,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $databaseDatastore->storeWebfile(new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
         $databaseDatastore->normalize();
 
         $result = $databaseDatastore->getWebfilesAsArray();
@@ -45,9 +45,9 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $storedWebfileId = $databaseDatastore->storeWebfile(new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $storedWebfileId = $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
 
-        $template = new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $template = new \webfilesframework\core\datastore\types\database\MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setId($storedWebfileId);
 
@@ -61,7 +61,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $storedWebfile = $databaseDatastore->storeWebfile(new \simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $storedWebfile = $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
 
         $foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
 
@@ -69,18 +69,18 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
     }
 
     /**
-     * @return \simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore
+     * @return \webfilesframework\core\datastore\types\database\MDatabaseDatastore
      */
     private function createDatabaseDatastore()
     {
-        $connection = new \simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection(
+        $connection = new \webfilesframework\core\datasystem\database\MDatabaseConnection(
             "wp481.webpack.hosteurope.de",
             "db13012651-wfint",
             "prefix_",
             "db13012651-wfint",
             "wfint007"); // yes i know it's the password of the database... ;) - you don't trick me. I trust you... :)
 
-        $databaseDatastore = new \simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
+        $databaseDatastore = new \webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
         return $databaseDatastore;
     }
 

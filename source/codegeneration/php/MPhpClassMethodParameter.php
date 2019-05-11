@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\codegeneration\php;
+namespace webfilesframework\codegeneration\php;
 
-use simpleserv\webfilesframework\codegeneration\MAbstractClassMethodParameter;
+use webfilesframework\codegeneration\MAbstractClassMethodParameter;
 
 /**
  * description

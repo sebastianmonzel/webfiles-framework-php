@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<object classname="simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile">
+<object classname="webfilesframework\core\datastore\types\database\MSampleWebfile">
 	<firstname><![CDATA[Sebastian]]></firstname>
 	<lastname><![CDATA[Monzel]]></lastname>
 	<street><![CDATA[Blumenstrasse]]></street>

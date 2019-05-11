@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\functions;
+namespace webfilesframework\core\datastore\functions;
 
 /**
  * Datastore functions are used to filter and manipulate the the

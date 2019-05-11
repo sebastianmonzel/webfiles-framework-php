@@ -1,11 +1,11 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore;
+namespace webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
  * Creates depending on the given type a datastore, which can

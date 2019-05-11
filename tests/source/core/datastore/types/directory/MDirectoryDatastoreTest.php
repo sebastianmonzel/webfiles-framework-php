@@ -1,20 +1,20 @@
 <?php
 
 
-use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
- * @covers simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+ * @covers webfilesframework\core\datastore\types\directory\MDirectoryDatastore
  */
 class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
     protected $object;
 
     /**
-     * @return \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+     * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
      */
     public function createDirectoryDatastore()
     {
@@ -24,7 +24,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @return \simpleserv\webfilesframework\core\datastore\MAbstractDatastore
+     * @return \webfilesframework\core\datastore\MAbstractDatastore
      */
     private function createTempDirectoryDatastore()
     {
@@ -32,7 +32,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $directory = new MDirectory(
             __DIR__ . '/../../../../../resources/targetTransferDirectoryDatastore');
 
-        return \simpleserv\webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
+        return \webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
     }
 
 
@@ -170,7 +170,7 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
         $tmpDatastore = $this->createTempDirectoryDatastore();
         $tmpDatastore->deleteAll();
 
-        $transfer = new \simpleserv\webfilesframework\core\datastore\MDatastoreTransfer(
+        $transfer = new \webfilesframework\core\datastore\MDatastoreTransfer(
             $directoryDatastore,$tmpDatastore);
 
         $transfer->transfer();
@@ -190,8 +190,8 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         /*$directoryDatastore = $this->createDirectoryDatastore();
 
-        $directoryDatastore = new \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory('E:\owncloud\familie\bilder\2016_12_24__weihnachten-bei-drochterts-test'));
+        $directoryDatastore = new \webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
+            new \webfilesframework\core\datasystem\file\system\MDirectory('E:\owncloud\familie\bilder\2016_12_24__weihnachten-bei-drochterts-test'));
 
         $webfilesArray = $directoryDatastore->getWebfilesAsArray();
 

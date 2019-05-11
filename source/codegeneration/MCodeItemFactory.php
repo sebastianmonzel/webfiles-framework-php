@@ -1,11 +1,11 @@
 <?php
 
-namespace simpleserv\webfilesframework\codegeneration;
+namespace webfilesframework\codegeneration;
 
-use simpleserv\webfilesframework\core\codegeneration\php\MPhpClassAttribute;
-use simpleserv\webfilesframework\core\codegeneration\java\MJavaWebfileClass;
-use simpleserv\webfilesframework\core\codegeneration\php\MPhpWebfileClass;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\core\codegeneration\php\MPhpClassAttribute;
+use webfilesframework\core\codegeneration\java\MJavaWebfileClass;
+use webfilesframework\core\codegeneration\php\MPhpWebfileClass;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description

@@ -1,10 +1,10 @@
 <?php
 
-use simpleserv\webfilesframework\core\datastore\MDatastoreFactory;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\MDatastoreFactory;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * @covers simpleserv\webfilesframework\core\datasystem\file\format\MWebfile
+ * @covers webfilesframework\core\datasystem\file\format\MWebfile
  *
  * Test class for MWebfileTest.
  */
@@ -33,7 +33,7 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
 
 
     /**
-     * @covers simpleserv\webfilesframework\core\datasystem\file\format\MWebfile::getSimplifiedAttributeName
+     * @covers webfilesframework\core\datasystem\file\format\MWebfile::getSimplifiedAttributeName
      */
     public function testGetSimplifiedAttributeName() {
     	
@@ -45,7 +45,7 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
     public function testUnmarshallingAndMarshallingWebfile() {
 
         // UNMARSHALL
-        $file = new \simpleserv\webfilesframework\core\datasystem\file\system\MFile(
+        $file = new \webfilesframework\core\datasystem\file\system\MFile(
             __DIR__ . '/../../../../../resources/folderDatastore/sampleWebfile1.webfile');
         $sample = MWebfile::staticUnmarshall($file->getContent());
 

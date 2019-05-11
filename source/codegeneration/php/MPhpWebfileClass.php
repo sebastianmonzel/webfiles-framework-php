@@ -1,9 +1,9 @@
 <?php
 
-namespace simpleserv\webfilesframework\codegeneration\php;
+namespace webfilesframework\codegeneration\php;
 
-use simpleserv\webfilesframework\codegeneration\MAbstractClass;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\codegeneration\MAbstractClass;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description

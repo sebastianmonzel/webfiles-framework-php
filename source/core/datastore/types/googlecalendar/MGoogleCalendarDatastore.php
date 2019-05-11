@@ -1,17 +1,17 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\googlecalendar;
+namespace webfilesframework\core\datastore\types\googlecalendar;
 
 use Google_Client;
 
 use Google_Service_Calendar;
 use Google_Service_Calendar_Event;
 use Google_Service_Calendar_EventDateTime;
-use simpleserv\webfilesframework\core\datastore\MAbstractCachableDatastore;
-use simpleserv\webfilesframework\core\datastore\MDatastoreException;
-use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\MAbstractCachableDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 
 class MGoogleCalendarDatastore extends MAbstractCachableDatastore

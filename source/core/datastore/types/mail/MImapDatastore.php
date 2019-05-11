@@ -1,14 +1,14 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\mail;
+namespace webfilesframework\core\datastore\types\mail;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
-use simpleserv\webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
 
 /**
  * Class to connect to a datastore based on a imap mailaccount.

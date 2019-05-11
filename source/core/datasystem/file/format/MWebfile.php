@@ -1,7 +1,7 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\file\format;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+namespace webfilesframework\core\datasystem\file\format;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Base cass for all webfile class definitions.<br />

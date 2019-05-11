@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore;
+namespace webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * General Exception used in datastores.

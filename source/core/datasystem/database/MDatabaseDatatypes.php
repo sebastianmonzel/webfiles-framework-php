@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\database;
+namespace webfilesframework\core\datasystem\database;
 
 /**
  * Defines the different datatypes of the actually used database systems.

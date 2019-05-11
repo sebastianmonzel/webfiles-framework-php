@@ -1,9 +1,9 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\webfilestream;
+namespace webfilesframework\core\datastore\webfilestream;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Defines the representation of a list of webfiles.

@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\file\system\dropbox;
+namespace webfilesframework\core\datasystem\file\system\dropbox;
 
-use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\core\datasystem\file\system\MFile;
 
 /**
  * description

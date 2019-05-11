@@ -1,10 +1,10 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\remote;
+namespace webfilesframework\core\datastore\types\remote;
 
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * Handles incoming calls to access remote datastores. RemoteDatastoreEndpoint
@@ -13,7 +13,7 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
  * For example: you can encapsulate a DatabaseDatastore or an DirectoryDatastore
  * to access it from remote.
  *
- * @package simpleserv\webfilesframework\core\datastore\types\remote
+ * @package webfilesframework\core\datastore\types\remote
  */
 class MRemoteDatastoreEndpoint
 {

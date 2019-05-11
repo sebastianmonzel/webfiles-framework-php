@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
+namespace webfilesframework\core\datasystem\file\format\image;
 
 /**
  * description

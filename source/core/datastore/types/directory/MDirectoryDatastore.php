@@ -1,17 +1,17 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\directory;
+namespace webfilesframework\core\datastore\types\directory;
 
-use simpleserv\webfilesframework\core\datastore\MAbstractCachableDatastore;
-use simpleserv\webfilesframework\core\datastore\MDatastoreException;
-use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\format\image\MImage;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
-use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\core\datastore\MAbstractCachableDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\image\MImage;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
+use webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Class to connect to a datastore based on a directory.

@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\database;
+namespace webfilesframework\core\datasystem\database;
 
 
 
@@ -26,7 +26,7 @@ class MDatabaseTable
 
     /**
      * MDatabaseTable constructor.
-     * @param \simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection $databaseConnection
+     * @param \webfilesframework\core\datasystem\database\MDatabaseConnection $databaseConnection
      * @param string $name
      */
     public function __construct(MDatabaseConnection $databaseConnection, $name)

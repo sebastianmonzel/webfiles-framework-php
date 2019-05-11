@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\io\form\validation;
+namespace webfilesframework\io\form\validation;
 
 /**
  * description

@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\time;
+namespace webfilesframework\core\time;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * description

@@ -1,10 +1,10 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\file\format\image;
+namespace webfilesframework\core\datasystem\file\format\image;
 
 
-use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
-use simpleserv\webfilesframework\core\datatypes\time\MTimestampHelper;
+use webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\core\datatypes\time\MTimestampHelper;
 
 
 /**

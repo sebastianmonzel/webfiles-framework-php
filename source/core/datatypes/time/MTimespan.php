@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\time;
+namespace webfilesframework\core\time;
 
 /**
  * description

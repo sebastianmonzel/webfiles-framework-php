@@ -1,7 +1,7 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\database;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+namespace webfilesframework\core\datasystem\database;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description

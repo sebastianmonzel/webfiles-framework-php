@@ -1,11 +1,11 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore;
+namespace webfilesframework\core\datastore;
 
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
  * Base class for defining datastores to save and load webfiles on a standardized way.<br />

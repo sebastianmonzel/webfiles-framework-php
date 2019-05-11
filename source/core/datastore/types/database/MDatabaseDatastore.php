@@ -1,21 +1,21 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\database;
+namespace webfilesframework\core\datastore\types\database;
 
-use simpleserv\webfilesframework\core\datastore\MDatastoreException;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTableColumn;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseTable;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseDatatypes;
-use simpleserv\webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datasystem\database\MDatabaseTableColumn;
+use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\core\datasystem\database\MDatabaseTable;
+use webfilesframework\core\datasystem\database\MDatabaseDatatypes;
+use webfilesframework\core\datastore\MISingleDatasourceDatastore;
 
-use simpleserv\webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
-use simpleserv\webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
-use simpleserv\webfilesframework\core\time\MTimespan;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+use webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
+use webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
+use webfilesframework\core\time\MTimespan;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Datastore based on a database. Actually only mysql is supported.
@@ -58,7 +58,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
      */
     public function getWebfilesAsStream()
     {
@@ -66,7 +66,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
      */
     public function getWebfilesAsArray()
     {
@@ -704,7 +704,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 	/**
-	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+	 * @see \webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
 	 *
 	 * @param MWebfile $webfile
 	 *

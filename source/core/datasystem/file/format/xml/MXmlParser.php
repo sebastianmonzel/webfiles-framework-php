@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\file\format\xml;
+namespace webfilesframework\core\datasystem\file\format\xml;
 
 /**
  * description

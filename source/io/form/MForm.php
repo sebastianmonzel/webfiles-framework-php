@@ -1,9 +1,9 @@
 <?php
 
-namespace simpleserv\webfilesframework\io\form;
+namespace webfilesframework\io\form;
 
-use simpleserv\webfilesframework\MSite;
-use simpleserv\webfilesframework\io\form\formItem\MAbstractFormItem;
+use webfilesframework\MSite;
+use webfilesframework\io\form\formItem\MAbstractFormItem;
 
 /**
  * description

@@ -1,13 +1,13 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\directory;
+namespace webfilesframework\core\datastore\types\directory;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\MAbstractDatastore;
 
 /**
  * Wrapper class to connect to a datastore based on a directory.
@@ -34,7 +34,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::tryConnect()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::tryConnect()
      */
     public function tryConnect()
     {
@@ -43,7 +43,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::isReadOnly()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::isReadOnly()
      */
     public function isReadOnly()
     {
@@ -52,7 +52,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getNextWebfileForTimestamp()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getNextWebfileForTimestamp()
      */
     public function getNextWebfileForTimestamp($time)
     {
@@ -61,7 +61,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsStream()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsStream()
      */
     public function getWebfilesAsStream()
     {
@@ -70,7 +70,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
      */
     public function getWebfilesAsArray()
     {
@@ -79,7 +79,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getLatestWebfiles()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getLatestWebfiles()
      */
     public function getLatestWebfiles($count = 5)
     {
@@ -88,7 +88,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
      */
     public function searchByTemplate(MWebfile $template)
     {
@@ -97,7 +97,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
      */
     public function storeWebfile(MWebfile $webfile)
     {
@@ -106,7 +106,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfilesFromStream()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::storeWebfilesFromStream()
      */
     public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
@@ -115,7 +115,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
     /* (non-PHPdoc)
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
      */
     public function deleteByTemplate(MWebfile $template)
     {

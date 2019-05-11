@@ -1,14 +1,14 @@
 {
-	"name" : "simpleserv/webfiles-framework",
+	"name" : "webfiles-framework/framework",
 	"authors" : [{
-			"name" : "simpleserv company",
-			"email" : "info@simpleserv.de"
+			"name" : "Sebatian Monzel",
+			"email" : "mail@sebastianmonzel.de"
 		}
 	],
 	"license" : "GPL-2.0-only",
 	"autoload" : {
 		"psr-4" : {
-			"simpleserv\\webfilesframework\\" : "source/"
+			"webfilesframework\\" : "source/"
 		}
 	},
 	"require" : {

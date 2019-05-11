@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datasystem\file\system;
+namespace webfilesframework\core\datasystem\file\system;
 
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * description

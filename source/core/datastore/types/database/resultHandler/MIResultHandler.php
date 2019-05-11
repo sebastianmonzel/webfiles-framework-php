@@ -6,7 +6,7 @@
  * Time: 21:38
  */
 
-namespace simpleserv\webfilesframework\core\datastore\types\database\resultHandler;
+namespace webfilesframework\core\datastore\types\database\resultHandler;
 
 
 interface MIResultHandler

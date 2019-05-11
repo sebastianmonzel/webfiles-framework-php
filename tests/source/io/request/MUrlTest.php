@@ -1,9 +1,9 @@
 <?php
 
-use simpleserv\webfilesframework\io\request\MUrl;
+use webfilesframework\io\request\MUrl;
 
 /**
- * @covers simpleserv\webfilesframework\io\request\MUrl
+ * @covers webfilesframework\io\request\MUrl
  */
 class MUrlTest extends PHPUnit_Framework_TestCase {
     /**
@@ -29,7 +29,7 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers simpleserv\webfilesframework\io\request\MUrl::getParam
+     * @covers webfilesframework\io\request\MUrl::getParam
      */
     public function testGetParam() {
     	
@@ -38,7 +38,7 @@ class MUrlTest extends PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers simpleserv\webfilesframework\io\request\MUrl::getQueryString
+     * @covers webfilesframework\io\request\MUrl::getQueryString
      */
     public function testGetQueryString() {
     	

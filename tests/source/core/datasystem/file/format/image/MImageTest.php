@@ -1,12 +1,12 @@
 <?php
 
 
-use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
-use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
 /**
- * @covers simpleserv\webfilesframework\core\datasystem\file\format\image\MImage
+ * @covers webfilesframework\core\datasystem\file\format\image\MImage
  */
 class MImageTest extends \PHPUnit_Framework_TestCase {
     /**
@@ -15,12 +15,12 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
     protected $object;
 
     /**
-     * @return \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+     * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
      */
     public function createDirectoryDatastore()
     {
-        $directoryDatastore = new \simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \simpleserv\webfilesframework\core\datasystem\file\system\MDirectory(__DIR__ . '/../../../../../resources/folderDatastore'));
+        $directoryDatastore = new \webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
+            new \webfilesframework\core\datasystem\file\system\MDirectory(__DIR__ . '/../../../../../resources/folderDatastore'));
         return $directoryDatastore;
     }
 
@@ -41,7 +41,7 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
 
     public function testReadExifDate() {
 
-        $image = new \simpleserv\webfilesframework\core\datasystem\file\format\image\MImage(
+        $image = new \webfilesframework\core\datasystem\file\format\image\MImage(
             __DIR__ . '/../../../../../../resources/folderDatastore/5302654.jpg');
 
         $exifDate = $image->readExifDate();

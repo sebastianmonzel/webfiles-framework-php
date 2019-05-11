@@ -1,11 +1,11 @@
 <?php
 
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datasystem\file\system\MFile;
 
 /**
- * @covers simpleserv\webfilesframework\core\datasystem\file\system\MDirectory
- * @covers simpleserv\webfilesframework\core\datasystem\file\system\MFile
+ * @covers webfilesframework\core\datasystem\file\system\MDirectory
+ * @covers webfilesframework\core\datasystem\file\system\MFile
  */
 class MDirectoryTest extends PHPUnit_Framework_TestCase {
     /**
@@ -29,7 +29,7 @@ class MDirectoryTest extends PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers simpleserv\webfilesframework\core\datasystem\file\system\MDirectory::getFiles
+     * @covers webfilesframework\core\datasystem\file\system\MDirectory::getFiles
      */
     public function testGetFiles() {
     	

@@ -1,12 +1,12 @@
 <?php
 
 
-use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
-use simpleserv\webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
 /**
- * @covers simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore
+ * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
  */
 class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
     /**
@@ -54,7 +54,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
     public function createDatabaseConnectionMock()
     {
         $databaseConnectionMock = $this
-            ->createMock('simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection');
+            ->createMock('webfilesframework\core\datasystem\database\MDatabaseConnection');
         return $databaseConnectionMock;
     }
 
@@ -94,7 +94,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         $showTablesResultHandler = $this
             ->createMock(
-                'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
+                'webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
 
         $showTablesResultHandler->method('getResultSize')->willReturn(1);
 
@@ -114,7 +114,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
 
         $webfilesResultHandler = $this
             ->createMock(
-                'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
+                'webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
 
         $webfilesReturnObject = (object) array(
             'id' => '1',
@@ -185,11 +185,11 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         $template = new MSampleWebfile();
 
         $stub = $this->createMock(
-            'simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection');
+            'webfilesframework\core\datasystem\database\MDatabaseConnection');
         $stub->method('getDatabaseName')->willReturn('webfiles');
 
         $resultHandler = $this->createMock(
-            'simpleserv\webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
+            'webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler');
         $resultHandler->method('getResultSize')->willReturn(0);
 
         // TODO warum wird die query so oft ausgeführt? prüfung metadaten + webfiletabelle

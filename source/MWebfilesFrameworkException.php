@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework;
+namespace webfilesframework;
 
 /**
  * description

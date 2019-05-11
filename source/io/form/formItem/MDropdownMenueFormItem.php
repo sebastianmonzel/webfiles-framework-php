@@ -1,8 +1,8 @@
 <?php
 
-namespace simpleserv\webfilesframework\io\form\formItem;
+namespace webfilesframework\io\form\formItem;
 
-use simpleserv\webfilesframework\MSite;
+use webfilesframework\MSite;
 
 /**
  * description

@@ -1,7 +1,7 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datatypes\time;
-use simpleserv\webfilesframework\MWebfilesFrameworkException;
+namespace webfilesframework\core\datatypes\time;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * description

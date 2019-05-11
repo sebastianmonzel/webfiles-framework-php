@@ -1,12 +1,12 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\remote;
+namespace webfilesframework\core\datastore\types\remote;
 
 
-use simpleserv\webfilesframework\core\datastore\MAbstractDatastore;
-use simpleserv\webfilesframework\io\request\MPostHttpRequest;
-use simpleserv\webfilesframework\core\datastore\webfilestream\MWebfileStream;
-use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\io\request\MPostHttpRequest;
+use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * Encapsulates the access to a datastore with help of the content

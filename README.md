@@ -45,8 +45,8 @@ in the same way. Remote datastores enable you to access locally defined datastor
 #### Read from DirectoryDatastore
 ```php
 <?php
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
 
 $directoryDatastore = new MDirectoryDatastore(new MDirectory("dir"));
 $directoryDatastore->getWebfilesAsArray();
@@ -54,8 +54,8 @@ $directoryDatastore->getWebfilesAsArray();
 #### Read from DatabaseDatastore (actually mysql only)
 ```php
 <?php
-use simpleserv\webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use simpleserv\webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
 
 $databaseDatastore = new MDatabaseDatastore(
     new MDatabaseConnection(
@@ -74,9 +74,9 @@ $databaseDatastore->getWebfilesAsArray();
 #### Transfer data from one datastore to another
 ```php
 <?php
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
-use simpleserv\webfilesframework\core\datastore\MDatastoreTransfer;
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\MDatastoreTransfer;
 
 $source = new MDirectoryDatastore(new MDirectory("sourceDir"));
 $target = new MDirectoryDatastore(new MDirectory("targetDir"));
@@ -90,9 +90,9 @@ $datastoreTransfer->transfer();
 *Serverside to provide access to the datastore:*
 ```php
 <?php
-use simpleserv\webfilesframework\core\datastore\types\remote\MRemoteDatastoreEndpoint; 
-use simpleserv\webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\core\datastore\types\remote\MRemoteDatastoreEndpoint; 
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
 
 $remoteDatastoreEndpoint = new MRemoteDatastoreEndpoint(
     new MDirectoryDatastore(new MDirectory("localDirectory"))
@@ -103,7 +103,7 @@ $remoteDatastoreEndpoint->handleRemoteCall();
 *Clientside to access the datastore:*
 ```php
 <?php
-use simpleserv\webfilesframework\core\datastore\types\remote\MRemoteDatastore;
+use webfilesframework\core\datastore\types\remote\MRemoteDatastore;
 
 // url on which the method $remoteDatastoreEndpoint->handleRemoteCall(); is reachable:
 $datastoreUrl = "http://localhost:1234/datastore/";
