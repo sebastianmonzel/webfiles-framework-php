@@ -204,7 +204,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
             ->willReturn(null);
 
         $stub->expects(self::at(15))->method('query')
-            ->with('INSERT INTO metadata(classname, version, tablename) VALUES (\'simpleserv\\\\webfilesframework\\\\core\\\\datastore\\\\types\\\\database\\\\MSampleWebfile\' , \'1\' , \'MSampleWebfile\');')
+            ->with('INSERT INTO metadata(classname, version, tablename) VALUES (\'webfilesframework\\\\core\\\\datastore\\\\types\\\\database\\\\MSampleWebfile\' , \'1\' , \'MSampleWebfile\');')
             ->willReturn(null);
 
         $stub->expects(self::at(16))->method('query')

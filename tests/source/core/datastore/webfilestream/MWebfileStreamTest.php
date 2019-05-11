@@ -11,7 +11,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
      */
     protected $object;
 
-    public static $webfileStreamAsStringReference = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><webfilestream><webfiles><object classname=\"simpleserv\\webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile\">
+    public static $webfileStreamAsStringReference = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><webfilestream><webfiles><object classname=\"webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile\">
 	<firstname><![CDATA[Hello]]></firstname>
 	<lastname><![CDATA[World]]></lastname>
 	<street><![CDATA[Blumenstrasse]]></street>
@@ -20,7 +20,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
 	<city><![CDATA[Neustadt an der Weinstrasse]]></city>
 	<id><![CDATA[1]]></id>
 	<time><![CDATA[4711]]></time>
-</object><object classname=\"simpleserv\\webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile\">
+</object><object classname=\"webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile\">
 	<firstname><![CDATA[Sergey]]></firstname>
 	<lastname><![CDATA[Brin]]></lastname>
 	<street><![CDATA[Blumenstraße]]></street>

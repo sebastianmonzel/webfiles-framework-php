@@ -3,8 +3,6 @@
 namespace webfilesframework\core\datastore;
 
 
-
-
 /**
  * Defines and provides basic functionality for caching a datastore.<br />
  * Basically the cached datastore is a combination between a efficient
