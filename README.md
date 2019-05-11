@@ -21,7 +21,7 @@
 Access and describe data in a structured way. Interact with remote data.
 The fascination about webbed data.
 
-Developer: Sebastian Monzel (mail@sebastianmonzel.de)
+developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
 Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<br />
 Documentation: http://sebastianmonzel.github.io/webfiles-framework-doc/<br />
