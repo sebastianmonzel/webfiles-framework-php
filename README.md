@@ -85,6 +85,8 @@ $datastoreTransfer->transfer();
 
 ```
 #### Read from RemoteDatastore
+You can make a datastore accessible from remote via http. `MRemoteDatastoreEndpoint` encapsulates the datastore to make
+accessible. On the other site you can use `MRemoteDatastore` to access the encapsulated datastore. 
 
 *Serverside to provide access to the datastore:*
 ```php
