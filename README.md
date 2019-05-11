@@ -39,7 +39,7 @@ in the same way. Remote datastores enable you to access locally defined datastor
  - save and read data in database or filesystem via the datastore api
 
 
-### Basic Usecases
+### Samples
 
 #### Read from DirectoryDatastore
 ```php
