@@ -104,13 +104,14 @@ class MDatabaseConnection
         @$this->connection->close();
     }
 
-    /**
-     * queries the database with the specified sql command
-     *
-     * @param $sqlCommand
-     * @return bool|\mysqli_result
-     * @internal param String $p_sSqlCommand
-     */
+	/**
+	 * queries the database with the specified sql command
+	 *
+	 * @param $sqlCommand
+	 *
+	 * @return bool|\mysqli_result
+	 * @throws MWebfilesFrameworkException
+	 */
     public function query($sqlCommand)
     {
         $result = $this->connection->query($sqlCommand);
@@ -121,10 +122,12 @@ class MDatabaseConnection
         return $result;
     }
 
-    /**
-     * @param $sqlCommand
-     * @return MMysqlResultHandler
-     */
+	/**
+	 * @param $sqlCommand
+	 *
+	 * @return MMysqlResultHandler
+	 * @throws MWebfilesFrameworkException
+	 */
     public function queryAndHandle($sqlCommand)
     {
         $result = $this->query($sqlCommand);

@@ -19,6 +19,10 @@ use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Datastore based on a database. Actually only mysql is supported.
+ * <br />
+ * Store is devided in webfiles and metadata. webfiles represent the
+ * content of data. Metadata contains a mapping from lassname to tablename
+ * and the version of the webfile definition.
  *
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
@@ -89,13 +93,13 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 	/**
-	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
 	 * @param MWebfile $webfile
 	 *
 	 * @return int|void Returns the id given in database (in case of a new webfile
 	 * the generated id will be returned)
 	 *
 	 * @throws MDatabaseDatastoreException
+	 * @throws MDatastoreException
 	 */
     public function storeWebfile(MWebfile $webfile)
     {
@@ -180,17 +184,14 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $tableNames;
     }
 
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
-     * @return int Returns the id given in database (in case of a new webfile
-     * the generated id will be returned)
-     */
-
-    /**
-     * Creates a database table to persist objects of this type.
-     * @param MWebfile $webfile
-     * @param boolean $dropTableIfExists
-     */
+	/**
+	 * Creates a database table to persist objects of this type.
+	 *
+	 * @param MWebfile $webfile
+	 * @param bool     $dropTableIfExists
+	 *
+	 * @throws MDatastoreException
+	 */
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
     {
 
@@ -229,10 +230,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         $table->create();
     }
 
-    /**
-     * @param $sAttributeName
-     * @param $table
-     */
+	/**
+	 * @param $sAttributeName
+	 *
+	 * @return MDatabaseTableColumn
+	 * @throws MDatastoreException
+	 */
     private function createTableColumnFromAttributeName($sAttributeName)
     {
         $prefix = substr($sAttributeName, 2, 1);
@@ -499,10 +502,13 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $this->transformMetadataObjectToWebfile($object);
     }
 
-    /**
-     * @param $object
-     * @return MWebfile
-     */
+	/**
+	 * @param $object
+	 *
+	 * @return mixed
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     private function transformMetadataObjectToWebfile($object) {
 
         $template = $this->createWebfileByClassname($object->classname);
@@ -513,11 +519,13 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfiles[0];
     }
 
-    /**
-     * @param $classname
-     * @return MWebfile
-     * @throws MWebfilesFrameworkException
-     */
+	/**
+	 * @param $classname
+	 *
+	 * @return object
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     private function createWebfileByClassname($classname) {
         $ref = new \ReflectionClass($classname);
         $webfile = $ref->newInstanceWithoutConstructor();
@@ -554,11 +562,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
     }
 
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::searchByTemplate()
-     * @param MWebfile $template
-     * @return array
-     */
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @return array
+	 * @throws MDatastoreException
+	 */
     public function searchByTemplate(MWebfile $template)
     {
 
@@ -694,10 +703,13 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $condition;
     }
 
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
-     * @param MWebfile $webfile
-     */
+	/**
+	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+	 *
+	 * @param MWebfile $webfile
+	 *
+	 * @throws MWebfilesFrameworkException
+	 */
     public function deleteByTemplate(MWebfile $webfile)
     {
 
@@ -719,12 +731,11 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
     }
 
-    /**
-     * @param MWebfile $template
-     * @param $first
-     * @param $order
-     * @return string
-     */
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @return string
+	 */
     private function translateTemplateIntoSorting(MWebfile $template)
     {
         $attributes = $template->getAttributes(true);
@@ -826,7 +837,5 @@ class MDatabaseDatastore extends MAbstractDatastore
         foreach ($tablenames as $tablename) {
             $this->databaseConnection->query("DROP TABLE " . $tablename);
         }
-
     }
-
 }

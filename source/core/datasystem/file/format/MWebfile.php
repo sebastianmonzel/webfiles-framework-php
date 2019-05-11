@@ -28,12 +28,14 @@ class MWebfile {
      */
     public static $m__sClassName;
 
-    /**
-     * Converts the current webfile into its xml representation.
-     *
-     * @param boolean $usePreamble sets the option of using a preamble in xml - usually used for setting the version of xml an the encoding.
-     * @return string returns the webfile as a marshalled String.
-     */
+	/**
+	 * Converts the current webfile into its xml representation.
+	 *
+	 * @param bool $usePreamble sets the option of using a preamble in xml - usually used for setting the version of xml an the encoding.
+	 *
+	 * @return string string returns the webfile as a marshalled String.
+	 * @throws \ReflectionException
+	 */
     public function marshall($usePreamble = true)
     {
         $out = "";
@@ -60,6 +62,8 @@ class MWebfile {
     /**
      * Converts the given xml into a webfile object.
      * @param string $data xml which represents a webfile.
+     *
+     * @throws MWebfilesFrameworkException
      */
     public function unmarshall($data)
     {
@@ -70,6 +74,7 @@ class MWebfile {
      * Converts the given xml-String into a new webfile object.
      * @param string $xmlAsString
      * @return MWebfile
+     * @throws MWebfilesFrameworkException
      */
     public static function staticUnmarshall($xmlAsString)
     {
@@ -201,14 +206,17 @@ class MWebfile {
 
     }
 
-    /**
-     * Returns the attributes of the actual class which are relevant for the
-     * webfile definition.
-     *
-     * @param bool $onlyAttributesOfSimpleDatatypes
-     * @return array array with attributes
-     */
-    public static function getAttributes($onlyAttributesOfSimpleDatatypes = false)
+
+	/**
+	 * eturns the attributes of the actual class which are relevant for the
+	 * webfile definition.
+	 *
+	 * @param bool $simpleDatatypesOnly
+	 *
+	 * @return \ReflectionProperty[]
+	 * @throws \ReflectionException
+	 */
+    public static function getAttributes($simpleDatatypesOnly = false)
     {
         $oSelfReflection = new \ReflectionClass(static::$m__sClassName);
         $oPropertyArray = $oSelfReflection->getProperties(
@@ -223,7 +231,7 @@ class MWebfile {
                 // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
                 substr($sAttributeName, 1, 1) != "_" ||
                 substr($sAttributeName, 2, 1) == "_" ||
-                ($onlyAttributesOfSimpleDatatypes && substr($sAttributeName, 2, 1) == "o")
+                ( $simpleDatatypesOnly && substr($sAttributeName, 2, 1) == "o")
             ) {
                 unset($oPropertyArray[$count]);
             }
@@ -232,12 +240,13 @@ class MWebfile {
         return $oPropertyArray;
     }
 
-    /**
-     * Returns a xml defined class information. It contains the
-     * classname and the given attributes.
-     *
-     * @return string xml with information about the class
-     */
+	/**
+	 * Returns a xml defined class information. It contains the
+	 * classname and the given attributes.
+	 *
+	 * @return string xml with information about the class
+	 * @throws \ReflectionException
+	 */
     public static function getClassInformation()
     {
 
@@ -297,11 +306,13 @@ class MWebfile {
         return null;
     }
 
-    /**
-     * Transforms the actual webfile into an dataset. A dataset is represented by a key value array.
-     * The key is the attributes name. The value is the attributes value.
-     * @return array
-     */
+	/**
+	 * Transforms the actual webfile into an dataset. A dataset is represented by a key value array.
+	 * The key is the attributes name. The value is the attributes value.
+	 *
+	 * @return array
+	 * @throws \ReflectionException
+	 */
     public function getDataset()
     {
         $dataset = array();
