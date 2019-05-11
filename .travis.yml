@@ -29,4 +29,4 @@ env:
 notifications:
   slack:
     rooms:
-    - simpleservcompany:PuGBBORaRFFEsZY4hpcbIZFK#general
+    - simpleservcompany:PuGBBORaRFFEsZY4hpcbIZFK#travis
