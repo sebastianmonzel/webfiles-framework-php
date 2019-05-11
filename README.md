@@ -34,7 +34,7 @@ Through an webfile definition and the standarized api you can access the differe
 in the same way. Remote datastores enable you to access locally defined datastores via HTTP.
 
 ### First Steps
- - add webfiles-framework as dependency to your `package.json`
+ - add webfiles-framework as dependency to your `composer.json`
  - define your datastucture as webfile definition
  - connect to your datastore
  - save and read data from your store
