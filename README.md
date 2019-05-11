@@ -36,8 +36,7 @@ in the same way. Remote datastores enable you to access locally defined datastor
 ### First Steps
  - add webfiles-framework as dependency `webfiles-framework/framework` to your `composer.json`
  - define your datastucture as webfile definition
- - connect to your datastore
- - save and read data from your store
+ - save and read data in database or filesystem via the datastore api
 
 
 ### Basic Usecases

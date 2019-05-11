@@ -186,11 +186,12 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 	/**
 	 * Creates a database table to persist objects of this type.
-	 *
+     *
 	 * @param MWebfile $webfile
 	 * @param bool     $dropTableIfExists
 	 *
 	 * @throws MDatastoreException
+	 * @throws \ReflectionException
 	 */
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
     {
