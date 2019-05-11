@@ -79,7 +79,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datastore\MDatastoreTransfer;
 
 $source = new MDirectoryDatastore(new MDirectory("sourceDir"));
-$target = new MDatabaseDatastore(new MDatabaseConnection("localhost","wonderfulDatabasename","myTableprefix","myuser","mypassword"));
+$target = new MDatabaseDatastore(new MDatabaseConnection("localhost","wonderfulDatabasename","mytableprefix","myuser","mypassword"));
 
 $datastoreTransfer = new MDatastoreTransfer($source, $target);
 $datastoreTransfer->transfer();
