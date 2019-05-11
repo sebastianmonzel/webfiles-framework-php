@@ -25,3 +25,8 @@ after_success:
 env:
   global:
     secure: JfhuKZI+Yp1bC29r5lcGtP4Mof2d2oQ144wqine1x2/xFp12RV5MfL+BQ3WlEMpc3PXhEYWyHS8R1fvtgiI2oarJVTkwUX5qXOdgDmNxQPHrrqd3OkyqCA4jzDlWpG+3ojWF3uEmzys/VhlQE0LSPIjO5YFYrLCvPSQkabL4yPo=
+
+notifications:
+  slack:
+    rooms:
+    - simpleservcompany:PuGBBORaRFFEsZY4hpcbIZFK#general
