@@ -8,7 +8,6 @@ use simpleserv\webfilesframework\io\form\formItem\MAbstractFormItem;
 /**
  * description
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

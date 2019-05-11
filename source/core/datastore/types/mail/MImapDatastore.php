@@ -13,7 +13,6 @@ use simpleserv\webfilesframework\core\datastore\MDatastoreException;
 /**
  * Class to connect to a datastore based on a imap mailaccount.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

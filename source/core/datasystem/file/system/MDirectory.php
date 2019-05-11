@@ -8,7 +8,6 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 /**
  * Encapsulates the access on directories.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

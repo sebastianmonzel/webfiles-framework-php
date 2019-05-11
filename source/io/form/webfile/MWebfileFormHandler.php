@@ -7,7 +7,6 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
  * Handles requests which are submitted through a form generated
  * by MWebfileFormVisualizer.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

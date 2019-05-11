@@ -11,7 +11,6 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
  * Creates depending on the given type a datastore, which can
  * be used to access and store webfiles.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

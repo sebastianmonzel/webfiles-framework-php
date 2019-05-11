@@ -7,7 +7,6 @@ use simpleserv\webfilesframework\core\datasystem\file\format\MWebfile;
 /**
  * Representation of a mail used in the imap datastore.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

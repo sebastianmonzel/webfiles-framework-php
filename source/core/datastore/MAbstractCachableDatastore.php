@@ -12,7 +12,6 @@ namespace simpleserv\webfilesframework\core\datastore;
  * (e.g. a directory datastore or a remote datastore).<br />
  * Actually cache is invalidated after one day.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

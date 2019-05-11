@@ -13,7 +13,6 @@ use simpleserv\webfilesframework\core\io\form\formItem\MHiddenFormItem;
  * Uses the javascript-libary DojoToolkit for visualizing
  * form elements.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

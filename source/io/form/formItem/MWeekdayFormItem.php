@@ -7,7 +7,6 @@ use simpleserv\webfilesframework\core\time\MWeekday;
 /**
  * description
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */

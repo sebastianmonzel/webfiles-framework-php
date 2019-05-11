@@ -18,9 +18,8 @@ use simpleserv\webfilesframework\core\time\MTimespan;
 use simpleserv\webfilesframework\MWebfilesFrameworkException;
 
 /**
- * Class to connect to a datastore based on a database.
+ * Datastore based on a database. Actually only mysql is supported.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
@@ -89,12 +88,15 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfilesResult;
     }
 
-    /**
-     * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
-     * @param MWebfile $webfile
-     * @return int Returns the id given in database (in case of a new webfile
-     * the generated id will be returned)
-     */
+	/**
+	 * @see \simpleserv\webfilesframework\core\datastore\MAbstractDatastore::storeWebfile()
+	 * @param MWebfile $webfile
+	 *
+	 * @return int|void Returns the id given in database (in case of a new webfile
+	 * the generated id will be returned)
+	 *
+	 * @throws MDatabaseDatastoreException
+	 */
     public function storeWebfile(MWebfile $webfile)
     {
 
@@ -122,7 +124,9 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
-     * Enter description here ...
+     * resolve databasee table name by webfile object. table name scheme
+     * is: $this->databaseConnection->getTablePrefix() . CLASSNAME_WITHOUT_NAMESPACE
+     *
      * @param MWebfile $webfile
      * @return string
      */

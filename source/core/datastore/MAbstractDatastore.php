@@ -14,7 +14,6 @@ use simpleserv\webfilesframework\core\datasystem\file\system\MDirectory;
  * <br />
  * Implements the webfiles standard to be able to edit datastores with help of the webfile editor.
  *
- * @author     simpleserv company < info@simpleserv.de >
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
