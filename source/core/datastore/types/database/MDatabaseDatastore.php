@@ -57,17 +57,24 @@ class MDatabaseDatastore extends MAbstractDatastore
         return NULL;
     }
 
-    /**
-     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
-     */
+	/**
+	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
+	 * @return MWebfileStream
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     public function getWebfilesAsStream()
     {
         return new MWebfileStream($this->getWebfilesAsArray());
     }
 
-    /**
-     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesFromDatastore()
-     */
+	/**
+	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 * @throws \Exception
+	 */
     public function getWebfilesAsArray()
     {
         $webfilesResult = array();
@@ -95,11 +102,12 @@ class MDatabaseDatastore extends MAbstractDatastore
 	/**
 	 * @param MWebfile $webfile
 	 *
-	 * @return int|void Returns the id given in database (in case of a new webfile
+	 * @return int Returns the id given in database (in case of a new webfile
 	 * the generated id will be returned)
-	 *
 	 * @throws MDatabaseDatastoreException
 	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
     public function storeWebfile(MWebfile $webfile)
     {
@@ -120,6 +128,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
     }
 
+	/**
+	 * @param MWebfile $webfile
+	 *
+	 * @return bool
+	 * @throws MWebfilesFrameworkException
+	 */
     private function tableExistsByWebfile(MWebfile $webfile)
     {
 
@@ -149,16 +163,25 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $tableName;
     }
 
+	/**
+	 * @param $tableName
+	 *
+	 * @return bool
+	 * @throws MWebfilesFrameworkException
+	 */
     private function tableExistsByTablename($tableName)
     {
         $allTableNames = $this->getAllTableNames();
         return in_array($tableName,$allTableNames);
     }
 
-    /**
-     * Returns all tablenames of the current connected database matching to the table prefix
-     * in the used connection.
-     */
+	/**
+	 * Returns all tablenames of the current connected database matching to the table prefix
+	 * in the used connection.
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 */
     private function getAllTableNames()
     {
         $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM `" . $this->databaseConnection->getDatabaseName() . "`");
@@ -186,11 +209,11 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 	/**
 	 * Creates a database table to persist objects of this type.
-     *
 	 * @param MWebfile $webfile
 	 * @param bool     $dropTableIfExists
 	 *
 	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
 	 * @throws \ReflectionException
 	 */
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
@@ -276,6 +299,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
     }
 
+	/**
+	 * @param $tablename
+	 *
+	 * @return bool
+	 * @throws MWebfilesFrameworkException
+	 */
     private function metadataExist($tablename)
     {
         if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
@@ -319,6 +348,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @param $className
+	 * @param $version
+	 * @param $tablename
+	 *
+	 * @throws MWebfilesFrameworkException
+	 */
     private function addMetadata($className, $version, $tablename)
     {
 
@@ -335,6 +371,14 @@ class MDatabaseDatastore extends MAbstractDatastore
             " VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');");
     }
 
+	/**
+	 * @param MWebfile $webfile
+	 * @param bool     $useOnlySimpleDatatypes
+	 *
+	 * @return int
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false)
     {
 
@@ -392,6 +436,14 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @param MWebfile $webfile
+	 *
+	 * @return bool
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     private function webfileExists(MWebfile $webfile)
     {
 
@@ -408,6 +460,15 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @param MWebfile $webfile
+	 * @param bool     $useOnlySimpleDatatypes
+	 *
+	 * @return int
+	 * @throws MDatabaseDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     private function update(MWebfile $webfile, $useOnlySimpleDatatypes = false)
     {
 
@@ -469,6 +530,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @param int $count
+	 *
+	 * @return array|void
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     public function getLatestWebfiles($count = 5)
     {
 
@@ -487,6 +555,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @param $time
+	 *
+	 * @return mixed|null
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     public function getNextWebfileForTimestamp($time)
     {
 
@@ -523,7 +598,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	/**
 	 * @param $classname
 	 *
-	 * @return object
+	 * @return MWebfile
 	 * @throws MWebfilesFrameworkException
 	 * @throws \ReflectionException
 	 */
@@ -536,6 +611,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfile;
     }
 
+	/**
+	 * @param $tableName
+	 *
+	 * @return mixed
+	 * @throws MWebfilesFrameworkException
+	 */
     public function resolveClassNameFromTableName($tableName)
     {
         if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
@@ -545,6 +626,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $metadata->classname;
     }
 
+	/**
+	 * @param $tablename
+	 *
+	 * @return object|\stdClass|null
+	 * @throws MWebfilesFrameworkException
+	 */
     private function resolveMetadataForTablename($tablename)
     {
 
@@ -568,6 +655,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @return array
 	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
     public function searchByTemplate(MWebfile $template)
     {
@@ -591,6 +680,16 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfileArray;
     }
 
+	/**
+	 * @param      $tableName
+	 * @param null $className
+	 * @param null $condition
+	 * @param null $order
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     private function getWebfilesByTablename($tableName,$className = null,$condition = null,$order = null)
     {
         $webfileArray = array();
@@ -650,11 +749,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfileArray;
     }
 
-    /**
-     *
-     * @param MWebfile $webfile
-     * @return string
-     */
+	/**
+	 * @param MWebfile $webfile
+	 *
+	 * @return string
+	 * @throws \ReflectionException
+	 */
     private function translateTemplateIntoCondition(MWebfile $webfile)
     {
 
@@ -710,6 +810,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @param MWebfile $webfile
 	 *
 	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
     public function deleteByTemplate(MWebfile $webfile)
     {
@@ -736,6 +837,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @param MWebfile $template
 	 *
 	 * @return string
+	 * @throws \ReflectionException
 	 */
     private function translateTemplateIntoSorting(MWebfile $template)
     {
@@ -770,11 +872,17 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $order;
     }
 
-    /**
-     * Normalizes database datastore:
-     *  - collect all webfiles in one table to sort after timestamp over all
-     *  -
-     */
+	/**
+	 * Normalizes database datastore:
+	 *  - collect all webfiles in one table to sort after timestamp over all
+	 *  -
+	 *
+	 * @param bool $useHumanReadableTimestamps
+	 * @param bool $saveThumbnailsForImages
+	 *
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
 
         $webfiles = $this->getWebfilesAsArray();
@@ -787,6 +895,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @param $webfileid
+	 * @param $time
+	 * @param $classname
+	 *
+	 * @throws MWebfilesFrameworkException
+	 */
     private function addMetadataNormalizationEntry($webfileid, $time, $classname) {
 
         if (!$this->tableExistsByTablename(
@@ -829,9 +944,11 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
-    /**
-     * Deletes all webfiles in the store and all metadata
-     */
+	/**
+	 * Deletes all webfiles in the store and all metadata
+	 *
+	 * @throws MWebfilesFrameworkException
+	 */
     public function deleteAll() {
 
         $tablenames = $this->getAllTableNames();

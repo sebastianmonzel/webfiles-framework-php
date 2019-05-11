@@ -367,7 +367,7 @@ class MWebfile {
     }
 
     /**
-     * @param $time unix timestamp of the context time.
+     * @param $time int unix timestamp of the context time.
      */
     public function setTime($time)
     {
