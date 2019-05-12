@@ -263,17 +263,17 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function createTableColumnFromAttributeName($sAttributeName)
     {
         $prefix = substr($sAttributeName, 2, 1);
-        if ($prefix == "s") {
+        if ($prefix == "s") { // string (width = 50)
             return new MDatabaseTableColumn(
                 MWebfile::getSimplifiedAttributeName($sAttributeName),
                 MDatabaseDatatypes::VARCHAR,
                 50);
-        } else if ($prefix == "l") {
+        } else if ($prefix == "l") { // longtext (width = 2000)
             return new MDatabaseTableColumn(
                 MWebfile::getSimplifiedAttributeName($sAttributeName),
                 MDatabaseDatatypes::VARCHAR,
                 2000);
-        } else if ($prefix == "i") {
+        } else if ($prefix == "i") { // int
             return new MDatabaseTableColumn(
                 MWebfile::getSimplifiedAttributeName($sAttributeName),
                 MDatabaseDatatypes::INT,
