@@ -35,6 +35,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::tryConnect()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function tryConnect()
     {
@@ -44,6 +45,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::isReadOnly()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function isReadOnly()
     {
@@ -53,6 +55,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getNextWebfileForTimestamp()
+	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 */
     public function getNextWebfileForTimestamp($time)
     {
@@ -62,6 +65,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsStream()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function getWebfilesAsStream()
     {
@@ -71,6 +75,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function getWebfilesAsArray()
     {
@@ -80,6 +85,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getLatestWebfiles()
+	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 */
     public function getLatestWebfiles($count = 5)
     {
@@ -89,6 +95,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function searchByTemplate(MWebfile $template)
     {
@@ -98,6 +105,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function storeWebfile(MWebfile $webfile)
     {
@@ -107,6 +115,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::storeWebfilesFromStream()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
@@ -116,6 +125,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function deleteByTemplate(MWebfile $template)
     {
@@ -123,7 +133,10 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
         return $this->directoryDatastore->deleteByTemplate($template);
     }
 
-    private function initDatastore()
+	/**
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 */
+	private function initDatastore()
     {
         if (!isset($this->directoryDatastore)) {
             $directory = new MDirectory($this->m_sDirectoryPath);

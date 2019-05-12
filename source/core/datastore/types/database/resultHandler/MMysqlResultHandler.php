@@ -9,10 +9,11 @@ class MMysqlResultHandler implements MIResultHandler
      */
     var $result;
 
-    /**
-     * MMysqlResultHandler constructor.
-     * @param \mysqli_result $result
-     */
+	/**
+	 * MMysqlResultHandler constructor.
+	 *
+	 * @param $result
+	 */
     public function __construct($result)
     {
         $this->result = $result;
