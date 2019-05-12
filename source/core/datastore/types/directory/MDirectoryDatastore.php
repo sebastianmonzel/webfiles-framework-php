@@ -191,11 +191,14 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
-    /**
-     * (non-PHPdoc)
-     * @see MAbstractDatastore::storeWebfilesFromWebfilestream()
-     * @param MWebfileStream $webfileStream
-     */
+	/**
+	 * (non-PHPdoc)
+	 * @see MAbstractDatastore::storeWebfilesFromWebfilestream()
+	 *
+	 * @param MWebfileStream $webfileStream
+	 *
+	 * @throws MDatastoreException
+	 */
     public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
         $webfiles = $webfileStream->getWebfiles();

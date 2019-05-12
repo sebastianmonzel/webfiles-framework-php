@@ -115,22 +115,30 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::storeWebfilesFromStream()
+	 *
+	 * @param MWebfileStream $webfileStream
+	 *
+	 * @return void
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
         $this->initDatastore();
-        return $this->directoryDatastore->storeWebfilesFromStream($webfileStream);
+        $this->directoryDatastore->storeWebfilesFromStream($webfileStream);
     }
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+	 *
+	 * @param MWebfile $template
+	 *
+	 * @return void
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function deleteByTemplate(MWebfile $template)
     {
         $this->initDatastore();
-        return $this->directoryDatastore->deleteByTemplate($template);
+        $this->directoryDatastore->deleteByTemplate($template);
     }
 
 	/**
