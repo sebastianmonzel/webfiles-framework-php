@@ -55,7 +55,12 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getNextWebfileForTimestamp()
+	 *
+	 * @param $time
+	 *
+	 * @return MWebfile|null
 	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function getNextWebfileForTimestamp($time)
     {
@@ -85,7 +90,12 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getLatestWebfiles()
+	 *
+	 * @param int $count
+	 *
+	 * @return array
 	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function getLatestWebfiles($count = 5)
     {
@@ -95,6 +105,10 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+	 *
+	 * @param MWebfile $template
+	 *
+	 * @return array
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function searchByTemplate(MWebfile $template)
@@ -105,12 +119,16 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getByTemplate()
+	 *
+	 * @param MWebfile $webfile
+	 *
+	 * @return void
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function storeWebfile(MWebfile $webfile)
     {
         $this->initDatastore();
-        return $this->directoryDatastore->storeWebfile($webfile);
+        $this->directoryDatastore->storeWebfile($webfile);
     }
 
 	/**
