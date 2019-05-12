@@ -36,10 +36,9 @@ class MDatabaseTable
     }
 
 
-    /**
-     *
-     * Enter description here ...
-     */
+	/**
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 */
     public function create()
     {
         $query = "CREATE TABLE IF NOT EXISTS `" . $this->name . "` (";
@@ -47,6 +46,9 @@ class MDatabaseTable
         if ($this->identifier != null && $this->identifierSize != null) {
             $query .= "`" . $this->identifier . "` int(" . $this->identifierSize . ") NOT NULL AUTO_INCREMENT,";
         }
+	    /**
+	     * @var MDatabaseTableColumn $value
+	     */
         foreach ($this->columns as $value) {
             $query .= $value->getStringRepresentation();
         }

@@ -49,7 +49,7 @@ use webfilesframework\core\datasystem\file\format\MWebfile;
 class Contact extends MWebfile
 {
 
-    private $m_sFirstname; // s defines the type of the attribute
+    private $m_sFirstname; // attributes has to be the given scheme - all attributes with "m_" as prefix gets persisted - "s" defines the type of the attribute (string)
     private $m_sLastname;
     private $m_sCity;
 
