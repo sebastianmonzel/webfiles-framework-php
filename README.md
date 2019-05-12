@@ -41,6 +41,53 @@ in the same way. Remote datastores enable you to access locally defined datastor
 
 ### Samples
 
+#### Create your first webfile
+```php
+
+use webfilesframework\core\datasystem\file\format\MWebfile;
+
+class Contact extends MWebfile
+{
+
+    private $m_sFirstname; // s defines the type of the attribute
+    private $m_sLastname;
+    private $m_sCity;
+
+    public static $m__sClassName = __CLASS__;
+    
+    public function setFirstname($m_sFirstname)
+    {
+        $this->m_sFirstname = $m_sFirstname;
+    }
+    
+    public function getFirstname()
+    {
+        return $this->m_sFirstname;
+    }
+
+    public function setLastname($m_sLastname)
+    {
+        $this->m_sLastname = $m_sLastname;
+    }
+    
+    public function getFirstname()
+    {
+        return $this->m_sFirstname;
+    }
+
+    public function setCity($m_sCity)
+    {
+        $this->m_sCity = $m_sCity;
+    }
+    
+    public function getCity($m_sCity)
+    {
+        $this->m_sCity = $m_sCity;
+    }
+
+}
+```
+
 #### Read from DirectoryDatastore
 ```php
 <?php
