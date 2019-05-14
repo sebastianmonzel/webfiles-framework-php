@@ -9,7 +9,6 @@ use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use webfilesframework\core\datasystem\file\format\image\MImage;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\system\MDirectory;
-use webfilesframework\core\datasystem\file\system\MDirectoryWebfileGrabber;
 use webfilesframework\core\datasystem\file\system\MFile;
 use webfilesframework\MWebfilesFrameworkException;
 
@@ -39,7 +38,15 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     private $NORMAL_IMAGES_FOLDER_NAME = "images-normalsize";
 
 
-    public function __construct(MDirectory $directory, $isRemoteDatastore = false)
+	/**
+	 * MDirectoryDatastore constructor.
+	 *
+	 * @param MDirectory $directory
+	 *
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 */
+	public function __construct(MDirectory $directory)
     {
         if ($directory == null || !$directory instanceof MDirectory) {
             throw new MDatastoreException("Cannot instantiate a DirectoryDatastore without valid directory.");
@@ -63,19 +70,34 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $this->m_oDirectory->exists();
     }
 
-    public function getWebfilesAsStream()
+	/**
+	 * @return MWebfileStream
+	 * @throws MWebfilesFrameworkException
+	 */
+	public function getWebfilesAsStream()
     {
         $webfileArray = $this->getWebfilesAsArray();
         return new MWebfileStream($webfileArray);
     }
 
-    public function getWebfilesAsArray()
+	/**
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws \Exception
+	 */
+	public function getWebfilesAsArray()
     {
         $files = $this->m_oDirectory->getFiles();
         return $this->transformFilesIntoWebfilesArray($files);
     }
 
-    public function getLatestWebfiles($count = 5)
+	/**
+	 * @param int $count
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 */
+	public function getLatestWebfiles($count = 5)
     {
         if (! $this->metaInformationWebfile->isNormalized() ) {
             throw new MWebfilesFrameworkException(
@@ -85,10 +107,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $this->transformFilesIntoWebfilesArray($filesArray);
     }
 
-    /**
-     * @param int $time
-     * @return MWebfile|null
-     */
+	/**
+	 * @param int $time
+	 *
+	 * @return MWebfile|null
+	 * @throws MWebfilesFrameworkException
+	 */
     public function getNextWebfileForTimestamp($time)
     {
 
@@ -108,7 +132,13 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return null;
     }
 
-    private function transformFilesIntoWebfilesArray($files)
+	/**
+	 * @param $files
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 */
+	private function transformFilesIntoWebfilesArray($files)
     {
 
         $webfileArray = array();
@@ -126,15 +156,15 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $webfileArray;
     }
 
-    /**
-     * @param MFile $file
-     * @param bool $forceTransformation
-     * @return MWebfile|null
-     */
+	/**
+	 * @param MFile $file
+	 * @param bool  $forceTransformation
+	 *
+	 * @return MWebfile|null
+	 * @throws MWebfilesFrameworkException
+	 */
     private function transformFileIntoWebfile(MFile $file, $forceTransformation = false)
     {
-
-        $webfileArray = array();
 
         /** @var MWebfile $item */
         $lowerCaseFileExtension = strtolower($file->getExtension());
@@ -173,7 +203,13 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     }
 
 
-    public function storeWebfile(MWebfile $webfile)
+	/**
+	 * @param MWebfile $webfile
+	 *
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
+	public function storeWebfile(MWebfile $webfile)
     {
         $directoryPath = $this->m_oDirectory->getPath();
         // TODO implizite annahme, dass dateiname immer gleich id ist lösen
@@ -192,14 +228,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     }
 
 	/**
-	 * (non-PHPdoc)
-	 * @see MAbstractDatastore::storeWebfilesFromWebfilestream()
-	 *
 	 * @param MWebfileStream $webfileStream
 	 *
-	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
-    public function storeWebfilesFromStream(MWebfileStream $webfileStream)
+	public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
         $webfiles = $webfileStream->getWebfiles();
 
@@ -209,10 +243,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     }
 
-    /**
-     * @param MWebfile $template
-     * @return array
-     */
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 */
     public function searchByTemplate(MWebfile $template)
     {
         if ($this->isDatastoreCached()) {
@@ -228,7 +264,13 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $webfiles;
     }
 
-    public function deleteByTemplate(MWebfile $template)
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 */
+	public function deleteByTemplate(MWebfile $template)
     {
         $webfiles = $this->searchByTemplate($template);
         $mapping = $this->createWebfileIdToFilenameMapping();
@@ -244,7 +286,10 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
-    public function deleteAll()
+	/**
+	 * @throws MWebfilesFrameworkException
+	 */
+	public function deleteAll()
     {
         $webfiles = $this->getWebfilesAsArray();
         $mapping = $this->createWebfileIdToFilenameMapping();
@@ -256,7 +301,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
-    private function createWebfileIdToFilenameMapping()
+	/**
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws \Exception
+	 */
+	private function createWebfileIdToFilenameMapping()
     {
         $filesArray = $this->m_oDirectory->getFiles();
 
@@ -278,12 +328,19 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     }
 
 
-    /**
-     * Normalizes directory datastore:
-     *  - normalizes filenames
-     * @param bool $useHumanReadableTimestamps attention - timezones are actually not , merging webfile datastores from
-     * different timezones can lead to mismatches.
-     */
+	/**
+	 * Normalizes directory datastore:
+	 *  - normalizes filenames
+	 *
+	 * @param bool $useHumanReadableTimestamps attention - timezones are actually not , merging webfile datastores from
+	 *                                         different timezones can lead to mismatches.
+	 *
+	 * @param bool $saveThumbnailsForImages
+	 *
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 * @throws \Exception
+	 */
     public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
         $filesArray = $this->m_oDirectory->getFiles();
 
@@ -299,7 +356,14 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         $this->writeMetaInformation($this->metaInformationWebfile);
     }
 
-    private function normalizeFile(MFile $file, $useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
+	/**
+	 * @param MFile $file
+	 * @param bool  $useHumanReadableTimestamps
+	 * @param bool  $saveThumbnailsForImages
+	 *
+	 * @throws MWebfilesFrameworkException
+	 */
+	private function normalizeFile(MFile $file, $useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
         $webfile = $this->transformFileIntoWebfile($file);
 
         $timestamp = null;
@@ -332,10 +396,14 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
-    /**
-     * Checks if filename was normalized with a regex:
-     * http://www.phpliveregex.com/p/imN
-     */
+	/**
+	 * Checks if filename was normalized with a regex:
+	 * http://www.phpliveregex.com/p/imN
+	 *
+	 * @param MFile $file
+	 *
+	 * @return false|int
+	 */
     private function isFilenameNormalized(MFile $file) {
         //
         return preg_match("/(\d*)_wf_(.*[.].*)/", $file->getName(), $output_array);
@@ -371,12 +439,21 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $file->exists();
     }
 
-    private function readMetaInformation() {
+	/**
+	 * @return MWebfile|null
+	 * @throws MWebfilesFrameworkException
+	 */
+	private function readMetaInformation() {
         $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
         return $this->transformFileIntoWebfile($file,true);
     }
 
-    private function writeMetaInformation(MDirectoryDatastoreMetainformation $metainformation) {
+	/**
+	 * @param MDirectoryDatastoreMetainformation $metainformation
+	 *
+	 * @throws \ReflectionException
+	 */
+	private function writeMetaInformation(MDirectoryDatastoreMetainformation $metainformation) {
         $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
         $file->writeContent($metainformation->marshall(),true);
     }
