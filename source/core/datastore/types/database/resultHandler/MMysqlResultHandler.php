@@ -33,9 +33,6 @@ class MMysqlResultHandler implements MIResultHandler
      */
     public function fetchNextResultObject() {
         $nextResultObject = $this->result->fetch_object();
-        if ( $nextResultObject ) {
-
-        }
         return $nextResultObject;
     }
 

@@ -54,6 +54,8 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	 * Returns a webfiles stream with all webfiles from
 	 * the actual datastore.
 	 * @return MWebfileStream
+	 * @throws MDatastoreException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 */
 	public function getWebfilesAsStream()
 	{
@@ -91,6 +93,10 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 		return $client;
 	}
 
+	/**
+	 * @return Google_Client
+	 * @throws MDatastoreException
+	 */
 	public function getClientWithToken() {
 
 		$client = $this->getClient();
@@ -111,7 +117,7 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	}
 
 	/**
-	 * @param $client
+	 * @param $client Google_Client
 	 */
 	public function refreshAccessTokenIfExpired($client)
 	{

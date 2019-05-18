@@ -81,7 +81,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $metadataTableName = $this->databaseConnection->getTablePrefix() . "metadata";
 
-        if (!$this->tableExistsByTablename($metadataTableName)) {
+        if (!$this->tableExists($metadataTableName)) {
             return $webfilesResult;
         }
 
@@ -137,8 +137,8 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function tableExistsByWebfile(MWebfile $webfile)
     {
 
-        $tableName = $this->resolveTableNameFromWebfile($webfile);
-        return $this->tableExistsByTablename($tableName);
+        $tableName = $this->resolveTableNameForWebfile($webfile);
+        return $this->tableExists($tableName);
     }
 
     /**
@@ -148,7 +148,7 @@ class MDatabaseDatastore extends MAbstractDatastore
      * @param MWebfile $webfile
      * @return string
      */
-    public function resolveTableNameFromWebfile(MWebfile $webfile)
+    public function resolveTableNameForWebfile(MWebfile $webfile)
     {
 
         $classname = $webfile::$m__sClassName;
@@ -169,7 +169,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @return bool
 	 * @throws MWebfilesFrameworkException
 	 */
-    private function tableExistsByTablename($tableName)
+    private function tableExists($tableName)
     {
         $allTableNames = $this->getAllTableNames();
         return in_array($tableName,$allTableNames);
@@ -219,7 +219,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
     {
 
-        $tableName = $this->resolveTableNameFromWebfile($webfile);
+        $tableName = $this->resolveTableNameForWebfile($webfile);
 
         // CREATE METADATA
         if (!$this->metadataExist($tableName)) {
@@ -307,7 +307,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
     private function metadataExist($tablename)
     {
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+        if (! $this->metadataTableExists() ) {
             $this->createMetadataTable();
             return false;
         }
@@ -358,8 +358,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function addMetadata($className, $version, $tablename)
     {
 
-        if (!$this->tableExistsByTablename(
-            $this->databaseConnection->getTablePrefix() . "metadata")) {
+        if (! $this->metadataTableExists() ) {
 
             $this->createMetadataTable();
         }
@@ -382,7 +381,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false)
     {
 
-        $tablename = $this->resolveTableNameFromWebfile($webfile);
+        $tablename = $this->resolveTableNameForWebfile($webfile);
 
         if (!$this->metadataExist($tablename)) {
             $this->addMetadata($webfile::$m__sClassName, '1', $tablename);
@@ -452,7 +451,7 @@ class MDatabaseDatastore extends MAbstractDatastore
             return false;
         }
 
-        $tableName = $this->resolveTableNameFromWebfile($webfile);
+        $tableName = $this->resolveTableNameForWebfile($webfile);
 
         $query = $this->databaseConnection->queryAndHandle(
             "SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
@@ -513,7 +512,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
 
         $query = "UPDATE 
-        			" . $this->resolveTableNameFromWebfile($webfile) . " 
+        			" . $this->resolveTableNameForWebfile($webfile) . " 
         		 SET 
         			" . $setValuesString . " 
         		 WHERE 
@@ -619,12 +618,15 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
     public function resolveClassNameFromTableName($tableName)
     {
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+        if (! $this->metadataTableExists() ) {
             $this->createMetadataTable();
         }
         $metadata = $this->resolveMetadataForTablename($tableName);
         return $metadata->classname;
     }
+
+
+
 
 	/**
 	 * @param $tablename
@@ -635,7 +637,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function resolveMetadataForTablename($tablename)
     {
 
-        if (!$this->tableExistsByTablename($this->databaseConnection->getTablePrefix() . "metadata")) {
+        if ( ! $this->metadataTableExists() ) {
             $this->createMetadataTable();
         }
 
@@ -665,7 +667,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         if ($this->tableExistsByWebfile($template)) {
 
-            $tableName = $this->resolveTableNameFromWebfile($template);
+            $tableName = $this->resolveTableNameForWebfile($template);
 
             $sorting = $this->translateTemplateIntoSorting($template);
             $condition = $this->translateTemplateIntoCondition($template);
@@ -734,7 +736,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                                 $oSubAttributeName = $oSubAttribute->getName();
                                 if (MWebfile::isSimpleDatatype($oSubAttributeName)) {
 
-                                    $sDatabaseFieldName = $this->resolveTableNameFromWebfile(
+                                    $sDatabaseFieldName = $this->resolveTableNameForWebfile(
                                         new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
                                     $targetWebfile->$sAttributeName->$oSubAttributeName = $databaseResultObject->$sDatabaseFieldName;
                                 }
@@ -818,7 +820,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         if ($this->tableExistsByWebfile($webfile)) {
 
             // determine table with webfile type
-            $tableName = $this->resolveTableNameFromWebfile($webfile);
+            $tableName = $this->resolveTableNameForWebfile($webfile);
 
             // translate template into a condition
             $condition = $this->translateTemplateIntoCondition($webfile);
@@ -904,7 +906,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
     private function addMetadataNormalizationEntry($webfileid, $time, $classname) {
 
-        if (!$this->tableExistsByTablename(
+        if (!$this->tableExists(
             $this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
 
             $this->createMetadataNormalizationTable();
@@ -956,4 +958,12 @@ class MDatabaseDatastore extends MAbstractDatastore
             $this->databaseConnection->query("DROP TABLE " . $tablename);
         }
     }
+
+	/**
+	 * @return bool
+	 * @throws MWebfilesFrameworkException
+	 */
+	public function metadataTableExists() {
+		return $this->tableExists( $this->databaseConnection->getTablePrefix() . "metadata" );
+	}
 }
