@@ -157,7 +157,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
             $webfile = $this->readFileAsWebfile($file);
             if ( $webfile != null ) {
-                $webfileArray = $this->addWebfileSafetyToArray($item,$webfileArray);
+                $webfileArray = $this->addWebfileSafetyToArray($webfile,$webfileArray);
             }
         }
 
