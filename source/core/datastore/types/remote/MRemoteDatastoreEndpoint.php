@@ -85,11 +85,31 @@ class MRemoteDatastoreEndpoint {
 		} else {
 			?>
             <h1>Remote datastore</h1>
-            <p>Remote datastore supports get and post method of http protocol. To query the datastore you have to to pass the </p>
+            <p>You are connected to a webfile remote datastore but you did not pass any parameter.</p>
+            <p>Remote datastores supports get and post method of http protocol. To query the datastore you have to to pass the following parameters:</p>
             <table>
-
-
+                <tr>
+                    <th>Parameters</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>method: retrieveWebfiles, </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>method: searchByTemplate, template: </td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>method: storeWebfile</td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>method: deleteByTemplate</td>
+                    <td></td>
+                </tr>
             </table>
+            <b>Hint:</b> The class MRemoteDatastore helps you to connect to an MRemoteDatastoreEndpoint.
 			<?php
 		}
 
