@@ -1,79 +1,98 @@
 <?php
 
-namespace webfilesframework\core\datastore\types\remote;
+namespace simpleserv\webfilesframework\core\datastore\types\remote;
 
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * Handles incoming calls to access remote datastores. RemoteDatastoreEndpoint
- * encapsulates a local datastore to access data from remote.
- *
- * For example: you can encapsulate a DatabaseDatastore or an DirectoryDatastore
- * to access it from remote.
- *
- * @package webfilesframework\core\datastore\types\remote
+ * Class MRemoteDatastoreEndpoint
+ * @package simpleserv\webfilesframework\core\datastore\types\remote
  */
-class MRemoteDatastoreEndpoint
-{
-    /** @var MAbstractDatastore  */
-    private $m_oDatastore;
+class MRemoteDatastoreEndpoint {
+	/** @var MAbstractDatastore */
+	private $m_oDatastore;
 
-    public static $METHOD_NAME_SEARCH_BY_TEMPLATE = "searchByTemplate";
-    public static $METHOD_NAME_STORE_WEBFILE = "storeWebfile";
-    public static $METHOD_NAME_DELETE_BY_TEMPLATE = "deleteByTemplate";
+	public static $METHOD_NAME_SEARCH_BY_TEMPLATE = "searchByTemplate";
+	public static $METHOD_NAME_STORE_WEBFILE = "storeWebfile";
+	public static $METHOD_NAME_DELETE_BY_TEMPLATE = "deleteByTemplate";
 
-    public static $PAYLOAD_FIELD_NAME_WEBFILE = "webfile";
-    public static $PAYLOAD_FIELD_NAME_TEMPLATE = "template";
-    public static $PAYLOAD_FIELD_NAME_METHOD = "method";
+	public static $PAYLOAD_FIELD_NAME_WEBFILE = "webfile";
+	public static $PAYLOAD_FIELD_NAME_TEMPLATE = "template";
+	public static $PAYLOAD_FIELD_NAME_METHOD = "method";
 
 
-    public function __construct(MAbstractDatastore $datastore) {
-        $this->m_oDatastore = $datastore;
-    }
+	public function __construct( MAbstractDatastore $datastore ) {
+		$this->m_oDatastore = $datastore;
+	}
 
-    public function handleRemoteCall() {
+	public function issetParam( $name ) {
+		return isset( $_GET[ $name ] ) || isset( $_POST[ $name ] );
+	}
 
-        if ( isset($_POST[static::$PAYLOAD_FIELD_NAME_METHOD])) {
+	public function getParam( $name ) {
+		if ( isset( $_GET[ $name ] ) ) {
+			return $_GET[ $name ];
+		} else {
+			return $_POST[ $name ];
+		}
+	}
 
-            if (
-                $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
-                    && isset($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]) ) {
+	/**
+	 * @throws \ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 */
+	public function handleRemoteCall() {
 
-                // GET BY TEMPLATE
-                $template = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]);
+		if ( $this->issetParam( static::$PAYLOAD_FIELD_NAME_METHOD ) ) {
 
-                $webfiles = $this->m_oDatastore->searchByTemplate($template);
-                $webfilesStream = new MWebfileStream($webfiles);
+			if (
+				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
+				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) ) {
 
-            } else if (
-                $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_STORE_WEBFILE
-                    && isset($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE])) {
+				// GET BY TEMPLATE
+				$template = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_TEMPLATE ] );
 
-                // STORE
-                $webfile = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_WEBFILE]);
-                $this->m_oDatastore->storeWebfile($webfile);
+				$webfiles       = $this->m_oDatastore->searchByTemplate( $template );
+				$webfilesStream = new MWebfileStream( $webfiles );
 
-            } else if (
-                $_POST[static::$PAYLOAD_FIELD_NAME_METHOD] == static::$METHOD_NAME_DELETE_BY_TEMPLATE
-                    && isset($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE])) {
+			} else if (
+				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_STORE_WEBFILE
+				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_WEBFILE ) ) {
 
-                // DELETE
-                $webfile = MWebfile::staticUnmarshall($_POST[static::$PAYLOAD_FIELD_NAME_TEMPLATE]);
-                $this->m_oDatastore->deleteByTemplate($webfile);
+				// STORE
+				$webfile = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_WEBFILE ] );
+				$this->m_oDatastore->storeWebfile( $webfile );
 
-            } else {
-                $webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
-            }
+			} else if (
+				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_DELETE_BY_TEMPLATE
+				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) ) {
 
-        } else {
-            $webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
-        }
-        if ( isset($webfilesStream) ) {
-            echo $webfilesStream->getXML();
-        }
+				// DELETE
+				$webfile = MWebfile::staticUnmarshall( getParam(static::$PAYLOAD_FIELD_NAME_TEMPLATE) );
+				$this->m_oDatastore->deleteByTemplate( $webfile );
 
-    }
+			} else {
+				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
+			}
+
+		}
+
+		if ( isset( $webfilesStream ) ) {
+			echo $webfilesStream->getXML();
+		} else {
+			?>
+            <h1>Remote datastore</h1>
+            <p>Remote datastore supports get and post method of http protocol. To query the datastore you have to to pass the </p>
+            <table>
+
+
+            </table>
+			<?php
+		}
+
+	}
 
 }
