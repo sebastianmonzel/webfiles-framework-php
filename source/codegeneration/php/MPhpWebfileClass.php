@@ -2,7 +2,7 @@
 
 namespace webfilesframework\codegeneration\php;
 
-use webfilesframework\codegeneration\MAbstractClass;
+use webfilesframework\codegeneration\general\MAbstractClass;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**

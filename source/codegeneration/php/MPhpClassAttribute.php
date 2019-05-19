@@ -2,7 +2,8 @@
 
 namespace webfilesframework\codegeneration\php;
 
-use webfilesframework\codegeneration\MAbstractClassAttribute;
+
+use webfilesframework\codegeneration\general\MAbstractClassAttribute;
 
 /**
  * description

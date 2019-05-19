@@ -26,7 +26,7 @@ class MWebfile {
     /**
      * @var string
      */
-    public static $m__sClassName;
+    public static $m__sClassName; // TODO check if get_class can be used instead - get_called_class for static methods
 
 	/**
 	 * Converts the current webfile into its xml representation.
@@ -59,30 +59,43 @@ class MWebfile {
         return $out;
     }
 
-    /**
-     * Converts the given xml into a webfile object.
-     * @param string $data xml which represents a webfile.
-     *
-     * @throws MWebfilesFrameworkException
-     */
+	/**
+	 * Converts the given xml into a webfile object.
+	 *
+	 * @param string $data xml which represents a webfile.
+	 *
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     public function unmarshall($data)
     {
         static::genericUnmarshall($data,$this);
     }
 
-    /**
-     * Converts the given xml-String into a new webfile object.
-     * @param string $xmlAsString
-     * @return MWebfile
-     * @throws MWebfilesFrameworkException
-     */
+	/**
+	 * Converts the given xml-String into a new webfile object.
+	 *
+	 * @param string $xmlAsString
+	 *
+	 * @return MWebfile
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
     public static function staticUnmarshall($xmlAsString)
     {
         return static::genericUnmarshall($xmlAsString);
     }
 
 
-    private static function genericUnmarshall($xmlAsString, &$targetObject = null) {
+	/**
+	 * @param      $xmlAsString
+	 * @param null $targetObject
+	 *
+	 * @return MWebfile
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
+	private static function genericUnmarshall($xmlAsString, &$targetObject = null) {
 
         $root = simplexml_load_string($xmlAsString);
 
@@ -126,11 +139,12 @@ class MWebfile {
         return $targetObject;
     }
 
-    /**
-     * In case of using the current webfile object for making a request
-     * on a datastore (getByTemplate()) this method helps to
-     * set the defaults for making the template request.
-     */
+	/**
+	 * In case of using the current webfile object for making a request
+	 * on a datastore (getByTemplate()) this method helps to
+	 * set the defaults for making the template request.
+	 * @throws \ReflectionException
+	 */
     public function presetForTemplateSearch()
     {
         $attributes = $this->getAttributes();
@@ -145,7 +159,13 @@ class MWebfile {
         }
     }
 
-    public function matchesTemplate(MWebfile $template) {
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @return bool
+	 * @throws \ReflectionException
+	 */
+	public function matchesTemplate(MWebfile $template) {
 
         if ( $template::$m__sClassName == static::$m__sClassName ) {
 

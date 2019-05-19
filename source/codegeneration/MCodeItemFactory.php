@@ -2,9 +2,8 @@
 
 namespace webfilesframework\codegeneration;
 
-use webfilesframework\core\codegeneration\php\MPhpClassAttribute;
-use webfilesframework\core\codegeneration\java\MJavaWebfileClass;
-use webfilesframework\core\codegeneration\php\MPhpWebfileClass;
+use webfilesframework\codegeneration\php\MPhpClassAttribute;
+use webfilesframework\codegeneration\php\MPhpWebfileClass;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -36,15 +35,15 @@ class MCodeItemFactory
 
     /**
      * @param string $programmingLanguage
-     * @return MJavaWebfileClass|MPhpWebfileClass
+     * @return MJavaClassAttribute|MPhpClassAttribute
      * @throws MWebfilesFrameworkException
      */
-    public static function createClassAttribute($programmingLanguage)
+    public static function createClassAttribute($programmingLanguage, $visibility, $name, $type)
     {
         if ($programmingLanguage == MProgrammingLanguage::PHP) {
-            return new MPhpClassAttribute();
+            return new MPhpClassAttribute($visibility, $name, $type);
         } else if ($programmingLanguage == MProgrammingLanguage::JAVA) {
-            return new MJavaClassAttribute();
+            return new MJavaClassAttribute($visibility, $name, $type);
         } else {
             throw new MWebfilesFrameworkException("Unknown programming language: " . $programmingLanguage);
         }

@@ -20,7 +20,13 @@ class MWebfileClassGeneration
     }
 
 
-    public function generateCodeForProgrammingLangugage(MProgrammingLanguage $programmingLanguage)
+	/**
+	 * @param MProgrammingLanguage $programmingLanguage
+	 *
+	 * @return string
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 */
+	public function generateCodeForProgrammingLangugage(MProgrammingLanguage $programmingLanguage)
     {
         $abstractClass = MCodeItemFactory::createClass($programmingLanguage);
         return $abstractClass->generateCode();

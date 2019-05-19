@@ -1,6 +1,6 @@
 <?php
 
-namespace webfilesframework\codegeneration;
+namespace webfilesframework\codegeneration\general;
 
 /**
  * description
