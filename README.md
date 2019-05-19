@@ -25,7 +25,7 @@ developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
 Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<br />
 Documentation: http://sebastianmonzel.github.io/webfiles-framework-doc/<br />
-Packagist: https://packagist.org/packages/simpleserv/webfiles-framework
+Packagist: https://packagist.org/packages/webfiles-framework/framework
 
 ### What is webfiles framework for?
 The webfiles framework manages access to database system (creates tables on the fly and 
