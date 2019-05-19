@@ -26,7 +26,7 @@ class MWebfile {
     /**
      * @var string
      */
-    public static $m__sClassName; // TODO check if get_class can be used instead - get_called_class for static methods
+    //public static $m__sClassName; // TODO check if get_class can be used instead - get_called_class for static methods
 
 	/**
 	 * Converts the current webfile into its xml representation.
@@ -43,7 +43,7 @@ class MWebfile {
         if ($usePreamble) {
             $out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
         }
-        $out .= "<object classname=\"" . static::$m__sClassName . "\">\n";
+        $out .= "<object classname=\"" . static::classname() . "\">\n";
         foreach ($attributes as $attribute) {
 
             $attributeName = $attribute->getName();
@@ -167,7 +167,7 @@ class MWebfile {
 	 */
 	public function matchesTemplate(MWebfile $template) {
 
-        if ( $template::$m__sClassName == static::$m__sClassName ) {
+        if ( $template::classname() == static::classname() ) {
 
             $attributes = $template->getAttributes(true);
 
@@ -238,7 +238,7 @@ class MWebfile {
 	 */
     public static function getAttributes($simpleDatatypesOnly = false)
     {
-        $oSelfReflection = new \ReflectionClass(static::$m__sClassName);
+        $oSelfReflection = new \ReflectionClass(static::classname());
         $oPropertyArray = $oSelfReflection->getProperties(
             \ReflectionProperty::IS_PUBLIC |
             \ReflectionProperty::IS_PROTECTED |
@@ -272,7 +272,7 @@ class MWebfile {
 
         $returnValue = "<classinformation>\n";
         $returnValue .= "\t<author>simpleserv.de</author>\n";
-        $returnValue .= "\t<classname>" . static::$m__sClassName . "</classname>\n";
+        $returnValue .= "\t<classname>" . static::classname() . "</classname>\n";
         $returnValue .= "\t<attributes>\n";
 
         $attributes = static::getAttributes();
@@ -397,6 +397,10 @@ class MWebfile {
     public function getGeograficPosition()
     {
         return NULL;
+    }
+
+    public static function classname() {
+    	return get_called_class();
     }
 
 }

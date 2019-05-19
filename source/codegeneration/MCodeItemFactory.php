@@ -33,11 +33,15 @@ class MCodeItemFactory
         }
     }
 
-    /**
-     * @param string $programmingLanguage
-     * @return MJavaClassAttribute|MPhpClassAttribute
-     * @throws MWebfilesFrameworkException
-     */
+	/**
+	 * @param string $programmingLanguage
+	 * @param        $visibility
+	 * @param        $name
+	 * @param        $type
+	 *
+	 * @return MJavaClassAttribute|MPhpClassAttribute
+	 * @throws MWebfilesFrameworkException
+	 */
     public static function createClassAttribute($programmingLanguage, $visibility, $name, $type)
     {
         if ($programmingLanguage == MProgrammingLanguage::PHP) {

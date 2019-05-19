@@ -16,7 +16,15 @@ class MWebfileStream
 
     private $webfiles;
 
-    public function __construct($input)
+	/**
+	 * MWebfileStream constructor.
+	 *
+	 * @param $input
+	 *
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
+	public function __construct($input)
     {
 
         if (is_array($input)) {
@@ -32,10 +40,13 @@ class MWebfileStream
         }
     }
 
-    /**
-     * @param array $webfiles
-     */
-    private function validateWebfilesArray($webfiles) {
+
+	/**
+	 * @param $webfiles
+	 *
+	 * @throws MWebfilesFrameworkException
+	 */
+	private function validateWebfilesArray($webfiles) {
 
         foreach ($webfiles as $webfile) {
             if ( ! $webfile instanceof MWebfile) {
@@ -58,7 +69,14 @@ class MWebfileStream
         return $xml;
     }
 
-    private function unmarshall($input)
+	/**
+	 * @param $input
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
+	private function unmarshall($input)
     {
 
         $webfilesResultArray = array();

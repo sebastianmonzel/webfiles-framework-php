@@ -151,7 +151,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     public function resolveTableNameForWebfile(MWebfile $webfile)
     {
 
-        $classname = $webfile::$m__sClassName;
+        $classname = $webfile::classname();
 
         if (strpos($classname, "\\") != -1) { // check if classname is given with namespace
 
@@ -223,7 +223,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         // CREATE METADATA
         if (!$this->metadataExist($tableName)) {
-            $this->addMetadata($webfile::$m__sClassName, '1', $tableName);
+            $this->addMetadata($webfile::classname(), '1', $tableName);
         }
 
         $attributeArray = $webfile->getAttributes();
@@ -384,7 +384,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         $tablename = $this->resolveTableNameForWebfile($webfile);
 
         if (!$this->metadataExist($tablename)) {
-            $this->addMetadata($webfile::$m__sClassName, '1', $tablename);
+            $this->addMetadata($webfile::classname(), '1', $tablename);
         }
 
 
@@ -892,7 +892,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         /** @var MWebfile $webfile */
         foreach ($webfiles as $webfile) {
             $this->addMetadataNormalizationEntry(
-                $webfile->getId(), $webfile->getTime(), $webfile::$m__sClassName);
+                $webfile->getId(), $webfile->getTime(), $webfile::classname());
         }
 
     }
