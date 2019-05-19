@@ -34,7 +34,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private $databaseConnection;
 
     const WEBFILEID = "webfileid";
-    const TIME = "time";
+    const TIME      = "time";
     const CLASSNAME = "classname";
 
     public function __construct(MDatabaseConnection $databaseConnection)
@@ -69,6 +69,8 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 	/**
+	 * Returns als webfiles defined in datastore as array. (without looking for type of webfile)
+	 *
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
 	 * @return array
 	 * @throws MWebfilesFrameworkException
@@ -77,12 +79,12 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
     public function getWebfilesAsArray()
     {
-        $webfilesResult = array();
+        $webfilesArray = array();
 
         $metadataTableName = $this->databaseConnection->getTablePrefix() . "metadata";
 
         if (!$this->tableExists($metadataTableName)) {
-            return $webfilesResult;
+            return $webfilesArray;
         }
 
         $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $metadataTableName);
@@ -93,10 +95,10 @@ class MDatabaseDatastore extends MAbstractDatastore
             $webfilesForTable = $this->getWebfilesByTableName($result->tablename, $result->classname);
 
             foreach ( $webfilesForTable as $webfile ) {
-                array_push($webfilesResult,$webfile);
+                array_push($webfilesArray, $webfile);
             }
         }
-        return $webfilesResult;
+        return $webfilesArray;
     }
 
 	/**

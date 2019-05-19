@@ -2,6 +2,7 @@
 
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\system\MFile;
 
 /**
  * @covers webfilesframework\core\datasystem\file\format\MWebfile
@@ -45,7 +46,7 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
     public function testUnmarshallingAndMarshallingWebfile() {
 
         // UNMARSHALL
-        $file = new \webfilesframework\core\datasystem\file\system\MFile(
+        $file = new MFile(
             __DIR__ . '/../../../../../resources/folderDatastore/sampleWebfile1.webfile');
         $sample = MWebfile::staticUnmarshall($file->getContent());
 
