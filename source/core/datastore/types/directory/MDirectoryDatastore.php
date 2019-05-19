@@ -155,8 +155,8 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         /** @var MWebfile $item */
         foreach ($files as $file) {
 
-            $item = $this->readFileAsWebfile($file);
-            if ( $item != null ) {
+            $webfile = $this->readFileAsWebfile($file);
+            if ( $webfile != null ) {
                 $webfileArray = $this->addWebfileSafetyToArray($item,$webfileArray);
             }
         }
@@ -196,7 +196,6 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             $item = MWebfile::staticUnmarshall($fileContent);
 
         } else {
-            // TODO write warn to log that file is ignored
             return null;
         }
 
