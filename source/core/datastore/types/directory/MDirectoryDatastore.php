@@ -211,6 +211,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         return $item;
     }
 
+	/**
+	 * @param MFile    $file
+	 * @param MWebfile $webfile
+	 *
+	 * @throws \ReflectionException
+	 */
 	private function writeWebfileAsFile(MFile $file, MWebfile $webfile)
 	{
 		$file->writeContent($webfile->marshall(),true);
