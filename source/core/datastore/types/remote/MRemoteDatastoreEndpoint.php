@@ -85,7 +85,7 @@ class MRemoteDatastoreEndpoint {
 		} else {
 			?>
             <h1>Remote datastore</h1>
-            <p>Success: You are connected to a webfile remote datastore but you did not pass any parameter or the right ones.</p>
+            <p>Success: You are connected to a webfile remote datastore but you did not pass any parameter or not the right ones.</p>
             <p>Remote datastores supports parameter submission via get and via post method of http protocol. To query the datastore you have to to pass the following parameters:</p>
             <table border="1">
                 <tr>
