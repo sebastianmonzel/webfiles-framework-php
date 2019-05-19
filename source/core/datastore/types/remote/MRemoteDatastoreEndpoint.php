@@ -85,31 +85,33 @@ class MRemoteDatastoreEndpoint {
 		} else {
 			?>
             <h1>Remote datastore</h1>
-            <p>You are connected to a webfile remote datastore but you did not pass any parameter.</p>
-            <p>Remote datastores supports get and post method of http protocol. To query the datastore you have to to pass the following parameters:</p>
-            <table>
+            <p>Success: You are connected to a webfile remote datastore but you did not pass any parameter or the right ones.</p>
+            <p>Remote datastores supports parameter submission via get and via post method of http protocol. To query the datastore you have to to pass the following parameters:</p>
+            <table border="1">
                 <tr>
                     <th>Parameters</th>
                     <th>Description</th>
                 </tr>
                 <tr>
-                    <td>method: retrieveWebfiles, </td>
-                    <td></td>
+                    <td><b>method</b>: retrieveWebfiles</td>
+                    <td>retrieves all templates.</td>
                 </tr>
                 <tr>
-                    <td>method: searchByTemplate, template: </td>
-                    <td></td>
+                    <td><b>method</b>: searchByTemplate, <b>template</b>: template with criteria to search for</td>
+                    <td>retrieves the webfiles matching the template criteria.</td>
                 </tr>
                 <tr>
-                    <td>method: storeWebfile</td>
-                    <td></td>
+                    <td><b>method</b>: "storeWebfile", <b>webfile</b>: the webfile to be stored.</td>
+                    <td>stores the submitted </td>
                 </tr>
                 <tr>
-                    <td>method: deleteByTemplate</td>
-                    <td></td>
+                    <td><b>method</b>: "deleteByTemplate", <b>template</b>: template with criteria to delete</td>
+                    <td>deletes the webfiles matching the template criteria.</td>
                 </tr>
             </table>
-            <b>Hint:</b> The class MRemoteDatastore helps you to connect to an MRemoteDatastoreEndpoint.
+            <p>
+                <b>Hint:</b> The class MRemoteDatastore helps you to connect to an MRemoteDatastoreEndpoint like this.
+            </p>
 			<?php
 		}
 
