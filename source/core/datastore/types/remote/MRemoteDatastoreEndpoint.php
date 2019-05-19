@@ -93,7 +93,7 @@ class MRemoteDatastoreEndpoint {
                     <th>Description</th>
                 </tr>
                 <tr>
-                    <td><b>method</b>: retrieveWebfiles</td>
+                    <td><b>method</b>: <a href="?method=retrieveWebfiles">retrieveWebfiles</a></td>
                     <td>retrieves all templates.</td>
                 </tr>
                 <tr>
