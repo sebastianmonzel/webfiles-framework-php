@@ -1,6 +1,6 @@
 <?php
 
-namespace simpleserv\webfilesframework\core\datastore\types\remote;
+namespace webfilesframework\core\datastore\types\remote;
 
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\webfilestream\MWebfileStream;
@@ -8,7 +8,7 @@ use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * Class MRemoteDatastoreEndpoint
- * @package simpleserv\webfilesframework\core\datastore\types\remote
+ * @package webfilesframework\core\datastore\types\remote
  */
 class MRemoteDatastoreEndpoint {
 	/** @var MAbstractDatastore */
