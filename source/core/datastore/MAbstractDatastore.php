@@ -17,7 +17,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-abstract class MAbstractDatastore extends MWebfile
+abstract class MAbstractDatastore
 {
 
     /**
@@ -37,10 +37,11 @@ abstract class MAbstractDatastore extends MWebfile
      * decide if implementing sorting by timestamp this function sets
      * the sorting to true or false.
      *
-     * @param $time
+     * @param $timestamp
+     *
      * @throws MDatastoreException
      */
-    public function getNextWebfileForTimestamp($time) {
+    public function getNextWebfileForTimestamp($timestamp) {
         throw new MDatastoreException("datastore cannot be sorted by timestamp.");
     }
 
@@ -83,12 +84,14 @@ abstract class MAbstractDatastore extends MWebfile
     public abstract function searchByTemplate(MWebfile $template);/** @noinspection PhpUnusedParameterInspection */
 
 
-    /**
-     *
-     * @param array $webfiles
-     * @param MWebfile $template
-     * @return array
-     */
+	/**
+	 *
+	 * @param array    $webfiles
+	 * @param MWebfile $template
+	 *
+	 * @return array
+	 * @throws \ReflectionException
+	 */
     protected function filterWebfilesArrayByTemplate($webfiles, MWebfile $template)
     {
 
@@ -156,23 +159,26 @@ abstract class MAbstractDatastore extends MWebfile
         }
     }
 
-    /**
-     * Resolves a datastore which is localized in the folder
-     * <b>"./custom/datastore"</b> according to the given id.<br />
-     * Every file situated in the datastore folder will be converted
-     * to a webfile an the list of webfiles will be used to compare
-     * the id on each datastore in the folder.
-     *
-     * @param string $datastoreId
-     * @throws MDatastoreException will be thrown if no datastore with
-     * the given id is available.
-     * @return MWebfile returns the found datastore
-     */
+	/**
+	 * Resolves a datastore which is localized in the folder
+	 * <b>"./custom/datastore"</b> according to the given id.<br />
+	 * Every file situated in the datastore folder will be converted
+	 * to a webfile an the list of webfiles will be used to compare
+	 * the id on each datastore in the folder.
+	 *
+	 * @param string $datastoreId
+	 *
+	 * @return MWebfile returns the found datastore
+	 * @throws MDatastoreException will be thrown if no datastore with*@throws
+	 *                             \webfilesframework\MWebfilesFrameworkException the given id is available.
+	 * @throws \ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 */
     public static function resolveCustomDatastoreById($datastoreId)
     {
 
         $datastoreDirectory = new MDirectory("./custom/datastore/");
-        $datastoreHolder = new MDirectoryDatastore($datastoreDirectory, false);
+        $datastoreHolder = new MDirectoryDatastore($datastoreDirectory);
 
         $webfiles = $datastoreHolder->getWebfilesAsArray();
 
@@ -192,10 +198,12 @@ abstract class MAbstractDatastore extends MWebfile
         return $selectedWebfile;
     }
 
-    /**
-     * @param $webfilesArray
-     * @return array
-     */
+	/**
+	 * @param $webfilesArray
+	 *
+	 * @return array
+	 * @throws \ReflectionException
+	 */
     public static function extractDatasetsFromWebfilesArray($webfilesArray)
     {
         $webfilesDatasets = array();

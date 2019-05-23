@@ -557,19 +557,19 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 	/**
-	 * @param $time
+	 * @param $timestamp
 	 *
 	 * @return mixed|null
 	 * @throws MWebfilesFrameworkException
 	 * @throws \ReflectionException
 	 */
-    public function getNextWebfileForTimestamp($time)
+    public function getNextWebfileForTimestamp($timestamp)
     {
 
         $handler = $this->databaseConnection->queryAndHandle(
             "SELECT webfileid,time,classname FROM " .
             $this->databaseConnection->getTablePrefix() . "metadatanormalization" .
-            "WHERE time > " . $time . " ORDER BY time DESC LIMIT 1");// TODO prevent sql injection
+            "WHERE time > " . $timestamp . " ORDER BY time DESC LIMIT 1");// TODO prevent sql injection
 
         if ( $handler->getResultSize() == 0 ) {
             return null;

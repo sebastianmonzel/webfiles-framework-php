@@ -4,6 +4,11 @@ namespace webfilesframework\core\datastore\types\database;
 
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
+/**
+ * TODO extract as test only class
+ * Class MSampleWebfile
+ * @package webfilesframework\core\datastore\types\database
+ */
 class MSampleWebfile extends MWebfile
 {
 

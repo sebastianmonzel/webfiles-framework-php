@@ -73,7 +73,7 @@ class MRemoteDatastore extends MAbstractDatastore
         // TODO
     }
 
-    public function getNextWebfileForTimestamp($time)
+    public function getNextWebfileForTimestamp($timestamp)
     {
         // TODO: Implement getNextWebfileForTimestamp() method.
         return null;

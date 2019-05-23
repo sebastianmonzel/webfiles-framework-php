@@ -8,7 +8,6 @@ class MDirectoryDatastoreMetainformation extends MWebfile
 {
     /** @var string */
     private $m_sTimezone;
-
     /** @var bool */
     private $m_bIsNormalized;
     /** @var bool */

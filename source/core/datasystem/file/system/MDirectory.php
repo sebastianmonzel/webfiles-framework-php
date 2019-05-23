@@ -3,8 +3,6 @@
 namespace webfilesframework\core\datasystem\file\system;
 
 
-use webfilesframework\core\datasystem\file\format\MWebfile;
-
 /**
  * Encapsulates the access on directories.
  *
@@ -23,10 +21,11 @@ class MDirectory extends MFile
     }
 
 
-    /**
-     * Returns the names of all files in the directory as an array.
-     * @return array array with file objects
-     */
+	/**
+	 * Returns the names of all files in the directory as an array.
+	 * @return array array with file objects
+	 * @throws \Exception
+	 */
     public function getFiles()
     {
 
@@ -36,7 +35,9 @@ class MDirectory extends MFile
             throw new \Exception("file '" . $this->m_sPath . "' does not exist.");
         }
 
-        if ($oDirectoryHandle = opendir($this->m_sPath)) {
+	    $filewebfiles = array();
+
+	    if ($oDirectoryHandle = opendir($this->m_sPath)) {
             while (false !== ($filename = readdir($oDirectoryHandle))) {
                 if ($filename != "." && $filename != ".." && (!is_dir($this->m_sPath . "/" . $filename))) {
 	                array_push($filenames, $filename);
@@ -44,21 +45,20 @@ class MDirectory extends MFile
             }
 	        asort($filenames);
 
-	        $filewebfiles = array();
 	        foreach ($filenames as $filename) {
 		        $filewebfile = new MFile($this->getPath() . "/" . $filename);
 		        array_push($filewebfiles, $filewebfile);
 	        }
-	        return $filewebfiles;
         }
-
-
+	    return $filewebfiles;
     }
 
-    /**
-     * @param $count
-     * @return array
-     */
+	/**
+	 * @param $count
+	 *
+	 * @return array
+	 * @throws \Exception
+	 */
     public function getLatestFiles($count)
     {
 
@@ -67,10 +67,11 @@ class MDirectory extends MFile
         return $latestFilesArray;
     }
 
-    /**
-     * Returns the names of all files in the directory as an array.
-     * @return array with filenames
-     */
+	/**
+	 * Returns the names of all files in the directory as an array.
+	 * @return array with filenames
+	 * @throws \Exception
+	 */
     public function getFileNames()
     {
 

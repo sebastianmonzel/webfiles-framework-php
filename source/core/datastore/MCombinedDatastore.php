@@ -27,7 +27,7 @@ class MCombinedDatastore extends MAbstractDatastore
         return true;
     }
 
-    public function getNextWebfileForTimestamp($time)
+    public function getNextWebfileForTimestamp($timestamp)
     {
         // nothing todo
     }

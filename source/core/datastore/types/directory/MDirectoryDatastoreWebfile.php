@@ -56,16 +56,16 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getNextWebfileForTimestamp()
 	 *
-	 * @param $time
+	 * @param $timestamp
 	 *
 	 * @return MWebfile|null
 	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
-    public function getNextWebfileForTimestamp($time)
+    public function getNextWebfileForTimestamp($timestamp)
     {
         $this->initDatastore();
-        return $this->directoryDatastore->getNextWebfileForTimestamp($time);
+        return $this->directoryDatastore->getNextWebfileForTimestamp($timestamp);
     }
 
 	/**

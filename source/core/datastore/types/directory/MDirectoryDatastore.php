@@ -102,6 +102,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @return array
 	 * @throws MWebfilesFrameworkException
 	 * @throws \ReflectionException
+	 * @throws \Exception
 	 */
 	public function getLatestWebfiles($count = 5)
     {
@@ -114,12 +115,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
     }
 
 	/**
-	 * @param int $time
+	 * @param int $timestamp
 	 *
 	 * @return MWebfile|null
 	 * @throws MWebfilesFrameworkException
 	 */
-    public function getNextWebfileForTimestamp($time)
+    public function getNextWebfileForTimestamp($timestamp)
     {
 
         if (! $this->metaInformationWebfile->isNormalized() ) {
@@ -131,7 +132,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         ksort($webfiles);
 
         foreach ($webfiles as $key => $webfile) {
-            if ($key > $time) {
+            if ( $key > $timestamp) {
                 return $webfile;
             }
         }
