@@ -52,11 +52,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         return false;
     }
 
-    public function getTime()
-    {
-        return NULL;
-    }
-
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
 	 * @return MWebfileStream
