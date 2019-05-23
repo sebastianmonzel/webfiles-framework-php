@@ -53,7 +53,6 @@ class Contact extends MWebfile
     private $m_sLastname;
     private $m_sCity;
 
-    public static $m__sClassName = __CLASS__;
     
     public function setFirstname($m_sFirstname)
     {

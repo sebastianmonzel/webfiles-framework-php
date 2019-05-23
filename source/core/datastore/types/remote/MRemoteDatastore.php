@@ -20,7 +20,6 @@ class MRemoteDatastore extends MAbstractDatastore
 
     private $m_sDatastoreUrl;
 
-    public static $m__sClassName = __CLASS__;
 
     public function __construct($datastoreUrl)
     {

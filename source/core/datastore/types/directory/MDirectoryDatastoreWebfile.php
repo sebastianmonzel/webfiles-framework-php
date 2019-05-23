@@ -30,8 +30,6 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
      */
     private $directoryDatastore;
 
-    public static $m__sClassName = __CLASS__;
-
 
 	/**
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::tryConnect()

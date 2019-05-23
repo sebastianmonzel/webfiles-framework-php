@@ -13,8 +13,6 @@ use webfilesframework\core\datasystem\file\format\MWebfile;
 class MMail extends MWebfile
 {
 
-    public static $m__sClassName = __CLASS__;
-
     private $m_sFrom;
     private $m_sTo;
 

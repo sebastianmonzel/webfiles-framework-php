@@ -16,7 +16,6 @@ class MDirectoryDatastoreMetainformation extends MWebfile
     /** @var bool */
     private $m_bContainsThumbnails;
 
-    public static $m__sClassName = __CLASS__;
 
     /**
      * @return string

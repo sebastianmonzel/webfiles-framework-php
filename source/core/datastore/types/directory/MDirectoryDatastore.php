@@ -33,7 +33,6 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
     /** @var MDirectory */
     private $m_oDirectory;
-    public static $m__sClassName = __CLASS__;
 
     /** @var MDirectoryDatastoreMetainformation */
     private $metaInformationWebfile;

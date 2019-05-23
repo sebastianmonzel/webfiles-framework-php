@@ -12,8 +12,6 @@ use webfilesframework\MWebfilesFrameworkException;
 class MTimestampHelper
 {
 
-    public static $m__sClassName = __CLASS__;
-
     public static function getMonthStart($month = -1, $year = -1)
     {
         if ($month == -1) {

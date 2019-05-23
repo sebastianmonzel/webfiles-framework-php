@@ -23,10 +23,6 @@ class MWebfile {
      */
     public $m_iTime;
 
-    /**
-     * @var string
-     */
-    //public static $m__sClassName; // TODO check if get_class can be used instead - get_called_class for static methods
 
 	/**
 	 * Converts the current webfile into its xml representation.

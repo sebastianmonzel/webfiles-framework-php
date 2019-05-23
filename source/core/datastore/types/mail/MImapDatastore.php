@@ -25,8 +25,6 @@ class MImapDatastore extends MAbstractDatastore
 
     private $connection;
 
-    public static $m__sClassName = __CLASS__;
-
 
     public function __construct(MMailAccount $mailAccount = null)
     {

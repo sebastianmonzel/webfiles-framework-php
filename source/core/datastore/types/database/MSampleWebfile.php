@@ -14,8 +14,6 @@ class MSampleWebfile extends MWebfile
     private $m_sPostcode;
     private $m_sCity;
 
-    public static $m__sClassName = __CLASS__;
-
     /**
      * @param mixed $m_sFirstname
      */

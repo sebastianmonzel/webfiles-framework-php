@@ -15,7 +15,6 @@ class MYoutubeVideo extends MWebfile
 
     private $m_sKey;
 
-    public static $m__sClassName = __CLASS__;
 
     public function getKey()
     {
