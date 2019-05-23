@@ -7,6 +7,7 @@ use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
+ * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
  */
 class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
     /**
