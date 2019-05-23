@@ -675,7 +675,7 @@ class MDatabaseDatastore extends MAbstractDatastore
             $condition = $this->translateTemplateIntoCondition($template);
 
             $webfileArray = $this->getWebfilesByTablename(
-                $tableName,$template::$m__sClassName,$condition,$sorting);
+                $tableName,$template::classname(),$condition,$sorting);
 
         } else {
             $this->createTable($template, false);
