@@ -19,7 +19,7 @@
 
 
 Access and describe data in a structured way. Interact with remote data.<br />
-The fascination about inweaved data.
+The fascination about interweaved data.
 
 developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
