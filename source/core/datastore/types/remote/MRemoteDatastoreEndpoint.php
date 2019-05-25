@@ -3,8 +3,8 @@
 namespace webfilesframework\core\datastore\types\remote;
 
 use webfilesframework\core\datastore\MAbstractDatastore;
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 /**
  * Class MRemoteDatastoreEndpoint

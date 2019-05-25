@@ -4,7 +4,7 @@ namespace webfilesframework\core\datastore\types\mail;
 
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datastore\MAbstractDatastore;
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datasystem\file\system\MFile;
 use webfilesframework\core\datastore\MISingleDatasourceDatastore;
@@ -71,9 +71,11 @@ class MImapDatastore extends MAbstractDatastore
         return null;
     }
 
-    /**
-     * @return MWebfileStream
-     */
+	/**
+	 * @return MWebfileStream
+	 * @throws \ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 */
     public function getWebfilesAsStream()
     {
 

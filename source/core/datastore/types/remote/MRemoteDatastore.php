@@ -4,8 +4,8 @@ namespace webfilesframework\core\datastore\types\remote;
 
 
 use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\io\request\MPostHttpRequest;
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**

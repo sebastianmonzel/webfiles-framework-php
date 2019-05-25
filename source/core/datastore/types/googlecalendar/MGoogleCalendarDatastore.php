@@ -10,8 +10,8 @@ use Google_Service_Calendar_EventDateTime;
 use webfilesframework\core\datastore\MAbstractCachableDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MISingleDatasourceDatastore;
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 
 class MGoogleCalendarDatastore extends MAbstractCachableDatastore
@@ -56,6 +56,7 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	 * @return MWebfileStream
 	 * @throws MDatastoreException
 	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
 	public function getWebfilesAsStream()
 	{

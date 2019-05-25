@@ -3,8 +3,8 @@
 namespace webfilesframework\core\datastore;
 
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
 use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**

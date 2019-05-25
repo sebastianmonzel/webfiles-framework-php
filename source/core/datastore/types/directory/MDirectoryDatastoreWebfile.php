@@ -5,7 +5,7 @@ namespace webfilesframework\core\datastore\types\directory;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
 
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datastore\MAbstractDatastore;
 
@@ -72,6 +72,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsStream()
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
     public function getWebfilesAsStream()
     {
@@ -98,6 +99,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @return array
 	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \ReflectionException
 	 */
     public function getLatestWebfiles($count = 5)
     {

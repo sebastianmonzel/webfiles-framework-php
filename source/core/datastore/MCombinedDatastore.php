@@ -4,7 +4,7 @@ namespace webfilesframework\core\datastore;
 
 
 use webfilesframework\core\datasystem\file\format\MWebfile;
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 /**
  * Combines different datastores in one datastore together.

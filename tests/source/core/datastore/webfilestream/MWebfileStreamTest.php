@@ -1,9 +1,10 @@
 <?php
 
-use webfilesframework\core\datastore\webfilestream\MWebfileStream;
+use webfilesframework\core\datasystem\file\format\MWebfileStream;
+
 
 /**
- * @covers webfilesframework\core\datastore\webfilestream\MWebfileStream
+ * @covers webfilesframework\core\datasystem\file\format\MWebfileStream
  */
 class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     /**
@@ -49,7 +50,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
 
     /**
-     * @covers webfilesframework\core\datastore\webfilestream\MWebfileStream::getXML
+     * @covers webfilesframework\core\datasystem\file\format\MWebfileStream:getXML
      */
     public function testGetXML()
     {
@@ -63,7 +64,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     }
     
     /**
-     * @covers webfilesframework\core\datastore\webfilestream\MWebfileStream::getWebfiles
+     * @covers webfilesframework\core\datasystem\file\format\MWebfileStream::getWebfiles
      */
     public function testGetWebfilesOnStringInput() {
 
