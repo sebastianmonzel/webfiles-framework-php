@@ -1,12 +1,11 @@
 <?php
 
 
-use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
-use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datasystem\file\format\media\image\MImage;
 
 /**
- * @covers webfilesframework\core\datasystem\file\format\image\MImage
+ * @covers webfilesframework\core\datasystem\file\format\media\MImage
  */
 class MImageTest extends \PHPUnit_Framework_TestCase {
     /**
@@ -14,9 +13,12 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
      */
     protected $object;
 
-    /**
-     * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
-     */
+	/**
+	 * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 */
     public function createDirectoryDatastore()
     {
         $directoryDatastore = new \webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
@@ -41,7 +43,7 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
 
     public function testReadExifDate() {
 
-        $image = new \webfilesframework\core\datasystem\file\format\image\MImage(
+        $image = new MImage(
             __DIR__ . '/../../../../../../resources/folderDatastore/5302654.jpg');
 
         $exifDate = $image->readExifDate();

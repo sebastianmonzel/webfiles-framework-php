@@ -5,7 +5,7 @@ namespace webfilesframework\core\datastore\types\directory;
 use webfilesframework\core\datastore\MAbstractCachableDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MISingleDatasourceDatastore;
-use webfilesframework\core\datasystem\file\format\image\MImage;
+use webfilesframework\core\datasystem\file\format\media\MImage;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
