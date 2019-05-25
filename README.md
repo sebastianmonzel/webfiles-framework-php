@@ -18,8 +18,8 @@
 [Codeclimate coverage link]: https://codeclimate.com/github/sebastianmonzel/webfiles-framework-php/coverage
 
 
-Access and describe data in a structured way. Interact with remote data.
-The fascination about webbed data.
+Access and describe data in a structured way. Interact with remote data.<br />
+The fascination about inweaved data.
 
 developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
