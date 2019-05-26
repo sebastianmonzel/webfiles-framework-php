@@ -3,6 +3,8 @@
 namespace webfilesframework\core\datasystem\file\format\media\image;
 
 
+use webfilesframework\core\datasystem\file\format\media\image\handler\MGdHandler;
+use webfilesframework\core\datasystem\file\format\media\image\handler\MImageMagickHandler;
 use webfilesframework\core\datasystem\file\system\MFile;
 use webfilesframework\core\datatypes\time\MTimestampHelper;
 
@@ -34,7 +36,10 @@ class MImage extends MFile
         }
     }
 
-    public function loadImage() {
+	/**
+	 * @throws \Exception
+	 */
+	public function loadImage() {
 
         if (MImage::isImageMagickInstalled() && false) {
             $this->handler = new MImageMagickHandler();
@@ -66,7 +71,10 @@ class MImage extends MFile
         return false;
     }
 
-    public static function isGd2Installed()
+	/**
+	 * @return bool
+	 */
+	public static function isGd2Installed()
     {
         if (function_exists("gd_info")) {
             $info = gd_info();
@@ -258,11 +266,13 @@ class MImage extends MFile
         }
     }
 
-    /**
-     *
-     * @param int $p_iPercent
-     * @param string $p_sFilePath
-     */
+	/**
+	 *
+	 * @param int    $p_iPercent
+	 * @param string $p_sFilePath
+	 *
+	 * @throws \Exception
+	 */
     public function saveScaledImgAsFileWithPercent($p_iPercent, $p_sFilePath = "")
     {
 

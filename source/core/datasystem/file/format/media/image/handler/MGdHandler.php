@@ -1,6 +1,6 @@
 <?php
 
-namespace webfilesframework\core\datasystem\file\format\media\image;
+namespace webfilesframework\core\datasystem\file\format\media\image\handler;
 
 
 /**
