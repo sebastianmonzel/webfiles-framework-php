@@ -42,6 +42,64 @@ class MDatabaseDatastore extends MAbstractDatastore
         $this->databaseConnection = $databaseConnection;
     }
 
+	/**
+	 * resolve databasee table name by webfile object. table name scheme
+	 * is: $this->databaseConnection->getTablePrefix() . CLASSNAME_WITHOUT_NAMESPACE
+	 *
+	 * @param MWebfile $webfile
+	 * @return string
+	 */
+	private function resolveTableNameForWebfile(MWebfile $webfile)
+	{
+
+		$classname = $webfile::classname();
+
+		if (strpos($classname, "\\") != -1) { // check if classname is in global namespace or not
+
+			$lastBackslashOccurrence = strrpos($classname, "\\");
+			$classname = substr($classname, $lastBackslashOccurrence + 1);
+		}
+
+		$tableName = $this->databaseConnection->getTablePrefix() . $classname;
+		return $tableName;
+	}
+
+	/**
+	 * @param $tableName
+	 *
+	 * @return mixed
+	 * @throws MWebfilesFrameworkException
+	 */
+	private function resolveClassNameFromTableName($tableName)
+	{
+		$metadata = $this->resolveMetadataForTablename($tableName);
+		return $metadata->classname;
+	}
+
+	/**
+	 * @param MWebfile $webfile
+	 *
+	 * @return bool
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
+	private function webfileExists(MWebfile $webfile)
+	{
+
+		if (!$this->tableExistsByWebfile($webfile)) {
+			$this->createTable($webfile, false);
+			return false;
+		}
+
+		$tableName = $this->resolveTableNameForWebfile($webfile);
+
+		$query = $this->databaseConnection->queryAndHandle(
+			"SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
+		return ($query->getResultSize() > 0);
+
+	}
+
     public function tryConnect()
     {
         return $this->databaseConnection->connect();
@@ -272,27 +330,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $this->tableExists($tableName);
     }
 
-    /**
-     * resolve databasee table name by webfile object. table name scheme
-     * is: $this->databaseConnection->getTablePrefix() . CLASSNAME_WITHOUT_NAMESPACE
-     *
-     * @param MWebfile $webfile
-     * @return string
-     */
-    private function resolveTableNameForWebfile(MWebfile $webfile)
-    {
 
-        $classname = $webfile::classname();
-
-        if (strpos($classname, "\\") != -1) { // check if classname is in global namespace or not
-
-            $lastBackslashOccurrence = strrpos($classname, "\\");
-            $classname = substr($classname, $lastBackslashOccurrence + 1);
-        }
-
-        $tableName = $this->databaseConnection->getTablePrefix() . $classname;
-        return $tableName;
-    }
 
 	/**
 	 * @param $tableName
@@ -432,30 +470,6 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 
 	/**
-	 * @param MWebfile $webfile
-	 *
-	 * @return bool
-	 * @throws MDatastoreException
-	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
-	 */
-    private function webfileExists(MWebfile $webfile)
-    {
-
-        if (!$this->tableExistsByWebfile($webfile)) {
-            $this->createTable($webfile, false);
-            return false;
-        }
-
-        $tableName = $this->resolveTableNameForWebfile($webfile);
-
-        $query = $this->databaseConnection->queryAndHandle(
-            "SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
-        return ($query->getResultSize() > 0);
-
-    }
-
-	/**
 	 * @param int $count
 	 *
 	 * @return array|void
@@ -503,22 +517,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $this->transformMetadataObjectToWebfile($object);
     }
 
-
-	/**
-	 * @param $classname
-	 *
-	 * @return MWebfile
-	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
-	 */
-    private function createWebfileByClassname($classname) {
-        $ref = new \ReflectionClass($classname);
-        $webfile = $ref->newInstanceWithoutConstructor();
-        if (! $webfile instanceof MWebfile ) {
-            throw new MWebfilesFrameworkException("given class '" . $classname . " does not extend MWebfile.");
-        }
-        return $webfile;
-    }
 
 	/**
 	 * @param $className
@@ -633,7 +631,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
 	private function transformMetadataObjectToWebfile($object) {
 
-		$template = $this->createWebfileByClassname($object->classname);
+		$template = MWebfile::createWebfileByClassname($object->classname);
 		$template->presetForTemplateSearch();
 		$template->setId($object->webfileid);
 
@@ -672,18 +670,6 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         return $webfileArray;
     }
-
-	/**
-	 * @param $tableName
-	 *
-	 * @return mixed
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function resolveClassNameFromTableName($tableName)
-	{
-		$metadata = $this->resolveMetadataForTablename($tableName);
-		return $metadata->classname;
-	}
 
 	/**
 	 * @param      $tableName

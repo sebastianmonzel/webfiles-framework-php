@@ -399,4 +399,20 @@ class MWebfile {
     	return get_called_class();
     }
 
+	/**
+	 * @param $classname
+	 *
+	 * @return MWebfile
+	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
+	 */
+	public static function createWebfileByClassname($classname) {
+		$ref = new \ReflectionClass($classname);
+		$webfile = $ref->newInstanceWithoutConstructor();
+		if (! $webfile instanceof MWebfile ) {
+			throw new MWebfilesFrameworkException("given class '" . $classname . " does not extend MWebfile.");
+		}
+		return $webfile;
+	}
+
 }
