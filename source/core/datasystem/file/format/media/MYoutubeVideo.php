@@ -3,6 +3,7 @@
 namespace webfilesframework\core\datasystem\file\format\media;
 
 
+use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
  * description
