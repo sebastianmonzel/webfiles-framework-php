@@ -521,21 +521,6 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 	/**
-	 * @param $tableName
-	 *
-	 * @return mixed
-	 * @throws MWebfilesFrameworkException
-	 */
-    public function resolveClassNameFromTableName($tableName)
-    {
-        if (! $this->metadataTableExists() ) {
-            $this->createMetadataTable();
-        }
-        $metadata = $this->resolveMetadataForTablename($tableName);
-        return $metadata->classname;
-    }
-
-	/**
 	 * @param $className
 	 * @param $version
 	 * @param $tablename
@@ -687,6 +672,18 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         return $webfileArray;
     }
+
+	/**
+	 * @param $tableName
+	 *
+	 * @return mixed
+	 * @throws MWebfilesFrameworkException
+	 */
+	private function resolveClassNameFromTableName($tableName)
+	{
+		$metadata = $this->resolveMetadataForTablename($tableName);
+		return $metadata->classname;
+	}
 
 	/**
 	 * @param      $tableName
@@ -855,6 +852,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * Normalizes database datastore:
 	 *  - collect all webfiles in one table to sort after timestamp over all
 	 *  -
+	 *
+	 * TODO normalization gets only done globally / can be als done on insert and remove
 	 *
 	 * @param bool $useHumanReadableTimestamps
 	 * @param bool $saveThumbnailsForImages
