@@ -3,13 +3,13 @@ php:
   - 5.6
 
 addons:
+  code_climate:
+    repo_token: 52756e59d36af6555a6aa32a7503258c0932bcfbdec8fe31f8a902f74811ef19
   apt:
     sources:
       - mysql-5.7-trusty
     packages:
       - mysql-server
-  code_climate:
-      repo_token: 52756e59d36af6555a6aa32a7503258c0932bcfbdec8fe31f8a902f74811ef19
 
 services:
   - mysql
@@ -25,17 +25,16 @@ sudo: required
 before_script:
   - mysql -e 'create database webfiles;'
   - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}; fi"
-
-# composer
-- composer self-update
-- composer install --dev --prefer-source --no-interaction
+  # composer
+  - composer self-update
+  - composer install --dev --prefer-source --no-interaction
 script:
-- phpunit --coverage-text --coverage-clover build/logs/clover.xml tests
+  - phpunit --coverage-text --coverage-clover build/logs/clover.xml tests
 after_script:
   - vendor/bin/test-reporter
 after_success:
-- if  [ $TRAVIS_PHP_VERSION = '5.6' ] && [ $TRAVIS_BRANCH = 'develop' ] && [ $TRAVIS_PULL_REQUEST
-  = 'false' ]; then sh generate-api.sh; fi
+  - if  [ $TRAVIS_PHP_VERSION = '5.6' ] && [ $TRAVIS_BRANCH = 'develop' ] && [ $TRAVIS_PULL_REQUEST
+    = 'false' ]; then sh generate-api.sh; fi
 env:
   global:
     secure: JfhuKZI+Yp1bC29r5lcGtP4Mof2d2oQ144wqine1x2/xFp12RV5MfL+BQ3WlEMpc3PXhEYWyHS8R1fvtgiI2oarJVTkwUX5qXOdgDmNxQPHrrqd3OkyqCA4jzDlWpG+3ojWF3uEmzys/VhlQE0LSPIjO5YFYrLCvPSQkabL4yPo=
