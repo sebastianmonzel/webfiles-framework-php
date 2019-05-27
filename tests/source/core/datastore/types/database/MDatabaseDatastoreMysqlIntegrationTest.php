@@ -72,6 +72,8 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 
         $storedWebfile = $databaseDatastore->storeWebfile(new MSampleWebfile());
 
+        $databaseDatastore->normalize();
+
         $foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
 
         self::assertEquals(1,count($foundWebfiles));
