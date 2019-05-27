@@ -25,7 +25,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function IGNORE_testNormalizeWebfiles()
+    public function testNormalizeWebfiles()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -39,7 +39,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         self::assertEquals(1,count($result));
     }
 
-    public function IGNORE_testSearchByTemplate()
+    public function testSearchByTemplate()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -56,7 +56,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         self::assertEquals(1,count($foundWebfiles));
     }
 
-    public function getLatestWebfiles() {
+    public function testGetLatestWebfiles() {
 
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
