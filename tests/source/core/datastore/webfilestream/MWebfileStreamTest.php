@@ -49,9 +49,6 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
     {
     }
 
-    /**
-     * @covers webfilesframework\core\datasystem\file\format\MWebfileStream:getXML
-     */
     public function testGetXML()
     {
         $webfileStream = new MWebfileStream(static::$webfileStreamAsStringReference);
