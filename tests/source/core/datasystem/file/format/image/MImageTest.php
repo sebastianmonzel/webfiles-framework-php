@@ -1,11 +1,13 @@
 <?php
 
 
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datasystem\file\format\media\image\MImage;
+use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
- * @covers webfilesframework\core\datasystem\file\format\media\MImage
+ * @covers webfilesframework\core\datasystem\file\format\media\image\MImage
  */
 class MImageTest extends \PHPUnit_Framework_TestCase {
     /**
@@ -14,15 +16,16 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
     protected $object;
 
 	/**
-	 * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+	 * @return MDirectoryDatastore
 	 * @throws ReflectionException
 	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 * @throws \webfilesframework\core\datastore\MDatastoreException
 	 */
     public function createDirectoryDatastore()
     {
-        $directoryDatastore = new \webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \webfilesframework\core\datasystem\file\system\MDirectory(__DIR__ . '/../../../../../resources/folderDatastore'));
+        $directoryDatastore = new MDirectoryDatastore(
+            new MDirectory(__DIR__ . '/../../../../../resources/folderDatastore')
+        );
         return $directoryDatastore;
     }
 

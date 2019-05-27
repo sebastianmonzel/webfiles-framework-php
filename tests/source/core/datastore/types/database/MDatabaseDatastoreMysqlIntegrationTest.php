@@ -28,7 +28,13 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 
     }
 
-    public function testNormalizeWebfiles()
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 */
+	public function testNormalizeWebfiles()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
