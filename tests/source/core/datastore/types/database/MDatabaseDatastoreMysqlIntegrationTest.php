@@ -10,7 +10,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 {
 
 
-    public function IGNORE_testGetWebfiles()
+    public function testGetWebfiles()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -74,11 +74,11 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
     private function createDatabaseDatastore()
     {
         $connection = new \webfilesframework\core\datasystem\database\MDatabaseConnection(
-            "wp481.webpack.hosteurope.de",
-            "db13012651-wfint",
+            "127.0.0.1",
+            "webfiles",
             "prefix_",
-            "db13012651-wfint",
-            "wfint007"); // yes i know it's the password of the database... ;) - you don't trick me. I trust you... :)
+            "root",
+            "");
 
         $databaseDatastore = new \webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
         return $databaseDatastore;

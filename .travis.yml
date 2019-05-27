@@ -1,16 +1,30 @@
 language: php
 php:
-- 5.6
+  - 5.6
+
 addons:
-    code_climate:
-        repo_token: 52756e59d36af6555a6aa32a7503258c0932bcfbdec8fe31f8a902f74811ef19
+  apt:
+    sources:
+      - mysql-5.7-trusty
+    packages:
+      - mysql-server
+  code_climate:
+      repo_token: 52756e59d36af6555a6aa32a7503258c0932bcfbdec8fe31f8a902f74811ef19
+
+services:
+  - mysql
+
+dist: trusty
+sudo: required
 
 -cache:
 -  directories:
 -  - "$HOME/vendor"
 
+
 before_script:
-- sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}; fi"
+  - mysql -e 'create database webfiles;'
+  - sh -c "if [ '$TRAVIS_PHP_VERSION' = '5.6' ]; then cd build; bash xdebug_install.sh; cd ${TRAVIS_BUILD_DIR}; fi"
 
 # composer
 - composer self-update
