@@ -1,4 +1,7 @@
 <?php
+
+use webfilesframework\core\datastore\types\database\MSampleWebfile;
+
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
  * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
@@ -16,7 +19,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $databaseDatastore->storeWebfile(new MSampleWebfile());
 
 
         $result = $databaseDatastore->getWebfilesAsArray();
@@ -31,7 +34,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $databaseDatastore->storeWebfile(new MSampleWebfile());
         $databaseDatastore->normalize();
 
         $result = $databaseDatastore->getWebfilesAsArray();
@@ -45,9 +48,9 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $storedWebfileId = $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $storedWebfileId = $databaseDatastore->storeWebfile(new MSampleWebfile());
 
-        $template = new \webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setId($storedWebfileId);
 
@@ -61,7 +64,7 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $storedWebfile = $databaseDatastore->storeWebfile(new \webfilesframework\core\datastore\types\database\MSampleWebfile());
+        $storedWebfile = $databaseDatastore->storeWebfile(new MSampleWebfile());
 
         $foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
 

@@ -3,7 +3,6 @@
 
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
-use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
@@ -13,9 +12,12 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
     protected $object;
 
-    /**
-     * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
-     */
+	/**
+	 * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 */
     public function createDirectoryDatastore()
     {
         $directoryDatastore = new MDirectoryDatastore(
