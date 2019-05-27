@@ -484,7 +484,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         $handler = $this->databaseConnection->queryAndHandle(
             "SELECT webfileid,time,classname FROM " .
             $this->databaseConnection->getTablePrefix() . "metadatanormalization" .
-            "ORDER BY time DESC LIMIT " . $count);// TODO prevent sql injection
+            " ORDER BY time DESC LIMIT " . $count);// TODO prevent sql injection
 
         while ($object = $handler->fetchNextResultObject() ) {
 
