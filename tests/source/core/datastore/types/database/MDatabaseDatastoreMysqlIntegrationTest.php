@@ -2,6 +2,8 @@
 
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
+include("../MAbstractDatastoreTest.php");
+
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
  * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
@@ -9,11 +11,17 @@ use webfilesframework\core\datastore\types\database\MSampleWebfile;
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.
  */
-class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
+class MDatabaseDatastoreMysqlIntegrationTest extends MAbstractDatastoreTest
 {
 
 
-    public function testGetWebfiles()
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 */
+	public function testGetWebfiles()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -21,12 +29,12 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 
         $databaseDatastore->storeWebfile(new MSampleWebfile());
 
-
         $result = $databaseDatastore->getWebfilesAsArray();
 
         self::assertEquals(1,count($result));
 
     }
+
 
 	/**
 	 * @throws ReflectionException
@@ -48,7 +56,13 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         self::assertEquals(1,count($result));
     }
 
-    public function testSearchByTemplate()
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 */
+	public function testSearchByTemplate()
     {
 
         $databaseDatastore = $this->createDatabaseDatastore();
@@ -65,12 +79,18 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
         self::assertEquals(1,count($foundWebfiles));
     }
 
-    public function testGetLatestWebfiles() {
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 */
+	public function testGetLatestWebfiles() {
 
         $databaseDatastore = $this->createDatabaseDatastore();
         $databaseDatastore->deleteAll();
 
-        $storedWebfile = $databaseDatastore->storeWebfile(new MSampleWebfile());
+        $databaseDatastore->storeWebfile(new MSampleWebfile());
 
         $databaseDatastore->normalize();
 
@@ -78,6 +98,69 @@ class MDatabaseDatastoreMysqlIntegrationTest extends PHPUnit_Framework_TestCase
 
         self::assertEquals(1,count($foundWebfiles));
     }
+
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 */
+	public function testUpdateWebfile() {
+
+		$databaseDatastore = $this->createDatabaseDatastore();
+		$databaseDatastore->deleteAll();
+		$databaseDatastore->normalize();
+
+	}
+
+
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 */
+	public function testDeleteAllWebfiles() {
+
+		$databaseDatastore = $this->createDatabaseDatastore();
+		$databaseDatastore->deleteAll();
+		$databaseDatastore->normalize();
+
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		self::assertEquals(0,count($foundWebfiles));
+
+		$databaseDatastore->storeWebfile(new MSampleWebfile());
+		$databaseDatastore->normalize();
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		self::assertEquals(1,count($foundWebfiles));
+
+		$databaseDatastore->deleteAll();
+
+		$databaseDatastore->normalize();
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		self::assertEquals(0,count($foundWebfiles));
+	}
+
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 */
+	public function testDeleteWebfileByTemplate() {
+
+		$databaseDatastore = $this->createDatabaseDatastore();
+		$databaseDatastore->deleteAll();
+
+		$databaseDatastore->storeWebfile($this->createSampleWebfile());
+		$databaseDatastore->normalize();
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles();
+		self::assertEquals(1,count($foundWebfiles));
+
+		$databaseDatastore->deleteByTemplate($this->createSampleTemplate());
+
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$databaseDatastore->normalize();
+		self::assertEquals(0,count($foundWebfiles));
+	}
 
     /**
      * @return \webfilesframework\core\datastore\types\database\MDatabaseDatastore

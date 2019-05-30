@@ -98,8 +98,12 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
     }
 
 
-
-    public function testSearchByTemplate() {
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 */
+	public function testSearchByTemplate() {
 
         $directoryDatastore = $this->createDirectoryDatastore();
         $template = new MSampleWebfile();

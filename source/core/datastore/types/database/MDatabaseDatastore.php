@@ -853,6 +853,11 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 */
     public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
 
+	    if (!$this->tableExists(
+		    $this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
+		    $this->createMetadataNormalizationTable();
+	    }
+
         $webfiles = $this->getWebfilesAsArray();
 
         /** @var MWebfile $webfile */
@@ -931,12 +936,16 @@ class MDatabaseDatastore extends MAbstractDatastore
 			// translate template into a condition
 			$condition = $this->translateTemplateIntoCondition($webfile);
 
-			$query = "DELETE FROM " . $tableName;
+			// delete normalization entry
+			$classname = str_replace('\\', '\\\\', $webfile::classname());
+			$normalizationDeleteQuery = "DELETE FROM " . $this->databaseConnection->getTablePrefix() . "metadatanormalization where webfileid in (SELECT id FROM $tableName WHERE " . $condition. ") AND classname = '" . $classname . "'";
+			$this->databaseConnection->query($normalizationDeleteQuery);
 
+			// delete webfile entry
+			$query = "DELETE FROM " . $tableName;
 			if (!empty($condition)) {
 				$query .= " WHERE " . $condition;
 			}
-
 			$this->databaseConnection->query($query);
 		}
 	}
