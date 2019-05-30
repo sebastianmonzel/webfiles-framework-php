@@ -167,7 +167,8 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         $databaseConnectionMock->expects($this->once())->method('queryAndHandle')->with('SHOW TABLES FROM `webfiles`')->willReturn($showTablesResultHandler);
 
         $webfilesResultHandler = $this->createMockForWebfilesResultHandler();
-        $databaseConnectionMock->expects($this->once())->method('query')->with('DELETE FROM MSampleWebfile')->willReturn($webfilesResultHandler);
+        $databaseConnectionMock->expects(self::at(8))->method('query')->with('DELETE FROM metadatanormalization where webfileid in (SELECT id FROM MSampleWebfile WHERE ) AND classname = \'webfilesframework\\\\core\\\\datastore\\\\types\\\\database\\\\MSampleWebfile\'')->willReturn($webfilesResultHandler);
+        $databaseConnectionMock->expects(self::at(9))->method('query')->with('DELETE FROM MSampleWebfile')->willReturn($webfilesResultHandler);
 
         $databaseConnectionMock->method('getDatabaseName')->willReturn('webfiles');
 
