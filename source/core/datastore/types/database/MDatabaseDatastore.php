@@ -496,6 +496,7 @@ class MDatabaseDatastore extends MAbstractDatastore
             $result = $this->addWebfileSafetyToArray($webfile,$result);
         }
 
+	    return $result;
     }
 
 	/**
@@ -659,16 +660,16 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         if ($this->tableExistsByWebfile($template)) {
 
-            $tableName = $this->resolveTableNameForWebfile($template);
-            $sorting = $this->translateTemplateIntoSorting($template);
-            $condition = $this->translateTemplateIntoCondition($template);
+	        $tableName = $this->resolveTableNameForWebfile($template);
+	        $sorting = $this->translateTemplateIntoSorting($template);
+	        $condition = $this->translateTemplateIntoCondition($template);
 
-            $webfileArray = $this->getWebfilesByTablename(
+	        $webfileArray = $this->getWebfilesByTablename(
                 $tableName,$template::classname(),$condition,$sorting
             );
 
         } else {
-            $this->createTable($template, false);
+	        $this->createTable($template, false);
         }
 
         return $webfileArray;
@@ -697,8 +698,6 @@ class MDatabaseDatastore extends MAbstractDatastore
         if (!empty($order)) {
             $query .= " ORDER BY " . $order;
         }
-
-        echo $query;
 
         $resultHandler = $this->databaseConnection->queryAndHandle($query);
 
