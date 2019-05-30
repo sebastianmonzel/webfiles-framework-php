@@ -345,7 +345,7 @@ class MDatabaseDatastore extends MAbstractDatastore
     private function tableExists($tableName)
     {
         $allTableNames = $this->getAllTableNames();
-        return in_array($tableName,$allTableNames);
+        return in_array($tableName,$allTableNames) || in_array(strtolower($tableName),$allTableNames);
     }
 
 	/**
@@ -658,9 +658,8 @@ class MDatabaseDatastore extends MAbstractDatastore
         $webfileArray = array();
 
         if ($this->tableExistsByWebfile($template)) {
-			echo "true";
+
             $tableName = $this->resolveTableNameForWebfile($template);
-			echo $tableName;
             $sorting = $this->translateTemplateIntoSorting($template);
             $condition = $this->translateTemplateIntoCondition($template);
 
