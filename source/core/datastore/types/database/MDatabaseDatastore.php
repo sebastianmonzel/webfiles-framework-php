@@ -31,13 +31,17 @@ class MDatabaseDatastore extends MAbstractDatastore
     implements MISingleDatasourceDatastore
 {
 
-    private $databaseConnection;
+	private $databaseConnection;
 
-    const WEBFILEID = "webfileid";
-    const TIME      = "time";
-    const CLASSNAME = "classname";
+	const METADATANORMALIZATION_TABLE_COLUMNNAME_WEBFILEID = "webfileid";
+	const METADATANORMALIZATION_TABLE_COLUMNNAME_TIME      = "time";
+	const METADATANORMALIZATION_TABLE_COLUMNNAME_CLASSNAME = "classname";
 
-    public function __construct(MDatabaseConnection $databaseConnection)
+	const METADATA_TABLE_COLUMNNAME_CLASSNAME = "classname";
+	const METADATA_TABLE_COLUMNNAME_VERSION   = "version";
+	const METADATA_TABLE_COLUMNNAME_TABLENAME = "tablename";
+
+	public function __construct(MDatabaseConnection $databaseConnection)
     {
         $this->databaseConnection = $databaseConnection;
     }
@@ -581,15 +585,15 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 
 		$table->addColumn(
-			self::CLASSNAME,
+			self::METADATA_TABLE_COLUMNNAME_CLASSNAME,
 			MDatabaseDatatypes::VARCHAR,
 			250);
 		$table->addColumn(
-			"version",
+			self::METADATA_TABLE_COLUMNNAME_VERSION,
 			MDatabaseDatatypes::INT,
 			50);
 		$table->addColumn(
-			"tablename",
+			self::METADATA_TABLE_COLUMNNAME_TABLENAME,
 			MDatabaseDatatypes::VARCHAR,
 			250);
 
@@ -870,15 +874,15 @@ class MDatabaseDatastore extends MAbstractDatastore
 		$table->specifyIdentifier("id", 10);
 
 		$table->addColumn(
-			self::WEBFILEID,
+			self::METADATANORMALIZATION_TABLE_COLUMNNAME_WEBFILEID,
 			MDatabaseDatatypes::VARCHAR,
 			250);
 		$table->addColumn(
-			self::TIME,
+			self::METADATANORMALIZATION_TABLE_COLUMNNAME_TIME,
 			MDatabaseDatatypes::INT,
 			12);
 		$table->addColumn(
-			self::CLASSNAME,
+			self::METADATANORMALIZATION_TABLE_COLUMNNAME_CLASSNAME,
 			MDatabaseDatatypes::VARCHAR,
 			250);
 
