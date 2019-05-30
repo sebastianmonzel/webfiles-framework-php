@@ -765,7 +765,7 @@ class MDatabaseDatastore extends MAbstractDatastore
             $name = $attribute->getName();
             $value = $attribute->getValue($webfile);
 
-            if ($value != "?" && !($value instanceof MAscendingSorting)
+            if ($value != "[any]" && !($value instanceof MAscendingSorting)
                 && !($value instanceof MDescendingSorting)
             ) {
                 if (!$first) {

@@ -150,7 +150,7 @@ class MWebfile {
 
             if (MWebfile::isSimpleDatatype($attributeName)) {
                 $attribute->setAccessible(true);
-                $attribute->setValue($this, "?");
+                $attribute->setValue($this, "[any]");
             }
         }
     }
@@ -174,7 +174,7 @@ class MWebfile {
                 $templateValue = $attribute->getValue($template);
 
                 if (
-                    $templateValue != "?"
+                    $templateValue != "[any]"
                     && !($templateValue instanceof MIDatastoreFunction)
                 ) {
 
