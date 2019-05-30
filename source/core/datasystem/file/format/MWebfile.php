@@ -4,8 +4,8 @@ namespace webfilesframework\core\datasystem\file\format;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
- * Base cass for all webfile class definitions.<br />
- * On the following <a href="http://simpleserv.de/webfiles/doc/doku.php?id=definitionwebfile">link</a>
+ * Base class for all webfile class definitions.<br />
+ * On the following <a href="http://sebastianmonzel.github.io/webfiles-framework-doc/webf/webf_01_defintion.html">link</a>
  * you can find more information about the definition of webfiles.
  *
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
