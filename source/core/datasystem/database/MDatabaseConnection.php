@@ -93,6 +93,7 @@ class MDatabaseConnection
             $this->connection->autocommit(1);
             return true;
         } else {
+        	echo mysqli_connect_error();
             return false;
         }
     }
