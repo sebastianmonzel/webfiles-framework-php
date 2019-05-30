@@ -1,6 +1,7 @@
 <?php
 
 
+use webfilesframework\core\datastore\MDatastoreTransfer;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
@@ -166,13 +167,18 @@ class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
 
     }
 
-    public function testDoNormalizeFileOnlyOnce() {
+	/**
+	 * @throws ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 */
+	public function testDoNormalizeFileOnlyOnce() {
 
         $directoryDatastore = $this->createDirectoryDatastore();
         $tmpDatastore = $this->createTempDirectoryDatastore();
         $tmpDatastore->deleteAll();
 
-        $transfer = new \webfilesframework\core\datastore\MDatastoreTransfer(
+        $transfer = new MDatastoreTransfer(
             $directoryDatastore,$tmpDatastore);
 
         $transfer->transfer();

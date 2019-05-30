@@ -488,7 +488,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         while ($object = $handler->fetchNextResultObject() ) {
 
-            $webfile = $this->transformMetadataObjectToWebfile($object);
+            $webfile = $this->retrieveWebfileForMetadataDbObject($object);
             $result = $this->addWebfileSafetyToArray($webfile,$result);
         }
 
@@ -514,7 +514,7 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
 
         $object = $handler->fetchNextResultObject();
-        return $this->transformMetadataObjectToWebfile($object);
+        return $this->retrieveWebfileForMetadataDbObject($object);
     }
 
 
@@ -629,7 +629,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @throws MWebfilesFrameworkException
 	 * @throws \ReflectionException
 	 */
-	private function transformMetadataObjectToWebfile($object) {
+	private function retrieveWebfileForMetadataDbObject($object) {
 
 		$template = MWebfile::createWebfileByClassname($object->classname);
 		$template->presetForTemplateSearch();
@@ -654,9 +654,9 @@ class MDatabaseDatastore extends MAbstractDatastore
         $webfileArray = array();
 
         if ($this->tableExistsByWebfile($template)) {
-
+			echo "true";
             $tableName = $this->resolveTableNameForWebfile($template);
-
+			echo $tableName;
             $sorting = $this->translateTemplateIntoSorting($template);
             $condition = $this->translateTemplateIntoCondition($template);
 
@@ -694,6 +694,8 @@ class MDatabaseDatastore extends MAbstractDatastore
         if (!empty($order)) {
             $query .= " ORDER BY " . $order;
         }
+
+        echo $query;
 
         $resultHandler = $this->databaseConnection->queryAndHandle($query);
 
