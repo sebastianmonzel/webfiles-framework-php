@@ -636,7 +636,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 		$template->setId($object->webfileid);
 
 		$webfiles = $this->searchByTemplate($template);
-		return $webfiles[0];
+		return array_shift($webfiles);
 	}
 
 
