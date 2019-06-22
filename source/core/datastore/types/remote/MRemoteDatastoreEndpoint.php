@@ -73,9 +73,9 @@ class MRemoteDatastoreEndpoint {
 				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_DELETE_BY_TEMPLATE
 				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) ) {
 
-				echo "delete by: " . getParam(static::$PAYLOAD_FIELD_NAME_TEMPLATE);
+				echo "delete by: " . $this->getParam(static::$PAYLOAD_FIELD_NAME_TEMPLATE);
 				// DELETE
-				$webfile = MWebfile::staticUnmarshall( getParam(static::$PAYLOAD_FIELD_NAME_TEMPLATE) );
+				$webfile = MWebfile::staticUnmarshall( $this->getParam(static::$PAYLOAD_FIELD_NAME_TEMPLATE) );
 				$this->m_oDatastore->deleteByTemplate( $webfile );
 			}
 
