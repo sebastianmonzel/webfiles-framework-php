@@ -2,6 +2,7 @@
 
 namespace webfilesframework\core\datastore\types\directory;
 
+use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
 
@@ -19,7 +20,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-class MDirectoryDatastoreWebfile extends MWebfile
+class MDirectoryDatastoreWebfile extends MAbstractDatastore
 {
 
     private $m_sDirectoryPath;

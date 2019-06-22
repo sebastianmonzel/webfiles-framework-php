@@ -17,7 +17,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
  */
-abstract class MAbstractDatastore
+abstract class MAbstractDatastore extends MWebfile
 {
 
     /**
