@@ -94,7 +94,7 @@ class MRemoteDatastoreEndpoint {
                 </tr>
                 <tr>
                     <td><b>method</b>: <a href="?method=retrieveWebfiles">retrieveWebfiles</a></td>
-                    <td>retrieves all templates.</td>
+                    <td>retrieves all webfiles.</td>
                 </tr>
                 <tr>
                     <td><b>method</b>: searchByTemplate, <b>template</b>: template with criteria to search for</td>
@@ -102,7 +102,7 @@ class MRemoteDatastoreEndpoint {
                 </tr>
                 <tr>
                     <td><b>method</b>: "storeWebfile", <b>webfile</b>: the webfile to be stored.</td>
-                    <td>stores the submitted </td>
+                    <td>stores the submitted webfile definition</td>
                 </tr>
                 <tr>
                     <td><b>method</b>: "deleteByTemplate", <b>template</b>: template with criteria to delete</td>
