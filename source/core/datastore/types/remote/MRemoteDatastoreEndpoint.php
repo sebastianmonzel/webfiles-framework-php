@@ -74,10 +74,10 @@ class MRemoteDatastoreEndpoint {
 				$webfile = MWebfile::staticUnmarshall( getParam(static::$PAYLOAD_FIELD_NAME_TEMPLATE) );
 				$this->m_oDatastore->deleteByTemplate( $webfile );
 
-			} else {
-				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
 			}
 
+		} else {
+			$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
 		}
 
 		if ( isset( $webfilesStream ) ) {
