@@ -47,6 +47,9 @@ class MRemoteDatastoreEndpoint {
 	 */
 	public function handleRemoteCall() {
 
+		echo "handle remote call";
+
+
 		if ( $this->issetParam( static::$PAYLOAD_FIELD_NAME_METHOD ) ) {
 
 			if ( $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_RETRIEVE_WEBFILES ) {
