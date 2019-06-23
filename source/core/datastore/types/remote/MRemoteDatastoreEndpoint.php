@@ -14,14 +14,14 @@ class MRemoteDatastoreEndpoint {
 	/** @var MAbstractDatastore */
 	private $m_oDatastore;
 
-	public static $METHOD_NAME_RETRIEVE_WEBFILES = "retrieveWebfiles";
+	public static $METHOD_NAME_RETRIEVE_WEBFILES  = "retrieveWebfiles";
 	public static $METHOD_NAME_SEARCH_BY_TEMPLATE = "searchByTemplate";
-	public static $METHOD_NAME_STORE_WEBFILE = "storeWebfile";
+	public static $METHOD_NAME_STORE_WEBFILE      = "storeWebfile";
 	public static $METHOD_NAME_DELETE_BY_TEMPLATE = "deleteByTemplate";
 
-	public static $PAYLOAD_FIELD_NAME_WEBFILE = "webfile";
-	public static $PAYLOAD_FIELD_NAME_TEMPLATE = "template";
-	public static $PAYLOAD_FIELD_NAME_METHOD = "method";
+	public static $PAYLOAD_FIELD_NAME_WEBFILE     = "webfile";
+	public static $PAYLOAD_FIELD_NAME_TEMPLATE    = "template";
+	public static $PAYLOAD_FIELD_NAME_METHOD      = "method";
 
 
 	public function __construct( MAbstractDatastore $datastore ) {
