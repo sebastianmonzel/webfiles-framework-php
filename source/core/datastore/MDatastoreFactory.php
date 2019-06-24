@@ -17,18 +17,22 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
 class MDatastoreFactory
 {
 
-    /**
-     * Creates a new datastore. The following input object types are
-     * actually supported:
-     * <ul>
-     *        <li>MDirectory</li>
-     *        <li>MDatabaseConnection</li>
-     * </ul>
-     *
-     * @param MDirectory|MDatabaseConnection $item
-     * @return MAbstractDatastore Returns a datastore depending on the
-     * given item.
-     */
+	/**
+	 * Creates a new datastore. The following input object types are
+	 * actually supported:
+	 * <ul>
+	 *        <li>MDirectory</li>
+	 *        <li>MDatabaseConnection</li>
+	 * </ul>
+	 *
+	 * @param MDirectory|MDatabaseConnection $item
+	 *
+	 * @return MAbstractDatastore Returns a datastore depending on the
+	 * given item.
+	 * @throws MDatastoreException
+	 * @throws \ReflectionException
+	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 */
     public static function createDatastore($item)
     {
         if ($item instanceof MDirectory) {
