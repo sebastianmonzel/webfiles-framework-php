@@ -26,8 +26,7 @@ developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
 
 ### What is webfiles framework for?
-The webfiles framework generalizes data access to database system, to file system and also accessing data on the remote site.  
-Through an webfile definition and the standarized api you can access the different systems in the same way.
+The webfiles framework generalizes data access to database system, to file system and also accessing data on the remote site. Through an webfile definition and the standarized api you can access the different systems in the same way.
 
 
 ### First Steps
