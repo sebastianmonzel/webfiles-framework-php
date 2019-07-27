@@ -26,10 +26,8 @@ developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
 
 ### What is webfiles framework for?
-The webfiles framework manages access to database system (creates tables on the fly and 
-read/write data in database) and to file system (read and write files).  
-Through an webfile definition and the standarized api you can access the different systems
-in the same way. Remote datastores enable you to access locally defined datastores via HTTP.
+The webfiles framework generalizes data access to database system, to file system and also accessing data on the remote site.  
+Through an webfile definition and the standarized api you can access the different systems in the same way.
 
 
 ### First Steps
