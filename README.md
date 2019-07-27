@@ -17,21 +17,20 @@
 [Codeclimate coverage image]: https://codeclimate.com/github/sebastianmonzel/webfiles-framework-php/badges/coverage.svg
 [Codeclimate coverage link]: https://codeclimate.com/github/sebastianmonzel/webfiles-framework-php/coverage
 
-
-Access and describe data in a structured way. Interact with remote data.<br />
-See the fascination about interweaved data.
-
-developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
-
 Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<br />
 Documentation: http://sebastianmonzel.github.io/webfiles-framework-doc/<br />
 Packagist: https://packagist.org/packages/webfiles-framework/framework
+
+Access and describe data in a structured way. Interact with remote data.<br />
+developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
+
 
 ### What is webfiles framework for?
 The webfiles framework manages access to database system (creates tables on the fly and 
 read/write data in database) and to file system (read and write files).  
 Through an webfile definition and the standarized api you can access the different systems
 in the same way. Remote datastores enable you to access locally defined datastores via HTTP.
+
 
 ### First Steps
  - add webfiles-framework as dependency `webfiles-framework/framework` to your `composer.json`
