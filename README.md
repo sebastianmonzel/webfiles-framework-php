@@ -21,7 +21,7 @@ Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<
 Documentation: http://sebastianmonzel.github.io/webfiles-framework-doc/<br />
 Packagist: https://packagist.org/packages/webfiles-framework/framework
 
-Access and describe data in a structured way. Interact with remote data.<br />
+Access and describe data in a generalized way. Interact with remote data.<br />
 developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
 
