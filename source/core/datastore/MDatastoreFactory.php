@@ -8,6 +8,9 @@ use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 
 /**
+ * @TODO eliminate class because only two types are supported and datastore defintions should happen be too dynamically
+ *       to create them in an genral way.
+ *
  * Creates depending on the given type a datastore, which can
  * be used to access and store webfiles.
  *
