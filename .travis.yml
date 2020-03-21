@@ -1,3 +1,5 @@
+dist: xenial
+
 language: php
 php:
   - 5.6
@@ -5,11 +7,6 @@ php:
 addons:
   code_climate:
     repo_token: 52756e59d36af6555a6aa32a7503258c0932bcfbdec8fe31f8a902f74811ef19
-  apt:
-    sources:
-      - mysql-5.7-trusty
-    packages:
-      - mysql-server
 
 services:
   - mysql
