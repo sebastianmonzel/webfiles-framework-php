@@ -14,6 +14,8 @@
      - siteelement/wrappedsiteelement
      - sessionDatastore?/ authtentifizierung
  - [x] MItem in MWebfile überführen
- - [ ] webfile links - MWebfileLink / MLoacalWebfileLink / MRemoteWebfileLink / MWebfileReferences
- 
+ - [ ] webfile links - MWebfileLink / MLocalWebfileLink / MRemoteWebfileLink / MWebfileReferences
+ - [ ] MDatastoreTransfer: inkrementeller Transfer ermöglichen (irgendwo speichern was oder bis zu welchem punkt schon transferiert wurde)
+ - [ ] Gaufrette nochmal anschauen als abstraktion für directory datastore
+ - [ ] directory-datastore: wenn nciht alle webfiles ein timestamp und eine id haben eine exception werden
  
