@@ -27,7 +27,7 @@ before_script:
 script:
   - phpunit --coverage-text --coverage-clover build/logs/clover.xml tests
 after_script:
-  - vendor/bin/test-reporter
+  #- vendor/bin/test-reporter
 after_success:
   - if  [ $TRAVIS_PHP_VERSION = '7.2' ] && [ $TRAVIS_BRANCH = 'develop' ] && [ $TRAVIS_PULL_REQUEST
     = 'false' ]; then sh generate-api.sh; fi
