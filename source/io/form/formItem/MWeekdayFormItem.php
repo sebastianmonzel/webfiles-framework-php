@@ -13,7 +13,7 @@ use webfilesframework\core\time\MWeekday;
 class MWeekdayFormItem extends MDropdownMenueFormItem
 {
 
-    public function init()
+	public function init($useLabel = true)
     {
         $this->possibleValues = array(
             new MWeekday(0, "Sonntag"),
