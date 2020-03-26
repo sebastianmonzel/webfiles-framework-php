@@ -84,9 +84,9 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
         return $databaseConnectionMock;
     }
 
-    /**
-     * @return array
-     */
+	/**
+	 * @return PHPUnit_Framework_MockObject_MockObject
+	 */
     public function createMockForShowTablesResultHandler()
     {
         $tablesMetaInformationResturnObject = (object) array(
