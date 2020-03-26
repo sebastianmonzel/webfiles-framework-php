@@ -9,7 +9,7 @@ use webfilesframework\core\datastore\types\database\MSampleWebfile;
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.
  */
-class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTest
+class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTest
 {
 
 
