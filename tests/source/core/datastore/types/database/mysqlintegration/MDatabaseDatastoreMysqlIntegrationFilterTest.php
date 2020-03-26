@@ -2,8 +2,6 @@
 
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
-include("../MAbstractDatastoreTest.php");
-
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
  * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
@@ -11,7 +9,7 @@ include("../MAbstractDatastoreTest.php");
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.
  */
-class MDatabaseDatastoreMysqlIntegrationTest extends MAbstractDatastoreTest
+class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTest
 {
 
 
@@ -77,6 +75,10 @@ class MDatabaseDatastoreMysqlIntegrationTest extends MAbstractDatastoreTest
         $foundWebfiles = $databaseDatastore->searchByTemplate($template);
 
         self::assertEquals(1,count($foundWebfiles));
+    }
+
+    public function testSearchByTemplateSorted() {
+
     }
 
 	/**
