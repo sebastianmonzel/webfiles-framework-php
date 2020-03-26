@@ -1,6 +1,7 @@
 <?php
 
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\MDatastoreTransfer;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
@@ -9,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
 /**
  * @covers webfilesframework\core\datastore\types\directory\MDirectoryDatastore
  */
-class MDirectoryDatastoreTest extends \PHPUnit_Framework_TestCase {
+class MDirectoryDatastoreTest extends TestCase {
 
     protected $object;
 

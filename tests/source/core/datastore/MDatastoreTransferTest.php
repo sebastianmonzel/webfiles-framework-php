@@ -1,13 +1,14 @@
 <?php
 
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\MDatastoreTransfer;
 
 
 /**
  * @covers webfilesframework\core\datastore\MDatastoreTransfer
  */
-class MDatastoreTransferTest extends PHPUnit_Framework_TestCase
+class MDatastoreTransferTest extends TestCase
 {
     /**
      * @var MDatastoreTransfer

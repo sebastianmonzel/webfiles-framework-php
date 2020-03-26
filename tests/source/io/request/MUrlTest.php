@@ -1,11 +1,12 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\io\request\MUrl;
 
 /**
  * @covers webfilesframework\io\request\MUrl
  */
-class MUrlTest extends PHPUnit_Framework_TestCase {
+class MUrlTest extends TestCase {
     /**
      * @var MDatastoreFactory
      */

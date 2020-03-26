@@ -1,6 +1,7 @@
 <?php
 
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datasystem\file\format\media\image\MImage;
@@ -9,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
 /**
  * @covers webfilesframework\core\datasystem\file\format\media\image\MImage
  */
-class MImageTest extends \PHPUnit_Framework_TestCase {
+class MImageTest extends TestCase {
     /**
      * @var MDatabaseDatasourceDatastore
      */

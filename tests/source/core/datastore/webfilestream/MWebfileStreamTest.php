@@ -1,12 +1,13 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 
 /**
  * @covers webfilesframework\core\datasystem\file\format\MWebfileStream
  */
-class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
+class MWebfileStreamTest extends TestCase {
     /**
      * @var MDatastoreFactory
      */

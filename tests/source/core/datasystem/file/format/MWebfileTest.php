@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\system\MFile;
@@ -9,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MFile;
  *
  * Test class for MWebfileTest.
  */
-class MWebfileTest extends PHPUnit_Framework_TestCase {
+class MWebfileTest extends TestCase {
     /**
      * @var MDatastoreFactory
      */

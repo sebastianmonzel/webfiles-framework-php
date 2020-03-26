@@ -1,8 +1,9 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
-abstract class MAbstractDatastoreTest extends PHPUnit_Framework_TestCase {
+abstract class MAbstractDatastoreTest extends TestCase {
 
 
 	protected function createSampleWebfile() {

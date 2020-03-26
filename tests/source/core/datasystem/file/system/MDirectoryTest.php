@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datasystem\file\system\MFile;
 
@@ -7,7 +8,7 @@ use webfilesframework\core\datasystem\file\system\MFile;
  * @covers webfilesframework\core\datasystem\file\system\MDirectory
  * @covers webfilesframework\core\datasystem\file\system\MFile
  */
-class MDirectoryTest extends PHPUnit_Framework_TestCase {
+class MDirectoryTest extends TestCase {
     /**
      * @var MDatastoreFactory
      */

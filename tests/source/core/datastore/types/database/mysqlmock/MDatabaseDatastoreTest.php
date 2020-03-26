@@ -1,6 +1,7 @@
 <?php
 
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
@@ -9,7 +10,7 @@ use webfilesframework\core\datastore\types\database\MSampleWebfile;
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
  * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
  */
-class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
+class MDatabaseDatastoreTest extends TestCase {
     /**
      * @var MDatabaseDatasourceDatastore
      */
@@ -21,7 +22,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp() : void {
         $connection = new MDatabaseConnection();
     }
 
@@ -29,7 +30,7 @@ class MDatabaseDatastoreTest extends \PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown() {
+    protected function tearDown() : void {
     }
 
     /**
