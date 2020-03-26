@@ -37,12 +37,12 @@ The webfiles framework generalizes data access to database system, to file syste
 
 ### Samples
 
-[Create your first webfile definition](#create-your-first-webfile-definition)<br />
-[Store a webfile in a datastore](#store-a-webfile-in-a-datastore)<br />
-[Read from DirectoryDatastore](#read-from-directorydatastore)<br />
-[Read from DatabaseDatastore (actually mysql only)](#read-from-databasedatastore-actually-mysql-only)<br />
-[Transfer data from one datastore to another](#transfer-data-from-one-datastore-to-another)<br />
-[Read from RemoteDatastore](#read-from-remotedatastore)<br />
+ - [Create your first webfile definition](#create-your-first-webfile-definition)
+ - [Store a webfile in a datastore](#store-a-webfile-in-a-datastore)
+ - [Read from DirectoryDatastore](#read-from-directorydatastore)
+ - [Read from DatabaseDatastore (actually mysql only)](#read-from-databasedatastore-actually-mysql-only)
+ - [Transfer data from one datastore to another](#transfer-data-from-one-datastore-to-another)
+ - [Read from RemoteDatastore](#read-from-remotedatastore)
 
 #### Create your first webfile definition
 ```php
