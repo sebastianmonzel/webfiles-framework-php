@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 
@@ -72,21 +73,19 @@ class MWebfileStreamTest extends TestCase {
         $this->assertEquals(2,count($webfilesFromStream));
     }
 
-    /**
-     * @expectedException \webfilesframework\MWebfilesFrameworkException
-     * @expectedExceptionMessageRegExp /Error: test that it not works/
-     */
     public function testInstantiationWithMalformedStringThrowsException() {
+
+    	self::expectException("\webfilesframework\MWebfilesFrameworkException");
+    	self::expectExceptionMessage("Error: test that it not works");
 
         $webfileStream = new MWebfileStream("Error: test that it not works");
 
     }
 
-    /**
-     * @expectedException \webfilesframework\MWebfilesFrameworkException
-     * @expectedExceptionMessageRegExp /No webfiles child exists on root element./
-     */
     public function testInstantiationWithWrongXmlThrowsException() {
+
+	    self::expectException("\webfilesframework\MWebfilesFrameworkException");
+	    self::expectExceptionMessage("No webfiles child exists on root element.");
 
         $webfileStream = new MWebfileStream("<test>
 <wrong>
@@ -97,14 +96,13 @@ class MWebfileStreamTest extends TestCase {
 
     }
 
-    /**
-     * @expectedException \webfilesframework\MWebfilesFrameworkException
-     * @expectedExceptionMessageRegExp /Not all elements in array are from type MWebfile./
-     */
     public function testInstantiationWithWrongArrayArgumentThrowsException() {
 
+	    self::expectException("\webfilesframework\MWebfilesFrameworkException");
+	    self::expectExceptionMessage("Not all elements in array are from type MWebfile.");
+
         $webfiles = array();
-        $webfiles[0] = new \webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $webfiles[0] = new MSampleWebfile();
         $webfiles[1] = "test";
 
         $webfileStream = new MWebfileStream($webfiles);
