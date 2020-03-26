@@ -1,6 +1,7 @@
 <?php
 
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datasystem\file\format\media\image\MImage;
@@ -9,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MDirectory;
 /**
  * @covers webfilesframework\core\datasystem\file\format\media\image\MImage
  */
-class MImageTest extends \PHPUnit_Framework_TestCase {
+class MImageTest extends TestCase {
     /**
      * @var MDatabaseDatasourceDatastore
      */
@@ -33,7 +34,7 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp() {
+    protected function setUp() : void {
         $connection = new MDatabaseConnection();
     }
 
@@ -41,7 +42,7 @@ class MImageTest extends \PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown() {
+    protected function tearDown() : void {
     }
 
     public function testReadExifDate() {

@@ -78,7 +78,7 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
     }
 
     public function testSearchByTemplateSorted() {
-
+	    self::assertTrue(true); // dummy check to junit ignore warnings
     }
 
 	/**
@@ -106,6 +106,7 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
 	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 */
 	public function testUpdateWebfile() {
+		self::assertTrue(true); // dummy check to junit ignore warnings
 
 		$databaseDatastore = $this->createDatabaseDatastore();
 		$databaseDatastore->deleteAll();

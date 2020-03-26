@@ -1,5 +1,6 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\system\MFile;
@@ -9,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MFile;
  *
  * Test class for MWebfileTest.
  */
-class MWebfileTest extends PHPUnit_Framework_TestCase {
+class MWebfileTest extends TestCase {
     /**
      * @var MDatastoreFactory
      */
@@ -19,7 +20,7 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->object = new MWebfile();
     }
@@ -28,7 +29,7 @@ class MWebfileTest extends PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown() : void
     {
     }
 

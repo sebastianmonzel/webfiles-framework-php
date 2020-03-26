@@ -1,12 +1,14 @@
 <?php
 
+use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 
 /**
  * @covers webfilesframework\core\datasystem\file\format\MWebfileStream
  */
-class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
+class MWebfileStreamTest extends TestCase {
     /**
      * @var MDatastoreFactory
      */
@@ -36,7 +38,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
-    protected function setUp()
+    protected function setUp() : void
     {
         $this->object = new MWebfileStream(null);
     }
@@ -45,7 +47,7 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
      * Tears down the fixture, for example, closes a network connection.
      * This method is called after a test is executed.
      */
-    protected function tearDown()
+    protected function tearDown() : void
     {
     }
 
@@ -71,21 +73,19 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
         $this->assertEquals(2,count($webfilesFromStream));
     }
 
-    /**
-     * @expectedException \webfilesframework\MWebfilesFrameworkException
-     * @expectedExceptionMessageRegExp /Error: test that it not works/
-     */
     public function testInstantiationWithMalformedStringThrowsException() {
+
+    	self::expectException("\webfilesframework\MWebfilesFrameworkException");
+    	self::expectExceptionMessage("Error: test that it not works");
 
         $webfileStream = new MWebfileStream("Error: test that it not works");
 
     }
 
-    /**
-     * @expectedException \webfilesframework\MWebfilesFrameworkException
-     * @expectedExceptionMessageRegExp /No webfiles child exists on root element./
-     */
     public function testInstantiationWithWrongXmlThrowsException() {
+
+	    self::expectException("\webfilesframework\MWebfilesFrameworkException");
+	    self::expectExceptionMessage("No webfiles child exists on root element.");
 
         $webfileStream = new MWebfileStream("<test>
 <wrong>
@@ -96,14 +96,13 @@ class MWebfileStreamTest extends PHPUnit_Framework_TestCase {
 
     }
 
-    /**
-     * @expectedException \webfilesframework\MWebfilesFrameworkException
-     * @expectedExceptionMessageRegExp /Not all elements in array are from type MWebfile./
-     */
     public function testInstantiationWithWrongArrayArgumentThrowsException() {
 
+	    self::expectException("\webfilesframework\MWebfilesFrameworkException");
+	    self::expectExceptionMessage("Not all elements in array are from type MWebfile.");
+
         $webfiles = array();
-        $webfiles[0] = new \webfilesframework\core\datastore\types\database\MSampleWebfile();
+        $webfiles[0] = new MSampleWebfile();
         $webfiles[1] = "test";
 
         $webfileStream = new MWebfileStream($webfiles);
