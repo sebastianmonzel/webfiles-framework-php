@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datasystem\file\system\MFile;
 
@@ -29,9 +30,10 @@ class MDirectoryTest extends TestCase {
     protected function tearDown() : void {
     }
     
-    /**
-     * @covers webfilesframework\core\datasystem\file\system\MDirectory::getFiles
-     */
+	/**
+	 * @covers webfilesframework\core\datasystem\file\system\MDirectory::getFiles
+	 * @throws Exception
+	 */
     public function testGetFiles() {
     	
     	$givenFiles = $this->object->getFiles();

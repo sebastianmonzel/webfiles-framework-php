@@ -1,10 +1,14 @@
 <?php
 
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
@@ -50,20 +54,20 @@ class MDatabaseDatastoreTest extends TestCase {
         return $reference;
     }
 
-    /**
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    public function createDatabaseConnectionMock()
+	/**
+	 * @return MockObject|MDatabaseConnection
+	 */
+	public function createDatabaseConnectionMock()
     {
         $databaseConnectionMock = $this
             ->createMock('webfilesframework\core\datasystem\database\MDatabaseConnection');
         return $databaseConnectionMock;
     }
 
-    /**
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
-    public function createPreparedDatabaseConnectionMock()
+	/**
+	 * @return MockObject|MDatabaseConnection
+	 */
+	public function createPreparedDatabaseConnectionMock()
     {
         $databaseConnectionMock = $this->createDatabaseConnectionMock();
         $showTablesResultHandler = $this->createMockForShowTablesResultHandler();
@@ -86,7 +90,7 @@ class MDatabaseDatastoreTest extends TestCase {
     }
 
 	/**
-	 * @return PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject|MMysqlResultHandler
 	 */
     public function createMockForShowTablesResultHandler()
     {
@@ -107,10 +111,9 @@ class MDatabaseDatastoreTest extends TestCase {
         return $showTablesResultHandler;
     }
 
-    /**
-     * @param $tablesMetaInformationResturnObject
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
+	/**
+	 * @return MockObject|MMysqlResultHandler
+	 */
     public function createMockForWebfilesResultHandler()
     {
 
@@ -137,6 +140,11 @@ class MDatabaseDatastoreTest extends TestCase {
         return $webfilesResultHandler;
     }
 
+	/**
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 */
     public function testSearchByTemplate() {
 
         $databaseConnectionMock = $this->createPreparedDatabaseConnectionMock();
@@ -157,9 +165,10 @@ class MDatabaseDatastoreTest extends TestCase {
         self::assertEquals($referenceObject,array_values($result)[0]);
     }
 
-    /**
-     *
-     */
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function testDeleteByTemplate() {
 
         $databaseConnectionMock = $this->createDatabaseConnectionMock();
@@ -182,6 +191,11 @@ class MDatabaseDatastoreTest extends TestCase {
         self::assertNull($result);
     }
 
+	/**
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function testCreationOfNewTableIfItDoesNotExists() {
 
         // TODO erweitern

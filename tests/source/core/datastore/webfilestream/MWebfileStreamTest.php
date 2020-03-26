@@ -1,8 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
+use webfilesframework\MWebfilesFrameworkException;
 
 
 /**
@@ -51,6 +53,10 @@ class MWebfileStreamTest extends TestCase {
     {
     }
 
+	/**
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 */
     public function testGetXML()
     {
         $webfileStream = new MWebfileStream(static::$webfileStreamAsStringReference);
@@ -62,9 +68,11 @@ class MWebfileStreamTest extends TestCase {
         );
     }
     
-    /**
-     * @covers webfilesframework\core\datasystem\file\format\MWebfileStream::getWebfiles
-     */
+	/**
+	 * @covers webfilesframework\core\datasystem\file\format\MWebfileStream::getWebfiles
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function testGetWebfilesOnStringInput() {
 
         $webfileStream = new MWebfileStream(static::$webfileStreamAsStringReference);
@@ -106,8 +114,5 @@ class MWebfileStreamTest extends TestCase {
         $webfiles[1] = "test";
 
         $webfileStream = new MWebfileStream($webfiles);
-
     }
-
-    
 }

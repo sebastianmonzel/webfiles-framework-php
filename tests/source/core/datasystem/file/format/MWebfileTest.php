@@ -4,6 +4,7 @@ use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * @covers webfilesframework\core\datasystem\file\format\MWebfile
@@ -44,6 +45,10 @@ class MWebfileTest extends TestCase {
     	$this->assertEquals($referencedSimplifiedAttributename,$calculatedSimplifiedAttributename);
     }
 
+	/**
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 */
     public function testUnmarshallingAndMarshallingWebfile() {
 
         // UNMARSHALL

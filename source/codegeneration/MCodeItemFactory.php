@@ -18,7 +18,7 @@ class MCodeItemFactory
     /**
      * @param $programmingLanguage
      * @param $className
-     * @return MJavaWebfileClass|MPhpWebfileClass
+     * @return MPhpWebfileClass
      * @throws MWebfilesFrameworkException
      */
     public static function createClass($programmingLanguage, $className)
@@ -26,8 +26,6 @@ class MCodeItemFactory
 
         if ($programmingLanguage == MProgrammingLanguage::PHP) {
             return new MPhpWebfileClass($className);
-        } else if ($programmingLanguage == MProgrammingLanguage::JAVA) {
-            return new MJavaWebfileClass($className);
         } else {
             throw new MWebfilesFrameworkException("Unknown programming language: " . $programmingLanguage);
         }
@@ -39,15 +37,13 @@ class MCodeItemFactory
 	 * @param        $name
 	 * @param        $type
 	 *
-	 * @return MJavaClassAttribute|MPhpClassAttribute
+	 * @return MPhpClassAttribute
 	 * @throws MWebfilesFrameworkException
 	 */
     public static function createClassAttribute($programmingLanguage, $visibility, $name, $type)
     {
         if ($programmingLanguage == MProgrammingLanguage::PHP) {
             return new MPhpClassAttribute($visibility, $name, $type);
-        } else if ($programmingLanguage == MProgrammingLanguage::JAVA) {
-            return new MJavaClassAttribute($visibility, $name, $type);
         } else {
             throw new MWebfilesFrameworkException("Unknown programming language: " . $programmingLanguage);
         }

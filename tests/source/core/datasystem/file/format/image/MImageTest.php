@@ -2,25 +2,28 @@
 
 
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datasystem\file\format\media\image\MImage;
 use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * @covers webfilesframework\core\datasystem\file\format\media\image\MImage
  */
 class MImageTest extends TestCase {
     /**
-     * @var MDatabaseDatasourceDatastore
+     * @var MDatabaseDatastore
      */
     protected $object;
 
 	/**
 	 * @return MDirectoryDatastore
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
 	 */
     public function createDirectoryDatastore()
     {
@@ -53,5 +56,4 @@ class MImageTest extends TestCase {
         $exifDate = $image->readExifDate();
         $this->assertEquals(1482418147,$exifDate);
     }
-
 }

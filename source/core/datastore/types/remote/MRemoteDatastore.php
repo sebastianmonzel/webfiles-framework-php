@@ -9,8 +9,7 @@ use webfilesframework\io\request\MPostHttpRequest;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
 /**
- * Encapsulates the access to a datastore with help of the content
- * information service.
+ * Access a datastore provided by MRemoteDatastoreEndpoint.
  *
  * @author     Sebastian Monzel < mail@sebastianmonzel.de >
  * @since      0.1.7
