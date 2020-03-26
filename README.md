@@ -37,6 +37,12 @@ The webfiles framework generalizes data access to database system, to file syste
 
 ### Samples
 
+[Create your first webfile definition](#create-your-first-webfile-definition)
+[Store a webfile in a datastore](#store-a-webfile-in-a-datastore)
+[Read from DirectoryDatastore](#read-from-directorydatastore)
+[Read from DatabaseDatastore (actually mysql only)](#read-from-databasedatastore-actually-mysql-only)
+
+
 #### Create your first webfile definition
 ```php
 
