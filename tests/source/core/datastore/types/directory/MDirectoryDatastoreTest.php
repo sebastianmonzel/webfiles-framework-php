@@ -201,15 +201,17 @@ class MDirectoryDatastoreTest extends TestCase {
 
     public function testNormalizeLocalDirectory() {
 
-        /*$directoryDatastore = $this->createDirectoryDatastore();
+	    self::assertTrue(true); // dummy check to junit ignore warnings
 
-        $directoryDatastore = new \webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
-            new \webfilesframework\core\datasystem\file\system\MDirectory('E:\owncloud\familie\bilder\2016_12_24__weihnachten-bei-drochterts-test'));
+	    /*$directoryDatastore = $this->createDirectoryDatastore();
 
-        $webfilesArray = $directoryDatastore->getWebfilesAsArray();
+		$directoryDatastore = new \webfilesframework\core\datastore\types\directory\MDirectoryDatastore(
+			new \webfilesframework\core\datasystem\file\system\MDirectory('E:\owncloud\familie\bilder\2016_12_24__weihnachten-bei-drochterts-test'));
 
-        self::assertTrue(is_array($webfilesArray));
-        self::assertEquals(11,count($webfilesArray));
+		$webfilesArray = $directoryDatastore->getWebfilesAsArray();
+
+		self::assertTrue(is_array($webfilesArray));
+		self::assertEquals(11,count($webfilesArray));
 */
         //$directoryDatastore->normalize(false,true);
 
