@@ -267,6 +267,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @return array
 	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
     public function searchByTemplate(MWebfile $template)
     {
@@ -288,6 +289,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
+	 * @throws \ReflectionException
 	 */
 	public function deleteByTemplate(MWebfile $template)
     {

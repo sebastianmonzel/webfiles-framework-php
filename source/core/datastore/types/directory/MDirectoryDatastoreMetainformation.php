@@ -4,6 +4,11 @@ namespace webfilesframework\core\datastore\types\directory;
 
 use webfilesframework\core\datasystem\file\format\MWebfile;
 
+/**
+ * Saves information about the state of the directory datastore:
+ *  -
+ * @package webfilesframework\core\datastore\types\directory
+ */
 class MDirectoryDatastoreMetainformation extends MWebfile
 {
     /** @var string */
