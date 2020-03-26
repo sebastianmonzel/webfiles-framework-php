@@ -37,7 +37,7 @@ The webfiles framework generalizes data access to database system, to file syste
 
 ### Samples
 
-#### Create your first webfile
+#### Create your first webfile definition
 ```php
 
 use webfilesframework\core\datasystem\file\format\MWebfile;
@@ -83,13 +83,51 @@ class Contact extends MWebfile
 }
 ```
 
+#### Store a webfile in a datastore:
+via directory:
+```php
+<?php
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+
+$directoryDatastore = new MDirectoryDatastore(new MDirectory("yourDirectoryToStoreWebfiles"));
+$contact = new Contact();
+$contact->setId(1);
+$contact->setFirstname("Sebastian");
+$contact->setLastname("Monzel");
+
+$directoryDatastore->storeWebfile($contact);
+```
+
+or via database:
+```php
+<?php
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+
+$databaseDatastore = new MDatabaseDatastore(
+                          new MDatabaseConnection(
+                              "localhost",
+                              "yourDatabaseToStoreWebfiles",
+                              "tablePrefixInDatabaseForActualDatastore", // will add this string before every created table name 
+                              "username",
+                              "password"
+                              )
+                      );
+$contact = new Contact();
+$contact->setFirstname("Sebastian");
+$contact->setLastname("Monzel");
+
+$databaseDatastore->storeWebfile($contact);
+```
+
 #### Read from DirectoryDatastore
 ```php
 <?php
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 
-$directoryDatastore = new MDirectoryDatastore(new MDirectory("dir"));
+$directoryDatastore = new MDirectoryDatastore(new MDirectory("yourDirectoryToStoreWebfiles"));
 $directoryDatastore->getWebfilesAsArray();
 ```
 #### Read from DatabaseDatastore (actually mysql only)
@@ -101,16 +139,18 @@ use webfilesframework\core\datasystem\database\MDatabaseConnection;
 $databaseDatastore = new MDatabaseDatastore(
     new MDatabaseConnection(
         "localhost",
-        "wonderfulDatabasename",
-        "myTableprefix",
-        "myuser",
-        "mypassword"
+        "yourDatabaseToStoreWebfiles",
+        "tablePrefixInDatabaseForActualDatastore", // will add this string before every created table name 
+        "username",
+        "password"
         )
 );
 $databaseDatastore->getWebfilesAsArray();
 
 ```
 
+#### Search by template in a datastore
+TODO
 
 #### Transfer data from one datastore to another
 ```php
@@ -127,7 +167,7 @@ $datastoreTransfer->transfer();
 
 ```
 #### Read from RemoteDatastore
-You can make a datastore accessible from remote via http. `MRemoteDatastoreEndpoint` encapsulates the datastore to make
+You can make a datastore accessible from remote via http(s). `MRemoteDatastoreEndpoint` encapsulates the datastore to make
 it accessible. On the other site you can use `MRemoteDatastore` to access the encapsulated datastore. 
 
 *Serverside to provide access to the datastore:*
