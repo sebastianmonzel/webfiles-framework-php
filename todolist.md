@@ -18,4 +18,6 @@
  - [ ] MDatastoreTransfer: inkrementeller Transfer ermöglichen (irgendwo speichern was oder bis zu welchem punkt schon transferiert wurde)
  - [ ] Gaufrette nochmal anschauen als abstraktion für directory datastore
  - [ ] directory-datastore: wenn nciht alle webfiles ein timestamp und eine id haben eine exception werden
- 
+ - [ ] nur dateiendungen mit .webfile zulassen bei storeWebfile
+ - [] bei invalidem payload kontrollierter rausgehen
+ - [ ] MDatabaseDatastore: wie kann man überschneidungen in datenbanken vermeiden? z.b. durch gleiches prefix
