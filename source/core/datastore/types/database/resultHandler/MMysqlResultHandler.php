@@ -2,10 +2,12 @@
 
 namespace webfilesframework\core\datastore\types\database\resultHandler;
 
+use mysqli_result;
+
 class MMysqlResultHandler implements MIResultHandler
 {
     /**
-     * @var \mysqli_result
+     * @var mysqli_result
      */
     var $result;
 

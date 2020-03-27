@@ -5,11 +5,10 @@ namespace webfilesframework\core\datastore\types\directory;
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datasystem\file\format\MWebfile;
-
-
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\MWebfilesFrameworkException;
+
 
 /**
  * Wrapper class to connect to a datastore based on a directory.

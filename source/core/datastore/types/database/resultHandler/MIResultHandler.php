@@ -3,6 +3,8 @@
 namespace webfilesframework\core\datastore\types\database\resultHandler;
 
 
+use stdClass;
+
 interface MIResultHandler
 {
 
@@ -12,7 +14,7 @@ interface MIResultHandler
     public function getResultSize();
 
     /**
-     * @return object|\stdClass
+     * @return object|stdClass
      */
     public function fetchNextResultObject();
 

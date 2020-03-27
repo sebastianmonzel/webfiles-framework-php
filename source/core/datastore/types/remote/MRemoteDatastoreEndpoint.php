@@ -2,9 +2,12 @@
 
 namespace webfilesframework\core\datastore\types\remote;
 
+use ReflectionException;
 use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Class MRemoteDatastoreEndpoint
@@ -41,9 +44,9 @@ class MRemoteDatastoreEndpoint {
 	}
 
 	/**
-	 * @throws \ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
 	 */
 	public function handleRemoteCall() {
 
@@ -92,7 +95,7 @@ class MRemoteDatastoreEndpoint {
             <h1>Remote datastore</h1>
             <p>Success: You are connected to a webfile remote datastore but you did not pass any parameter or not the right ones.</p>
             <p>Remote datastores supports parameter submission via get and via post method of http protocol. To query the datastore you have to to pass the following parameters:</p>
-            <table border="1">
+            <table style="border-width: 1px">
                 <tr>
                     <th>Parameters</th>
                     <th>Description</th>

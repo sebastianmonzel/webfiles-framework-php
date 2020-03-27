@@ -2,7 +2,6 @@
 
 namespace webfilesframework\core\datasystem\file\format;
 
-use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**

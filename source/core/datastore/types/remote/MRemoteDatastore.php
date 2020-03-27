@@ -3,10 +3,12 @@
 namespace webfilesframework\core\datastore\types\remote;
 
 
+use ReflectionException;
 use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\io\request\MPostHttpRequest;
-use webfilesframework\core\datasystem\file\format\MWebfile;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Encapsulates the access to a datastore with help of the content
@@ -38,14 +40,13 @@ class MRemoteDatastore extends MAbstractDatastore
         return false;
     }
 
-    private function doRemoteCall($data = null)
-    {
-        $request = new MPostHttpRequest($this->m_sDatastoreUrl, $data);
-        $response = $request->makeRequest();
-
-        return $response;
-    }
-
+	/**
+	 * @param null $data
+	 *
+	 * @return MWebfileStream
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 */
     public function getWebfilesAsStream($data = null)
     {
 
@@ -58,6 +59,13 @@ class MRemoteDatastore extends MAbstractDatastore
         return $this->getWebfilesAsStream()->getWebfiles();
     }
 
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function searchByTemplate(MWebfile $template)
     {
 
@@ -79,7 +87,11 @@ class MRemoteDatastore extends MAbstractDatastore
         return null;
     }
 
-
+	/**
+	 * @param MWebfile $webfile
+	 *
+	 * @throws ReflectionException
+	 */
     public function storeWebfile(MWebfile $webfile)
     {
 
@@ -90,6 +102,11 @@ class MRemoteDatastore extends MAbstractDatastore
         $this->doRemoteCall($data);
     }
 
+	/**
+	 * @param MWebfile $template
+	 *
+	 * @throws ReflectionException
+	 */
     public function deleteByTemplate(MWebfile $template)
     {
         $data = array();
@@ -98,5 +115,13 @@ class MRemoteDatastore extends MAbstractDatastore
 
         $this->doRemoteCall($data);
     }
+
+	private function doRemoteCall($data = null)
+	{
+		$request = new MPostHttpRequest($this->m_sDatastoreUrl, $data);
+		$response = $request->makeRequest();
+
+		return $response;
+	}
 
 }

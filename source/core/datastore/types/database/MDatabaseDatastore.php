@@ -2,20 +2,22 @@
 
 namespace webfilesframework\core\datastore\types\database;
 
-use webfilesframework\core\datastore\MDatastoreException;
-use webfilesframework\core\datasystem\database\MDatabaseTableColumn;
-use webfilesframework\core\datasystem\file\format\MWebfile;
-use webfilesframework\core\datastore\MAbstractDatastore;
-use webfilesframework\core\datasystem\database\MDatabaseConnection;
-use webfilesframework\core\datasystem\database\MDatabaseTable;
-use webfilesframework\core\datasystem\database\MDatabaseDatatypes;
-use webfilesframework\core\datastore\MISingleDatasourceDatastore;
-
+use ReflectionException;
+use stdClass;
 use webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
 use webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\core\datasystem\database\MDatabaseDatatypes;
+use webfilesframework\core\datasystem\database\MDatabaseTable;
+use webfilesframework\core\datasystem\database\MDatabaseTableColumn;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\time\MTimespan;
 use webfilesframework\MWebfilesFrameworkException;
+
 
 /**
  * Datastore based on a database. Actually only mysql is supported.
@@ -86,7 +88,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @return bool
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function webfileExists(MWebfile $webfile)
 	{
@@ -118,7 +120,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
 	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function getWebfilesAsStream()
     {
@@ -131,7 +133,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 * @throws \Exception
 	 */
     public function getWebfilesAsArray()
@@ -166,7 +168,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @throws MDatabaseDatastoreException
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function storeWebfile(MWebfile $webfile)
     {
@@ -193,7 +195,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @return int
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false)
 	{
@@ -259,7 +261,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @return int
 	 * @throws MDatabaseDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function update(MWebfile $webfile, $useOnlySimpleDatatypes = false)
 	{
@@ -387,7 +389,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
     {
@@ -478,7 +480,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @return array|void
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function getLatestWebfiles($count = 5)
     {
@@ -504,7 +506,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @return mixed|null
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function getNextWebfileForTimestamp($timestamp)
     {
@@ -606,7 +608,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	/**
 	 * @param $tablename
 	 *
-	 * @return object|\stdClass|null
+	 * @return object|stdClass|null
 	 * @throws MWebfilesFrameworkException
 	 */
     private function resolveMetadataForTablename($tablename)
@@ -632,7 +634,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @return mixed
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function retrieveWebfileForMetadataDbObject($object) {
 
@@ -651,7 +653,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @return array
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function searchByTemplate(MWebfile $template)
     {
@@ -683,7 +685,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 *
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function getWebfilesByTablename($tableName,$className = null,$condition = null,$order = null)
     {
@@ -748,7 +750,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @param MWebfile $webfile
 	 *
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function translateTemplateIntoCondition(MWebfile $webfile)
     {
@@ -803,7 +805,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @param MWebfile $template
 	 *
 	 * @return string
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function translateTemplateIntoSorting(MWebfile $template)
     {
@@ -849,7 +851,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @param bool $saveThumbnailsForImages
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
 
@@ -923,7 +925,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @param MWebfile $webfile
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function deleteByTemplate(MWebfile $webfile)
 	{

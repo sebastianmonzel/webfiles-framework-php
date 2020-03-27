@@ -2,13 +2,13 @@
 
 namespace webfilesframework\core\datastore\types\mail;
 
-use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\MISingleDatasourceDatastore;
+use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datasystem\file\system\MFile;
-use webfilesframework\core\datastore\MISingleDatasourceDatastore;
-use webfilesframework\core\datastore\MDatastoreException;
 
 /**
  * Class to connect to a datastore based on a imap mailaccount.
