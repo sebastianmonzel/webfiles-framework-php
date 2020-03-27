@@ -3,8 +3,8 @@
 
 use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
-use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
 
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
