@@ -1,6 +1,8 @@
 <?php
 
 namespace webfilesframework\core\datasystem\file\format;
+use ReflectionClass;
+use ReflectionProperty;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -113,7 +115,7 @@ class MWebfile {
             $classname = (string)$root->attributes()->classname;
 
             // INSTANCIATE NEW
-            $ref = new \ReflectionClass($classname);
+            $ref = new ReflectionClass($classname);
             $targetObject = $ref->newInstanceWithoutConstructor();
         }
 
@@ -122,7 +124,7 @@ class MWebfile {
 
         /** @var \SimpleXMLElement $value */
         foreach ($objectAttributes as $value) {
-            /** @var \ReflectionProperty $attribute */
+            /** @var ReflectionProperty $attribute */
             foreach ($attributes as $attribute) {
 
                 $attribute->setAccessible(true);
@@ -167,7 +169,7 @@ class MWebfile {
 
             $attributes = $template->getAttributes(true);
 
-            /** @var \ReflectionProperty $attribute */
+            /** @var ReflectionProperty $attribute */
             foreach ($attributes as $attribute) {
 
                 $attribute->setAccessible(true);
@@ -229,16 +231,16 @@ class MWebfile {
 	 *
 	 * @param bool $simpleDatatypesOnly
 	 *
-	 * @return \ReflectionProperty[]
+	 * @return ReflectionProperty[]
 	 * @throws \ReflectionException
 	 */
     public static function getAttributes($simpleDatatypesOnly = false)
     {
-        $oSelfReflection = new \ReflectionClass(static::classname());
+        $oSelfReflection = new ReflectionClass(static::classname());
         $oPropertyArray = $oSelfReflection->getProperties(
-            \ReflectionProperty::IS_PUBLIC |
-            \ReflectionProperty::IS_PROTECTED |
-            \ReflectionProperty::IS_PRIVATE);
+            ReflectionProperty::IS_PUBLIC |
+            ReflectionProperty::IS_PROTECTED |
+            ReflectionProperty::IS_PRIVATE);
 
         $count = 0;
         while ($count < count($oPropertyArray)) {
@@ -407,7 +409,7 @@ class MWebfile {
 	 * @throws \ReflectionException
 	 */
 	public static function createWebfileByClassname($classname) {
-		$ref = new \ReflectionClass($classname);
+		$ref = new ReflectionClass($classname);
 		$webfile = $ref->newInstanceWithoutConstructor();
 		if (! $webfile instanceof MWebfile ) {
 			throw new MWebfilesFrameworkException("given class '" . $classname . " does not extend MWebfile.");

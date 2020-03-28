@@ -2,7 +2,9 @@
 
 namespace webfilesframework\core\datastore\types\database;
 
+use Exception;
 use ReflectionException;
+use ReflectionProperty;
 use stdClass;
 use webfilesframework\core\datastore\functions\sorting\MAscendingSorting;
 use webfilesframework\core\datastore\functions\sorting\MDescendingSorting;
@@ -134,7 +136,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @return array
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function getWebfilesAsArray()
     {
@@ -148,7 +150,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $oDatabaseResultHandler = $this->databaseConnection->queryAndHandle("SELECT * FROM " . $metadataTableName);
         if (!$oDatabaseResultHandler->getResultSize() > 0) {
-            throw new \Exception("no tables given in metadata.");
+            throw new Exception("no tables given in metadata.");
         }
         while ( $result = $oDatabaseResultHandler->fetchNextResultObject() ) {
             $webfilesForTable = $this->getWebfilesByTableName($result->tablename, $result->classname);
@@ -409,7 +411,7 @@ class MDatabaseDatastore extends MAbstractDatastore
             $tableName);
         $table->specifyIdentifier("id", 10);
 
-        /** @var \ReflectionProperty $oAttribute */
+        /** @var ReflectionProperty $oAttribute */
         foreach ($attributeArray as $oAttribute) {
 
             $sAttributeName = $oAttribute->getName();
@@ -576,7 +578,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	}
 
 	/**
-	 *
+	 * @throws MWebfilesFrameworkException
 	 */
 	private function createMetadataTable()
 	{
@@ -870,6 +872,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
+	/**
+	 * @throws MWebfilesFrameworkException
+	 */
 	private function createMetadataNormalizationTable()
 	{
 

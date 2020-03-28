@@ -2,6 +2,8 @@
 
 namespace webfilesframework\core\datastore\types\directory;
 
+use Exception;
+use ReflectionException;
 use webfilesframework\core\datastore\MAbstractCachableDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MISingleDatasourceDatastore;
@@ -48,7 +50,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function __construct(MDirectory $directory)
     {
@@ -77,7 +79,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function getWebfilesAsStream()
     {
@@ -88,7 +90,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function getWebfilesAsArray()
     {
@@ -101,8 +103,8 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
-	 * @throws \Exception
+	 * @throws ReflectionException
+	 * @throws Exception
 	 */
 	public function getLatestWebfiles($count = 5)
     {
@@ -144,7 +146,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function translateFilesIntoWebfilesArray($files)
     {
@@ -170,7 +172,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @return MWebfile|null
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     private function readFileAsWebfile(MFile $file, $forceTransformation = false)
     {
@@ -214,7 +216,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @param MFile    $file
 	 * @param MWebfile $webfile
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function writeWebfileAsFile(MFile $file, MWebfile $webfile)
 	{
@@ -226,7 +228,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @param MWebfile $webfile
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function storeWebfile(MWebfile $webfile)
     {
@@ -250,7 +252,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @param MWebfileStream $webfileStream
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
@@ -267,7 +269,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function searchByTemplate(MWebfile $template)
     {
@@ -289,7 +291,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 *
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function deleteByTemplate(MWebfile $template)
     {
@@ -325,7 +327,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	private function createWebfileIdToFilenameMapping()
     {
@@ -359,8 +361,8 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @param bool $saveThumbnailsForImages
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
-	 * @throws \Exception
+	 * @throws ReflectionException
+	 * @throws Exception
 	 */
     public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
         $filesArray = $this->m_oDirectory->getFiles();
@@ -383,7 +385,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @param bool  $saveThumbnailsForImages
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function normalizeFile(MFile $file, $useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
         $webfile = $this->readFileAsWebfile($file);
@@ -464,7 +466,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @return MWebfile|null
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function readMetaInformation() {
         $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
@@ -474,7 +476,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @param MDirectoryDatastoreMetainformation $metainformation
 	 *
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function writeMetaInformation(MDirectoryDatastoreMetainformation $metainformation) {
         $file = new MFile($this->m_oDirectory->getPath() . "\\" . ".metainformation");
