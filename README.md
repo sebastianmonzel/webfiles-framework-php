@@ -18,7 +18,7 @@
 [Codeclimate coverage link]: https://codeclimate.com/github/sebastianmonzel/webfiles-framework-php/coverage
 
 Api-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-api/<br />
-Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-doc/<br />
+Documentation: http://sebastianmonzel.github.io/webfiles-framework-php-doc/ ([github-repo](https://github.com/sebastianmonzel/webfiles-framework-php-doc))<br />
 Packagist: https://packagist.org/packages/webfiles-framework/framework
 
 Access and describe data in a generalized way. Interact with remote data.<br />
