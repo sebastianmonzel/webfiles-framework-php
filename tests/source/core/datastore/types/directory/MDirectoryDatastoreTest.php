@@ -2,10 +2,14 @@
 
 
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\MAbstractDatastore;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datastore\MDatastoreTransfer;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * @covers webfilesframework\core\datastore\types\directory\MDirectoryDatastore
@@ -15,10 +19,10 @@ class MDirectoryDatastoreTest extends TestCase {
     protected $object;
 
 	/**
-	 * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
+	 * @return MDirectoryDatastore
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
 	 */
     public function createDirectoryDatastore()
     {
@@ -27,16 +31,19 @@ class MDirectoryDatastoreTest extends TestCase {
         return $directoryDatastore;
     }
 
-    /**
-     * @return \webfilesframework\core\datastore\MAbstractDatastore
-     */
+	/**
+	 * @return MAbstractDatastore
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     private function createTempDirectoryDatastore()
     {
 
         $directory = new MDirectory(
             __DIR__ . '/../../../../../resources/targetTransferDirectoryDatastore');
 
-        return \webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
+        return MDatastoreFactory::createDatastore($directory);
     }
 
 
@@ -101,8 +108,8 @@ class MDirectoryDatastoreTest extends TestCase {
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
 	 */
 	public function testSearchByTemplate() {
 
@@ -174,8 +181,8 @@ class MDirectoryDatastoreTest extends TestCase {
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
 	 */
 	public function testDoNormalizeFileOnlyOnce() {
 

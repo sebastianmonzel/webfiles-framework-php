@@ -67,5 +67,46 @@ class MSampleWebfile extends MWebfile
         $this->m_sCity = $m_sCity;
     }
 
+	/**
+	 * @return mixed
+	 */
+	public function getFirstname() {
+		return $this->m_sFirstname;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getLastname() {
+		return $this->m_sLastname;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getStreet() {
+		return $this->m_sStreet;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getHousenumber() {
+		return $this->m_sHousenumber;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getPostcode() {
+		return $this->m_sPostcode;
+	}
+
+	/**
+	 * @return mixed
+	 */
+	public function getCity() {
+		return $this->m_sCity;
+	}
 
 }

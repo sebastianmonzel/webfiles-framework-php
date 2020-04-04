@@ -36,8 +36,10 @@ class MRemoteDatastore extends MAbstractDatastore
 
     public function isReadOnly()
     {
-        // TODO
-        return false;
+	    $data = array();
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_IS_READ_ONLY;
+
+	    $this->doRemoteCall($data);
     }
 
 	/**
@@ -49,11 +51,15 @@ class MRemoteDatastore extends MAbstractDatastore
 	 */
     public function getWebfilesAsStream($data = null)
     {
-
         $callResult = $this->doRemoteCall($data);
         return new MWebfileStream($callResult);
     }
 
+	/**
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function getWebfilesAsArray()
     {
         return $this->getWebfilesAsStream()->getWebfiles();
@@ -70,21 +76,38 @@ class MRemoteDatastore extends MAbstractDatastore
     {
 
         $data = array();
-        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
         return $this->getWebfilesAsStream($data)->getWebfiles();
     }
 
+	/**
+	 * @param int $count
+	 *
+	 * @return array
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function getLatestWebfiles($count = 5)
     {
-        // TODO
+	    $data = array();
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_COUNT]  = $count;
+
+	    return $this->getWebfilesAsStream($data)->getWebfiles();
     }
 
+	/**
+	 * @param $timestamp
+	 */
     public function getNextWebfileForTimestamp($timestamp)
     {
-        // TODO: Implement getNextWebfileForTimestamp() method.
-        return null;
+	    $data = array();
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_GET_NEXT_WEBFILE_FOR_TIMESTAMP;
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TIMESTAMP] = $timestamp;
+
+	    $this->doRemoteCall($data);
     }
 
 	/**
@@ -96,7 +119,7 @@ class MRemoteDatastore extends MAbstractDatastore
     {
 
         $data = array();
-        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_STORE_WEBFILE;
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]  = MRemoteDatastoreEndpoint::$METHOD_NAME_STORE_WEBFILE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_WEBFILE] = $webfile->marshall();
 
         $this->doRemoteCall($data);
@@ -110,7 +133,7 @@ class MRemoteDatastore extends MAbstractDatastore
     public function deleteByTemplate(MWebfile $template)
     {
         $data = array();
-        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_DELETE_BY_TEMPLATE;
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_DELETE_BY_TEMPLATE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
         $this->doRemoteCall($data);

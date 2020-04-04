@@ -17,14 +17,23 @@ class MRemoteDatastoreEndpoint {
 	/** @var MAbstractDatastore */
 	private $m_oDatastore;
 
-	public static $METHOD_NAME_RETRIEVE_WEBFILES  = "retrieveWebfiles";
-	public static $METHOD_NAME_SEARCH_BY_TEMPLATE = "searchByTemplate";
-	public static $METHOD_NAME_STORE_WEBFILE      = "storeWebfile";
-	public static $METHOD_NAME_DELETE_BY_TEMPLATE = "deleteByTemplate";
+	// READ
+	public static $METHOD_NAME_IS_READ_ONLY                   = "isReadOnly";
+	public static $METHOD_NAME_RETRIEVE_WEBFILES              = "retrieveWebfiles";
+	public static $METHOD_NAME_SEARCH_BY_TEMPLATE             = "searchByTemplate";
+	public static $METHOD_NAME_GET_LATEST_WEBFILES            = "getLatestWebfiles";
+	public static $METHOD_NAME_GET_NEXT_WEBFILE_FOR_TIMESTAMP = "getNextWebfileForTimestamp";
 
+	// WRITE
+	public static $METHOD_NAME_STORE_WEBFILE        = "storeWebfile";
+	public static $METHOD_NAME_DELETE_BY_TEMPLATE   = "deleteByTemplate";
+
+	// PAYLOAD
 	public static $PAYLOAD_FIELD_NAME_WEBFILE     = "webfile";
 	public static $PAYLOAD_FIELD_NAME_TEMPLATE    = "template";
 	public static $PAYLOAD_FIELD_NAME_METHOD      = "method";
+	public static $PAYLOAD_FIELD_NAME_COUNT       = "count";
+	public static $PAYLOAD_FIELD_NAME_TIMESTAMP   = "timestamp";
 
 
 	public function __construct( MAbstractDatastore $datastore ) {
@@ -44,6 +53,8 @@ class MRemoteDatastoreEndpoint {
 	}
 
 	/**
+     * Will be called in an endpoint to handle incoming calls to the remote datastore.
+     *
 	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
@@ -54,8 +65,7 @@ class MRemoteDatastoreEndpoint {
 
 			if ( $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_RETRIEVE_WEBFILES ) {
 				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
-			} else if (
-				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
+			} else if ( $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_SEARCH_BY_TEMPLATE
 				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) ) {
 
 				// GET BY TEMPLATE
@@ -64,17 +74,22 @@ class MRemoteDatastoreEndpoint {
 				$webfiles       = $this->m_oDatastore->searchByTemplate( $template );
 				$webfilesStream = new MWebfileStream( $webfiles );
 
-			} else if (
-				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_STORE_WEBFILE
-				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_WEBFILE ) ) {
+			} else if ( $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_STORE_WEBFILE
+			            && $this->issetParam( static::$PAYLOAD_FIELD_NAME_WEBFILE ) ) {
 
 				// STORE
 				$webfile = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_WEBFILE ] );
 				$this->m_oDatastore->storeWebfile( $webfile );
 
 				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
-			} else if (
-				$this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_DELETE_BY_TEMPLATE
+			} else if ( $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_GET_LATEST_WEBFILES
+				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_COUNT ) ) {
+
+				// GET LATEST WEBFILES
+				$count = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_COUNT ] );
+
+				$webfilesStream = $this->m_oDatastore->getLatestWebfiles($count);
+			} else if ( $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_DELETE_BY_TEMPLATE
 				&& $this->issetParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) ) {
 
 				// DELETE
