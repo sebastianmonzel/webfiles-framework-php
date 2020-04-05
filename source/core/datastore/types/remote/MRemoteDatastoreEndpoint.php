@@ -25,8 +25,8 @@ class MRemoteDatastoreEndpoint {
 	public static $METHOD_NAME_GET_NEXT_WEBFILE_FOR_TIMESTAMP = "getNextWebfileForTimestamp";
 
 	// WRITE
-	public static $METHOD_NAME_STORE_WEBFILE        = "storeWebfile";
-	public static $METHOD_NAME_DELETE_BY_TEMPLATE   = "deleteByTemplate";
+	public static $METHOD_NAME_STORE_WEBFILE = "storeWebfile";
+	public static $METHOD_NAME_DELETE_BY_TEMPLATE = "deleteByTemplate";
 
 	// PAYLOAD
 	public static $PAYLOAD_FIELD_NAME_WEBFILE     = "webfile";
@@ -122,7 +122,11 @@ class MRemoteDatastoreEndpoint {
 			} else if ( $this->isReadOnly() ) { // IS READONLY
 
 				$isReadOnly = $this->m_oDatastore->isReadOnly();
-				echo $isReadOnly;
+				if ( $isReadOnly) {
+				    echo "true";
+                } else {
+				    echo "false";
+                };
 
 				return;
 
