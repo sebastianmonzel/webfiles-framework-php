@@ -132,7 +132,6 @@ class MDatabaseDatastore extends MAbstractDatastore
 	/**
 	 * Returns all webfiles defined in datastore as array. (without looking for type of webfile)
 	 *
-	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
 	 * @return array
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException

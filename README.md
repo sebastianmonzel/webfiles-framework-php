@@ -135,7 +135,7 @@ use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 
 $directoryDatastore = new MDirectoryDatastore(new MDirectory("yourDirectoryToStoreWebfiles"));
-$directoryDatastore->getWebfilesAsArray();
+$directoryDatastore->getAllWebfiles();
 ```
 #### Read from DatabaseDatastore (actually mysql only)
 ```php
@@ -152,7 +152,7 @@ $databaseDatastore = new MDatabaseDatastore(
         "password"
         )
 );
-$databaseDatastore->getWebfilesAsArray();
+$databaseDatastore->getAllWebfiles();
 
 ```
 
@@ -199,5 +199,5 @@ use webfilesframework\core\datastore\types\remote\MRemoteDatastore;
 $datastoreUrl = "http://localhost:1234/datastore/";
 
 $remoteDatastore = new MRemoteDatastore($datastoreUrl);
-$remoteDatastore->getWebfilesAsArray();
+$remoteDatastore->getAllWebfiles();
 ```

@@ -148,23 +148,23 @@ class MDirectoryDatastoreTest extends TestCase {
     public function testCreateAndDeleteByTemplate() {
 
         $databaseDatastore = $this->createDirectoryDatastore();
-        self::assertEquals(3,count($databaseDatastore->getWebfilesAsArray()));
+        self::assertEquals(3,count($databaseDatastore->getAllWebfiles()->getWebfiles()));
         $databaseDatastore->storeWebfile($this->createReferenceSampleObject3());
-        self::assertEquals(4,count($databaseDatastore->getWebfilesAsArray()));
+        self::assertEquals(4,count($databaseDatastore->getAllWebfiles()->getWebfiles()));
 
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setLastname("Hauber");
         $databaseDatastore->deleteByTemplate($template);
-        self::assertEquals(3,count($databaseDatastore->getWebfilesAsArray()));
+        self::assertEquals(3,count($databaseDatastore->getAllWebfiles()->getWebfiles()));
     }
 
 
 
-    public function testGetWebfilesAsArray() {
+    public function testGetAllWebfiles() {
 
         $directoryDatastore = $this->createDirectoryDatastore();
-        $webfilesArray = $directoryDatastore->getWebfilesAsArray();
+        $webfilesArray = $directoryDatastore->getAllWebfiles()->getWebfiles();
 
 
         self::assertTrue(is_array($webfilesArray));
