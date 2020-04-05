@@ -25,7 +25,7 @@ class MRemoteDatastoreTest extends TestCase {
 		self::assertNotNull($webfilesAsStream);
 		$webfilesArray = $webfilesAsStream->getWebfiles();
 		self::assertTrue(is_array( $webfilesArray ));
-		self::assertEquals(2, count( $webfilesArray ));
+		self::assertCount(2, $webfilesArray);
 
 		/** @var MSampleWebfile $firstWebfile */
 		$firstWebfile = $webfilesArray[0];
@@ -48,7 +48,7 @@ class MRemoteDatastoreTest extends TestCase {
 		self::assertNotNull($webfilesArray);
 		self::assertTrue(is_array($webfilesArray));
 
-		self::assertEquals(1, count($webfilesArray));
+		self::assertCount(1, $webfilesArray);
 
 		/** @var MSampleWebfile $firstWebfile */
 		$firstWebfile = $webfilesArray[0];
@@ -71,7 +71,7 @@ class MRemoteDatastoreTest extends TestCase {
 
 		self::assertNotNull($webfilesArray);
 		self::assertTrue(is_array($webfilesArray));
-		self::assertEquals(0, count($webfilesArray));
+		self::assertCount(0, $webfilesArray);
 	}
 
 
@@ -84,17 +84,36 @@ class MRemoteDatastoreTest extends TestCase {
 
 		$webfileToStore->setId(4);
 		$webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
+		self::assertCount(3, $webfilesStream->getWebfiles());
 
 		$webfileToStore->setId(5);
 		$webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-		self::assertEquals(4, count($webfilesStream->getWebfiles()));
+		self::assertCount(4, $webfilesStream->getWebfiles());
 
 		$searchtemplate = new MSampleWebfile();
 		$searchtemplate->presetForTemplateSearch();
 		$searchtemplate->setLastname("Schmidt");
-
 		$webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
-		self::assertEquals(2, count($webfilesStream->getWebfiles()));
+		self::assertCount(2, $webfilesStream->getWebfiles());
+	}
+
+	public function testGetNextWebfileForTimestamp() {
+
+		$remoteDatastore = $this->createRemoteDatastore();
+
+		$next_webfile_for_timestamp = $remoteDatastore->getNextWebfileForTimestamp( -1 );
+		// TODO für die methode  muss man normalize auf dem directory datastore aufrufen -
+		// TODO normalize gibt es jedoch nicht im remote datastore - soll ich die normalize durchleiten?
+		//self::assertNotNull($next_webfile_for_timestamp);
+		self::assertEquals("","");
+	}
+
+	public function testIsReadonly() {
+
+		$remoteDatastore = $this->createRemoteDatastore();
+
+		$readOnly = $remoteDatastore->isReadOnly();
+		self::assertFalse($readOnly);
 	}
 
 }

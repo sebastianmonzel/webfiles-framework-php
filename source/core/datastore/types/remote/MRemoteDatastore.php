@@ -19,7 +19,7 @@ use webfilesframework\MWebfilesFrameworkException;
  */
 class MRemoteDatastore extends MAbstractDatastore
 {
-
+	// TODO exceptions von originärem datastore wie druchreichen?
     private $m_sDatastoreUrl;
 
 
@@ -39,7 +39,7 @@ class MRemoteDatastore extends MAbstractDatastore
 	    $data = array();
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_IS_READ_ONLY;
 
-	    $this->doRemoteCall($data);
+	    return $this->doRemoteCall($data);
     }
 
 	/**

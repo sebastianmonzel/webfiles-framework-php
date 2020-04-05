@@ -38,6 +38,7 @@ abstract class MAbstractDatastore extends MWebfile
      * the sorting to true or false.
      *
      * @param $timestamp
+     * @return MWebfile
      *
      * @throws MDatastoreException
      */
@@ -65,6 +66,7 @@ abstract class MAbstractDatastore extends MWebfile
      * @param int $count Count of webfiles to be selected.
      * @return array list of webfiles
      */
+    // TODO webfilesstream als return nehmen
     public abstract function getLatestWebfiles($count = 5);
 
 
