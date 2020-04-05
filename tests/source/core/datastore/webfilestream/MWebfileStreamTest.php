@@ -63,7 +63,7 @@ class MWebfileStreamTest extends TestCase {
     }
     
     /**
-     * @covers webfilesframework\core\datasystem\file\format\MWebfileStream::getWebfiles
+     * @covers webfilesframework\core\datasystem\file\format\MWebfileStream::getArray
      */
     public function testGetWebfilesOnStringInput() {
 
