@@ -116,7 +116,7 @@ class MCombinedDatastore extends MAbstractDatastore
     /**
      * @see MAbstractDatastore:getWebfilestream()
      */
-    public function getWebfilesAsStream()
+    public function getAllWebfiles()
     {
 
         $webfiles = $this->getWebfilesAsArray();
@@ -144,7 +144,7 @@ class MCombinedDatastore extends MAbstractDatastore
 
     }
 
-    public function getWebfilesAsArray()
+    private function getWebfilesAsArray()
     {
         if (count($this->registeredDatastores) == 0) {
             //throw new Exception

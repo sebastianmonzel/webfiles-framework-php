@@ -66,7 +66,7 @@ class MRemoteDatastoreEndpoint {
 
 			if ( $this->isRetrieveWebfiles() ) { // GET BY TEMPLATE
 
-				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
+				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
 				echo $webfilesStream->getXML();
 
 				return;
@@ -86,7 +86,7 @@ class MRemoteDatastoreEndpoint {
 				$webfile = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_WEBFILE ] );
 				$this->m_oDatastore->storeWebfile($webfile);
 
-				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
+				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
 				echo $webfilesStream->getXML();
 
 				return;
@@ -114,7 +114,7 @@ class MRemoteDatastoreEndpoint {
 				$webfile = MWebfile::staticUnmarshall( $this->getParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) );
 				$this->m_oDatastore->deleteByTemplate( $webfile );
 
-				$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
+				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
 				echo $webfilesStream->getXML();
 
 				return;
@@ -134,7 +134,7 @@ class MRemoteDatastoreEndpoint {
 
 		} else {
 
-			$webfilesStream = $this->m_oDatastore->getWebfilesAsStream();
+			$webfilesStream = $this->m_oDatastore->getAllWebfiles();
 			echo $webfilesStream->getXML();
 
 			return;

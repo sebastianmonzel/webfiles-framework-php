@@ -73,15 +73,15 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
 	/**
-	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsStream()
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
 	 * @throws \ReflectionException
+	 *@see \webfilesframework\core\datastore\MAbstractDatastore::getAllWebfiles()
 	 */
-    public function getWebfilesAsStream()
+    public function getAllWebfiles()
     {
         $this->initDatastore();
-        return $this->directoryDatastore->getWebfilesAsStream();
+        return $this->directoryDatastore->getAllWebfiles();
     }
 
 	/**

@@ -124,13 +124,13 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
-    public function getWebfilesAsStream()
+    public function getAllWebfiles()
     {
-        return new MWebfileStream($this->getWebfilesAsArray());
+        return new MWebfileStream($this->getAllWebfilesAsArray());
     }
 
 	/**
-	 * Returns als webfiles defined in datastore as array. (without looking for type of webfile)
+	 * Returns all webfiles defined in datastore as array. (without looking for type of webfile)
 	 *
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilesAsArray()
 	 * @return array
@@ -138,7 +138,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	 * @throws ReflectionException
 	 * @throws Exception
 	 */
-    public function getWebfilesAsArray()
+    private function getAllWebfilesAsArray()
     {
         $webfilesArray = array();
 
@@ -862,7 +862,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 		    $this->createMetadataNormalizationTable();
 	    }
 
-        $webfiles = $this->getWebfilesAsArray();
+        $webfiles = $this->getAllWebfilesAsArray();
 
         /** @var MWebfile $webfile */
         foreach ($webfiles as $webfile) {

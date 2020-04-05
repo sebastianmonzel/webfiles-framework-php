@@ -56,20 +56,10 @@ class MRemoteDatastore extends MAbstractDatastore
 	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 */
-    public function getWebfilesAsStream($data = null)
+    public function getAllWebfiles($data = null)
     {
         $callResult = $this->doRemoteCall($data);
         return new MWebfileStream($callResult);
-    }
-
-	/**
-	 * @return array
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
-    public function getWebfilesAsArray()
-    {
-        return $this->getWebfilesAsStream()->getWebfiles();
     }
 
 	/**
@@ -86,7 +76,7 @@ class MRemoteDatastore extends MAbstractDatastore
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
-        return $this->getWebfilesAsStream($data)->getWebfiles();
+        return $this->getAllWebfiles($data)->getWebfiles();
     }
 
 	/**
@@ -102,7 +92,7 @@ class MRemoteDatastore extends MAbstractDatastore
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_COUNT]  = $count;
 
-	    return $this->getWebfilesAsStream($data)->getWebfiles();
+	    return $this->getAllWebfiles($data)->getWebfiles();
     }
 
 	/**

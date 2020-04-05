@@ -81,9 +81,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
-	public function getWebfilesAsStream()
+	public function getAllWebfiles()
     {
-        $webfileArray = $this->getWebfilesAsArray();
+        $webfileArray = $this->getAllWebfilesAsArray();
         return new MWebfileStream($webfileArray);
     }
 
@@ -92,7 +92,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 * @throws MWebfilesFrameworkException
 	 * @throws Exception
 	 */
-	public function getWebfilesAsArray()
+	private function getAllWebfilesAsArray()
     {
         $files = $this->m_oDirectory->getFiles();
         return $this->translateFilesIntoWebfilesArray($files);
@@ -130,7 +130,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
                 "searching for next webfile only possible when datastore is normalized.");
         }
 
-        $webfiles = $this->getWebfilesAsArray();
+        $webfiles = $this->getAllWebfilesAsArray();
         ksort($webfiles);
 
         foreach ($webfiles as $key => $webfile) {
@@ -280,7 +280,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             }
             $webfiles = $this->cachingDatastore->searchByTemplate($template);
         } else {
-            $webfiles = $this->getWebfilesAsArray();
+            $webfiles = $this->getAllWebfilesAsArray();
             $webfiles = $this->filterWebfilesArrayByTemplate($webfiles, $template);
         }
         return $webfiles;
@@ -314,7 +314,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 */
 	public function deleteAll()
     {
-        $webfiles = $this->getWebfilesAsArray();
+        $webfiles = $this->getAllWebfilesAsArray();
         $mapping = $this->createWebfileIdToFilenameMapping();
 
         foreach ($webfiles as $webfile) {

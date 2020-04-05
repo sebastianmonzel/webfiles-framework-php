@@ -16,11 +16,11 @@ class MRemoteDatastoreTest extends TestCase {
 		return $remoteDatastore;
 	}
 
-	public function testGetWebfiles() {
+	public function testGetAllWebfiles() {
 
 		$remoteDatastore = $this->createRemoteDatastore();
 
-		$webfilesAsStream = $remoteDatastore->getWebfilesAsStream();
+		$webfilesAsStream = $remoteDatastore->getAllWebfiles();
 
 		self::assertNotNull($webfilesAsStream);
 		$webfilesArray = $webfilesAsStream->getWebfiles();

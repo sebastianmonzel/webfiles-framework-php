@@ -57,7 +57,7 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	 * @throws \webfilesframework\MWebfilesFrameworkException
 	 * @throws \ReflectionException
 	 */
-	public function getWebfilesAsStream()
+	public function getAllWebfiles()
 	{
 		$client = $this->getClientWithToken();
 		$service = new Google_Service_Calendar($client);
@@ -212,15 +212,6 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 
 		return $webfile;
 
-	}
-
-	/**
-	 * Returns all webfiles from the actual datastore.
-	 * @return array list of webfiles
-	 */
-	public function getWebfilesAsArray()
-	{
-		// TODO: Implement getWebfilesAsArray() method.
 	}
 
 	/**

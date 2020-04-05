@@ -51,13 +51,7 @@ abstract class MAbstractDatastore extends MWebfile
      * the actual datastore.
      * @return MWebfileStream
      */
-    public abstract function getWebfilesAsStream();
-
-    /**
-     * Returns all webfiles from the actual datastore.
-     * @return array list of webfiles
-     */
-    public abstract function getWebfilesAsArray();
+    public abstract function getAllWebfiles();
 
     /**
      * Returns the latests webfiles. Sorting will
