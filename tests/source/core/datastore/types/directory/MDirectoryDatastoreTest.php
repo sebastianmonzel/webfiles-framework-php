@@ -43,7 +43,7 @@ class MDirectoryDatastoreTest extends TestCase {
         $directory = new MDirectory(
             __DIR__ . '/../../../../../resources/targetTransferDirectoryDatastore');
 
-        return MDatastoreFactory::createDatastore($directory);
+        return new MDirectoryDatastore($directory);
     }
 
 

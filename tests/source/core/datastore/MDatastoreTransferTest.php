@@ -5,6 +5,7 @@ use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datastore\MDatastoreTransfer;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\MWebfilesFrameworkException;
@@ -181,21 +182,21 @@ class MDatastoreTransferTest extends TestCase
         $directory = new MDirectory(
             __DIR__ . '/../../../resources/targetTransferDirectoryDatastore');
 
-        return MDatastoreFactory::createDatastore($directory);
+	    return new MDirectoryDatastore($directory);
     }
 
     private function createSourceDirectoryDatastore()
     {
         $directory = new MDirectory(
             __DIR__ . '/../../../resources/folderDatastore');
-        return MDatastoreFactory::createDatastore($directory);
+	    return new MDirectoryDatastore($directory);
     }
 
 
     private function createDatabaseDatastore()
     {
         $connection = $this->createPreparedDatabaseConnectionMock();
-        return MDatastoreFactory::createDatastore($connection);
+	    return new MDatabaseDatastore($connection);
     }
 
     /**
