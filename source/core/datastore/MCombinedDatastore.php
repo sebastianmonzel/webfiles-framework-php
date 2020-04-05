@@ -119,7 +119,7 @@ class MCombinedDatastore extends MAbstractDatastore
     public function getAllWebfiles()
     {
 
-        $webfiles = $this->getWebfilesAsArray();
+        $webfiles = $this->getAllWebfiles()->getWebfiles();
         return new MWebfileStream($webfiles);
     }
 

@@ -215,7 +215,7 @@ class MDatastoreTransferTest extends TestCase
 
         self::assertEquals(
             1,
-            count($target->getWebfilesAsArray()));
+            count($target->getAllWebfiles()->getWebfiles()));
 
     }
 
@@ -233,7 +233,7 @@ class MDatastoreTransferTest extends TestCase
 
         self::assertEquals(
             3,
-            count($target->getWebfilesAsArray()));
+            count($target->getAllWebfiles()->getWebfiles()));
 
         $target->normalize();
 
