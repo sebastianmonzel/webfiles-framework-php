@@ -19,6 +19,7 @@ class MRemoteDatastoreEndpoint {
 
 	// READ
 	public static $METHOD_NAME_IS_READ_ONLY                   = "isReadOnly";
+	public static $METHOD_NAME_TRY_CONNECT                    = "tryConnect";
 	public static $METHOD_NAME_RETRIEVE_WEBFILES              = "retrieveWebfiles";
 	public static $METHOD_NAME_SEARCH_BY_TEMPLATE             = "searchByTemplate";
 	public static $METHOD_NAME_GET_LATEST_WEBFILES            = "getLatestWebfiles";
@@ -130,6 +131,17 @@ class MRemoteDatastoreEndpoint {
 
 				return;
 
+			} else if ( $this->isTryConnect() ) { // IS TRYCONNECT
+
+				$tryConnect = $this->m_oDatastore->tryConnect();
+				if ( $tryConnect ) {
+					echo "true";
+				} else {
+					echo "false";
+				}
+
+				return;
+
 			}
 
 		} else {
@@ -226,6 +238,13 @@ class MRemoteDatastoreEndpoint {
 	 */
 	public function isReadOnly(): bool {
 		return $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_IS_READ_ONLY;
+	}
+
+	/**
+	 * @return bool
+	 */
+	public function isTryConnect(): bool {
+		return $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_TRY_CONNECT;
 	}
 
 }

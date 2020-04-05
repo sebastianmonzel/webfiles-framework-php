@@ -30,8 +30,16 @@ class MRemoteDatastore extends MAbstractDatastore
 
     public function tryConnect()
     {
-        // TODO
-        return true;
+	    $data = array();
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_TRY_CONNECT;
+
+	    $isReadOnly = $this->doRemoteCall($data);
+
+	    if ( $isReadOnly == "true" ) {
+		    return true;
+	    } else {
+		    return false;
+	    }
     }
 
     public function isReadOnly()
@@ -89,7 +97,7 @@ class MRemoteDatastore extends MAbstractDatastore
     public function getLatestWebfiles($count = 5)
     {
 	    $data = array();
-	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
+	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_GET_LATEST_WEBFILES;
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_COUNT]  = $count;
 
 	    return $this->getAllWebfiles($data)->getArray();
