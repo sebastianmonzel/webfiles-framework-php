@@ -116,4 +116,23 @@ class MRemoteDatastoreTest extends TestCase {
 		self::assertFalse($readOnly);
 	}
 
+	public function testTryConnect() {
+
+		$remoteDatastore = $this->createRemoteDatastore();
+
+		$tryConnect = $remoteDatastore->tryConnect();
+		self::assertTrue($tryConnect);
+	}
+
+	public function testGetLatestWebfiles() {
+
+		$remoteDatastore = $this->createRemoteDatastore();
+
+		// TODO für die methode  muss man normalize auf dem directory datastore aufrufen -
+		// TODO normalize gibt es jedoch nicht im remote datastore - soll ich die normalize durchleiten?
+		//$latestWebfiles = $remoteDatastore->getLatestWebfiles(1);
+		//self::assertCount(1, $latestWebfiles);
+		self::assertEquals("","");
+	}
+
 }
