@@ -126,7 +126,7 @@ class MRemoteDatastoreEndpoint {
 				    echo "true";
                 } else {
 				    echo "false";
-                };
+                }
 
 				return;
 
