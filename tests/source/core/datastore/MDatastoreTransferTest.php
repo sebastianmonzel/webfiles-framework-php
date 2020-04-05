@@ -2,7 +2,12 @@
 
 
 use PHPUnit\Framework\TestCase;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datastore\MDatastoreTransfer;
+use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
+use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\MWebfilesFrameworkException;
 
 
 /**
@@ -164,32 +169,33 @@ class MDatastoreTransferTest extends TestCase
         return $webfilesResultHandler;
     }
 
-    /**
-     * @return \webfilesframework\core\datastore\types\directory\MDirectoryDatastore
-     */
+	/**
+	 * @return MDirectoryDatastore
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 */
     private function createDirectoryDatastore()
     {
 
-        $directory = new \webfilesframework\core\datasystem\file\system\MDirectory(
+        $directory = new MDirectory(
             __DIR__ . '/../../../resources/targetTransferDirectoryDatastore');
 
-        return \webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
+        return MDatastoreFactory::createDatastore($directory);
     }
 
     private function createSourceDirectoryDatastore()
     {
-
-        $directory = new \webfilesframework\core\datasystem\file\system\MDirectory(
+        $directory = new MDirectory(
             __DIR__ . '/../../../resources/folderDatastore');
-
-        return \webfilesframework\core\datastore\MDatastoreFactory::createDatastore($directory);
+        return MDatastoreFactory::createDatastore($directory);
     }
 
 
     private function createDatabaseDatastore()
     {
         $connection = $this->createPreparedDatabaseConnectionMock();
-        return \webfilesframework\core\datastore\MDatastoreFactory::createDatastore($connection);
+        return MDatastoreFactory::createDatastore($connection);
     }
 
     /**

@@ -113,7 +113,9 @@ class MRemoteDatastore extends MAbstractDatastore
 	/**
 	 * @param MWebfile $webfile
 	 *
+	 * @return MWebfileStream
 	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
 	 */
     public function storeWebfile(MWebfile $webfile)
     {
@@ -122,13 +124,17 @@ class MRemoteDatastore extends MAbstractDatastore
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]  = MRemoteDatastoreEndpoint::$METHOD_NAME_STORE_WEBFILE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_WEBFILE] = $webfile->marshall();
 
-        $this->doRemoteCall($data);
+	    $callResultAsWebfileStreamXml = $this->doRemoteCall($data);
+
+	    return new MWebfileStream($callResultAsWebfileStreamXml);
     }
 
 	/**
 	 * @param MWebfile $template
 	 *
+	 * @return MWebfileStream
 	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
 	 */
     public function deleteByTemplate(MWebfile $template)
     {
@@ -136,7 +142,9 @@ class MRemoteDatastore extends MAbstractDatastore
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_DELETE_BY_TEMPLATE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
-        $this->doRemoteCall($data);
+	    $callResultAsWebfileStreamXml = $this->doRemoteCall($data);
+
+	    return new MWebfileStream($callResultAsWebfileStreamXml);
     }
 
 	private function doRemoteCall($data = null)
