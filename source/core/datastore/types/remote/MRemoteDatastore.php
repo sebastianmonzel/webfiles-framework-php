@@ -39,7 +39,14 @@ class MRemoteDatastore extends MAbstractDatastore
 	    $data = array();
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_IS_READ_ONLY;
 
-	    return $this->doRemoteCall($data);
+	    $isReadOnly = $this->doRemoteCall($data);
+
+	    if ( $isReadOnly == "true" ) {
+	    	return true;
+	    } else {
+	    	return false;
+	    }
+
     }
 
 	/**
