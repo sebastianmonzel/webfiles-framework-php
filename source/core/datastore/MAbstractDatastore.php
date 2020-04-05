@@ -132,7 +132,7 @@ abstract class MAbstractDatastore extends MWebfile
             throw new MDatastoreException("cannot modify data on read-only datastore.");
         }
 
-        $webfiles = $webfileStream->getWebfiles();
+        $webfiles = $webfileStream->getArray();
         foreach ($webfiles as $webfile) {
             $this->storeWebfile($webfile);
         }

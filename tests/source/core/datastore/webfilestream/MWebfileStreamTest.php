@@ -68,7 +68,7 @@ class MWebfileStreamTest extends TestCase {
     public function testGetWebfilesOnStringInput() {
 
         $webfileStream = new MWebfileStream(static::$webfileStreamAsStringReference);
-        $webfilesFromStream = $webfileStream->getWebfiles();
+        $webfilesFromStream = $webfileStream->getArray();
 
         $this->assertEquals(2,count($webfilesFromStream));
     }

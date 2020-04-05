@@ -23,7 +23,7 @@ class MRemoteDatastoreTest extends TestCase {
 		$webfilesAsStream = $remoteDatastore->getAllWebfiles();
 
 		self::assertNotNull($webfilesAsStream);
-		$webfilesArray = $webfilesAsStream->getWebfiles();
+		$webfilesArray = $webfilesAsStream->getArray();
 		self::assertTrue(is_array( $webfilesArray ));
 		self::assertCount(2, $webfilesArray);
 
@@ -84,17 +84,17 @@ class MRemoteDatastoreTest extends TestCase {
 
 		$webfileToStore->setId(4);
 		$webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-		self::assertCount(3, $webfilesStream->getWebfiles());
+		self::assertCount(3, $webfilesStream->getArray());
 
 		$webfileToStore->setId(5);
 		$webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-		self::assertCount(4, $webfilesStream->getWebfiles());
+		self::assertCount(4, $webfilesStream->getArray());
 
 		$searchtemplate = new MSampleWebfile();
 		$searchtemplate->presetForTemplateSearch();
 		$searchtemplate->setLastname("Schmidt");
 		$webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
-		self::assertCount(2, $webfilesStream->getWebfiles());
+		self::assertCount(2, $webfilesStream->getArray());
 	}
 
 	public function testGetNextWebfileForTimestamp() {

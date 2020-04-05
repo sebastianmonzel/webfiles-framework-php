@@ -256,7 +256,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 */
 	public function storeWebfilesFromStream(MWebfileStream $webfileStream)
     {
-        $webfiles = $webfileStream->getWebfiles();
+        $webfiles = $webfileStream->getArray();
 
         foreach ($webfiles as $webfile) {
             $this->storeWebfile($webfile);

@@ -2,6 +2,7 @@
 
 namespace webfilesframework\core\datasystem\file\format;
 
+use ReflectionException;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -21,7 +22,7 @@ class MWebfileStream
 	 * @param $input
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function __construct($input)
     {
@@ -73,7 +74,7 @@ class MWebfileStream
 	 *
 	 * @return array
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private function unmarshall($input)
     {
@@ -133,7 +134,7 @@ class MWebfileStream
         return $this->marshall();
     }
 
-    public function getWebfiles()
+    public function getArray()
     {
         return $this->webfiles;
     }

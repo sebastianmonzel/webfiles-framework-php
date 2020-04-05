@@ -76,7 +76,7 @@ class MRemoteDatastore extends MAbstractDatastore
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
-        return $this->getAllWebfiles($data)->getWebfiles();
+        return $this->getAllWebfiles($data)->getArray();
     }
 
 	/**
@@ -92,7 +92,7 @@ class MRemoteDatastore extends MAbstractDatastore
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_COUNT]  = $count;
 
-	    return $this->getAllWebfiles($data)->getWebfiles();
+	    return $this->getAllWebfiles($data)->getArray();
     }
 
 	/**

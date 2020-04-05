@@ -27,7 +27,7 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
         $databaseDatastore->storeWebfile(new MSampleWebfile());
 
-        $result = $databaseDatastore->getAllWebfiles()->getWebfiles();
+        $result = $databaseDatastore->getAllWebfiles()->getArray();
 
         self::assertEquals(1,count($result));
 
@@ -49,7 +49,7 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
         $databaseDatastore->storeWebfile(new MSampleWebfile());
         $databaseDatastore->normalize();
 
-        $result = $databaseDatastore->getAllWebfiles()->getWebfiles();
+        $result = $databaseDatastore->getAllWebfiles()->getArray();
 
         self::assertEquals(1,count($result));
     }

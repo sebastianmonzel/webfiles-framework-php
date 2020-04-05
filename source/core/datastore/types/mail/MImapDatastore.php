@@ -59,7 +59,7 @@ class MImapDatastore extends MAbstractDatastore
      */
     public function getNextWebfileForTimestamp($timestamp)
     {
-        $webfiles = $this->getAllWebfiles()->getWebfiles();
+        $webfiles = $this->getAllWebfiles()->getArray();
 
         ksort($webfiles);
 
