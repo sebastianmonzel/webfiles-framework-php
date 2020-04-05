@@ -7,10 +7,8 @@ use webfilesframework\io\request\MUrl;
  * @covers webfilesframework\io\request\MUrl
  */
 class MUrlTest extends TestCase {
-    /**
-     * @var MDatastoreFactory
-     */
-    protected $object;
+
+    protected $testUrl;
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -18,7 +16,7 @@ class MUrlTest extends TestCase {
      */
     protected function setUp() : void
     {
-        $this->object = new MUrl("http://www.simpleserv.de/?paramone=foo&paramtoo=bar&");
+        $this->testUrl = new MUrl("http://www.simpleserv.de/?paramone=foo&paramtoo=bar&");
     }
 
     /**
@@ -34,8 +32,8 @@ class MUrlTest extends TestCase {
      */
     public function testGetParam() {
     	
-        $this->assertEquals('foo',$this->object->getParam('paramone'));
-        $this->assertEquals('bar',$this->object->getParam('paramtoo'));
+        $this->assertEquals('foo',$this->testUrl->getParam('paramone'));
+        $this->assertEquals('bar',$this->testUrl->getParam('paramtoo'));
     }
     
     /**
@@ -43,6 +41,6 @@ class MUrlTest extends TestCase {
      */
     public function testGetQueryString() {
     	
-    	$this->assertEquals('paramone=foo&paramtoo=bar&',$this->object->getQueryString());
+    	$this->assertEquals('paramone=foo&paramtoo=bar&',$this->testUrl->getQueryString());
     }
 }
