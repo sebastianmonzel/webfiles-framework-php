@@ -1,5 +1,6 @@
 <?php
 
+namespace test\webfilesframework\core\datastore\types\mysqlmock;
 
 use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;

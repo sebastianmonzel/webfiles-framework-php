@@ -1,6 +1,8 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace test\webfilesframework\core\datastore\webfilestream;
+
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
@@ -8,7 +10,7 @@ use webfilesframework\core\datasystem\file\format\MWebfileStream;
 /**
  * @covers webfilesframework\core\datasystem\file\format\MWebfileStream
  */
-class MWebfileStreamTest extends TestCase {
+class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
     /**
      * @var MDatastoreFactory
      */

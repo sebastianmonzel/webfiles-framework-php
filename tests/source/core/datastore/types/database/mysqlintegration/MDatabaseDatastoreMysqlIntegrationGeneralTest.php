@@ -1,5 +1,7 @@
 <?php
 
+namespace test\webfilesframework\core\datastore\types\mysqlintegration;
+
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastoreException;

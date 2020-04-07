@@ -1,7 +1,7 @@
 <?php
 
 
-use PHPUnit\Framework\TestCase;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
@@ -12,7 +12,7 @@ use webfilesframework\MWebfilesFrameworkException;
 /**
  * @covers webfilesframework\core\datasystem\file\format\media\image\MImage
  */
-class MImageTest extends TestCase {
+class MImageTest extends MAbstractWebfilesFramworkTest {
     /**
      * @var MDatabaseDatasourceDatastore
      */

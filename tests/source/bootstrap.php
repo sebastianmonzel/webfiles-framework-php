@@ -4,3 +4,8 @@ if (!file_exists($file)) {
     throw new RuntimeException("Install dependencies using composer to run the test suite.");
 }
 $autoload = require_once $file;
+
+$classLoader = new \Composer\Autoload\ClassLoader();
+
+$classLoader->addPsr4("test\\webfilesframework\\", __DIR__, true);
+$classLoader->register();

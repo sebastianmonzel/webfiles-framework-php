@@ -1,6 +1,6 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\system\MFile;
@@ -10,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MFile;
  *
  * Test class for MWebfileTest.
  */
-class MWebfileTest extends TestCase {
+class MWebfileTest extends MAbstractWebfilesFramworkTest {
 
     /**
      * @covers webfilesframework\core\datasystem\file\format\MWebfile::getSimplifiedAttributeName

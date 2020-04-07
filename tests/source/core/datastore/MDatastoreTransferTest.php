@@ -1,7 +1,8 @@
 <?php
 
+namespace test\webfilesframework\core\datastore;
 
-use PHPUnit\Framework\TestCase;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datastore\MDatastoreTransfer;
@@ -14,8 +15,7 @@ use webfilesframework\MWebfilesFrameworkException;
 /**
  * @covers webfilesframework\core\datastore\MDatastoreTransfer
  */
-class MDatastoreTransferTest extends TestCase
-{
+class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
     /**
      * @var MDatastoreTransfer
      */

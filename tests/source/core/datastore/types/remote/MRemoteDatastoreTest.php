@@ -1,10 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+namespace test\webfilesframework\core\datastore\types;
+
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\remote\MRemoteDatastore;
 
-class MRemoteDatastoreTest extends TestCase {
+class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 	protected $object;
 
