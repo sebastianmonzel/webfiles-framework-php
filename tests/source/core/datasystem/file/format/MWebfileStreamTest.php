@@ -1,6 +1,6 @@
 <?php
 
-namespace test\webfilesframework\core\datastore\webfilestream;
+namespace test\webfilesframework\core\datasystem\file\format;
 
 use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
