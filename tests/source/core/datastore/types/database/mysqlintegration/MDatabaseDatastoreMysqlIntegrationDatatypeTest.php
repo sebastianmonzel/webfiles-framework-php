@@ -104,7 +104,7 @@ class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreT
 
         $databaseDatastore->normalize();
 
-        $foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+        $foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 
         self::assertEquals(1,count($foundWebfiles));
     }
@@ -135,18 +135,18 @@ class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreT
 		$databaseDatastore->deleteAll();
 		$databaseDatastore->normalize();
 
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		self::assertEquals(0,count($foundWebfiles));
 
 		$databaseDatastore->storeWebfile(new MSampleWebfile());
 		$databaseDatastore->normalize();
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		self::assertEquals(1,count($foundWebfiles));
 
 		$databaseDatastore->deleteAll();
 
 		$databaseDatastore->normalize();
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		self::assertEquals(0,count($foundWebfiles));
 	}
 
@@ -163,12 +163,12 @@ class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreT
 
 		$databaseDatastore->storeWebfile($this->createSampleWebfile());
 		$databaseDatastore->normalize();
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles();
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles()->getArray();
 		self::assertEquals(1,count($foundWebfiles));
 
 		$databaseDatastore->deleteByTemplate($this->createSampleTemplate());
 
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		$databaseDatastore->normalize();
 		self::assertEquals(0,count($foundWebfiles));
 	}

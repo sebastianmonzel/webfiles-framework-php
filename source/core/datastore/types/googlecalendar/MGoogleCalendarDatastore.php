@@ -219,7 +219,7 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	 * happen according to the time information of the webfiles.
 	 *
 	 * @param int $count Count of webfiles to be selected.
-	 * @return array list of webfiles
+	 * @return MWebfileStream list of webfiles
 	 */
 	public function getLatestWebfiles($count = 5)
 	{

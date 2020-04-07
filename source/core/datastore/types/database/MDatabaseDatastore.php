@@ -479,14 +479,14 @@ class MDatabaseDatastore extends MAbstractDatastore
 	/**
 	 * @param int $count
 	 *
-	 * @return array|void
+	 * @return MWebfileStream|void
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
     public function getLatestWebfiles($count = 5)
     {
 
-        $result = array();
+        $webfilesResultArray = array();
 
         $handler = $this->databaseConnection->queryAndHandle(
             "SELECT webfileid,time,classname FROM " .
@@ -496,10 +496,10 @@ class MDatabaseDatastore extends MAbstractDatastore
         while ($object = $handler->fetchNextResultObject() ) {
 
             $webfile = $this->retrieveWebfileForMetadataDbObject($object);
-            $result = $this->addWebfileSafetyToArray($webfile,$result);
+            $webfilesResultArray = $this->addWebfileSafetyToArray($webfile,$webfilesResultArray);
         }
 
-	    return $result;
+	    return new MWebfileStream($webfilesResultArray);
     }
 
 	/**

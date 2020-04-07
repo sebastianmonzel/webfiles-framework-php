@@ -90,7 +90,7 @@ class MRemoteDatastore extends MAbstractDatastore
 	/**
 	 * @param int $count
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
@@ -100,7 +100,7 @@ class MRemoteDatastore extends MAbstractDatastore
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD] = MRemoteDatastoreEndpoint::$METHOD_NAME_GET_LATEST_WEBFILES;
 	    $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_COUNT]  = $count;
 
-	    return $this->getAllWebfiles($data)->getArray();
+	    return $this->getAllWebfiles($data);
     }
 
 	/**

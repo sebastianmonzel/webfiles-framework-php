@@ -2,10 +2,12 @@
 
 namespace webfilesframework\core\datastore;
 
+use ReflectionException;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Base class for defining datastores to save and load webfiles on a standardized way.<br />
@@ -58,9 +60,8 @@ abstract class MAbstractDatastore extends MWebfile
      * happen according to the time information of the webfiles.
      *
      * @param int $count Count of webfiles to be selected.
-     * @return array list of webfiles
+     * @return MWebfileStream list of webfiles
      */
-    // TODO webfilesstream als return nehmen
     public abstract function getLatestWebfiles($count = 5);
 
 
@@ -86,7 +87,7 @@ abstract class MAbstractDatastore extends MWebfile
 	 * @param MWebfile $template
 	 *
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     protected function filterWebfilesArrayByTemplate($webfiles, MWebfile $template)
     {
@@ -165,10 +166,9 @@ abstract class MAbstractDatastore extends MWebfile
 	 * @param string $datastoreId
 	 *
 	 * @return MWebfile returns the found datastore
-	 * @throws MDatastoreException will be thrown if no datastore with*@throws
-	 *                             \webfilesframework\MWebfilesFrameworkException the given id is available.
-	 * @throws \ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws MDatastoreException will be thrown if no datastore with the given id is available.
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
 	 */
     public static function resolveCustomDatastoreById($datastoreId)
     {
@@ -176,7 +176,7 @@ abstract class MAbstractDatastore extends MWebfile
         $datastoreDirectory = new MDirectory("./custom/datastore/");
         $datastoreHolder = new MDirectoryDatastore($datastoreDirectory);
 
-        $webfiles = $datastoreHolder->getWebfilesAsArray();
+        $webfiles = $datastoreHolder->getAllWebfiles()->getArray();
 
         $selectedWebfile = null;
 
@@ -198,7 +198,7 @@ abstract class MAbstractDatastore extends MWebfile
 	 * @param $webfilesArray
 	 *
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public static function extractDatasetsFromWebfilesArray($webfilesArray)
     {

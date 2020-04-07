@@ -95,9 +95,7 @@ class MRemoteDatastoreEndpoint {
 			} else if ( $this->isGetLatestWebfiles() ) { // GET LATEST WEBFILES
 
 				$count = $_POST[static::$PAYLOAD_FIELD_NAME_COUNT];
-
-				$webfilesArray  = $this->m_oDatastore->getLatestWebfiles($count);
-				$webfilesStream = new MWebfileStream($webfilesArray);
+				$webfilesStream = $this->m_oDatastore->getLatestWebfiles($count);
 
 				echo $webfilesStream->getXML();
 

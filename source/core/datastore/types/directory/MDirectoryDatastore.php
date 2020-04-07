@@ -101,7 +101,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @param int $count
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 * @throws Exception
@@ -113,7 +113,9 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
                 "searching for latest webfiles only possible when datastore is normalized.");
         }
         $filesArray = $this->m_oDirectory->getLatestFiles($count);
-        return $this->translateFilesIntoWebfilesArray($filesArray);
+	    $webfilesArray = $this->translateFilesIntoWebfilesArray( $filesArray );
+
+	    return new MWebfileStream($webfilesArray);
     }
 
 	/**

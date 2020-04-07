@@ -8,6 +8,7 @@ use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastoreException;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -103,7 +104,7 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
 
         $databaseDatastore->normalize();
 
-        $foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+        $foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 
         self::assertEquals(1,count($foundWebfiles));
     }
@@ -134,18 +135,18 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
 		$databaseDatastore->deleteAll();
 		$databaseDatastore->normalize();
 
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		self::assertEquals(0,count($foundWebfiles));
 
 		$databaseDatastore->storeWebfile(new MSampleWebfile());
 		$databaseDatastore->normalize();
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		self::assertEquals(1,count($foundWebfiles));
 
 		$databaseDatastore->deleteAll();
 
 		$databaseDatastore->normalize();
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		self::assertEquals(0,count($foundWebfiles));
 	}
 
@@ -162,12 +163,12 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
 
 		$databaseDatastore->storeWebfile($this->createSampleWebfile());
 		$databaseDatastore->normalize();
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles();
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles()->getArray();
 		self::assertEquals(1,count($foundWebfiles));
 
 		$databaseDatastore->deleteByTemplate($this->createSampleTemplate());
 
-		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1);
+		$foundWebfiles = $databaseDatastore->getLatestWebfiles(1)->getArray();
 		$databaseDatastore->normalize();
 		self::assertEquals(0,count($foundWebfiles));
 	}
@@ -177,7 +178,7 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
      */
     private function createDatabaseDatastore()
     {
-        $connection = new \webfilesframework\core\datasystem\database\MDatabaseConnection(
+        $connection = new MDatabaseConnection(
             "127.0.0.1",
             "webfiles",
             "prefix_",

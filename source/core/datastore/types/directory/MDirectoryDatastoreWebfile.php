@@ -2,6 +2,7 @@
 
 namespace webfilesframework\core\datastore\types\directory;
 
+use ReflectionException;
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datasystem\file\format\MWebfile;
@@ -36,7 +37,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::tryConnect()
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function tryConnect()
     {
@@ -48,7 +49,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @see \webfilesframework\core\datastore\MAbstractDatastore::isReadOnly()
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function isReadOnly()
     {
@@ -64,7 +65,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @return MWebfile|null
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function getNextWebfileForTimestamp($timestamp)
     {
@@ -75,7 +76,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	/**
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 *@see \webfilesframework\core\datastore\MAbstractDatastore::getAllWebfiles()
 	 */
     public function getAllWebfiles()
@@ -89,10 +90,10 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 *
 	 * @param int $count
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function getLatestWebfiles($count = 5)
     {
@@ -108,7 +109,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @return array
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function searchByTemplate(MWebfile $template)
     {
@@ -122,7 +123,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @param MWebfile $webfile
 	 *
 	 * @return void
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
 	 */
@@ -138,7 +139,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @param MWebfileStream $webfileStream
 	 *
 	 * @return void
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
 	 */
@@ -156,7 +157,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 * @return void
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function deleteByTemplate(MWebfile $template)
     {
@@ -165,7 +166,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
     }
 
 	/**
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
 	 */
