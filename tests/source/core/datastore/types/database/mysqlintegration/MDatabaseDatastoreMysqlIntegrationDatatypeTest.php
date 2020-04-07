@@ -2,7 +2,7 @@
 
 namespace test\webfilesframework\core\datastore\types\mysqlintegration;
 
-use test\webfilesframework\MAbstractWebfilesFramworkTest;
+use test\webfilesframework\core\datastore\types\MAbstractDatastoreTest;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastoreException;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
@@ -15,8 +15,7 @@ use webfilesframework\MWebfilesFrameworkException;
  * Free Database by freemysqlhosting.net
  * Use http://www.phpmyadmin.co/ to look into the data of the database.
  */
-class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractWebfilesFramworkTest
-{
+class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreTest {
 
 
 	/**

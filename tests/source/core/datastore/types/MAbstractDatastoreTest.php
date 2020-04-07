@@ -1,5 +1,7 @@
 <?php
 
+namespace test\webfilesframework\core\datastore\types;
+
 use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
