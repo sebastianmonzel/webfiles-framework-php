@@ -2,7 +2,10 @@
 
 namespace webfilesframework\core\datasystem\file\format;
 use ReflectionClass;
+use ReflectionException;
 use ReflectionProperty;
+use SimpleXMLElement;
+use webfilesframework\core\datastore\functions\MIDatastoreFunction;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -32,7 +35,7 @@ class MWebfile {
 	 * @param bool $usePreamble sets the option of using a preamble in xml - usually used for setting the version of xml an the encoding.
 	 *
 	 * @return string string returns the webfile as a marshalled String.
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function marshall($usePreamble = true)
     {
@@ -63,7 +66,7 @@ class MWebfile {
 	 * @param string $data xml which represents a webfile.
 	 *
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function unmarshall($data)
     {
@@ -75,9 +78,9 @@ class MWebfile {
 	 *
 	 * @param string $xmlAsString
 	 *
-	 * @return MWebfile
+	 * @return MWebfile|object
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public static function staticUnmarshall($xmlAsString)
     {
@@ -89,9 +92,9 @@ class MWebfile {
 	 * @param      $xmlAsString
 	 * @param null $targetObject
 	 *
-	 * @return MWebfile
+	 * @return MWebfile|object
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	private static function genericUnmarshall($xmlAsString, &$targetObject = null) {
 
@@ -122,7 +125,7 @@ class MWebfile {
         $objectAttributes = $root->children();
         $attributes = $targetObject->getAttributes();
 
-        /** @var \SimpleXMLElement $value */
+        /** @var SimpleXMLElement $value */
         foreach ($objectAttributes as $value) {
             /** @var ReflectionProperty $attribute */
             foreach ($attributes as $attribute) {
@@ -141,7 +144,7 @@ class MWebfile {
 	 * In case of using the current webfile object for making a request
 	 * on a datastore (getByTemplate()) this method helps to
 	 * set the defaults for making the template request.
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function presetForTemplateSearch()
     {
@@ -161,7 +164,7 @@ class MWebfile {
 	 * @param MWebfile $template
 	 *
 	 * @return bool
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public function matchesTemplate(MWebfile $template) {
 
@@ -232,7 +235,7 @@ class MWebfile {
 	 * @param bool $simpleDatatypesOnly
 	 *
 	 * @return ReflectionProperty[]
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public static function getAttributes($simpleDatatypesOnly = false)
     {
@@ -263,7 +266,7 @@ class MWebfile {
 	 * classname and the given attributes.
 	 *
 	 * @return string xml with information about the class
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public static function getClassInformation()
     {
@@ -329,7 +332,7 @@ class MWebfile {
 	 * The key is the attributes name. The value is the attributes value.
 	 *
 	 * @return array
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
     public function getDataset()
     {
@@ -406,7 +409,7 @@ class MWebfile {
 	 *
 	 * @return MWebfile
 	 * @throws MWebfilesFrameworkException
-	 * @throws \ReflectionException
+	 * @throws ReflectionException
 	 */
 	public static function createWebfileByClassname($classname) {
 		$ref = new ReflectionClass($classname);

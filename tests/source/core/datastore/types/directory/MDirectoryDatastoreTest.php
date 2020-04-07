@@ -4,6 +4,7 @@ namespace test\webfilesframework\core\datastore\types;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MDatastoreFactory;
@@ -16,7 +17,7 @@ use webfilesframework\MWebfilesFrameworkException;
 /**
  * @covers webfilesframework\core\datastore\types\directory\MDirectoryDatastore
  */
-class MDirectoryDatastoreTest extends TestCase {
+class MDirectoryDatastoreTest extends MAbstractWebfilesFramworkTest {
 
     protected $object;
 

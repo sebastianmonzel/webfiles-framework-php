@@ -3,19 +3,22 @@
 namespace test\webfilesframework\core\datastore\types\mysqlmock;
 
 use PHPUnit\Framework\MockObject\MockObject;
-use PHPUnit\Framework\TestCase;
+use ReflectionException;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
+use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
  * @covers webfilesframework\core\datasystem\database\MDatabaseConnection
  */
-class MDatabaseDatastoreTest extends TestCase {
+class MDatabaseDatastoreTest extends MAbstractWebfilesFramworkTest {
     /**
-     * @var MDatabaseDatasourceDatastore
+     * @var MDatabaseDatastore
      */
     protected $object;
 
@@ -137,6 +140,11 @@ class MDatabaseDatastoreTest extends TestCase {
         return $webfilesResultHandler;
     }
 
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 * @throws MDatastoreException
+	 */
     public function testSearchByTemplate() {
 
         $databaseConnectionMock = $this->createPreparedDatabaseConnectionMock();
@@ -157,9 +165,10 @@ class MDatabaseDatastoreTest extends TestCase {
         self::assertEquals($referenceObject,array_values($result)[0]);
     }
 
-    /**
-     *
-     */
+	/**
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 */
     public function testDeleteByTemplate() {
 
         $databaseConnectionMock = $this->createDatabaseConnectionMock();
@@ -168,6 +177,7 @@ class MDatabaseDatastoreTest extends TestCase {
         $databaseConnectionMock->expects($this->once())->method('queryAndHandle')->with('SHOW TABLES FROM `webfiles`')->willReturn($showTablesResultHandler);
 
         $webfilesResultHandler = $this->createMockForWebfilesResultHandler();
+        // TODO folgende query macht keinen sinn: WHERE hört einfach ohne bedingung auf
         $databaseConnectionMock->expects(self::at(8))->method('query')->with('DELETE FROM metadatanormalization where webfileid in (SELECT id FROM MSampleWebfile WHERE ) AND classname = \'webfilesframework\\\\core\\\\datastore\\\\types\\\\database\\\\MSampleWebfile\'')->willReturn($webfilesResultHandler);
         $databaseConnectionMock->expects(self::at(9))->method('query')->with('DELETE FROM MSampleWebfile')->willReturn($webfilesResultHandler);
 

@@ -17,6 +17,7 @@
 		"ext-mysqli": "*",
 		"ext-json": "*",
 		"ext-simplexml": "*",
+		"ext-exif": "*",
 		"google/apiclient" : "^2.0",
 		"katzgrau/klogger" : "dev-master"
     },

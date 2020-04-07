@@ -3,7 +3,7 @@
 namespace webfilesframework\core\datasystem\file\format\media\image;
 
 
-use webfilesframework\core\io\request\MPostHttpRequest;
+use webfilesframework\io\request\MPostHttpRequest;
 
 /**
  * Creates a QR-Code with help of the google charts api.

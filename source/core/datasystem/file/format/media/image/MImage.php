@@ -3,6 +3,7 @@
 namespace webfilesframework\core\datasystem\file\format\media\image;
 
 
+use Exception;
 use webfilesframework\core\datasystem\file\format\media\image\handler\MGdHandler;
 use webfilesframework\core\datasystem\file\format\media\image\handler\MImageMagickHandler;
 use webfilesframework\core\datasystem\file\system\MFile;
@@ -24,7 +25,15 @@ class MImage extends MFile
 
     protected $handler;
 
-
+	/**
+	 * MImage constructor.
+	 *
+	 * @param        $filePath
+	 * @param bool   $loadImageResourceOnCreation
+	 * @param string $type
+	 *
+	 * @throws Exception
+	 */
     public function __construct($filePath, $loadImageResourceOnCreation = false, $type = "jpg") {
 
         parent::__construct($filePath);
@@ -37,7 +46,7 @@ class MImage extends MFile
     }
 
 	/**
-	 * @throws \Exception
+	 * @throws Exception
 	 */
 	public function loadImage() {
 
@@ -171,7 +180,7 @@ class MImage extends MFile
      * @param $width
      * @param $height
      * @param string $filePath
-     * @throws \Exception
+     * @throws Exception
      * @internal param unknown $p_iWidth
      * @internal param unknown $p_iHeight
      * @internal param string $p_sFilePath
@@ -181,7 +190,7 @@ class MImage extends MFile
 
         if (!$this->exists()) {
             $iErrorCode = 30;
-            throw new \Exception(
+            throw new Exception(
                 "File does not exists. Given File in the Image Object has to be created or has to be an existent file.",
                 $iErrorCode
             );
@@ -228,7 +237,12 @@ class MImage extends MFile
         return $oSizeStringArray[3];
     }
 
-
+	/**
+	 * @param        $p_iHeight
+	 * @param string $p_sFilePath
+	 *
+	 * @throws Exception
+	 */
     public function saveScaledImgAsFileWithHeight($p_iHeight, $p_sFilePath = "")
     {
 
@@ -253,7 +267,12 @@ class MImage extends MFile
         $this->saveScaledImgAsFile($p_iWidth, $iNewHeight, $p_sFilePath);
     }
 
-
+	/**
+	 * @param        $p_iBiggerSize
+	 * @param string $p_sFilePath
+	 *
+	 * @throws Exception
+	 */
     public function saveScaledImgAsFileWithBiggerSize($p_iBiggerSize, $p_sFilePath = "")
     {
 
@@ -271,7 +290,7 @@ class MImage extends MFile
 	 * @param int    $p_iPercent
 	 * @param string $p_sFilePath
 	 *
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function saveScaledImgAsFileWithPercent($p_iPercent, $p_sFilePath = "")
     {
@@ -306,7 +325,7 @@ class MImage extends MFile
 
     public function __toString()
     {
-        return "<img src=\"" . $this->getPath() . "\" width=\"300\"><br />";
+        return "<img alt=\"\" src=\"" . $this->getPath() . "\" width=\"300\"><br />";
     }
 
     public static function hasImageTypeExtension(MFile $image)

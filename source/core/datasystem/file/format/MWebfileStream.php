@@ -3,6 +3,7 @@
 namespace webfilesframework\core\datasystem\file\format;
 
 use ReflectionException;
+use SimpleXMLElement;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -84,7 +85,7 @@ class MWebfileStream
         $root = $this->parseAndValidateWebfilesStreamXml($input);
         $webfilesChildren = $root->webfiles->children();
 
-        /** @var \SimpleXMLElement $webfileChild */
+        /** @var SimpleXMLElement $webfileChild */
         foreach ($webfilesChildren as $webfileChild) {
             array_push(
                 $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild->asXML()));
@@ -95,7 +96,7 @@ class MWebfileStream
 
     /**
      * @param string $input
-     * @return \SimpleXMLElement
+     * @return SimpleXMLElement
      * @throws MWebfilesFrameworkException
      */
     private function parseAndValidateWebfilesStreamXml($input) {
@@ -118,7 +119,7 @@ class MWebfileStream
             throw new MWebfilesFrameworkException("Root element has not exactly one child. Input: " . $input);
         }
 
-        /** @var \SimpleXMLElement $rootChild */
+        /** @var SimpleXMLElement $rootChild */
         foreach ($rootChildren as $rootChild) {
             if ( $rootChild->getName() != "webfiles" ) {
                 throw new MWebfilesFrameworkException("No webfiles child exists on root element. Input: " . $input);
