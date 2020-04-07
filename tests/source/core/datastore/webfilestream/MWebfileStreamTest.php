@@ -8,7 +8,7 @@ use webfilesframework\core\datasystem\file\format\MWebfileStream;
 
 
 /**
- * @covers MWebfileStream
+ * @covers webfilesframework\core\datasystem\file\format\MWebfileStream
  */
 class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
     /**
