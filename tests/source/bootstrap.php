@@ -7,5 +7,5 @@ $autoload = require_once $file;
 
 $classLoader = new \Composer\Autoload\ClassLoader();
 
-$classLoader->addPsr4("\\test\\webfilesframework\\", __DIR__. "\\source", true); // TODO __DIR__ immer gleich? travis und lokal - vermutung, dass treavis weiter oben in der verzeichnisebene ansätzt
+$classLoader->addPsr4("test\\webfilesframework\\", __DIR__, true);
 $classLoader->register();
