@@ -2,6 +2,7 @@
 
 namespace test\webfilesframework\core\datastore\types\mysqlintegration;
 
+use ReflectionException;
 use test\webfilesframework\core\datastore\types\MAbstractDatastoreTest;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
@@ -20,10 +21,10 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
 
 
 	/**
-	 * @throws ReflectionException
-	 * @throws MWebfilesFrameworkException
-	 * @throws MDatastoreException
 	 * @throws MDatabaseDatastoreException
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
 	 */
 	public function testGetWebfiles()
     {

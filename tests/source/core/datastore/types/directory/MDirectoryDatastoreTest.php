@@ -3,6 +3,7 @@
 namespace test\webfilesframework\core\datastore\types;
 
 use PHPUnit\Framework\TestCase;
+use ReflectionException;
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MDatastoreFactory;
@@ -143,9 +144,11 @@ class MDirectoryDatastoreTest extends TestCase {
 
     }
 
-    /**
-     *
-     */
+	/**
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function testCreateAndDeleteByTemplate() {
 
         $databaseDatastore = $this->createDirectoryDatastore();
@@ -161,7 +164,11 @@ class MDirectoryDatastoreTest extends TestCase {
     }
 
 
-
+	/**
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function testGetAllWebfiles() {
 
         $directoryDatastore = $this->createDirectoryDatastore();
@@ -181,9 +188,9 @@ class MDirectoryDatastoreTest extends TestCase {
     }
 
 	/**
-	 * @throws ReflectionException
-	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
 	 */
 	public function testDoNormalizeFileOnlyOnce() {
 

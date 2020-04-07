@@ -2,9 +2,11 @@
 
 namespace test\webfilesframework\core\datastore\types\mysqlmock;
 
+use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 use webfilesframework\core\datasystem\database\MDatabaseConnection;
 
 /**
@@ -16,8 +18,6 @@ class MDatabaseDatastoreTest extends TestCase {
      * @var MDatabaseDatasourceDatastore
      */
     protected $object;
-
-
 
     /**
      * Sets up the fixture, for example, opens a network connection.
@@ -52,7 +52,7 @@ class MDatabaseDatastoreTest extends TestCase {
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     public function createDatabaseConnectionMock()
     {
@@ -62,7 +62,7 @@ class MDatabaseDatastoreTest extends TestCase {
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     public function createPreparedDatabaseConnectionMock()
     {
@@ -87,7 +87,7 @@ class MDatabaseDatastoreTest extends TestCase {
     }
 
 	/**
-	 * @return PHPUnit_Framework_MockObject_MockObject
+	 * @return MockObject
 	 */
     public function createMockForShowTablesResultHandler()
     {
@@ -108,10 +108,9 @@ class MDatabaseDatastoreTest extends TestCase {
         return $showTablesResultHandler;
     }
 
-    /**
-     * @param $tablesMetaInformationResturnObject
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
+	/**
+	 * @return MockObject|MMysqlResultHandler
+	 */
     public function createMockForWebfilesResultHandler()
     {
 

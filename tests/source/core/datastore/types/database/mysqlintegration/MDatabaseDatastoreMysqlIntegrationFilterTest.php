@@ -2,8 +2,14 @@
 
 namespace test\webfilesframework\core\datastore\types\mysqlintegration;
 
+use ReflectionException;
 use test\webfilesframework\core\datastore\types\MAbstractDatastoreTest;
+use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastoreException;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * @covers webfilesframework\core\datastore\types\database\MDatabaseDatastore
@@ -17,30 +23,30 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
-	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 * @throws MDatabaseDatastoreException
 	 */
 	public function testGetWebfiles()
-    {
+	{
 
-        $databaseDatastore = $this->createDatabaseDatastore();
-        $databaseDatastore->deleteAll();
+		$databaseDatastore = $this->createDatabaseDatastore();
+		$databaseDatastore->deleteAll();
 
-        $databaseDatastore->storeWebfile(new MSampleWebfile());
+		$databaseDatastore->storeWebfile(new MSampleWebfile());
 
-        $result = $databaseDatastore->getAllWebfiles()->getArray();
+		$result = $databaseDatastore->getAllWebfiles()->getArray();
 
-        self::assertEquals(1,count($result));
+		self::assertEquals(1,count($result));
 
-    }
+	}
 
 
 	/**
+	 * @throws MDatabaseDatastoreException
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
-	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
 	 */
 	public function testNormalizeWebfiles()
     {
@@ -58,9 +64,9 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
-	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 * @throws MDatabaseDatastoreException
 	 */
 	public function testSearchByTemplate()
     {
@@ -85,9 +91,9 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
-	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 * @throws MDatabaseDatastoreException
 	 */
 	public function testGetLatestWebfiles() {
 
@@ -105,7 +111,7 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws MWebfilesFrameworkException
 	 */
 	public function testUpdateWebfile() {
 		self::assertTrue(true); // dummy check to junit ignore warnings
@@ -119,9 +125,9 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
-	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 * @throws MDatabaseDatastoreException
 	 */
 	public function testDeleteAllWebfiles() {
 
@@ -146,9 +152,9 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 
 	/**
 	 * @throws ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
-	 * @throws \webfilesframework\core\datastore\MDatastoreException
-	 * @throws \webfilesframework\core\datastore\types\database\MDatabaseDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws MDatastoreException
+	 * @throws MDatabaseDatastoreException
 	 */
 	public function testDeleteWebfileByTemplate() {
 
@@ -168,18 +174,18 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
 	}
 
     /**
-     * @return \webfilesframework\core\datastore\types\database\MDatabaseDatastore
+     * @return MDatabaseDatastore
      */
     private function createDatabaseDatastore()
     {
-        $connection = new \webfilesframework\core\datasystem\database\MDatabaseConnection(
+        $connection = new MDatabaseConnection(
             "127.0.0.1",
             "webfiles",
             "prefix_",
             "root",
             "");
 
-        $databaseDatastore = new \webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
+        $databaseDatastore = new MDatabaseDatastore($connection);
         return $databaseDatastore;
     }
 

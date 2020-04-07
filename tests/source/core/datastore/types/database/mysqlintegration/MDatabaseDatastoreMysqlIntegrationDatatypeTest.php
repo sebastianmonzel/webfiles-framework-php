@@ -2,10 +2,13 @@
 
 namespace test\webfilesframework\core\datastore\types\mysqlintegration;
 
+use ReflectionException;
 use test\webfilesframework\core\datastore\types\MAbstractDatastoreTest;
 use webfilesframework\core\datastore\MDatastoreException;
+use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastoreException;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
+use webfilesframework\core\datasystem\database\MDatabaseConnection;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**
@@ -19,10 +22,10 @@ class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreT
 
 
 	/**
-	 * @throws ReflectionException
-	 * @throws MWebfilesFrameworkException
-	 * @throws MDatastoreException
 	 * @throws MDatabaseDatastoreException
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
 	 */
 	public function testGetWebfiles()
     {
@@ -171,18 +174,18 @@ class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreT
 	}
 
     /**
-     * @return \webfilesframework\core\datastore\types\database\MDatabaseDatastore
+     * @return MDatabaseDatastore
      */
     private function createDatabaseDatastore()
     {
-        $connection = new \webfilesframework\core\datasystem\database\MDatabaseConnection(
+        $connection = new MDatabaseConnection(
             "127.0.0.1",
             "webfiles",
             "prefix_",
             "root",
             "");
 
-        $databaseDatastore = new \webfilesframework\core\datastore\types\database\MDatabaseDatastore($connection);
+        $databaseDatastore = new MDatabaseDatastore($connection);
         return $databaseDatastore;
     }
 
