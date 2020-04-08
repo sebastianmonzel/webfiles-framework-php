@@ -119,8 +119,8 @@ class MCombinedDatastore extends MAbstractDatastore
     public function getAllWebfiles()
     {
 
-        $webfiles = $this->getAllWebfiles()->getArray();
-        return new MWebfileStream($webfiles);
+        $webfilesArray = $this->getWebfilesAsArray();
+        return new MWebfileStream($webfilesArray);
     }
 
     public function getLatestWebfiles($count = 5)
@@ -129,17 +129,6 @@ class MCombinedDatastore extends MAbstractDatastore
     }
 
     public function searchByTemplate(MWebfile $template)
-    {
-
-    }
-
-
-    public function getDatasetsFromDatastore()
-    {
-
-    }
-
-    public function getLatestDatasets($count = 5, $reverse = true)
     {
 
     }
