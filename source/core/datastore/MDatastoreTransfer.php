@@ -16,6 +16,14 @@ class MDatastoreTransfer
     private $source;
     private $target;
 
+	/**
+	 * MDatastoreTransfer constructor.
+	 *
+	 * @param MAbstractDatastore $source
+	 * @param MAbstractDatastore $target
+	 *
+	 * @throws MDatastoreException
+	 */
     function __construct(MAbstractDatastore $source, MAbstractDatastore $target)
     {
         if ($source == null) {
@@ -29,6 +37,9 @@ class MDatastoreTransfer
         $this->target = $target;
     }
 
+	/**
+	 * @throws MDatastoreException
+	 */
     function transfer()
     {
 
