@@ -76,8 +76,7 @@ class MRemoteDatastoreEndpoint {
 
 				$template = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_TEMPLATE ] );
 
-				$webfiles       = $this->m_oDatastore->searchByTemplate($template);
-				$webfilesStream = new MWebfileStream($webfiles);
+				$webfilesStream = $this->m_oDatastore->searchByTemplate($template);
 				echo $webfilesStream->getXML();
 
 				return;
