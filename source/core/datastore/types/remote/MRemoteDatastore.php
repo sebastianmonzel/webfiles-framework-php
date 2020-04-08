@@ -73,7 +73,7 @@ class MRemoteDatastore extends MAbstractDatastore
 	/**
 	 * @param MWebfile $template
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
@@ -84,7 +84,7 @@ class MRemoteDatastore extends MAbstractDatastore
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
 
-        return $this->getAllWebfiles($data)->getArray();
+        return $this->getAllWebfiles($data);
     }
 
 	/**

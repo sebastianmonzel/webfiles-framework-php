@@ -2,6 +2,7 @@
 
 namespace webfilesframework\core\datastore\types\mail;
 
+use ReflectionException;
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MISingleDatasourceDatastore;
@@ -9,6 +10,7 @@ use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\core\datasystem\file\system\MFile;
+use webfilesframework\MWebfilesFrameworkException;
 
 /**
  * Class to connect to a datastore based on a imap mailaccount.
@@ -50,13 +52,15 @@ class MImapDatastore extends MAbstractDatastore
         return true;
     }
 
-    /**
-     * According to the given timestamp the next matching webfile will be searched and returned.
-     *
-     * @param int $timestamp
-     *
-     * @return MWebfile
-     */
+	/**
+	 * According to the given timestamp the next matching webfile will be searched and returned.
+	 *
+	 * @param $timestamp
+	 *
+	 * @return MWebfile|null
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 */
     public function getNextWebfileForTimestamp($timestamp)
     {
         $webfiles = $this->getAllWebfiles()->getArray();
@@ -73,8 +77,8 @@ class MImapDatastore extends MAbstractDatastore
 
 	/**
 	 * @return MWebfileStream
-	 * @throws \ReflectionException
-	 * @throws \webfilesframework\MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
 	 */
     public function getAllWebfiles()
     {

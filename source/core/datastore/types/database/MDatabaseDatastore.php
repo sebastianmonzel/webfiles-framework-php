@@ -643,7 +643,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 		$template->presetForTemplateSearch();
 		$template->setId($object->webfileid);
 
-		$webfiles = $this->searchByTemplate($template);
+		$webfiles = $this->searchByTemplate($template)->getArray();
 		return array_shift($webfiles);
 	}
 
@@ -651,7 +651,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	/**
 	 * @param MWebfile $template
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
@@ -675,7 +675,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 	        $this->createTable($template, false);
         }
 
-        return $webfileArray;
+        return new MWebfileStream($webfileArray);
     }
 
 	/**

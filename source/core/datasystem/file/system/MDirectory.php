@@ -3,6 +3,8 @@
 namespace webfilesframework\core\datasystem\file\system;
 
 
+use Exception;
+
 /**
  * Encapsulates the access on directories.
  *
@@ -24,7 +26,7 @@ class MDirectory extends MFile
 	/**
 	 * Returns the names of all files in the directory as an array.
 	 * @return array array with file objects
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function getFiles()
     {
@@ -32,7 +34,7 @@ class MDirectory extends MFile
         $filenames = array();
 
         if ( ! $this->exists() ) {
-            throw new \Exception("file '" . $this->m_sPath . "' does not exist.");
+            throw new Exception("file '" . $this->m_sPath . "' does not exist.");
         }
 
 	    $filewebfiles = array();
@@ -57,7 +59,7 @@ class MDirectory extends MFile
 	 * @param $count
 	 *
 	 * @return array
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function getLatestFiles($count)
     {
@@ -70,7 +72,7 @@ class MDirectory extends MFile
 	/**
 	 * Returns the names of all files in the directory as an array.
 	 * @return array with filenames
-	 * @throws \Exception
+	 * @throws Exception
 	 */
     public function getFileNames()
     {

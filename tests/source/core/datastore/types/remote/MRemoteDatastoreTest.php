@@ -2,9 +2,11 @@
 
 namespace test\webfilesframework\core\datastore\types;
 
+use ReflectionException;
 use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\remote\MRemoteDatastore;
+use webfilesframework\MWebfilesFrameworkException;
 
 class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
@@ -45,7 +47,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		$searchtemplate->presetForTemplateSearch();
 		$searchtemplate->setLastname("Monzel");
 
-		$webfilesArray = $remoteDatastore->searchByTemplate($searchtemplate);
+		$webfilesArray = $remoteDatastore->searchByTemplate($searchtemplate)->getArray();
 
 		self::assertNotNull($webfilesArray);
 		self::assertTrue(is_array($webfilesArray));
@@ -59,7 +61,10 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		self::assertEquals($firstWebfile->getLastname(),"Monzel");
 	}
 
-
+	/**
+	 * @throws ReflectionException
+	 * @throws MWebfilesFrameworkException
+	 */
 	public function testSearchByTemplate_findsNoWebfile() {
 
 		$remoteDatastore = $this->createRemoteDatastore();
@@ -68,8 +73,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		$searchtemplate->presetForTemplateSearch();
 		$searchtemplate->setLastname("Schmidt");
 
-		// TODO warum array statt webfiles stream?
-		$webfilesArray = $remoteDatastore->searchByTemplate($searchtemplate);
+		$webfilesArray = $remoteDatastore->searchByTemplate($searchtemplate)->getArray();
 
 		self::assertNotNull($webfilesArray);
 		self::assertTrue(is_array($webfilesArray));

@@ -153,7 +153,7 @@ class MDatabaseDatastoreTest extends MAbstractWebfilesFramworkTest {
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
 
-        $result = $databaseDatastore->searchByTemplate($template);
+        $result = $databaseDatastore->searchByTemplate($template)->getArray();
 
         self::assertNotNull($result);
         self::assertTrue(is_array($result));
@@ -224,7 +224,7 @@ class MDatabaseDatastoreTest extends MAbstractWebfilesFramworkTest {
             ->with('CREATE TABLE IF NOT EXISTS `MSampleWebfile` (`id` int(10) NOT NULL AUTO_INCREMENT,`firstname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`lastname` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`street` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`housenumber` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`postcode` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`city` varchar(50) CHARACTER SET utf8 COLLATE utf8_unicode_ci NOT NULL,`time` int(24) NOT NULL,PRIMARY KEY (`id`)) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1;')
             ->willReturn(null);
 
-        $result = $databaseDatastore->searchByTemplate($template);
+        $result = $databaseDatastore->searchByTemplate($template)->getArray();
 
         self::assertNotNull($result);
         self::assertTrue(is_array($result));

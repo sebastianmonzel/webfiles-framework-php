@@ -237,7 +237,7 @@ class MGoogleCalendarDatastore extends MAbstractCachableDatastore
 	 * </ol>
 	 *
 	 * @param MWebfile $template template to search for
-	 * @return array list of webfiles
+	 * @return MWebfileStream list of webfiles
 	 */
 	public function searchByTemplate(MWebfile $template)
 	{

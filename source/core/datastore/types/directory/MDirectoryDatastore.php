@@ -269,7 +269,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	/**
 	 * @param MWebfile $template
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
@@ -280,12 +280,13 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
             if (!$this->isCacheActual()) {
                 $this->fillCachingDatastore();
             }
-            $webfiles = $this->cachingDatastore->searchByTemplate($template);
+            $webfilesStream = $this->cachingDatastore->searchByTemplate($template);
         } else {
-            $webfiles = $this->getAllWebfilesAsArray();
-            $webfiles = $this->filterWebfilesArrayByTemplate($webfiles, $template);
+            $webfilesArray = $this->getAllWebfilesAsArray();
+            $webfilesArray = $this->filterWebfilesArrayByTemplate($webfilesArray, $template);
+	        $webfilesStream = new MWebfileStream($webfilesArray);
         }
-        return $webfiles;
+        return $webfilesStream;
     }
 
 	/**
@@ -297,7 +298,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 	 */
 	public function deleteByTemplate(MWebfile $template)
     {
-        $webfiles = $this->searchByTemplate($template);
+        $webfiles = $this->searchByTemplate($template)->getArray();
         $mapping = $this->createWebfileIdToFilenameMapping();
 
         if ($this->isDatastoreCached()) {

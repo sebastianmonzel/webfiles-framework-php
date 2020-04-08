@@ -76,7 +76,7 @@ abstract class MAbstractDatastore extends MWebfile
      * </ol>
      *
      * @param MWebfile $template template to search for
-     * @return array list of webfiles
+     * @return MWebfileStream list of webfiles
      */
     public abstract function searchByTemplate(MWebfile $template);/** @noinspection PhpUnusedParameterInspection */
 

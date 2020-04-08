@@ -80,7 +80,7 @@ class MDatabaseDatastoreMysqlIntegrationFilterTest extends MAbstractDatastoreTes
         $template->presetForTemplateSearch();
         $template->setId($storedWebfileId);
 
-        $foundWebfiles = $databaseDatastore->searchByTemplate($template);
+        $foundWebfiles = $databaseDatastore->searchByTemplate($template)->getArray();
 
         self::assertEquals(1,count($foundWebfiles));
     }

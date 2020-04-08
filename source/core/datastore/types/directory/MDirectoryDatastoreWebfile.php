@@ -106,7 +106,7 @@ class MDirectoryDatastoreWebfile extends MAbstractDatastore
 	 *
 	 * @param MWebfile $template
 	 *
-	 * @return array
+	 * @return MWebfileStream
 	 * @throws MDatastoreException
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException

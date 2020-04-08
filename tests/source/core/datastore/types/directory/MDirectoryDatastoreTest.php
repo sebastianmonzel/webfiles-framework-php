@@ -120,7 +120,7 @@ class MDirectoryDatastoreTest extends MAbstractWebfilesFramworkTest {
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setFirstname('Sebastian');
-        $result = $directoryDatastore->searchByTemplate($template);
+        $result = $directoryDatastore->searchByTemplate($template)->getArray();
 
         self::assertNotNull($result);
         self::assertTrue(is_array($result));
@@ -133,7 +133,7 @@ class MDirectoryDatastoreTest extends MAbstractWebfilesFramworkTest {
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setId('2');
-        $result = $directoryDatastore->searchByTemplate($template);
+        $result = $directoryDatastore->searchByTemplate($template)->getArray();
 
         self::assertNotNull($result);
         self::assertTrue(is_array($result));
