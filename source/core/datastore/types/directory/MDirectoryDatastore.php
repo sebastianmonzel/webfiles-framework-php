@@ -445,6 +445,11 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         }
     }
 
+	/**
+	 * @param MImage $image
+	 *
+	 * @throws Exception
+	 */
     private function createThumbnailsForFile(MImage $image) {
 
         $this->m_oDirectory->createSubDirectoryIfNotExists($this->THUMB_IMAGES_FOLDER_NAME);

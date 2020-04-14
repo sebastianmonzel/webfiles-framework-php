@@ -2,11 +2,14 @@
 
 namespace test\webfilesframework\core\datastore;
 
+use PHPUnit\Framework\MockObject\MockObject;
+use ReflectionException;
 use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\MDatastoreException;
 use webfilesframework\core\datastore\MDatastoreFactory;
 use webfilesframework\core\datastore\MDatastoreTransfer;
 use webfilesframework\core\datastore\types\database\MDatabaseDatastore;
+use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 use webfilesframework\core\datastore\types\directory\MDirectoryDatastore;
 use webfilesframework\core\datasystem\file\system\MDirectory;
 use webfilesframework\MWebfilesFrameworkException;
@@ -36,7 +39,7 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     public function createDatabaseConnectionMock()
     {
@@ -46,7 +49,7 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
     }
 
     /**
-     * @return PHPUnit_Framework_MockObject_MockObject
+     * @return MockObject
      */
     public function createPreparedDatabaseConnectionMock()
     {
@@ -91,9 +94,9 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
         return $databaseConnectionMock;
     }
 
-    /**
-     * @return array
-     */
+	/**
+	 * @return MockObject|MMysqlResultHandler
+	 */
     public function createMockForShowTablesResultHandler()
     {
         $tablesMetaInformationResturnObject = (object)array(
@@ -140,10 +143,9 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
         return $showTablesResultHandler;
     }
 
-    /**
-     * @param $tablesMetaInformationResturnObject
-     * @return PHPUnit_Framework_MockObject_MockObject
-     */
+	/**
+	 * @return MockObject
+	 */
     public function createMockForWebfilesResultHandler()
     {
 
@@ -172,9 +174,9 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
 
 	/**
 	 * @return MDirectoryDatastore
-	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 * @throws MDatastoreException
+	 * @throws ReflectionException
 	 */
     private function createDirectoryDatastore()
     {
@@ -185,6 +187,12 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
 	    return new MDirectoryDatastore($directory);
     }
 
+	/**
+	 * @return MDirectoryDatastore
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     private function createSourceDirectoryDatastore()
     {
         $directory = new MDirectory(
@@ -192,16 +200,21 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
 	    return new MDirectoryDatastore($directory);
     }
 
-
+	/**
+	 * @return MDatabaseDatastore
+	 */
     private function createDatabaseDatastore()
     {
         $connection = $this->createPreparedDatabaseConnectionMock();
 	    return new MDatabaseDatastore($connection);
     }
 
-    /**
-     * @covers webfilesframework\core\datastore\MDatastoreTransfer::transfer
-     */
+	/**
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 * @covers webfilesframework\core\datastore\MDatastoreTransfer::transfer
+	 */
     public function testTransferFromDatabaseToDirectory()
     {
         $source = $this->createDatabaseDatastore();
@@ -220,6 +233,11 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
 
     }
 
+	/**
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
     public function testTransferFromDirectoryToDirectory()
     {
         $source = $this->createSourceDirectoryDatastore();

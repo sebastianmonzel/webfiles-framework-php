@@ -20,6 +20,10 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		return $remoteDatastore;
 	}
 
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
 	public function testGetAllWebfiles() {
 
 		$remoteDatastore = $this->createRemoteDatastore();
@@ -39,6 +43,10 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 	}
 
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
 	public function testSearchByTemplate_findsOneWebfile() {
 
 		$remoteDatastore = $this->createRemoteDatastore();
@@ -80,7 +88,10 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		self::assertCount(0, $webfilesArray);
 	}
 
-
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
 	public function testStoreWebfileAndDeleteItAgain() {
 
 		$remoteDatastore = $this->createRemoteDatastore();

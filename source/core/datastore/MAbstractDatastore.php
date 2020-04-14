@@ -145,6 +145,7 @@ abstract class MAbstractDatastore extends MWebfile
      * applied to the given template.
      *
      * @param MWebfile $template
+     * @return void
      * @throws MDatastoreException
      */
     public function deleteByTemplate(MWebfile $template)
