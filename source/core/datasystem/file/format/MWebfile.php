@@ -445,7 +445,7 @@ class MWebfile {
         $json = "";
         $attributes = $this->getAttributes();
         $json .= "{\n";
-        $json .= "\tclassname: \"" . static::classname() . ",\n";
+        $json .= "\tclassname: \"" . static::classname() . "\",\n";
         foreach ($attributes as $attribute) {
 
             $attributeName = $attribute->getName();
@@ -453,7 +453,7 @@ class MWebfile {
             if (MWebfile::isSimpleDatatype($attributeName)) {
                 $attribute->setAccessible(true);
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
-                $json .= "\t" . $attributeFieldName . ": " . $attribute->getValue($this) . ",\n";
+                $json .= "\t" . $attributeFieldName . ": \"" . $attribute->getValue($this) . "\",\n";
             }
         }
         $json .= "}";
