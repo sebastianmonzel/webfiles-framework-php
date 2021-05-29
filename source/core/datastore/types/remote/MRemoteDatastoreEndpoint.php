@@ -254,8 +254,10 @@ class MRemoteDatastoreEndpoint {
     private function writeOutWebfilesStream(MWebfileStream $webfilesStream): void
     {
         if ($this->issetParam(static::$TYPE_XML)) {
+            header('Content-Type: application/xml');
             echo $webfilesStream->getXML();
         } else {
+            header('Content-Type: application/json');
             echo $webfilesStream->getJSON();
         }
     }
