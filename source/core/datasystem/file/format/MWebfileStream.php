@@ -57,17 +57,31 @@ class MWebfileStream
         
     }
 
-    private function marshall()
+    private function marshallAsXML()
     {
 
         $xml = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>";
 
         $xml .= "<webfilestream><webfiles>";
+        /** @var MWebfile $webfile */
         foreach ($this->webfiles as $webfile) {
-            $xml .= $webfile->marshall(false);
+            $xml .= $webfile->marshall(false, false);
         }
         $xml .= "</webfiles></webfilestream>";
         return $xml;
+    }
+
+    private function marshallAsJSON()
+    {
+
+        $json = "{";
+        $json .= "webfiles: ";
+        /** @var MWebfile $webfile */
+        foreach ($this->webfiles as $webfile) {
+            $json .= $webfile->marshall(false, true);
+        }
+        $json .= "}";
+        return $json;
     }
 
 	/**
@@ -132,7 +146,12 @@ class MWebfileStream
 
     public function getXML()
     {
-        return $this->marshall();
+        return $this->marshallAsXML();
+    }
+
+    public function getJSON()
+    {
+        return $this->marshallAsJSON();
     }
 
     public function getArray()

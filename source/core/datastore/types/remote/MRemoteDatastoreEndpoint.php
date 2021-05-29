@@ -68,7 +68,7 @@ class MRemoteDatastoreEndpoint {
 			if ( $this->isRetrieveWebfiles() ) { // GET BY TEMPLATE
 
 				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
-				echo $webfilesStream->getXML();
+				echo $webfilesStream->getJSON();
 
 				return;
 
@@ -77,7 +77,7 @@ class MRemoteDatastoreEndpoint {
 				$template = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_TEMPLATE ] );
 
 				$webfilesStream = $this->m_oDatastore->searchByTemplate($template);
-				echo $webfilesStream->getXML();
+				echo $webfilesStream->getJSON();
 
 				return;
 
@@ -87,7 +87,7 @@ class MRemoteDatastoreEndpoint {
 				$this->m_oDatastore->storeWebfile($webfile);
 
 				$webfilesStream = $this->m_oDatastore->getAllWebfiles(); // TODO nur bei lesenenden operationen auch was zurückgeben - bei schreibend ist ein simples "true" / "false" ausreichend als ack dass was geschrieben wurde
-				echo $webfilesStream->getXML();
+				echo $webfilesStream->getJSON();
 
 				return;
 
@@ -96,7 +96,7 @@ class MRemoteDatastoreEndpoint {
 				$count = $_POST[static::$PAYLOAD_FIELD_NAME_COUNT];
 				$webfilesStream = $this->m_oDatastore->getLatestWebfiles($count);
 
-				echo $webfilesStream->getXML();
+				echo $webfilesStream->getJSON();
 
 				return;
 
@@ -113,7 +113,7 @@ class MRemoteDatastoreEndpoint {
 				$this->m_oDatastore->deleteByTemplate( $webfile );
 
 				$webfilesStream = $this->m_oDatastore->getAllWebfiles(); // TODO nur bei lesenenden operationen auch was zurückgeben - bei schreibend ist ein simples "true" / "false" ausreichend als ack dass was geschrieben wurde
-				echo $webfilesStream->getXML();
+				echo $webfilesStream->getJSON();
 
 				return;
 
@@ -144,7 +144,7 @@ class MRemoteDatastoreEndpoint {
 		} else {
 
 			$webfilesStream = $this->m_oDatastore->getAllWebfiles();
-			echo $webfilesStream->getXML();
+			echo $webfilesStream->getJSON();
 
 			return;
 		}

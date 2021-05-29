@@ -29,35 +29,22 @@ class MWebfile {
     public $m_iTime;
 
 
-	/**
-	 * Converts the current webfile into its xml representation.
-	 *
-	 * @param bool $usePreamble sets the option of using a preamble in xml - usually used for setting the version of xml an the encoding.
-	 *
-	 * @return string string returns the webfile as a marshalled String.
-	 * @throws ReflectionException
-	 */
-    public function marshall($usePreamble = true)
+    /**
+     * Converts the current webfile into its xml representation.
+     *
+     * @param bool $usePreamble sets the option of using a preamble in xml - usually used for setting the version of xml an the encoding.
+     *
+     * @param bool $marshallAsJSON
+     * @return string string returns the webfile as a marshalled String.
+     * @throws ReflectionException
+     */
+    public function marshall($usePreamble = true, $marshallAsJSON = false)
     {
-        $out = "";
-        $attributes = $this->getAttributes();
-        if ($usePreamble) {
-            $out .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        if ( ! $marshallAsJSON ) {
+            return $this->marshalAsXml($usePreamble);
+        } else {
+            return $this->marshalAsJson();
         }
-        $out .= "<object classname=\"" . static::classname() . "\">\n";
-        foreach ($attributes as $attribute) {
-
-            $attributeName = $attribute->getName();
-
-            if (MWebfile::isSimpleDatatype($attributeName)) {
-                $attribute->setAccessible(true);
-                $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
-                $out .= "\t<" . $attributeFieldName . "><![CDATA[" . $attribute->getValue($this) . "]]></" . $attributeFieldName . ">\n";
-            }
-        }
-        $out .= "</object>";
-
-        return $out;
     }
 
 	/**
@@ -419,5 +406,59 @@ class MWebfile {
 		}
 		return $webfile;
 	}
+
+    /**
+     * @param bool $usePreamble
+     * @return string
+     * @throws ReflectionException
+     */
+    public function marshalAsXml(bool $usePreamble): string
+    {
+        $xml = "";
+        $attributes = $this->getAttributes();
+        if ($usePreamble) {
+            $xml .= "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n";
+        }
+        $xml .= "<object classname=\"" . static::classname() . "\">\n";
+        foreach ($attributes as $attribute) {
+
+            $attributeName = $attribute->getName();
+
+            if (MWebfile::isSimpleDatatype($attributeName)) {
+                $attribute->setAccessible(true);
+                $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
+                $xml .= "\t<" . $attributeFieldName . "><![CDATA[" . $attribute->getValue($this) . "]]></" . $attributeFieldName . ">\n";
+            }
+        }
+        $xml .= "</object>";
+
+        return $xml;
+    }
+
+    /**
+     * @param bool $usePreamble
+     * @return string
+     * @throws ReflectionException
+     */
+    public function marshalAsJson(): string
+    {
+        $json = "";
+        $attributes = $this->getAttributes();
+        $json .= "{\n";
+        $json .= "\tclassname: \"" . static::classname() . ",\n";
+        foreach ($attributes as $attribute) {
+
+            $attributeName = $attribute->getName();
+
+            if (MWebfile::isSimpleDatatype($attributeName)) {
+                $attribute->setAccessible(true);
+                $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
+                $json .= "\t" . $attributeFieldName . ": " . $attribute->getValue($this) . ",\n";
+            }
+        }
+        $json .= "}";
+
+        return $json;
+    }
 
 }
