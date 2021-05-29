@@ -14,7 +14,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 	public function createRemoteDatastore() {
 		$remoteDatastore = new MRemoteDatastore(
-			"http://webfiles.sebastianmonzel.de/jenkins/datastore/"
+			"http://webfiles.sebastianmonzel.de/jenkins/datastore/?xml"
 		);
 
 		return $remoteDatastore;
