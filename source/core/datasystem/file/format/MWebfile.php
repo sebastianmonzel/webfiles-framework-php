@@ -445,7 +445,7 @@ class MWebfile {
         $json = "";
         $attributes = $this->getAttributes();
         $json .= "{\n";
-        $json .= "\t\"classname\": \"" . static::classname() . "\",\n";
+        $json .= "\t\"classname\": \"" . str_replace("\\", "\\\\", static::classname()) . "\",\n";
 
 
         foreach ($attributes as $key => $attribute) {
