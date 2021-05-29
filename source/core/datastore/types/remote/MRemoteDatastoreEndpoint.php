@@ -37,6 +37,8 @@ class MRemoteDatastoreEndpoint {
 	public static $PAYLOAD_FIELD_NAME_COUNT       = "count";
 	public static $PAYLOAD_FIELD_NAME_TIMESTAMP   = "timestamp";
 
+	public static $TYPE_XML                      = "xml";
+
 
 	public function __construct( MAbstractDatastore $datastore ) {
 		$this->m_oDatastore = $datastore;
@@ -71,16 +73,16 @@ class MRemoteDatastoreEndpoint {
 			if ( $this->isRetrieveWebfiles() ) { // GET BY TEMPLATE
 
 				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
-				echo $webfilesStream->getJSON();
+                $this->writeOutWebfilesStream($webfilesStream);
 
-				return;
+                return;
 
 			} else if ( $this->isSearchByTemplate() ) { // GET BY TEMPLATE
 
 				$template = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_TEMPLATE ] );
 
 				$webfilesStream = $this->m_oDatastore->searchByTemplate($template);
-				echo $webfilesStream->getJSON();
+                $this->writeOutWebfilesStream($webfilesStream);
 
 				return;
 
@@ -90,7 +92,7 @@ class MRemoteDatastoreEndpoint {
 				$this->m_oDatastore->storeWebfile($webfile);
 
 				$webfilesStream = $this->m_oDatastore->getAllWebfiles(); // TODO nur bei lesenenden operationen auch was zurückgeben - bei schreibend ist ein simples "true" / "false" ausreichend als ack dass was geschrieben wurde
-				echo $webfilesStream->getJSON();
+                $this->writeOutWebfilesStream($webfilesStream);
 
 				return;
 
@@ -98,8 +100,7 @@ class MRemoteDatastoreEndpoint {
 
 				$count = $_POST[static::$PAYLOAD_FIELD_NAME_COUNT];
 				$webfilesStream = $this->m_oDatastore->getLatestWebfiles($count);
-
-				echo $webfilesStream->getJSON();
+                $this->writeOutWebfilesStream($webfilesStream);
 
 				return;
 
@@ -116,7 +117,7 @@ class MRemoteDatastoreEndpoint {
 				$this->m_oDatastore->deleteByTemplate( $webfile );
 
 				$webfilesStream = $this->m_oDatastore->getAllWebfiles(); // TODO nur bei lesenenden operationen auch was zurückgeben - bei schreibend ist ein simples "true" / "false" ausreichend als ack dass was geschrieben wurde
-				echo $webfilesStream->getJSON();
+                $this->writeOutWebfilesStream($webfilesStream);
 
 				return;
 
@@ -147,7 +148,7 @@ class MRemoteDatastoreEndpoint {
 		} else {
 
 			$webfilesStream = $this->m_oDatastore->getAllWebfiles();
-			echo $webfilesStream->getJSON();
+            $this->writeOutWebfilesStream($webfilesStream);
 
 			return;
 		}
@@ -246,5 +247,17 @@ class MRemoteDatastoreEndpoint {
 	public function isTryConnect(): bool {
 		return $this->getParam( static::$PAYLOAD_FIELD_NAME_METHOD ) == static::$METHOD_NAME_TRY_CONNECT;
 	}
+
+    /**
+     * @param MWebfileStream $webfilesStream
+     */
+    private function writeOutWebfilesStream(MWebfileStream $webfilesStream): void
+    {
+        if ($this->issetParam(static::$TYPE_XML)) {
+            echo $webfilesStream->getXML();
+        } else {
+            echo $webfilesStream->getJSON();
+        }
+    }
 
 }
