@@ -2,6 +2,7 @@
 
 namespace webfilesframework\core\datastore\types\remote;
 
+
 use ReflectionException;
 use webfilesframework\core\datastore\MAbstractDatastore;
 use webfilesframework\core\datastore\MDatastoreException;
@@ -62,6 +63,8 @@ class MRemoteDatastoreEndpoint {
 	 * @throws MDatastoreException
 	 */
 	public function handleRemoteCall() {
+
+        header("Access-Control-Allow-Origin: *");
 
 		if ( $this->issetParam( static::$PAYLOAD_FIELD_NAME_METHOD ) ) {
 
