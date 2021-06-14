@@ -78,7 +78,7 @@ class MWebfileStream
         /** @var MWebfile $webfile */
         foreach ($this->webfiles as $webfile) {
             $json .= $webfile->marshall(false, true);
-            if (next($this->webfiles)==true) $json .= ",";
+            if (next($this->webfiles)==true) $json .= "\n,\n";
         }
         $json .= "]";
         return $json;
