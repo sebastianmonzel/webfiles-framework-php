@@ -28,7 +28,6 @@ class MWebfile {
      */
     public $m_iTime;
 
-
     /**
      * Converts the current webfile into its xml representation.
      *
@@ -84,7 +83,22 @@ class MWebfile {
 	 * @throws ReflectionException
 	 */
 	private static function genericUnmarshall($xmlAsString, &$targetObject = null) {
+        if ( substr(trim($xmlAsString),0,1) == "{" ) {
+            return self::genericJsonUnmarshal($xmlAsString, $targetObject);
+        } else {
+            return self::genericXmlUnmarshal($xmlAsString, $targetObject);
+        }
+    }
 
+    /**
+     * @param $xmlAsString
+     * @param $targetObject
+     * @return object
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private static function genericXmlUnmarshal($xmlAsString, $targetObject): object
+    {
         $root = simplexml_load_string($xmlAsString);
 
         if ($root == null) {
@@ -101,8 +115,49 @@ class MWebfile {
             }
         }
 
-        if ( $targetObject == null ) {
+        if ($targetObject == null) {
             $classname = (string)$root->attributes()->classname;
+
+            // INSTANCIATE NEW
+            $ref = new ReflectionClass($classname);
+            $targetObject = $ref->newInstanceWithoutConstructor();
+        }
+
+        $objectAttributes = $root->children();
+        $attributes = $targetObject->getAttributes();
+
+        /** @var SimpleXMLElement $value */
+        foreach ($objectAttributes as $value) {
+            /** @var ReflectionProperty $attribute */
+            foreach ($attributes as $attribute) {
+
+                $attribute->setAccessible(true);
+                $attributeName = $attribute->getName();
+                if ($value->getName() == static::getSimplifiedAttributeName($attributeName)) {
+                    $attribute->setValue($targetObject, $value->__toString());
+                }
+            }
+        }
+        return $targetObject;
+    }
+
+    /**
+     * @param $xmlAsString
+     * @param $targetObject
+     * @return object
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private static function genericJsonUnmarshal($xmlAsString, $targetObject): object
+    {
+        $root = json_decode($xmlAsString);
+
+        if ($root == null) {
+            throw new MWebfilesFrameworkException("Error on reading initial json: " . $xmlAsString);
+        }
+
+        if ($targetObject == null) {
+            $classname = (string)$root->classname;
 
             // INSTANCIATE NEW
             $ref = new ReflectionClass($classname);
@@ -446,6 +501,7 @@ class MWebfile {
         $attributes = $this->getAttributes();
         $json .= "{\n";
         $json .= "\t\"classname\": \"" . str_replace("\\", "\\\\", static::classname()) . "\",\n";
+        $json .= "\t\"webfile\": {\n";
 
 
         foreach ($attributes as $key => $attribute) {
@@ -455,11 +511,12 @@ class MWebfile {
             if (MWebfile::isSimpleDatatype($attributeName)) {
                 $attribute->setAccessible(true);
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
-                $json .= "\t\"" . $attributeFieldName . "\": \"" . $attribute->getValue($this) . "\"";
+                $json .= "\t\t\"" . $attributeFieldName . "\": \"" . $attribute->getValue($this) . "\"";
                 if (next($attributes)==true) $json .= ",";
                 $json .= "\n";
             }
         }
+        $json .= "\t}";
         $json .= "}";
 
         return $json;

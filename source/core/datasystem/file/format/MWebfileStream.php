@@ -74,14 +74,13 @@ class MWebfileStream
     private function marshallAsJSON()
     {
 
-        $json = "{";
-        $json .= "\"webfiles\": [";
+        $json = "[\n";
         /** @var MWebfile $webfile */
         foreach ($this->webfiles as $webfile) {
             $json .= $webfile->marshall(false, true);
             if (next($this->webfiles)==true) $json .= ",";
         }
-        $json .= "]}";
+        $json .= "]";
         return $json;
     }
 
