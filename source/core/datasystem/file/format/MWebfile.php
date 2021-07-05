@@ -117,10 +117,7 @@ class MWebfile {
 
         if ($targetObject == null) {
             $classname = (string)$root->attributes()->classname;
-
-            // INSTANCIATE NEW
-            $ref = new ReflectionClass($classname);
-            $targetObject = $ref->newInstanceWithoutConstructor();
+            $targetObject = MWebfile::createWebfileByClassname($classname);
         }
 
         $objectAttributes = $root->children();
@@ -142,40 +139,36 @@ class MWebfile {
     }
 
     /**
-     * @param $xmlAsString
+     * @param $jsonAsString
      * @param $targetObject
      * @return object
      * @throws MWebfilesFrameworkException
      * @throws ReflectionException
      */
-    private static function genericJsonUnmarshal($xmlAsString, $targetObject): object
+    private static function genericJsonUnmarshal($jsonAsString, $targetObject): object
     {
-        $root = json_decode($xmlAsString);
+        $jsonRoot = json_decode($jsonAsString, true);
 
-        if ($root == null) {
-            throw new MWebfilesFrameworkException("Error on reading initial json: " . $xmlAsString);
+        if ($jsonRoot == null) {
+            throw new MWebfilesFrameworkException("Error on reading initial json: " . $jsonAsString);
         }
 
         if ($targetObject == null) {
-            $classname = (string)$root->classname;
-
-            // INSTANCIATE NEW
-            $ref = new ReflectionClass($classname);
-            $targetObject = $ref->newInstanceWithoutConstructor();
+            $classname = (string)$jsonRoot['classname'];
+            $targetObject = MWebfile::createWebfileByClassname($classname);
         }
 
-        $objectAttributes = $root->children();
+        $objectAttributes = $jsonRoot['webfile'];
         $attributes = $targetObject->getAttributes();
 
-        /** @var SimpleXMLElement $value */
-        foreach ($objectAttributes as $value) {
+        foreach ($objectAttributes as $key => $value) {
             /** @var ReflectionProperty $attribute */
             foreach ($attributes as $attribute) {
 
                 $attribute->setAccessible(true);
                 $attributeName = $attribute->getName();
-                if ($value->getName() == static::getSimplifiedAttributeName($attributeName)) {
-                    $attribute->setValue($targetObject, $value->__toString());
+                if ($key == static::getSimplifiedAttributeName($attributeName)) {
+                    $attribute->setValue($targetObject, $value);
                 }
             }
         }
@@ -454,8 +447,8 @@ class MWebfile {
 	 * @throws ReflectionException
 	 */
 	public static function createWebfileByClassname($classname) {
-		$ref = new ReflectionClass($classname);
-		$webfile = $ref->newInstanceWithoutConstructor();
+		$reflectionClass = new ReflectionClass($classname);
+		$webfile = $reflectionClass->newInstanceWithoutConstructor();
 		if (! $webfile instanceof MWebfile ) {
 			throw new MWebfilesFrameworkException("given class '" . $classname . " does not extend MWebfile.");
 		}

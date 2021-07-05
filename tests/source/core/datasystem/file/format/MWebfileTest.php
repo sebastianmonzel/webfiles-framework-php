@@ -22,7 +22,7 @@ class MWebfileTest extends MAbstractWebfilesFramworkTest {
     	$this->assertEquals($referencedSimplifiedAttributename,$calculatedSimplifiedAttributename);
     }
 
-    public function testUnmarshallingAndMarshallingWebfile() {
+    public function testUnmarshallingAndMarshallingXmlWebfile() {
 
         // UNMARSHALL
         $file = new MFile(
@@ -36,6 +36,22 @@ class MWebfileTest extends MAbstractWebfilesFramworkTest {
             __DIR__ . '/../../../../../resources/folderDatastore/sampleWebfile1.webfile',
             $marshalledWebfile
             );
+    }
+
+    public function testUnmarshallingAndMarshallingJsonWebfile() {
+
+        // UNMARSHALL
+        $file = new MFile(
+            __DIR__ . '/../../../../../resources/folderDatastoreJson/sampleWebfile1.webfile');
+        $sample = MWebfile::staticUnmarshall($file->getContent());
+
+        // MARSHALL
+        $marshalledWebfile = $sample->marshall(true, true);
+
+        $this->assertJsonStringEqualsJsonFile(
+            __DIR__ . '/../../../../../resources/folderDatastoreJson/sampleWebfile1.webfile',
+            $marshalledWebfile
+        );
     }
 
     public function checkConventionsOnEveryGivenWebfileInClasspath() {

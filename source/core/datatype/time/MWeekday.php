@@ -1,6 +1,6 @@
 <?php
 
-namespace webfilesframework\core\time;
+namespace webfilesframework\core\datatype\time;
 
 use webfilesframework\core\datasystem\file\format\MWebfile;
 

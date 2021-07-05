@@ -1,0 +1,13 @@
+{
+	"classname": "webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile",
+	"webfile": {
+		"firstname": "Sebastian",
+		"lastname": "Monzel",
+		"street": "Blumenstrasse",
+		"housenumber": "4",
+		"postcode": "67433",
+		"city": "Neustadt an der Weinstrasse",
+		"id": "1",
+		"time": "4711"
+	}
+}

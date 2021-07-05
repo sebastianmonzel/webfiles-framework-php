@@ -1,6 +1,6 @@
 <?php
 
-namespace webfilesframework\core\datatypes\time;
+namespace webfilesframework\core\datatype\time;
 use webfilesframework\MWebfilesFrameworkException;
 
 /**

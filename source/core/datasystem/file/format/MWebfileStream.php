@@ -93,19 +93,11 @@ class MWebfileStream
 	 */
 	private function unmarshall($input)
     {
-
-        $webfilesResultArray = array();
-
-        $root = $this->parseAndValidateWebfilesStreamXml($input);
-        $webfilesChildren = $root->webfiles->children();
-
-        /** @var SimpleXMLElement $webfileChild */
-        foreach ($webfilesChildren as $webfileChild) {
-            array_push(
-                $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild->asXML()));
+        if ( substr(trim($input),0,1) == "{" ) {
+            return $this->unmarshallAsJson($input);
+        } else {
+            return $this->unmarshallAsXml($input);
         }
-
-        return $webfilesResultArray;
     }
 
     /**
@@ -157,5 +149,49 @@ class MWebfileStream
     public function getArray()
     {
         return $this->webfiles;
+    }
+
+    /**
+     * @param $input
+     * @return array
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function unmarshallAsXml($input): array
+    {
+        $webfilesResultArray = array();
+
+        $root = $this->parseAndValidateWebfilesStreamXml($input);
+        $webfilesChildren = $root->webfiles->children();
+
+        /** @var SimpleXMLElement $webfileChild */
+        foreach ($webfilesChildren as $webfileChild) {
+            array_push(
+                $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild->asXML()));
+        }
+
+        return $webfilesResultArray;
+    }
+
+    /**
+     * @param $input
+     * @return array
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function unmarshallAsJson($input): array
+    {
+        $webfilesResultArray = array();
+
+        $root = $this->parseAndValidateWebfilesStreamXml($input);
+        $webfilesChildren = $root->webfiles->children();
+
+        /** @var SimpleXMLElement $webfileChild */
+        foreach ($webfilesChildren as $webfileChild) {
+            array_push(
+                $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild->asXML()));
+        }
+
+        return $webfilesResultArray;
     }
 }
