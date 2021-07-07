@@ -66,9 +66,10 @@ class MRemoteDatastoreEndpoint {
 	 */
 	public function handleRemoteCall() {
 
+        header("Access-Control-Allow-Headers: *");
         header("Access-Control-Allow-Origin: *");
 
-		if ( $this->issetParam( static::$PAYLOAD_FIELD_NAME_METHOD ) ) {
+        if ( $this->issetParam( static::$PAYLOAD_FIELD_NAME_METHOD ) ) {
 
 			if ( $this->isRetrieveWebfiles() ) { // GET BY TEMPLATE
 
