@@ -7,7 +7,7 @@ use Exception;
 use webfilesframework\core\datasystem\file\format\media\image\handler\MGdHandler;
 use webfilesframework\core\datasystem\file\format\media\image\handler\MImageMagickHandler;
 use webfilesframework\core\datasystem\file\system\MFile;
-use webfilesframework\core\datatypes\time\MTimestampHelper;
+use webfilesframework\core\datatype\time\MTimestampHelper;
 
 
 /**
