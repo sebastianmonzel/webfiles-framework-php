@@ -2,6 +2,8 @@
 
 namespace webfilesframework\core\datatype\webfiledefinition;
 
+use webfilesframework\core\datasystem\file\format\MWebfile;
+
 /**
  * Class MTextMessageWebfile
  * @package webfilesframework\core\datastore\types\database
