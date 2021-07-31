@@ -153,7 +153,7 @@ class MRemoteDatastoreEndpoint {
 
 			return;
 		}
-		// Write documentation if no case matches:
+		// Write documentation if no case matches: TODO nonsense since "else" always skips this block
 		?>
         <h1>Remote datastore</h1>
         <p>Success: You are connected to a webfile remote datastore but you did not pass any parameter or not the right
