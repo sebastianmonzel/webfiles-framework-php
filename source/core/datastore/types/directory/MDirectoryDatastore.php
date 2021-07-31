@@ -237,6 +237,14 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         $directoryPath = $this->m_oDirectory->getPath();
         // TODO implizite annahme, dass dateiname immer gleich id ist lösen
         // TODO normalize hier anwenden
+        if ( $webfile->getId() == 0 ) {
+            $webfile->setId(uniqid());
+        }
+
+        if ( $webfile->getTime() == 0 ) {
+            $webfile->setTime(time());
+        }
+
         $file = new MFile($directoryPath . "/" . $webfile->getId() . ".webfile");
 
         $file->writeContent($webfile->marshall(), true);

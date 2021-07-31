@@ -26,7 +26,7 @@ class MWebfile {
      * An event would have the point when it takes place. An news entry
      * would have the creation time as context time.
      */
-    public $m_iTime;
+    public $m_iTime = 0;
 
     /**
      * Converts the current webfile into its xml representation.
