@@ -11,12 +11,13 @@ use webfilesframework\core\datasystem\file\format\MWebfileStream;
  * @covers webfilesframework\core\datasystem\file\format\MWebfileStream
  */
 class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
-    /**
-     * @var MDatastoreFactory
-     */
-    protected $object;
 
-    public static $webfileStreamAsStringReference = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><webfilestream><webfiles><object classname=\"webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile\">
+    /**
+     * @var MWebfileStream
+     */
+    protected $webfileStream;
+
+    public static $webfileStreamAsXmlStringReference = "<?xml version=\"1.0\" encoding=\"UTF-8\"?><webfilestream><webfiles><object classname=\"webfilesframework\\core\\datastore\\types\\database\\MSampleWebfile\">
 	<firstname><![CDATA[Hello]]></firstname>
 	<lastname><![CDATA[World]]></lastname>
 	<street><![CDATA[Blumenstrasse]]></street>
@@ -36,13 +37,43 @@ class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
 	<time><![CDATA[4712]]></time>
 </object></webfiles></webfilestream>";
 
+    public static $webfileStreamAsJsonStringReference = "[
+        {
+        \"classname\": \"webfilesframework\\\\core\\\\datastore\\\\types\\\\database\\\\MSampleWebfile\",
+        \"webfile\": {
+            \"firstname\": \"Hello\",
+            \"lastname\": \"World\",
+            \"street\": \"Blumenstrasse\",
+            \"housenumber\": \"4\",
+            \"postcode\": \"67433\",
+            \"city\": \"Neustadt an der Weinstrasse\",
+            \"id\": \"1\",
+            \"time\": \"4711\"
+            }
+        }
+        ,
+        {
+            \"classname\": \"webfilesframework\\\\core\\\\datastore\\\\types\\\\database\\\\MSampleWebfile\",
+            \"webfile\": {
+            \"firstname\": \"Sergey\",
+                \"lastname\": \"Brin\",
+                \"street\": \"Blumenstraße\",
+                \"housenumber\": \"8\",
+                \"postcode\": \"67433\",
+                \"city\": \"Neustadt an der Weinstraße\",
+                \"id\": \"2\",
+                \"time\": \"4712\"
+            }
+        }
+    ]";
+
     /**
      * Sets up the fixture, for example, opens a network connection.
      * This method is called before a test is executed.
      */
     protected function setUp() : void
     {
-        $this->object = new MWebfileStream(null);
+        $this->webfileStream = new MWebfileStream(null);
     }
 
     /**
@@ -53,14 +84,35 @@ class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
     {
     }
 
+    /**
+     * @throws \ReflectionException
+     * @throws \webfilesframework\MWebfilesFrameworkException
+     */
     public function testGetXML()
     {
-        $webfileStream = new MWebfileStream(static::$webfileStreamAsStringReference);
+        $webfileStream = new MWebfileStream(static::$webfileStreamAsXmlStringReference);
         $remarshalledXml = $webfileStream->getXML();
 
         $this->assertXmlStringEqualsXmlString(
-            static::$webfileStreamAsStringReference,
+            static::$webfileStreamAsXmlStringReference,
             $remarshalledXml
+        );
+    }
+
+    /**
+     * @throws \ReflectionException
+     * @throws \webfilesframework\MWebfilesFrameworkException
+     */
+    public function testGetJson()
+    {
+        $webfileStream = new MWebfileStream(static::$webfileStreamAsJsonStringReference);
+        $remarshalledJson = $webfileStream->getJSON();
+
+        echo $remarshalledJson;
+
+        $this->assertJsonStringEqualsJsonString(
+            static::$webfileStreamAsJsonStringReference,
+            $remarshalledJson
         );
     }
     
@@ -69,7 +121,7 @@ class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
      */
     public function testGetWebfilesOnStringInput() {
 
-        $webfileStream = new MWebfileStream(static::$webfileStreamAsStringReference);
+        $webfileStream = new MWebfileStream(static::$webfileStreamAsXmlStringReference);
         $webfilesFromStream = $webfileStream->getArray();
 
         $this->assertEquals(2,count($webfilesFromStream));
@@ -80,7 +132,7 @@ class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
     	self::expectException("\webfilesframework\MWebfilesFrameworkException");
     	self::expectExceptionMessage("Error: test that it not works");
 
-        $webfileStream = new MWebfileStream("Error: test that it not works");
+        new MWebfileStream("Error: test that it not works");
 
     }
 
@@ -89,7 +141,7 @@ class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
 	    self::expectException("\webfilesframework\MWebfilesFrameworkException");
 	    self::expectExceptionMessage("No webfiles child exists on root element.");
 
-        $webfileStream = new MWebfileStream("<test>
+        new MWebfileStream("<test>
 <wrong>
 <value>test</value>
 <value>test</value>
@@ -107,7 +159,7 @@ class MWebfileStreamTest extends MAbstractWebfilesFramworkTest {
         $webfiles[0] = new MSampleWebfile();
         $webfiles[1] = "test";
 
-        $webfileStream = new MWebfileStream($webfiles);
+        new MWebfileStream($webfiles);
 
     }
 
