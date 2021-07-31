@@ -36,20 +36,19 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 		$xmlRemoteDatastore = $this->createXmlRemoteDatastore();
 
-		$webfilesAsStream = $xmlRemoteDatastore->getAllWebfiles();
-
-		self::assertNotNull($webfilesAsStream);
-		$webfilesArray = $webfilesAsStream->getArray();
-		self::assertTrue(is_array( $webfilesArray ));
-		self::assertCount(2, $webfilesArray);
-
-		/** @var MSampleWebfile $firstWebfile */
-		$firstWebfile = $webfilesArray[0];
-
-		self::assertEquals("Sebastian", $firstWebfile->getFirstname());
-		self::assertEquals("Monzel", $firstWebfile->getLastname());
-
+        $this->doTestGetAllWebfiles($xmlRemoteDatastore);
 	}
+
+    /**
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    public function test_json_getAllWebfiles() {
+
+        $jsonRemoteDatastore = $this->createJsonRemoteDatastore();
+
+        $this->doTestGetAllWebfiles($jsonRemoteDatastore);
+    }
 
 	/**
 	 * @throws MWebfilesFrameworkException
@@ -106,11 +105,15 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		$this->doTestStoreAndDelete($xmlRemoteDatastore);
 	}
 
-   public function test_json_storeWebfileAndDeleteItAgain() {
+    /**
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    public function test_json_storeWebfileAndDeleteItAgain() {
 
         $jsonRemoteDatastore = $this->createJsonRemoteDatastore();
         $this->doTestStoreAndDelete($jsonRemoteDatastore);
-   }
+    }
 
     /**
      * @param MRemoteDatastore $remoteDatastore
@@ -175,6 +178,26 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		self::assertEquals("","");
 	}
 
+    /**
+     * @param MRemoteDatastore $jsonRemoteDatastore
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function doTestGetAllWebfiles(MRemoteDatastore $jsonRemoteDatastore): void
+    {
+        $webfilesAsStream = $jsonRemoteDatastore->getAllWebfiles();
+
+        self::assertNotNull($webfilesAsStream);
+        $webfilesArray = $webfilesAsStream->getArray();
+        self::assertTrue(is_array($webfilesArray));
+        self::assertCount(2, $webfilesArray);
+
+        /** @var MSampleWebfile $firstWebfile */
+        $firstWebfile = $webfilesArray[0];
+
+        self::assertEquals("Sebastian", $firstWebfile->getFirstname());
+        self::assertEquals("Monzel", $firstWebfile->getLastname());
+    }
 
 
 }
