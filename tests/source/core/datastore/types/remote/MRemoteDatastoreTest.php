@@ -103,13 +103,13 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 	public function test_xml_storeWebfileAndDeleteItAgain() {
 
 		$xmlRemoteDatastore = $this->createXmlRemoteDatastore();
-		$this->testStoreAndDelete($xmlRemoteDatastore);
+		$this->doTestStoreAndDelete($xmlRemoteDatastore);
 	}
 
    public function test_json_storeWebfileAndDeleteItAgain() {
 
         $jsonRemoteDatastore = $this->createJsonRemoteDatastore();
-        $this->testStoreAndDelete($jsonRemoteDatastore);
+        $this->doTestStoreAndDelete($jsonRemoteDatastore);
    }
 
     /**
@@ -117,7 +117,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
      * @throws MWebfilesFrameworkException
      * @throws ReflectionException
      */
-    private function testStoreAndDelete(MRemoteDatastore $remoteDatastore): void
+    private function doTestStoreAndDelete(MRemoteDatastore $remoteDatastore): void
     {
         $webfileToStore = new MSampleWebfile();
         $webfileToStore->setLastname("Schmidt");
