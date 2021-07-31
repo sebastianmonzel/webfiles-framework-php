@@ -21,11 +21,12 @@ class MRemoteDatastore extends MAbstractDatastore
 {
 	// TODO exceptions von originärem datastore wie druchreichen?
     private $m_sDatastoreUrl;
+    private $m_sFormat;
 
-
-    public function __construct($datastoreUrl)
+    public function __construct($datastoreUrl, $format)
     {
         $this->m_sDatastoreUrl = $datastoreUrl;
+        $this->m_sFormat = $format;
     }
 
     public function tryConnect()
@@ -80,9 +81,11 @@ class MRemoteDatastore extends MAbstractDatastore
     public function searchByTemplate(MWebfile $template)
     {
 
+        $marshallAsJson = $this->m_sFormat == "json";
+
         $data = array();
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_SEARCH_BY_TEMPLATE;
-        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall(true, $marshallAsJson);
 
         return $this->getAllWebfiles($data);
     }
@@ -125,9 +128,11 @@ class MRemoteDatastore extends MAbstractDatastore
     public function storeWebfile(MWebfile $webfile)
     {
 
+        $marshallAsJson = $this->m_sFormat == "json";
+
         $data = array();
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]  = MRemoteDatastoreEndpoint::$METHOD_NAME_STORE_WEBFILE;
-        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_WEBFILE] = $webfile->marshall();
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_WEBFILE] = $webfile->marshall(true, $marshallAsJson);
 
 	    $callResultAsWebfileStreamXml = $this->doRemoteCall($data);
 
@@ -143,9 +148,12 @@ class MRemoteDatastore extends MAbstractDatastore
 	 */
     public function deleteByTemplate(MWebfile $template)
     {
+
+        $marshallAsJson = $this->m_sFormat == "json";
+
         $data = array();
         $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_METHOD]   = MRemoteDatastoreEndpoint::$METHOD_NAME_DELETE_BY_TEMPLATE;
-        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall();
+        $data[MRemoteDatastoreEndpoint::$PAYLOAD_FIELD_NAME_TEMPLATE] = $template->marshall(true, $marshallAsJson);
 
 	    $callResultAsWebfileStreamXml = $this->doRemoteCall($data);
 
@@ -154,7 +162,7 @@ class MRemoteDatastore extends MAbstractDatastore
 
 	private function doRemoteCall($data = null)
 	{
-		$request = new MPostHttpRequest($this->m_sDatastoreUrl, $data);
+		$request = new MPostHttpRequest($this->m_sDatastoreUrl . "?" . $this->m_sFormat, $data);
 		$response = $request->makeRequest();
 
 		return $response;
