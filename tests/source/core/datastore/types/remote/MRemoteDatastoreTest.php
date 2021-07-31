@@ -12,7 +12,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 	protected $object;
 
-	public function createRemoteDatastore() {
+	public function createXmlRemoteDatastore() {
 		$remoteDatastore = new MRemoteDatastore(
 			"http://webfiles.sebastianmonzel.de/jenkins/datastore/?xml"
 		);
@@ -20,15 +20,23 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		return $remoteDatastore;
 	}
 
+    public function createJsonRemoteDatastore() {
+        $remoteDatastore = new MRemoteDatastore(
+            "http://webfiles.sebastianmonzel.de/jenkins/datastore/?json"
+        );
+
+        return $remoteDatastore;
+    }
+
 	/**
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
-	public function testGetAllWebfiles() {
+	public function test_xml_getAllWebfiles() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
+		$xmlRemoteDatastore = $this->createXmlRemoteDatastore();
 
-		$webfilesAsStream = $remoteDatastore->getAllWebfiles();
+		$webfilesAsStream = $xmlRemoteDatastore->getAllWebfiles();
 
 		self::assertNotNull($webfilesAsStream);
 		$webfilesArray = $webfilesAsStream->getArray();
@@ -47,9 +55,9 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
-	public function testSearchByTemplate_findsOneWebfile() {
+	public function test_xml_searchByTemplate_findsOneWebfile() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
+		$remoteDatastore = $this->createXmlRemoteDatastore();
 
 		$searchtemplate = new MSampleWebfile();
 		$searchtemplate->presetForTemplateSearch();
@@ -73,9 +81,9 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 	 * @throws ReflectionException
 	 * @throws MWebfilesFrameworkException
 	 */
-	public function testSearchByTemplate_findsNoWebfile() {
+	public function test_xml_searchByTemplate_findsNoWebfile() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
+		$remoteDatastore = $this->createXmlRemoteDatastore();
 
 		$searchtemplate = new MSampleWebfile();
 		$searchtemplate->presetForTemplateSearch();
@@ -92,28 +100,43 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
-	public function testStoreWebfileAndDeleteItAgain() {
+	public function test_xml_storeWebfileAndDeleteItAgain() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
-
-		$webfileToStore = new MSampleWebfile();
-		$webfileToStore->setLastname("Schmidt");
-
-		$webfileToStore->setId(4);
-		$webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-		self::assertCount(3, $webfilesStream->getArray());
-
-		$webfileToStore->setId(5);
-		$webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-		self::assertCount(4, $webfilesStream->getArray());
-
-		$searchtemplate = new MSampleWebfile();
-		$searchtemplate->presetForTemplateSearch();
-		$searchtemplate->setLastname("Schmidt");
-		$webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
-		self::assertCount(2, $webfilesStream->getArray());
+		$xmlRemoteDatastore = $this->createXmlRemoteDatastore();
+		$this->testStoreAndDelete($xmlRemoteDatastore);
 	}
 
+   public function test_json_storeWebfileAndDeleteItAgain() {
+
+        $jsonRemoteDatastore = $this->createJsonRemoteDatastore();
+        $this->testStoreAndDelete($jsonRemoteDatastore);
+   }
+
+    /**
+     * @param MRemoteDatastore $remoteDatastore
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function testStoreAndDelete(MRemoteDatastore $remoteDatastore): void
+    {
+        $webfileToStore = new MSampleWebfile();
+        $webfileToStore->setLastname("Schmidt");
+
+        $webfileToStore->setId(4);
+        $webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
+        self::assertCount(3, $webfilesStream->getArray());
+
+        $webfileToStore->setId(5);
+        $webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
+        self::assertCount(4, $webfilesStream->getArray());
+
+        $searchtemplate = new MSampleWebfile();
+        $searchtemplate->presetForTemplateSearch();
+        $searchtemplate->setLastname("Schmidt");
+        $webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
+        self::assertCount(2, $webfilesStream->getArray());
+    }
+    /*
 	public function testGetNextWebfileForTimestamp() {
 
 		$remoteDatastore = $this->createRemoteDatastore();
@@ -123,27 +146,27 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		// TODO normalize gibt es jedoch nicht im remote datastore - soll ich die normalize durchleiten?
 		//self::assertNotNull($next_webfile_for_timestamp);
 		self::assertEquals("","");
-	}
+	}*/
 
-	public function testIsReadonly() {
+	public function test_xml_isReadonly() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
+		$remoteDatastore = $this->createXmlRemoteDatastore();
 
 		$readOnly = $remoteDatastore->isReadOnly();
 		self::assertFalse($readOnly);
 	}
 
-	public function testTryConnect() {
+	public function test_xml_tryConnect() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
+		$remoteDatastore = $this->createXmlRemoteDatastore();
 
 		$tryConnect = $remoteDatastore->tryConnect();
 		self::assertTrue($tryConnect);
 	}
 
-	public function testGetLatestWebfiles() {
+	public function test_xml_getLatestWebfiles() {
 
-		$remoteDatastore = $this->createRemoteDatastore();
+		$remoteDatastore = $this->createXmlRemoteDatastore();
 
 		// TODO für die methode  muss man normalize auf dem directory datastore aufrufen -
 		// TODO normalize gibt es jedoch nicht im remote datastore - soll ich die normalize durchleiten? - ich glaub hier sollt man pro speicherung für jedes neue webfile extra ne normalisierung vornehmen (schon angefangen?)
@@ -151,5 +174,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 		//self::assertCount(1, $latestWebfiles);
 		self::assertEquals("","");
 	}
+
+
 
 }

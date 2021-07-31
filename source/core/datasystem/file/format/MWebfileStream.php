@@ -93,7 +93,7 @@ class MWebfileStream
 	 */
 	private function unmarshall($input)
     {
-        if ( substr(trim($input),0,1) == "{" ) {
+        if ( substr(trim($input),0,1) == "[" ) {
             return $this->unmarshallAsJson($input);
         } else {
             return $this->unmarshallAsXml($input);
@@ -133,6 +133,22 @@ class MWebfileStream
         }
 
         return $root;
+    }
+
+    /**
+     * @param string $input
+     * @return SimpleXMLElement
+     * @throws MWebfilesFrameworkException
+     */
+    private function parseAndValidateWebfilesStreamJson($jsonAsString) {
+
+        $jsonRoot = json_decode($jsonAsString, true);
+
+        if ($jsonRoot == null) {
+            throw new MWebfilesFrameworkException("Error on reading initial json: " . $jsonAsString);
+        }
+
+        return $jsonRoot;
     }
 
 
@@ -183,13 +199,12 @@ class MWebfileStream
     {
         $webfilesResultArray = array();
 
-        $root = $this->parseAndValidateWebfilesStreamXml($input);
-        $webfilesChildren = $root->webfiles->children();
+        $root = $this->parseAndValidateWebfilesStreamJson($input);
 
         /** @var SimpleXMLElement $webfileChild */
-        foreach ($webfilesChildren as $webfileChild) {
+        foreach ($root as $webfileChild) {
             array_push(
-                $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild->asXML()));
+                $webfilesResultArray, MWebfile::staticUnmarshall($webfileChild));
         }
 
         return $webfilesResultArray;

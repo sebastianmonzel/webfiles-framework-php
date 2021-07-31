@@ -82,11 +82,16 @@ class MWebfile {
 	 * @throws MWebfilesFrameworkException
 	 * @throws ReflectionException
 	 */
-	private static function genericUnmarshall($xmlAsString, &$targetObject = null) {
-        if ( substr(trim($xmlAsString),0,1) == "{" ) {
-            return self::genericJsonUnmarshal($xmlAsString, $targetObject);
+	private static function genericUnmarshall($input, &$targetObject = null) {
+        if ( is_array($input) ) {
+            // json already parsed
+            return self::genericJsonUnmarshal($input, $targetObject);
+        } else if (substr(trim($input),0,1) == "{" ) {
+            // json as text
+            return self::genericJsonUnmarshal($input, $targetObject);
         } else {
-            return self::genericXmlUnmarshal($xmlAsString, $targetObject);
+            // xml as text
+            return self::genericXmlUnmarshal($input, $targetObject);
         }
     }
 
@@ -139,18 +144,25 @@ class MWebfile {
     }
 
     /**
-     * @param $jsonAsString
+     * @param $input
      * @param $targetObject
      * @return object
      * @throws MWebfilesFrameworkException
      * @throws ReflectionException
      */
-    private static function genericJsonUnmarshal($jsonAsString, $targetObject): object
+    private static function genericJsonUnmarshal($input, $targetObject): object
     {
-        $jsonRoot = json_decode($jsonAsString, true);
+
+        if ( is_array($input) ) {
+            // already parsed json
+            $jsonRoot = $input;
+        } else {
+            // json string
+            $jsonRoot = json_decode($input, true);
+        }
 
         if ($jsonRoot == null) {
-            throw new MWebfilesFrameworkException("Error on reading initial json: " . $jsonAsString);
+            throw new MWebfilesFrameworkException("Error on reading initial json: " . $input);
         }
 
         if ($targetObject == null) {
