@@ -30,8 +30,6 @@ class MRssFeed {
 
             $entry = new MRssFeedEntry();
 
-            var_dump($root);
-
             $time = strtotime($root->pubDate);
             $entry->setTime($time);
             $entry->setLink(htmlspecialchars($root->link));
