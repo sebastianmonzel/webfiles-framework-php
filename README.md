@@ -26,7 +26,9 @@ developer & contact: Sebastian Monzel (mail@sebastianmonzel.de)
 
 
 ### What is webfiles framework for?
-The webfiles framework generalizes data access to database system, to file system and also accessing data on the remote site. Through an webfile definition and the standarized api you can access the different systems in the same way.
+The purpose of webfiles framework is to provide a lightweight libary to interoperate with data on a standarized way: the webfiles.
+
+The webfiles framework generalizes data access to database system, to file system and accessing data on the remote site. Through an webfile definition and the standarized api you can access the different systems in the same way.
 
 
 ### First Steps
@@ -35,14 +37,14 @@ The webfiles framework generalizes data access to database system, to file syste
  - save and read data in database or filesystem via the datastore api
 
 
-### Samples
+### Sample use cases
 
  - [Define your first webfile definition](#define-your-first-webfile-definition)
- - [Store a webfile in a datastore](#store-a-webfile-in-a-datastore)
+ - [Store a webfile in a datastore](#store-a-webfile-in-a-datastore) - database tables will be created on the fly according to the webfiles defintion.
  - [Read from DirectoryDatastore](#read-from-directorydatastore)
  - [Read from DatabaseDatastore (actually mysql only)](#read-from-databasedatastore-actually-mysql-only)
  - [Transfer data from one datastore to another](#transfer-data-from-one-datastore-to-another)
- - [Read from RemoteDatastore](#read-from-remotedatastore)
+ - [Read from RemoteDatastore](#read-from-remotedatastore) - a remote datastore is a datastore which lives on an other server in the web 
 
 #### Define your first webfile definition
 ```php
