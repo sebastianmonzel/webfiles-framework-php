@@ -74,7 +74,8 @@ class MRssDatastore extends MAbstractCachableDatastore
      */
     public function getLatestWebfiles($count = 5)
     {
-        return null;
+        $webfileArray = $this->getAllWebfilesAsArray();
+        return new MWebfileStream($webfileArray); // TODO einschränken auf count
     }
 
     /**
