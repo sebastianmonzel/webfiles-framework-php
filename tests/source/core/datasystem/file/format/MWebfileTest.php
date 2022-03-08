@@ -22,6 +22,19 @@ class MWebfileTest extends MAbstractWebfilesFramworkTest {
     	$this->assertEquals($referencedSimplifiedAttributename,$calculatedSimplifiedAttributename);
     }
 
+    /**
+     * @covers webfilesframework\core\datasystem\file\format\MWebfile::getSimplifiedAttributeName
+     */
+    public function testIsNumericAttribute() {
+
+        $isNumericAttributeGiven = MWebfile::isNumericAttribute("m_iId");
+        $this->assertEquals(true,$isNumericAttributeGiven);
+
+        $isNumericAttributeNotGiven = MWebfile::isNumericAttribute("m_bIsRed");
+        $this->assertEquals(false,$isNumericAttributeNotGiven);
+    }
+
+
     public function testUnmarshallingAndMarshallingXmlWebfile() {
 
         // UNMARSHALL
@@ -53,6 +66,8 @@ class MWebfileTest extends MAbstractWebfilesFramworkTest {
             $marshalledWebfile
         );
     }
+
+
 
     public function checkConventionsOnEveryGivenWebfileInClasspath() {
         // TODO probably https://github.com/hanneskod/classtools fits for

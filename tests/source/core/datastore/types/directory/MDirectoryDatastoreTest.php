@@ -152,16 +152,16 @@ class MDirectoryDatastoreTest extends MAbstractWebfilesFramworkTest {
 	 */
     public function testCreateAndDeleteByTemplate() {
 
-        $databaseDatastore = $this->createDirectoryDatastore();
-        self::assertEquals(3,count($databaseDatastore->getAllWebfiles()->getArray()));
-        $databaseDatastore->storeWebfile($this->createReferenceSampleObject3());
-        self::assertEquals(4,count($databaseDatastore->getAllWebfiles()->getArray()));
+        $directoryDatastore = $this->createDirectoryDatastore();
+        self::assertEquals(3,count($directoryDatastore->getAllWebfiles()->getArray()));
+        $directoryDatastore->storeWebfile($this->createReferenceSampleObject3());
+        self::assertEquals(4,count($directoryDatastore->getAllWebfiles()->getArray()));
 
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
         $template->setLastname("Hauber");
-        $databaseDatastore->deleteByTemplate($template);
-        self::assertEquals(3,count($databaseDatastore->getAllWebfiles()->getArray()));
+        $directoryDatastore->deleteByTemplate($template);
+        self::assertEquals(3,count($directoryDatastore->getAllWebfiles()->getArray()));
     }
 
 

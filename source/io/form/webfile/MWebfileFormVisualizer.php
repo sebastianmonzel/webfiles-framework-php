@@ -57,7 +57,7 @@ class MWebfileFormVisualizer
 
             $attribute->setAccessible(true);
             if (
-                MWebfile::isSimpleDatatype($attributeName)
+                MWebfile::isSimpleDatatypeAttribute($attributeName)
                 && !array_key_exists($attributeName, $this->ignoredFieldsList)
                 && !in_array($attributeName, $this->ignoredFieldsList)
             ) {

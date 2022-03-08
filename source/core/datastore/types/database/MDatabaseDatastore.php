@@ -218,8 +218,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 			$oAttribute->setAccessible(true);
 			$sAttributeName = $oAttribute->getName();
 			if ($sAttributeName != "m_iId" && (
-					MWebfile::isObject($sAttributeName) ||
-					MWebfile::isSimpleDatatype($sAttributeName))
+					MWebfile::isObjectAttribute($sAttributeName) ||
+					MWebfile::isSimpleDatatypeAttribute($sAttributeName))
 			) {
 
 				if (!$bIsFirstLoop) {
@@ -228,9 +228,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 				}
 				$sAttributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
 				$sSqlFieldSetting .= $sAttributeDatabaseFieldName;
-				if (MWebfile::isSimpleDatatype($sAttributeName)) {
+				if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
 					$sSqlValueSetting .= "\"" . $oAttribute->getValue($webfile) . "\"";
-				} else if (MWebfile::isObject($sAttributeName)) {
+				} else if (MWebfile::isObjectAttribute($sAttributeName)) {
 
 					if (!$useOnlySimpleDatatypes) {
 						if ($this->$sAttributeName->getId() != 0) {
@@ -278,8 +278,8 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 
 			if ($sAttributeName != "m_iId" && (
-					MWebfile::isObject($sAttributeName) ||
-					MWebfile::isSimpleDatatype($sAttributeName))
+					MWebfile::isObjectAttribute($sAttributeName) ||
+					MWebfile::isSimpleDatatypeAttribute($sAttributeName))
 			) {
 
 				if (!$isFirstLoop) {
@@ -287,9 +287,9 @@ class MDatabaseDatastore extends MAbstractDatastore
 				}
 				$attributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
 				$setValuesString .= $attributeDatabaseFieldName;
-				if (MWebfile::isSimpleDatatype($sAttributeName)) {
+				if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
 					$setValuesString .= " = '" . $oAttribute->getValue($webfile) . "'";
-				} else if (MWebfile::isObject($sAttributeName)) {
+				} else if (MWebfile::isObjectAttribute($sAttributeName)) {
 
 					if (!$useOnlySimpleDatatypes) {
 						if ($this->$sAttributeName->getId() != 0) {
@@ -415,7 +415,7 @@ class MDatabaseDatastore extends MAbstractDatastore
 
             $sAttributeName = $oAttribute->getName();
 
-            if (MWebfile::isSimpleDatatype($sAttributeName)
+            if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)
                 && MWebfile::getSimplifiedAttributeName($sAttributeName) != "id"
                 // ignore id as long as its set seperatly as primary key directly after creation of table
             ) {
@@ -719,10 +719,10 @@ class MDatabaseDatastore extends MAbstractDatastore
                         $oAttribute->setAccessible(true);
 
                         $sAttributeName = $oAttribute->getName();
-                        if (MWebfile::isSimpleDatatype($sAttributeName)) {
+                        if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
                             $sDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
                             $oAttribute->setValue($targetWebfile, $databaseResultObject->$sDatabaseFieldName);
-                        } else if (MWebfile::isObject($sAttributeName)) {
+                        } else if (MWebfile::isObjectAttribute($sAttributeName)) {
                             eval("\$sClassName = static::\$s__oAggregation[\$sAttributeName];");
                             /** @noinspection PhpUndefinedVariableInspection */
                             eval("\$oSubAttributeArray = $sClassName::getAttributes(1);");
@@ -730,7 +730,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                             foreach ($oSubAttributeArray as $oSubAttribute) {
 
                                 $oSubAttributeName = $oSubAttribute->getName();
-                                if (MWebfile::isSimpleDatatype($oSubAttributeName)) {
+                                if (MWebfile::isSimpleDatatypeAttribute($oSubAttributeName)) {
 
                                     $sDatabaseFieldName = $this->resolveTableNameForWebfile(
                                         new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);

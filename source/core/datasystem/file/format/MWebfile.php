@@ -200,7 +200,7 @@ class MWebfile {
 
             $attributeName = $attribute->getName();
 
-            if (MWebfile::isSimpleDatatype($attributeName)) {
+            if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
                 $attribute->setAccessible(true);
                 $attribute->setValue($this, "[any]");
             }
@@ -247,33 +247,17 @@ class MWebfile {
      * returns true if attribute is a simple datatype (for example
      * string, integer or boolean).
      *
-     * @param string $datatypeName
-     * @return boolean
-     */
-    public static function isSimpleDatatype($datatypeName)
-    {
-        if (!self::isObject($datatypeName) && substr($datatypeName, 2, 1) != "_") {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
-    /**
-     * returns true if attribute is object in the other case the returnvalue is false
      * @param string $attributeName
      * @return boolean
      */
-    public static function isObject($attributeName)
+    public static function isSimpleDatatypeAttribute($attributeName)
     {
-        if (substr($attributeName, 2, 1) == "o") {
+        if (!self::isObjectAttribute($attributeName) && self::getTypeIdentifier($attributeName) != "_") {
             return true;
         } else {
             return false;
         }
-
     }
-
 
 	/**
 	 * eturns the attributes of the actual class which are relevant for the
@@ -299,7 +283,7 @@ class MWebfile {
                 // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
                 substr($sAttributeName, 1, 1) != "_" ||
                 substr($sAttributeName, 2, 1) == "_" ||
-                ( $simpleDatatypesOnly && substr($sAttributeName, 2, 1) == "o")
+                ( $simpleDatatypesOnly && self::getTypeIdentifier($sAttributeName) == "o")
             ) {
                 unset($oPropertyArray[$count]);
             }
@@ -329,7 +313,7 @@ class MWebfile {
 
             $attributeName = $attribute->getName();
 
-            if (MWebfile::isSimpleDatatype($attributeName)) {
+            if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
                 $attributeFieldType = MWebfile::getDatatypeFromAttributeName($attributeName);
                 $returnValue .= "\t\t<attribute name=\"" . $attributeFieldName . "\" type=\"" . $attributeFieldType . "\" />\n";
@@ -352,23 +336,23 @@ class MWebfile {
     public static function getDatatypeFromAttributeName($attributeName)
     {
         // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
-        $datatypeToken = substr($attributeName, 2, 1);
+        $typeIdentifier = self::getTypeIdentifier($attributeName);
 
-        if ($datatypeToken == "s") {
+        if ($typeIdentifier == "s") {
             return "shorttext";
-        } else if ($datatypeToken == "l") {
+        } else if ($typeIdentifier == "l") {
             return "longtext";
-        } else if ($datatypeToken == "h") {
+        } else if ($typeIdentifier == "h") {
             return "htmllongtext";
-        } else if ($datatypeToken == "d") {
+        } else if ($typeIdentifier == "d") {
             return "date";
-        } else if ($datatypeToken == "t") {
+        } else if ($typeIdentifier == "t") {
             return "time";
-        } else if ($datatypeToken == "i") {
+        } else if ($typeIdentifier == "i") {
             return "integer";
-        } else if ($datatypeToken == "f") {
+        } else if ($typeIdentifier == "f") {
             return "float";
-        } else if ($datatypeToken == "o") {
+        } else if ($typeIdentifier == "o") {
             return "object";
         }
         return null;
@@ -393,7 +377,7 @@ class MWebfile {
             $attribute->setAccessible(true);
             $attributeValue = $attribute->getValue($this);
 
-            if (MWebfile::isSimpleDatatype($attributeName)) {
+            if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
                 $dataset[$attributeFieldName] = $attributeValue;
             }
@@ -403,17 +387,44 @@ class MWebfile {
 
 
     /**
-     * Returns database field name to a given attribute
+     * Returns a simplified field name to a given attribute. Simplified field names
+     * are used for example in the database or json representation.
      *
-     * @param string $p_sFieldName
+     * @param string $originAttributeName
      * @return string
      */
-    public static function getSimplifiedAttributeName($p_sFieldName)
+    public static function getSimplifiedAttributeName($originAttributeName)
     {
         // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
-        $sDatabaseFieldName = substr($p_sFieldName, 3);
-        $sDatabaseFieldName = strtolower($sDatabaseFieldName);
-        return $sDatabaseFieldName;
+        $simplifiedAttributeName = substr($originAttributeName, 3);
+        $simplifiedAttributeName = strtolower($simplifiedAttributeName);
+        return $simplifiedAttributeName;
+    }
+
+    public static function isNumericAttribute($attributeName)
+    {
+        $typeIdentifier = self::getTypeIdentifier($attributeName);
+        return $typeIdentifier == "i";
+    }
+
+    /**
+     * returns true if attribute is object in the other case the returnvalue is false
+     * @param $attributeName
+     * @return bool
+     */
+    public static function isObjectAttribute($attributeName)
+    {
+        $typeIdentifier = self::getTypeIdentifier($attributeName);
+        return $typeIdentifier == "o";
+    }
+
+    /**
+     * @param $attributeName
+     */
+    private static function getTypeIdentifier($attributeName): string
+    {
+        $typeIdentifier = substr($attributeName, 2, 1);
+        return strtolower($typeIdentifier);
     }
 
     public function getId()
@@ -484,7 +495,7 @@ class MWebfile {
 
             $attributeName = $attribute->getName();
 
-            if (MWebfile::isSimpleDatatype($attributeName)) {
+            if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
                 $attribute->setAccessible(true);
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
                 $xml .= "\t<" . $attributeFieldName . "><![CDATA[" . $attribute->getValue($this) . "]]></" . $attributeFieldName . ">\n";
@@ -513,12 +524,16 @@ class MWebfile {
 
             $attributeName = $attribute->getName();
 
-            if (MWebfile::isSimpleDatatype($attributeName)) {
+            if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
                 $attribute->setAccessible(true);
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
                 $attributeFieldValue = $attribute->getValue($this);
                 $attributeFieldValue = $this->normalizeFieldValue($attributeFieldValue);
-                $json .= "\t\t\"" . $attributeFieldName . "\": \"" . $attributeFieldValue . "\"";
+                if ( static::isNumericAttribute($attribute) ) {
+                    $json .= "\t\t\"" . $attributeFieldName . "\": " . $attributeFieldValue; // TODO check if value is really numeric?
+                } else {
+                    $json .= "\t\t\"" . $attributeFieldName . "\": \"" . $attributeFieldValue . "\"";
+                }
                 if (next($attributes)==true) $json .= ",";
                 $json .= "\n";
             }

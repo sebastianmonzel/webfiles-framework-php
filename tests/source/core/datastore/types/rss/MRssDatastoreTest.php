@@ -4,16 +4,13 @@
 use test\webfilesframework\core\datastore\types\MAbstractDatastoreTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\rss\MRssDatastore;
+use webfilesframework\core\datastore\types\rss\MRssFeedEntry;
 
 class MRssDatastoreTest extends MAbstractDatastoreTest
 {
-    public function createRssDatastore() {
-        return new MRssDatastore("https://www.spiegel.de/index.rss");
-    }
+    public function test_json_getAllWebfiles_spiegel() {
 
-    public function test_json_getAllWebfiles() {
-
-        $jsonRemoteDatastore = $this->createRssDatastore();
+        $jsonRemoteDatastore = new MRssDatastore("https://www.spiegel.de/index.rss");
 
         $webfilesAsStream = $jsonRemoteDatastore->getAllWebfiles();
 
@@ -24,11 +21,30 @@ class MRssDatastoreTest extends MAbstractDatastoreTest
 
         //var_dump($webfilesArray);
 
-        /** @var MSampleWebfile $firstWebfile */
-        $firstWebfile = $webfilesArray[0];
+        /** @var MRssFeedEntry $firstWebfile */
+        $firstWebfile = reset($webfilesArray);
 
-        self::assertEquals("Sebastian", $firstWebfile->getFirstname());
-        self::assertEquals("Monzel", $firstWebfile->getLastname());
+        self::assertEquals($firstWebfile->getHeading(), $firstWebfile->getHeading()); // TODO
+    }
+
+    public function test_json_getAllWebfiles_tagesschau() {
+
+        $jsonRemoteDatastore = new MRssDatastore("https://www.tagesschau.de/xml/rss2/");
+        $webfilesAsStream = $jsonRemoteDatastore->getAllWebfiles();
+
+        self::assertNotNull($webfilesAsStream);
+        $webfilesArray = $webfilesAsStream->getArray();
+        self::assertTrue(is_array($webfilesArray));
+        self::assertCount(6, $webfilesArray);
+
+
+        /** @var MRssFeedEntry $firstWebfile */
+        var_dump($webfilesArray);
+
+
+        $firstWebfile = reset($webfilesArray);
+
+        self::assertEquals($firstWebfile->getHeading(), $firstWebfile->getHeading()); // TODO
     }
 
 }
