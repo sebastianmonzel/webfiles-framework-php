@@ -335,7 +335,6 @@ class MWebfile {
      */
     public static function getDatatypeFromAttributeName($attributeName)
     {
-        // TODO generalize attribute prefix (sample "m_-s-", (start 2, length 1) )
         $typeIdentifier = self::getTypeIdentifier($attributeName);
 
         if ($typeIdentifier == "s") {
@@ -420,6 +419,7 @@ class MWebfile {
 
     /**
      * @param $attributeName
+     * @return string type identifier
      */
     private static function getTypeIdentifier($attributeName): string
     {
@@ -507,7 +507,6 @@ class MWebfile {
     }
 
     /**
-     * @param bool $usePreamble
      * @return string
      * @throws ReflectionException
      */
@@ -551,6 +550,7 @@ class MWebfile {
     private function normalizeFieldValue($attributeFieldValue)
     {
         $attributeFieldValue = str_replace("\r\n", "\\n", $attributeFieldValue);
+        $attributeFieldValue = str_replace("\"", "\\\"", $attributeFieldValue);
         return $attributeFieldValue;
     }
 
