@@ -516,7 +516,9 @@ class MWebfile {
             if (MWebfile::isSimpleDatatype($attributeName)) {
                 $attribute->setAccessible(true);
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
-                $json .= "\t\t\"" . $attributeFieldName . "\": \"" . $attribute->getValue($this) . "\"";
+                $attributeFieldValue = $attribute->getValue($this);
+                $attributeFieldValue = $this->normalizeFieldValue($attributeFieldValue);
+                $json .= "\t\t\"" . $attributeFieldName . "\": \"" . $attributeFieldValue . "\"";
                 if (next($attributes)==true) $json .= ",";
                 $json .= "\n";
             }
@@ -525,6 +527,16 @@ class MWebfile {
         $json .= "}";
 
         return $json;
+    }
+
+    /**
+     * @param $attributeFieldValue
+     * @return string|string[]
+     */
+    private function normalizeFieldValue($attributeFieldValue)
+    {
+        $attributeFieldValue = str_replace("\r\n", "\\n", $attributeFieldValue);
+        return $attributeFieldValue;
     }
 
 }
