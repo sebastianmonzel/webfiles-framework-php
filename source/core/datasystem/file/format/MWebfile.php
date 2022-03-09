@@ -152,7 +152,7 @@ class MWebfile {
      */
     private static function genericJsonUnmarshal($input, $targetObject): object
     {
-
+        // TODO probleme mit zeilen umbrüchen
         if ( is_array($input) ) {
             // already parsed json
             $jsonRoot = $input;
@@ -550,6 +550,7 @@ class MWebfile {
     private function normalizeFieldValue($attributeFieldValue)
     {
         $attributeFieldValue = str_replace("\r\n", "\\n", $attributeFieldValue);
+        $attributeFieldValue = str_replace("\n", "\\n", $attributeFieldValue);
         $attributeFieldValue = str_replace("\"", "\\\"", $attributeFieldValue);
         return $attributeFieldValue;
     }
