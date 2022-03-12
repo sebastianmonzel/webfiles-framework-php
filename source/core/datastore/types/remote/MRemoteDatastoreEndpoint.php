@@ -17,6 +17,7 @@ use webfilesframework\MWebfilesFrameworkException;
 class MRemoteDatastoreEndpoint {
 	/** @var MAbstractDatastore */
 	private $m_oDatastore;
+	private $m_bOverwriteReadOnlyWithTrue;
 
 	// READ
 	public static $METHOD_NAME_IS_READ_ONLY                   = "isReadOnly";
@@ -40,8 +41,9 @@ class MRemoteDatastoreEndpoint {
 	public static $TYPE_XML                      = "xml";
 
 
-	public function __construct( MAbstractDatastore $datastore ) {
+	public function __construct( MAbstractDatastore $datastore,  bool $overwriteReadOnlyWithTrue = false ) {
 		$this->m_oDatastore = $datastore;
+		$this->m_bOverwriteReadOnlyWithTrue = $overwriteReadOnlyWithTrue;
 	}
 
 	public function issetParam( $name ) {
@@ -125,7 +127,7 @@ class MRemoteDatastoreEndpoint {
 			} else if ( $this->isReadOnly() ) { // IS READONLY
 
 				$isReadOnly = $this->m_oDatastore->isReadOnly();
-				if ( $isReadOnly) {
+				if ( $isReadOnly || $this->m_bOverwriteReadOnlyWithTrue) {
 				    echo "true";
                 } else {
 				    echo "false";
