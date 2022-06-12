@@ -91,7 +91,7 @@ class MDatabaseConnection
                 $this->password,
                 $this->databaseName
             );
-        } catch (mysqli_sql_exception $ex) {
+        } catch (\mysqli_sql_exception $ex) {
             throw new MWebfilesFrameworkException("error on connecting to myql-server: " . $this->host . " with user: " . $this->username);
         }
 
