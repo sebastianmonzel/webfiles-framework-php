@@ -2,6 +2,7 @@
 
 namespace webfilesframework\core\datasystem\database;
 
+use Katzgrau\KLogger\Logger;
 use webfilesframework\core\datastore\types\database\resultHandler\MIResultHandler;
 use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 use webfilesframework\MWebfilesFrameworkException;
@@ -79,15 +80,21 @@ class MDatabaseConnection
 
     /**
      * connects to the database server
+     * @throws MWebfilesFrameworkException
      */
     public function connect()
     {
-        $this->connection = @new \mysqli(
-            $this->host,
-            $this->username,
-            $this->password,
-            $this->databaseName
-        );
+        try {
+            $this->connection = @new \mysqli(
+                $this->host,
+                $this->username,
+                $this->password,
+                $this->databaseName
+            );
+        } catch (mysqli_sql_exception $ex) {
+            throw new MWebfilesFrameworkException("error on connecting to myql-server: " . $this->host . " with user: " . $this->username);
+        }
+
 
         if (!$this->connection->connect_errno) {
             $this->connection->autocommit(1);

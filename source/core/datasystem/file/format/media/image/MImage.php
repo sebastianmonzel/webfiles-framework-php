@@ -4,6 +4,7 @@ namespace webfilesframework\core\datasystem\file\format\media\image;
 
 
 use Exception;
+use lsolesen\pel\PelJpeg;
 use webfilesframework\core\datasystem\file\format\media\image\handler\MGdHandler;
 use webfilesframework\core\datasystem\file\format\media\image\handler\MImageMagickHandler;
 use webfilesframework\core\datasystem\file\system\MFile;
@@ -59,9 +60,9 @@ class MImage extends MFile
         }
 
         if ($this->exists()) {
-            if ($this->m_sType == "jpg") {
+            if ($this->isJpeg()) {
                 $this->m_oImage = $this->handler->loadJpg($this->getPath());
-            } else if ($this->m_sType == "png") {
+            } else if ($this->isPng()) {
                 $this->m_oImage = $this->handler->loadPng($this->getPath());
             }
         }
@@ -106,10 +107,10 @@ class MImage extends MFile
     public function outputInBrowser()
     {
 
-        if ($this->m_sType == "jpg") {
+        if ($this->isJpeg()) {
             header("Content-Type: image/jpeg");
             imagejpeg($this->m_oImage);
-        } else if ($this->m_sType == "png") {
+        } else if ($this->isPng()) {
             header("Content-Type: image/png");
             imagepng($this->m_oImage);
         }
@@ -139,10 +140,10 @@ class MImage extends MFile
     public function outputAsDownload()
     {
 
-        if ($this->m_sType == "jpg") {
+        if ($this->isJpeg()) {
             header("Content-Type: image/jpeg");
             imagejpeg($this->m_oImage, $this->getPath());
-        } else if ($this->m_sType == "png") {
+        } else if ($this->isPng()) {
             header("Content-Type: image/png");
             imagepng($this->m_oImage, $this->getPath());
         }
@@ -165,10 +166,10 @@ class MImage extends MFile
             $sFilePath = $this->getPath();
         }
 
-        if ($this->m_sType == "jpg") {
+        if ($this->isJpeg()) {
             //Header("Content-Type: image/jpeg");
             imagejpeg($this->m_oImage, $sFilePath, $quality);
-        } else if ($this->m_sType == "png") {
+        } else if ($this->isPng()) {
             //Header("Content-Type: image/png");
             imagepng($this->m_oImage, $sFilePath);
         }
@@ -187,6 +188,11 @@ class MImage extends MFile
      */
     public function saveScaledImgAsFile($width, $height, $filePath = "")
     {
+        if ($this->isJpeg()) {
+            $inputPel = new PelJpeg($this->getPath());
+            $oldExif = $inputPel->getExif();
+            $oldICC = $inputPel->getICC();
+        }
 
         if (!$this->exists()) {
             $iErrorCode = 30;
@@ -205,15 +211,28 @@ class MImage extends MFile
         $oScaledImage = imagecreatetruecolor($width, $height);
         imagecopyresampled($oScaledImage, $this->m_oImage, 0, 0, 0, 0, $width, $height, $this->getImageWidth(), $this->getImageHeight());
 
-        if ($this->m_sType == "jpg") {
+        if ($this->isJpeg()) {
             //Header("Content-Type: image/jpeg");
             imagejpeg($oScaledImage, $sFilePath);
-        } else if ($this->m_sType == "png") {
+
+            $outputPel = new PelJpeg($sFilePath);
+            $outputPel->setExif($oldExif);
+            $outputPel->setIcc($oldICC);
+            $outputPel->saveFile($sFilePath);
+
+        } else if ($this->isPng()) {
             //Header("Content-Type: image/png");
             imagepng($oScaledImage, $sFilePath);
         }
         imagedestroy($oScaledImage);
+
+
     }
+
+    function copyMeta($inputPath, $outputPath) {
+
+    }
+
 
     public function getImageWidth()
     {
@@ -333,6 +352,22 @@ class MImage extends MFile
         return ($image->getExtension() == "jpg"
             || $image->getExtension() == "jpeg"
             || $image->getExtension() == "png");
+    }
+
+    /**
+     * @return bool
+     */
+    private function isJpeg(): bool
+    {
+        return $this->m_sType == "jpg";
+    }
+
+    /**
+     * @return bool
+     */
+    private function isPng(): bool
+    {
+        return $this->m_sType == "png";
     }
 
 }

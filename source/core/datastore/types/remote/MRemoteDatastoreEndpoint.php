@@ -94,7 +94,7 @@ class MRemoteDatastoreEndpoint {
 				$webfile = MWebfile::staticUnmarshall( $_POST[ static::$PAYLOAD_FIELD_NAME_WEBFILE ] );
 				$this->m_oDatastore->storeWebfile($webfile);
 
-				$webfilesStream = $this->m_oDatastore->getAllWebfiles(); // TODO nur bei lesenenden operationen auch was zurückgeben - bei schreibend ist ein simples "true" / "false" ausreichend als ack dass was geschrieben wurde
+				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
                 $this->writeOutWebfilesStream($webfilesStream);
 
 				return;
@@ -119,7 +119,7 @@ class MRemoteDatastoreEndpoint {
 				$webfile = MWebfile::staticUnmarshall( $this->getParam( static::$PAYLOAD_FIELD_NAME_TEMPLATE ) );
 				$this->m_oDatastore->deleteByTemplate( $webfile );
 
-				$webfilesStream = $this->m_oDatastore->getAllWebfiles(); // TODO nur bei lesenenden operationen auch was zurückgeben - bei schreibend ist ein simples "true" / "false" ausreichend als ack dass was geschrieben wurde
+				$webfilesStream = $this->m_oDatastore->getAllWebfiles();
                 $this->writeOutWebfilesStream($webfilesStream);
 
 				return;

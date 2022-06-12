@@ -119,7 +119,9 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
     private function doTestStoreAndDelete(MRemoteDatastore $remoteDatastore): void
     {
         $webfileToStore = new MSampleWebfile();
-        $webfileToStore->setLastname("Schmidt");
+        $webfileToStore->setLastname("Schmidt
+        // TODO zeil4enumbruch macht probleme bei json
+        ");
 
         $webfileToStore->setId(4);
         $webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);

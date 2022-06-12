@@ -187,7 +187,7 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
             $normalizedFile = new MFile($file->getFolder() . "/" . $this->NORMAL_IMAGES_FOLDER_NAME . "/" . $file->getName());
 
-            if ($normalizedFile->exists() && false) { // TODO as long as exif information not copied use the original image
+            if ($normalizedFile->exists()) {
                 $item = new MImage($normalizedFile->getPath());
             } else {
                 $item = new MImage($file->getPath());

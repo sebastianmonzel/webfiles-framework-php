@@ -17,7 +17,7 @@ use webfilesframework\core\datasystem\database\MDatabaseTable;
 use webfilesframework\core\datasystem\database\MDatabaseTableColumn;
 use webfilesframework\core\datasystem\file\format\MWebfile;
 use webfilesframework\core\datasystem\file\format\MWebfileStream;
-use webfilesframework\core\time\MTimespan;
+use webfilesframework\core\datatype\time\MTimespan;
 use webfilesframework\MWebfilesFrameworkException;
 
 
