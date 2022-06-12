@@ -5,6 +5,7 @@ use ReflectionClass;
 use ReflectionException;
 use ReflectionProperty;
 use SimpleXMLElement;
+use stdClass;
 use webfilesframework\core\datastore\functions\MIDatastoreFunction;
 use webfilesframework\MWebfilesFrameworkException;
 
@@ -358,8 +359,8 @@ class MWebfile {
     }
 
 	/**
-	 * Transforms the actual webfile into an dataset. A dataset is represented by a key value array.
-	 * The key is the attributes name. The value is the attributes value.
+	 * Transforms the actual webfile into a dataset. A dataset is represented by a key value array.
+	 * The key is the attributes simplified name (without datatype identifier). The value is the attributes value.
 	 *
 	 * @return array
 	 * @throws ReflectionException
@@ -379,6 +380,33 @@ class MWebfile {
             if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
                 $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
                 $dataset[$attributeFieldName] = $attributeValue;
+            }
+        }
+        return $dataset;
+    }
+
+    /**
+     * Transforms the actual webfile into a simplified object.
+     * The attributes of a webfile gets simplified by removing the datatype identifier.
+     * The value is the original attribute value.
+     *
+     * @return stdClass
+     * @throws ReflectionException
+     */
+    public function getSimplifiedObject()
+    {
+        $dataset = new stdClass;
+        $attributes = $this->getAttributes();
+
+        foreach ($attributes as $attribute) {
+
+            $attributeName = $attribute->getName();
+            $attribute->setAccessible(true);
+            $attributeValue = $attribute->getValue($this);
+
+            if (MWebfile::isSimpleDatatypeAttribute($attributeName)) {
+                $attributeFieldName = static::getSimplifiedAttributeName($attributeName);
+                $dataset->$attributeFieldName = $attributeValue;
             }
         }
         return $dataset;

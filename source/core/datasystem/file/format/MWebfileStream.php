@@ -167,6 +167,17 @@ class MWebfileStream
         return $this->webfiles;
     }
 
+    public function getSimplifiedArray() {
+
+        $simplifiedWebfilesArray = array();
+
+        /** @var MWebfile $webfile */
+        foreach ($this->webfiles as $webfile) {
+            $simplifiedWebfilesArray[] = $webfile->getSimplifiedObject();
+        }
+        return $simplifiedWebfilesArray;
+    }
+
     /**
      * @param $input
      * @return array
