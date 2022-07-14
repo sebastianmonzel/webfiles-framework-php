@@ -28,9 +28,8 @@ class MWebfileFormVisualizer
     /** @var MForm $form */
     private $form;
 
-    public function __construct(MWebfile $webfile)
+    public function __construct()
     {
-        $this->init($webfile);
     }
 
     public function init(MWebfile $webfile)

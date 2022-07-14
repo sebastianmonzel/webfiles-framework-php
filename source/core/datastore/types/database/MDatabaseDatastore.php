@@ -35,78 +35,78 @@ class MDatabaseDatastore extends MAbstractDatastore
     implements MISingleDatasourceDatastore
 {
 
-	private $databaseConnection;
+    private $databaseConnection;
 
-	const METADATANORMALIZATION_TABLE_COLUMNNAME_WEBFILEID = "webfileid";
-	const METADATANORMALIZATION_TABLE_COLUMNNAME_TIME      = "time";
-	const METADATANORMALIZATION_TABLE_COLUMNNAME_CLASSNAME = "classname";
+    const METADATANORMALIZATION_TABLE_COLUMNNAME_WEBFILEID = "webfileid";
+    const METADATANORMALIZATION_TABLE_COLUMNNAME_TIME      = "time";
+    const METADATANORMALIZATION_TABLE_COLUMNNAME_CLASSNAME = "classname";
 
-	const METADATA_TABLE_COLUMNNAME_CLASSNAME = "classname";
-	const METADATA_TABLE_COLUMNNAME_VERSION   = "version";
-	const METADATA_TABLE_COLUMNNAME_TABLENAME = "tablename";
+    const METADATA_TABLE_COLUMNNAME_CLASSNAME = "classname";
+    const METADATA_TABLE_COLUMNNAME_VERSION   = "version";
+    const METADATA_TABLE_COLUMNNAME_TABLENAME = "tablename";
 
-	public function __construct(MDatabaseConnection $databaseConnection)
+    public function __construct(MDatabaseConnection $databaseConnection)
     {
         $this->databaseConnection = $databaseConnection;
     }
 
-	/**
-	 * resolve databasee table name by webfile object. table name scheme
-	 * is: $this->databaseConnection->getTablePrefix() . CLASSNAME_WITHOUT_NAMESPACE
-	 *
-	 * @param MWebfile $webfile
-	 * @return string
-	 */
-	private function resolveTableNameForWebfile(MWebfile $webfile)
-	{
+    /**
+     * resolve databasee table name by webfile object. table name scheme
+     * is: $this->databaseConnection->getTablePrefix() . CLASSNAME_WITHOUT_NAMESPACE
+     *
+     * @param MWebfile $webfile
+     * @return string
+     */
+    private function resolveTableNameForWebfile(MWebfile $webfile)
+    {
 
-		$classname = $webfile::classname();
+        $classname = $webfile::classname();
 
-		if (strpos($classname, "\\") != -1) { // check if classname is in global namespace or not
+        if (strpos($classname, "\\") != -1) { // check if classname is in global namespace or not
 
-			$lastBackslashOccurrence = strrpos($classname, "\\");
-			$classname = substr($classname, $lastBackslashOccurrence + 1);
-		}
+            $lastBackslashOccurrence = strrpos($classname, "\\");
+            $classname = substr($classname, $lastBackslashOccurrence + 1);
+        }
 
-		$tableName = $this->databaseConnection->getTablePrefix() . $classname;
-		return $tableName;
-	}
+        $tableName = $this->databaseConnection->getTablePrefix() . $classname;
+        return $tableName;
+    }
 
-	/**
-	 * @param $tableName
-	 *
-	 * @return mixed
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function resolveClassNameFromTableName($tableName)
-	{
-		$metadata = $this->resolveMetadataForTablename($tableName);
-		return $metadata->classname;
-	}
+    /**
+     * @param $tableName
+     *
+     * @return mixed
+     * @throws MWebfilesFrameworkException
+     */
+    private function resolveClassNameFromTableName($tableName)
+    {
+        $metadata = $this->resolveMetadataForTablename($tableName);
+        return $metadata->classname;
+    }
 
-	/**
-	 * @param MWebfile $webfile
-	 *
-	 * @return bool
-	 * @throws MDatastoreException
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
-	private function webfileExists(MWebfile $webfile)
-	{
+    /**
+     * @param MWebfile $webfile
+     *
+     * @return bool
+     * @throws MDatastoreException
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function webfileExists(MWebfile $webfile)
+    {
 
-		if (!$this->tableExistsByWebfile($webfile)) {
-			$this->createTable($webfile, false);
-			return false;
-		}
+        if (!$this->tableExistsByWebfile($webfile)) {
+            $this->createTable($webfile, false);
+            return false;
+        }
 
-		$tableName = $this->resolveTableNameForWebfile($webfile);
+        $tableName = $this->resolveTableNameForWebfile($webfile);
 
-		$query = $this->databaseConnection->queryAndHandle(
-			"SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
-		return ($query->getResultSize() > 0);
+        $query = $this->databaseConnection->queryAndHandle(
+            "SELECT * FROM " . $tableName . " WHERE id='" . $webfile->getId() . "'");
+        return ($query->getResultSize() > 0);
 
-	}
+    }
 
     public function tryConnect()
     {
@@ -118,25 +118,25 @@ class MDatabaseDatastore extends MAbstractDatastore
         return false;
     }
 
-	/**
-	 * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
-	 * @return MWebfileStream
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::getWebfilestream()
+     * @return MWebfileStream
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     public function getAllWebfiles()
     {
         return new MWebfileStream($this->getAllWebfilesAsArray());
     }
 
-	/**
-	 * Returns all webfiles defined in datastore as array. (without looking for type of webfile)
-	 *
-	 * @return array
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 * @throws Exception
-	 */
+    /**
+     * Returns all webfiles defined in datastore as array. (without looking for type of webfile)
+     *
+     * @return array
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     * @throws Exception
+     */
     private function getAllWebfilesAsArray()
     {
         $webfilesArray = array();
@@ -161,16 +161,16 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfilesArray;
     }
 
-	/**
-	 * @param MWebfile $webfile
-	 *
-	 * @return int Returns the id given in database (in case of a new webfile
-	 * the generated id will be returned)
-	 * @throws MDatabaseDatastoreException
-	 * @throws MDatastoreException
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param MWebfile $webfile
+     *
+     * @return int Returns the id given in database (in case of a new webfile
+     * the generated id will be returned)
+     * @throws MDatabaseDatastoreException
+     * @throws MDatastoreException
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     public function storeWebfile(MWebfile $webfile)
     {
 
@@ -190,147 +190,149 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
     }
 
-	/**
-	 * @param MWebfile $webfile
-	 * @param bool     $useOnlySimpleDatatypes
-	 *
-	 * @return int
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
-	private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false)
-	{
+    /**
+     * @param MWebfile $webfile
+     * @param bool     $useOnlySimpleDatatypes
+     *
+     * @return int
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function store(MWebfile $webfile, $useOnlySimpleDatatypes = false)
+    {
 
-		$tablename = $this->resolveTableNameForWebfile($webfile);
+        $tablename = $this->resolveTableNameForWebfile($webfile);
 
-		if (!$this->metadataExists($tablename)) {
-			$this->addMetadata($webfile::classname(), '1', $tablename);
-		}
-
-
-		$oAttributeArray = $webfile->getAttributes();
-
-		$sSqlFieldSetting = "";
-		$sSqlValueSetting = "";
-
-		$bIsFirstLoop = true;
-		foreach ($oAttributeArray as $oAttribute) {
-			$oAttribute->setAccessible(true);
-			$sAttributeName = $oAttribute->getName();
-			if ($sAttributeName != "m_iId" && (
-					MWebfile::isObjectAttribute($sAttributeName) ||
-					MWebfile::isSimpleDatatypeAttribute($sAttributeName))
-			) {
-
-				if (!$bIsFirstLoop) {
-					$sSqlFieldSetting .= ",";
-					$sSqlValueSetting .= ",";
-				}
-				$sAttributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
-				$sSqlFieldSetting .= $sAttributeDatabaseFieldName;
-				if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
-					$sSqlValueSetting .= "\"" . $oAttribute->getValue($webfile) . "\"";
-				} else if (MWebfile::isObjectAttribute($sAttributeName)) {
-
-					if (!$useOnlySimpleDatatypes) {
-						if ($this->$sAttributeName->getId() != 0) {
-							$this->$sAttributeName->update(1);
-							$sAttributeId = $this->$sAttributeName->getId();
-						} else {
-							$sAttributeId = $this->$sAttributeName->add(1);
-						}
-						$sSqlFieldSetting .= "id";
-						$sSqlValueSetting .= "\"" . $sAttributeId . "\"";
-					}
-				}
-				if ($bIsFirstLoop)
-					$bIsFirstLoop = false;
-			}
-		}
-
-		$query = "INSERT INTO " . $tablename . " ( " . $sSqlFieldSetting . " ) VALUES ( " . $sSqlValueSetting . " )";
-		$this->databaseConnection->query($query);
-
-		return $this->databaseConnection->getInsertId();
-
-	}
-
-	/**
-	 * @param MWebfile $webfile
-	 * @param bool     $useOnlySimpleDatatypes
-	 *
-	 * @return int
-	 * @throws MDatabaseDatastoreException
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
-	private function update(MWebfile $webfile, $useOnlySimpleDatatypes = false)
-	{
-
-		$oAttributeArray = $webfile->getAttributes();
-
-		$setValuesString = "";
-		$isFirstLoop = true;
-
-		foreach ($oAttributeArray as $oAttribute) {
-			$oAttribute->setAccessible(true);
-			$sAttributeName = $oAttribute->getName();
+        if (!$this->metadataExists($tablename)) {
+            $this->addMetadata($webfile::classname(), '1', $tablename);
+        }
 
 
-			if ($sAttributeName != "m_iId" && (
-					MWebfile::isObjectAttribute($sAttributeName) ||
-					MWebfile::isSimpleDatatypeAttribute($sAttributeName))
-			) {
+        $oAttributeArray = $webfile->getAttributes();
 
-				if (!$isFirstLoop) {
-					$setValuesString .= ",";
-				}
-				$attributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
-				$setValuesString .= $attributeDatabaseFieldName;
-				if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
-					$setValuesString .= " = '" . $oAttribute->getValue($webfile) . "'";
-				} else if (MWebfile::isObjectAttribute($sAttributeName)) {
+        $sSqlFieldSetting = "";
+        $sSqlValueSetting = "";
 
-					if (!$useOnlySimpleDatatypes) {
-						if ($this->$sAttributeName->getId() != 0) {
-							$this->update($this->$sAttributeName, true);
-							$sAttributeId = $this->$sAttributeName->getId();
-						} else {
-							$sAttributeId = $this->store($this->$sAttributeName, true);
-						}
-						$setValuesString .= "_id";
-						$setValuesString .= " = \"" . $sAttributeId . "\"";
-					}
-				}
+        $bIsFirstLoop = true;
+        foreach ($oAttributeArray as $oAttribute) {
+            $oAttribute->setAccessible(true);
+            $sAttributeName = $oAttribute->getName();
+            if ($sAttributeName != "m_iId" && (
+                    MWebfile::isObjectAttribute($sAttributeName) ||
+                    MWebfile::isSimpleDatatypeAttribute($sAttributeName))
+            ) {
 
-				$isFirstLoop = false;
-			}
-		}
+                if (!$bIsFirstLoop) {
+                    $sSqlFieldSetting .= ",";
+                    $sSqlValueSetting .= ",";
+                }
+                $sAttributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
+                $sSqlFieldSetting .= $sAttributeDatabaseFieldName;
+                if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
+                    $sSqlValueSetting .= "\"" . $oAttribute->getValue($webfile) . "\"";
+                } else if (MWebfile::isObjectAttribute($sAttributeName)) {
 
-		$query = "UPDATE 
+                    if (!$useOnlySimpleDatatypes) {
+                        if ($this->$sAttributeName->getId() != 0) {
+                            $this->$sAttributeName->update(1);
+                            $sAttributeId = $this->$sAttributeName->getId();
+                        } else {
+                            $sAttributeId = $this->$sAttributeName->add(1);
+                        }
+                        $sSqlFieldSetting .= "id";
+                        $sSqlValueSetting .= "\"" . $sAttributeId . "\"";
+                    }
+                }
+                if ($bIsFirstLoop)
+                    $bIsFirstLoop = false;
+            }
+        }
+
+        $query = "INSERT INTO " . $tablename . " ( " . $sSqlFieldSetting . " ) VALUES ( " . $sSqlValueSetting . " )";
+        $this->databaseConnection->query($query);
+
+        $this->normalize();
+
+        return $this->databaseConnection->getInsertId();
+
+    }
+
+    /**
+     * @param MWebfile $webfile
+     * @param bool     $useOnlySimpleDatatypes
+     *
+     * @return int
+     * @throws MDatabaseDatastoreException
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function update(MWebfile $webfile, $useOnlySimpleDatatypes = false)
+    {
+
+        $oAttributeArray = $webfile->getAttributes();
+
+        $setValuesString = "";
+        $isFirstLoop = true;
+
+        foreach ($oAttributeArray as $oAttribute) {
+            $oAttribute->setAccessible(true);
+            $sAttributeName = $oAttribute->getName();
+
+
+            if ($sAttributeName != "m_iId" && (
+                    MWebfile::isObjectAttribute($sAttributeName) ||
+                    MWebfile::isSimpleDatatypeAttribute($sAttributeName))
+            ) {
+
+                if (!$isFirstLoop) {
+                    $setValuesString .= ",";
+                }
+                $attributeDatabaseFieldName = MWebfile::getSimplifiedAttributeName($sAttributeName);
+                $setValuesString .= $attributeDatabaseFieldName;
+                if (MWebfile::isSimpleDatatypeAttribute($sAttributeName)) {
+                    $setValuesString .= " = '" . $oAttribute->getValue($webfile) . "'";
+                } else if (MWebfile::isObjectAttribute($sAttributeName)) {
+
+                    if (!$useOnlySimpleDatatypes) {
+                        if ($this->$sAttributeName->getId() != 0) {
+                            $this->update($this->$sAttributeName, true);
+                            $sAttributeId = $this->$sAttributeName->getId();
+                        } else {
+                            $sAttributeId = $this->store($this->$sAttributeName, true);
+                        }
+                        $setValuesString .= "_id";
+                        $setValuesString .= " = \"" . $sAttributeId . "\"";
+                    }
+                }
+
+                $isFirstLoop = false;
+            }
+        }
+
+        $query = "UPDATE 
         			" . $this->resolveTableNameForWebfile($webfile) . " 
         		 SET 
         			" . $setValuesString . " 
         		 WHERE 
         			id = '" . $webfile->getId() . "'";
 
-		$this->databaseConnection->query($query);
-		$error = $this->databaseConnection->getError();
+        $this->databaseConnection->query($query);
+        $error = $this->databaseConnection->getError();
 
-		if (isset($error) && !empty($error)) {
-			throw new MDatabaseDatastoreException($error, $query);
-		}
+        if (isset($error) && !empty($error)) {
+            throw new MDatabaseDatastoreException($error, $query);
+        }
 
-		return $webfile->getId();
+        return $webfile->getId();
 
-	}
+    }
 
-	/**
-	 * @param MWebfile $webfile
-	 *
-	 * @return bool
-	 * @throws MWebfilesFrameworkException
-	 */
+    /**
+     * @param MWebfile $webfile
+     *
+     * @return bool
+     * @throws MWebfilesFrameworkException
+     */
     private function tableExistsByWebfile(MWebfile $webfile)
     {
         $tableName = $this->resolveTableNameForWebfile($webfile);
@@ -339,25 +341,25 @@ class MDatabaseDatastore extends MAbstractDatastore
 
 
 
-	/**
-	 * @param $tableName
-	 *
-	 * @return bool
-	 * @throws MWebfilesFrameworkException
-	 */
+    /**
+     * @param $tableName
+     *
+     * @return bool
+     * @throws MWebfilesFrameworkException
+     */
     private function tableExists($tableName)
     {
         $allTableNames = $this->getAllTableNames();
         return in_array($tableName,$allTableNames) || in_array(strtolower($tableName),$allTableNames);
     }
 
-	/**
-	 * Returns all tablenames of the current connected database matching to the table prefix
-	 * in the used connection. Also includes the meta table.
-	 *
-	 * @return array
-	 * @throws MWebfilesFrameworkException
-	 */
+    /**
+     * Returns all tablenames of the current connected database matching to the table prefix
+     * in the used connection. Also includes the meta table.
+     *
+     * @return array
+     * @throws MWebfilesFrameworkException
+     */
     private function getAllTableNames()
     {
         $handler = $this->databaseConnection->queryAndHandle("SHOW TABLES FROM `" . $this->databaseConnection->getDatabaseName() . "`");
@@ -383,15 +385,15 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $tableNames;
     }
 
-	/**
-	 * Creates a database table to persist objects of this type.
-	 * @param MWebfile $webfile
-	 * @param bool     $dropTableIfExists
-	 *
-	 * @throws MDatastoreException
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * Creates a database table to persist objects of this type.
+     * @param MWebfile $webfile
+     * @param bool     $dropTableIfExists
+     *
+     * @throws MDatastoreException
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     private function createTable(MWebfile $webfile, $dropTableIfExists = true)
     {
 
@@ -430,12 +432,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         $table->create();
     }
 
-	/**
-	 * @param $sAttributeName
-	 *
-	 * @return MDatabaseTableColumn
-	 * @throws MDatastoreException
-	 */
+    /**
+     * @param $sAttributeName
+     *
+     * @return MDatabaseTableColumn
+     * @throws MDatastoreException
+     */
     private function createTableColumnFromAttributeName($sAttributeName)
     {
         $prefix = substr($sAttributeName, 2, 1);
@@ -476,13 +478,13 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 
-	/**
-	 * @param int $count
-	 *
-	 * @return MWebfileStream|void
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param int $count
+     *
+     * @return MWebfileStream|void
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     public function getLatestWebfiles($count = 5)
     {
 
@@ -499,16 +501,16 @@ class MDatabaseDatastore extends MAbstractDatastore
             $webfilesResultArray = $this->addWebfileSafetyToArray($webfile,$webfilesResultArray);
         }
 
-	    return new MWebfileStream($webfilesResultArray);
+        return new MWebfileStream($webfilesResultArray);
     }
 
-	/**
-	 * @param $timestamp
-	 *
-	 * @return mixed|null
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param $timestamp
+     *
+     * @return mixed|null
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     public function getNextWebfileForTimestamp($timestamp)
     {
 
@@ -526,92 +528,92 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
 
-	/**
-	 * @param $className
-	 * @param $version
-	 * @param $tablename
-	 *
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function addMetadata($className, $version, $tablename)
-	{
+    /**
+     * @param $className
+     * @param $version
+     * @param $tablename
+     *
+     * @throws MWebfilesFrameworkException
+     */
+    private function addMetadata($className, $version, $tablename)
+    {
 
-		if (! $this->metadataTableExists() ) {
+        if (! $this->metadataTableExists() ) {
 
-			$this->createMetadataTable();
-		}
-		$className = str_replace('\\', '\\\\', $className);
-		$this->databaseConnection->query(
-			"INSERT INTO " .
-			$this->databaseConnection->getTablePrefix() . "metadata" .
-			"(classname, version, tablename)" .
-			" VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');");
-	}
+            $this->createMetadataTable();
+        }
+        $className = str_replace('\\', '\\\\', $className);
+        $this->databaseConnection->query(
+            "INSERT INTO " .
+            $this->databaseConnection->getTablePrefix() . "metadata" .
+            "(classname, version, tablename)" .
+            " VALUES ('" . $className . "' , '" . $version . "' , '" . $tablename . "');");
+    }
 
-	/**
-	 * @return bool
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function metadataTableExists() {
-		return $this->tableExists( $this->databaseConnection->getTablePrefix() . "metadata" );
-	}
+    /**
+     * @return bool
+     * @throws MWebfilesFrameworkException
+     */
+    private function metadataTableExists() {
+        return $this->tableExists( $this->databaseConnection->getTablePrefix() . "metadata" );
+    }
 
-	/**
-	 * @param $tablename
-	 *
-	 * @return bool
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function metadataExists($tablename)
-	{
-		if (! $this->metadataTableExists() ) {
-			$this->createMetadataTable();
-			return false;
-		}
-		$oDatabaseResultSet = $this->databaseConnection->queryAndHandle(
-			"SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
-		if ($oDatabaseResultSet->getResultSize() > 0) {
-			return true;
-		}
-		return false;
-	}
+    /**
+     * @param $tablename
+     *
+     * @return bool
+     * @throws MWebfilesFrameworkException
+     */
+    private function metadataExists($tablename)
+    {
+        if (! $this->metadataTableExists() ) {
+            $this->createMetadataTable();
+            return false;
+        }
+        $oDatabaseResultSet = $this->databaseConnection->queryAndHandle(
+            "SELECT * FROM " . $this->databaseConnection->getTablePrefix() . "metadata WHERE tablename = '" . $tablename . "'");
+        if ($oDatabaseResultSet->getResultSize() > 0) {
+            return true;
+        }
+        return false;
+    }
 
-	/**
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function createMetadataTable()
-	{
+    /**
+     * @throws MWebfilesFrameworkException
+     */
+    private function createMetadataTable()
+    {
 
-		$table = new MDatabaseTable(
-			$this->databaseConnection,
-			$this->databaseConnection->getTablePrefix() . 'metadata');
-		$table->specifyIdentifier("id", 10);
-
-
-		$table->addColumn(
-			self::METADATA_TABLE_COLUMNNAME_CLASSNAME,
-			MDatabaseDatatypes::VARCHAR,
-			250);
-		$table->addColumn(
-			self::METADATA_TABLE_COLUMNNAME_VERSION,
-			MDatabaseDatatypes::INT,
-			50);
-		$table->addColumn(
-			self::METADATA_TABLE_COLUMNNAME_TABLENAME,
-			MDatabaseDatatypes::VARCHAR,
-			250);
-
-		$table->create();
-
-	}
+        $table = new MDatabaseTable(
+            $this->databaseConnection,
+            $this->databaseConnection->getTablePrefix() . 'metadata');
+        $table->specifyIdentifier("id", 10);
 
 
-	/**
-	 * @param $tablename
-	 *
-	 * @return object|stdClass|null
-	 * @throws MWebfilesFrameworkException
-	 */
+        $table->addColumn(
+            self::METADATA_TABLE_COLUMNNAME_CLASSNAME,
+            MDatabaseDatatypes::VARCHAR,
+            250);
+        $table->addColumn(
+            self::METADATA_TABLE_COLUMNNAME_VERSION,
+            MDatabaseDatatypes::INT,
+            50);
+        $table->addColumn(
+            self::METADATA_TABLE_COLUMNNAME_TABLENAME,
+            MDatabaseDatatypes::VARCHAR,
+            250);
+
+        $table->create();
+
+    }
+
+
+    /**
+     * @param $tablename
+     *
+     * @return object|stdClass|null
+     * @throws MWebfilesFrameworkException
+     */
     private function resolveMetadataForTablename($tablename)
     {
 
@@ -630,32 +632,32 @@ class MDatabaseDatastore extends MAbstractDatastore
         }
     }
 
-	/**
-	 * @param $object
-	 *
-	 * @return mixed
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
-	private function retrieveWebfileForMetadataDbObject($object) {
+    /**
+     * @param $object
+     *
+     * @return mixed
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    private function retrieveWebfileForMetadataDbObject($object) {
 
-		$template = MWebfile::createWebfileByClassname($object->classname);
-		$template->presetForTemplateSearch();
-		$template->setId($object->webfileid);
+        $template = MWebfile::createWebfileByClassname($object->classname);
+        $template->presetForTemplateSearch();
+        $template->setId($object->webfileid);
 
-		$webfiles = $this->searchByTemplate($template)->getArray();
-		return array_shift($webfiles);
-	}
+        $webfiles = $this->searchByTemplate($template)->getArray();
+        return array_shift($webfiles);
+    }
 
 
-	/**
-	 * @param MWebfile $template
-	 *
-	 * @return MWebfileStream
-	 * @throws MDatastoreException
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param MWebfile $template
+     *
+     * @return MWebfileStream
+     * @throws MDatastoreException
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     public function searchByTemplate(MWebfile $template)
     {
 
@@ -663,31 +665,31 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         if ($this->tableExistsByWebfile($template)) {
 
-	        $tableName = $this->resolveTableNameForWebfile($template);
-	        $sorting = $this->translateTemplateIntoSorting($template);
-	        $condition = $this->translateTemplateIntoCondition($template);
+            $tableName = $this->resolveTableNameForWebfile($template);
+            $sorting = $this->translateTemplateIntoSorting($template);
+            $condition = $this->translateTemplateIntoCondition($template);
 
-	        $webfileArray = $this->getWebfilesByTablename(
+            $webfileArray = $this->getWebfilesByTablename(
                 $tableName,$template::classname(),$condition,$sorting
             );
 
         } else {
-	        $this->createTable($template, false);
+            $this->createTable($template, false);
         }
 
         return new MWebfileStream($webfileArray);
     }
 
-	/**
-	 * @param      $tableName
-	 * @param null $className
-	 * @param null $condition
-	 * @param null $order
-	 *
-	 * @return array
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param      $tableName
+     * @param null $className
+     * @param null $condition
+     * @param null $order
+     *
+     * @return array
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     private function getWebfilesByTablename($tableName,$className = null,$condition = null,$order = null)
     {
         $webfileArray = array();
@@ -733,7 +735,7 @@ class MDatabaseDatastore extends MAbstractDatastore
                                 if (MWebfile::isSimpleDatatypeAttribute($oSubAttributeName)) {
 
                                     $sDatabaseFieldName = $this->resolveTableNameForWebfile(
-                                        new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
+                                            new $tableName()) . "_" . MWebfile::getSimplifiedAttributeName($oSubAttributeName);
                                     $targetWebfile->$sAttributeName->$oSubAttributeName = $databaseResultObject->$sDatabaseFieldName;
                                 }
                             }
@@ -747,12 +749,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $webfileArray;
     }
 
-	/**
-	 * @param MWebfile $webfile
-	 *
-	 * @return string
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param MWebfile $webfile
+     *
+     * @return string
+     * @throws ReflectionException
+     */
     private function translateTemplateIntoCondition(MWebfile $webfile)
     {
 
@@ -802,12 +804,12 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $condition;
     }
 
-	/**
-	 * @param MWebfile $template
-	 *
-	 * @return string
-	 * @throws ReflectionException
-	 */
+    /**
+     * @param MWebfile $template
+     *
+     * @return string
+     * @throws ReflectionException
+     */
     private function translateTemplateIntoSorting(MWebfile $template)
     {
         $attributes = $template->getAttributes(true);
@@ -841,25 +843,25 @@ class MDatabaseDatastore extends MAbstractDatastore
         return $order;
     }
 
-	/**
-	 * Normalizes database datastore:
-	 *  - collect all webfiles in one table to sort after timestamp over all
-	 *  -
-	 *
-	 * TODO normalization gets only done globally / can be als done on insert and remove
-	 *
-	 * @param bool $useHumanReadableTimestamps
-	 * @param bool $saveThumbnailsForImages
-	 *
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
+    /**
+     * Normalizes database datastore:
+     *  - collect all webfiles in one table to sort after timestamp over all
+     *  -
+     *
+     * TODO normalization gets only done globally / can be als done on insert and remove
+     *
+     * @param bool $useHumanReadableTimestamps
+     * @param bool $saveThumbnailsForImages
+     *
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
     public function normalize($useHumanReadableTimestamps = false, $saveThumbnailsForImages = false) {
 
-	    if (!$this->tableExists(
-		    $this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
-		    $this->createMetadataNormalizationTable();
-	    }
+        if ($this->tableExists(
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
+            $this->deleteAllMetadataNormalizationEntries();
+        }
 
         $webfiles = $this->getAllWebfilesAsArray();
 
@@ -871,100 +873,117 @@ class MDatabaseDatastore extends MAbstractDatastore
 
     }
 
-	/**
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function createMetadataNormalizationTable()
-	{
+    /**
+     * @throws MWebfilesFrameworkException
+     */
+    private function createMetadataNormalizationTable()
+    {
 
-		$table = new MDatabaseTable(
-			$this->databaseConnection,
-			$this->databaseConnection->getTablePrefix() . 'metadatanormalization');
-		$table->specifyIdentifier("id", 10);
+        $table = new MDatabaseTable(
+            $this->databaseConnection,
+            $this->databaseConnection->getTablePrefix() . 'metadatanormalization');
+        $table->specifyIdentifier("id", 10);
 
-		$table->addColumn(
-			self::METADATANORMALIZATION_TABLE_COLUMNNAME_WEBFILEID,
-			MDatabaseDatatypes::VARCHAR,
-			250);
-		$table->addColumn(
-			self::METADATANORMALIZATION_TABLE_COLUMNNAME_TIME,
-			MDatabaseDatatypes::INT,
-			12);
-		$table->addColumn(
-			self::METADATANORMALIZATION_TABLE_COLUMNNAME_CLASSNAME,
-			MDatabaseDatatypes::VARCHAR,
-			250);
+        $table->addColumn(
+            self::METADATANORMALIZATION_TABLE_COLUMNNAME_WEBFILEID,
+            MDatabaseDatatypes::VARCHAR,
+            250);
+        $table->addColumn(
+            self::METADATANORMALIZATION_TABLE_COLUMNNAME_TIME,
+            MDatabaseDatatypes::INT,
+            12);
+        $table->addColumn(
+            self::METADATANORMALIZATION_TABLE_COLUMNNAME_CLASSNAME,
+            MDatabaseDatatypes::VARCHAR,
+            250);
 
-		$table->create();
+        $table->create();
 
-	}
+    }
 
-	/**
-	 * @param $webfileid
-	 * @param $time
-	 * @param $classname
-	 *
-	 * @throws MWebfilesFrameworkException
-	 */
-	private function addMetadataNormalizationEntry($webfileid, $time, $classname) {
+    /**
+     * @param $webfileid
+     * @param $time
+     * @param $classname
+     *
+     * @throws MWebfilesFrameworkException
+     */
+    private function addMetadataNormalizationEntry($webfileid, $time, $classname) {
 
-		if (!$this->tableExists(
-			$this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
+        if (!$this->tableExists(
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
 
-			$this->createMetadataNormalizationTable();
-		}
-		$className = str_replace('\\', '\\\\', $classname);
-		$sqlCommand = "INSERT INTO " .
-		              $this->databaseConnection->getTablePrefix() . "metadatanormalization " .
-		              "(webfileid, time, classname)" .
-		              " VALUES ('" . $webfileid . "' , " . $time . " , '" . $className . "');";
-		$this->databaseConnection->query(
-			$sqlCommand);
-		echo "\n\n" . $this->databaseConnection->getError() . "\n\n";
-	}
+            $this->createMetadataNormalizationTable();
+        }
+        $className = str_replace('\\', '\\\\', $classname);
+        $sqlCommand = "INSERT INTO " .
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization " .
+            "(webfileid, time, classname)" .
+            " VALUES ('" . $webfileid . "' , " . $time . " , '" . $className . "');";
+        $this->databaseConnection->query(
+            $sqlCommand);
+        echo "\n\n" . $this->databaseConnection->getError() . "\n\n";
+    }
 
-	/**
-	 * @see \webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
-	 *
-	 * @param MWebfile $webfile
-	 *
-	 * @throws MWebfilesFrameworkException
-	 * @throws ReflectionException
-	 */
-	public function deleteByTemplate(MWebfile $webfile)
-	{
+    /**
+     * @param $webfileid
+     * @param $time
+     * @param $classname
+     *
+     * @throws MWebfilesFrameworkException
+     */
+    private function deleteAllMetadataNormalizationEntries() {
 
-		if ($this->tableExistsByWebfile($webfile)) {
+        $sqlCommand = "DELETE FROM " .
+            $this->databaseConnection->getTablePrefix() . "metadatanormalization;";
+        $this->databaseConnection->query(
+            $sqlCommand);
+        echo "\n\n" . $this->databaseConnection->getError() . "\n\n";
+    }
 
-			// determine table with webfile type
-			$tableName = $this->resolveTableNameForWebfile($webfile);
+    /**
+     * @see \webfilesframework\core\datastore\MAbstractDatastore::deleteByTemplate()
+     *
+     * @param MWebfile $webfile
+     *
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    public function deleteByTemplate(MWebfile $webfile)
+    {
 
-			// translate template into a condition
-			$condition = $this->translateTemplateIntoCondition($webfile);
+        if ($this->tableExistsByWebfile($webfile)) {
 
-			// delete normalization entry
-			$classname = str_replace('\\', '\\\\', $webfile::classname());
-			$normalizationDeleteQuery = "DELETE FROM " . $this->databaseConnection->getTablePrefix() . "metadatanormalization where webfileid in (SELECT id FROM $tableName WHERE " . $condition. ") AND classname = '" . $classname . "'";
-			$this->databaseConnection->query($normalizationDeleteQuery);
+            // determine table with webfile type
+            $tableName = $this->resolveTableNameForWebfile($webfile);
 
-			// delete webfile entry
-			$query = "DELETE FROM " . $tableName;
-			if (!empty($condition)) {
-				$query .= " WHERE " . $condition;
-			}
-			$this->databaseConnection->query($query);
-		}
-	}
+            // translate template into a condition
+            $condition = $this->translateTemplateIntoCondition($webfile);
 
-	/**
-	 * Deletes all webfiles in the store and all metadata
-	 *
-	 * @throws MWebfilesFrameworkException
-	 */
+            // delete normalization entry
+            $classname = str_replace('\\', '\\\\', $webfile::classname());
+            $normalizationDeleteQuery = "DELETE FROM " . $this->databaseConnection->getTablePrefix() . "metadatanormalization where webfileid in (SELECT id FROM $tableName WHERE " . $condition. ") AND classname = '" . $classname . "'";
+            $this->databaseConnection->query($normalizationDeleteQuery);
+
+            // delete webfile entry
+            $query = "DELETE FROM " . $tableName;
+            if (!empty($condition)) {
+                $query .= " WHERE " . $condition;
+            }
+            $this->databaseConnection->query($query);
+        }
+    }
+
+    /**
+     * Deletes all webfiles in the store and all metadata
+     *
+     * @throws MWebfilesFrameworkException
+     */
     public function deleteAll() {
 
         $tablenames = $this->getAllTableNames();
         foreach ($tablenames as $tablename) {
+            // TODO filter on prefix
             $this->databaseConnection->query("DROP TABLE " . $tablename);
         }
     }

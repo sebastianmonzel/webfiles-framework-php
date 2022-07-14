@@ -2,7 +2,6 @@
 
 namespace webfilesframework\core\datasystem\database;
 
-use Katzgrau\KLogger\Logger;
 use webfilesframework\core\datastore\types\database\resultHandler\MIResultHandler;
 use webfilesframework\core\datastore\types\database\resultHandler\MMysqlResultHandler;
 use webfilesframework\MWebfilesFrameworkException;
@@ -60,7 +59,6 @@ class MDatabaseConnection
             $this->password = $password;
         }
 
-        $this->connect();
     }
 
     /**
