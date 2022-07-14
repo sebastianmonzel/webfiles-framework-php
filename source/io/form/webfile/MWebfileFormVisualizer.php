@@ -47,10 +47,6 @@ class MWebfileFormVisualizer
             $this->hiddenFieldsList = array();
         }
 
-        $action = MUrl::getInstance()->getQueryString();
-        $method = "POST";
-        $this->form = new MForm($action, $method);
-
         $attributes = $this->webfile->getAttributes();
 
         /** @var \ReflectionProperty $attribute */
