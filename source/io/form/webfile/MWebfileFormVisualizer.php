@@ -69,7 +69,6 @@ class MWebfileFormVisualizer
                 if (!array_key_exists($attributeName, $this->hiddenFieldsList)
                     && !in_array($attributeName, $this->hiddenFieldsList)
                 ) {
-                    echo var_export($this->localizedNamesList);
 
                     // NOT HIDDEN FIELD
                     if (isset($this->localizedNamesList[$attributeName])) {
@@ -78,13 +77,11 @@ class MWebfileFormVisualizer
                             $attributeValue,
                             $this->localizedNamesList[$attributeName]
                         );
-                        echo $attributeName . " set<br />";
                     } else {
                         $formItem = MFormItemFactory::getFormItemByAttributeName(
                             $attributeName,
                             $attributeValue
                         );
-                        echo $attributeName . " not set2<br />";
 
                     }
                 } else {
