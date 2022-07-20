@@ -490,6 +490,10 @@ class MDatabaseDatastore extends MAbstractDatastore
 
         $webfilesResultArray = array();
 
+        if ( ! $this->tableExists($this->databaseConnection->getTablePrefix() . "metadatanormalization")) {
+            return new MWebfileStream($webfilesResultArray);
+        }
+
         $handler = $this->databaseConnection->queryAndHandle(
             "SELECT webfileid,time,classname FROM " .
             $this->databaseConnection->getTablePrefix() . "metadatanormalization" .
