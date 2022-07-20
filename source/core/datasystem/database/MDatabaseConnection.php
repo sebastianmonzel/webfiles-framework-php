@@ -121,6 +121,9 @@ class MDatabaseConnection
 	 */
     public function query($sqlCommand)
     {
+        if ( ! isset($this->connection) ) {
+            $this->connect();
+        }
         $result = $this->connection->query($sqlCommand);
         if ($this->getError() != null ) {
             throw new MWebfilesFrameworkException("Error orrured on executing sql: " . $this->getError() .", SQL: " . $sqlCommand);
@@ -137,6 +140,9 @@ class MDatabaseConnection
 	 */
     public function queryAndHandle($sqlCommand)
     {
+        if ( ! isset($this->connection) ) {
+            $this->connect();
+        }
         $result = $this->query($sqlCommand);
         if ($this->getError() != null ) {
             throw new MWebfilesFrameworkException("Error orrured on executing sql: " . $this->getError() .", SQL: " . $sqlCommand);
