@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<phpunit bootstrap="./tests/source/bootstrap.php" colors="true">
-
-    <testsuites>
-        <testsuite name="webfiles framework test suite">
-            <directory suffix="Test.php">./tests/source</directory>
-        </testsuite>
-    </testsuites>
-
-    <filter>
-        <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory>./source</directory>
-            <exclude>
-                <directory>./build/</directory>
-                <directory>./tests/</directory>
-                <directory>./vendor/</directory>
-            </exclude>
-        </whitelist>
-    </filter>
+<phpunit xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" bootstrap="./tests/source/bootstrap.php" colors="true" xsi:noNamespaceSchemaLocation="https://schema.phpunit.de/9.3/phpunit.xsd">
+  <coverage processUncoveredFiles="true">
+    <include>
+      <directory>./source</directory>
+    </include>
+    <exclude>
+      <directory>./build/</directory>
+      <directory>./tests/</directory>
+      <directory>./vendor/</directory>
+    </exclude>
+  </coverage>
+  <testsuites>
+    <testsuite name="webfiles framework test suite">
+      <directory suffix="Test.php">./tests/source</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

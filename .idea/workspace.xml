@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="BranchesTreeState">
+    <expand />
+    <select />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="928b1207-78ed-4a08-8634-98b547d29c9a" name="Default Changelist" comment="add composer.lock">
+      <change beforePath="$PROJECT_DIR$/.idea/php.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/php.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/webfiles-framework-php.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/webfiles-framework-php.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Dockerfile" beforeDir="false" afterPath="$PROJECT_DIR$/Dockerfile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.json" beforeDir="false" afterPath="$PROJECT_DIR$/composer.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/composer.lock" beforeDir="false" afterPath="$PROJECT_DIR$/composer.lock" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution>
+      <phar pharPath="$PROJECT_DIR$/composer.phar" />
+    </execution>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+    <option name="UPDATE_TYPE" value="REBASE" />
+  </component>
+  <component name="GithubProjectSettings">
+    <option name="branchProtectionPatterns">
+      <list>
+        <option value="master" />
+      </list>
+    </option>
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration" interpreter_name="PHP">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/katzgrau/klogger" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+      <path value="$PROJECT_DIR$/vendor/psr/log" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-message" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/guzzle" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/psr7" />
+      <path value="$PROJECT_DIR$/vendor/guzzlehttp/promises" />
+      <path value="$PROJECT_DIR$/vendor/phpseclib/phpseclib" />
+      <path value="$PROJECT_DIR$/vendor/psr/cache" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient-services" />
+      <path value="$PROJECT_DIR$/vendor/google/auth" />
+      <path value="$PROJECT_DIR$/vendor/google/apiclient" />
+      <path value="$PROJECT_DIR$/vendor/monolog/monolog" />
+      <path value="$PROJECT_DIR$/vendor/firebase/php-jwt" />
+      <path value="$PROJECT_DIR$/vendor/ralouphie/getallheaders" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-client" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/random_compat" />
+      <path value="$PROJECT_DIR$/vendor/paragonie/constant_time_encoding" />
+      <path value="$PROJECT_DIR$/vendor/lsolesen/pel" />
+      <path value="$PROJECT_DIR$/vendor/psr/http-factory" />
+      <path value="$PROJECT_DIR$/vendor/symfony/deprecation-contracts" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="1scGPGeL03pO63d0HtubSEvcHZx" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/workspace-phpstorm/webfiles-framework-php&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  }
+}</component>
+  <component name="RecentsManager">
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\workspace-phpstorm\webfiles-framework-php\source\core\datatypes" />
+    </key>
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\workspace-phpstorm\webfiles-framework-php\tests\resources\folderDatastoreJson" />
+    </key>
+  </component>
+  <component name="RunAnythingCache">
+    <option name="myCommands">
+      <command value="composer require lsolesen/pel " />
+      <command value="mvn clean install" />
+      <command value="php composer require lsolesen/pel " />
+      <command value="php composer.phar require lsolesen/pel " />
+    </option>
+  </component>
+  <component name="RunManager" selected="PHPUnit.MWebfileTest.testIsNumericAttribute">
+    <configuration name="MRemoteDatastoreTest.test_json_storeWebfileAndDeleteItAgain" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="test\webfilesframework\core\datastore\types\MRemoteDatastoreTest" file="$PROJECT_DIR$/tests/source/core/datastore/types/remote/MRemoteDatastoreTest.php" method="test_json_storeWebfileAndDeleteItAgain" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MRssDatastoreTest.test_json_getAllWebfiles" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="MRssDatastoreTest" file="$PROJECT_DIR$/tests/source/core/datastore/types/rss/MRssDatastoreTest.php" method="test_json_getAllWebfiles" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MRssDatastoreTest.test_json_getAllWebfiles_spiegel" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="MRssDatastoreTest" file="$PROJECT_DIR$/tests/source/core/datastore/types/rss/MRssDatastoreTest.php" method="test_json_getAllWebfiles_spiegel" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MRssDatastoreTest.test_json_getAllWebfiles_tagesschau" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="MRssDatastoreTest" file="$PROJECT_DIR$/tests/source/core/datastore/types/rss/MRssDatastoreTest.php" method="test_json_getAllWebfiles_tagesschau" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MWebfileTest.testIsNumericAttribute" type="PHPUnitRunConfigurationType" factoryName="PHPUnit" temporary="true">
+      <TestRunner class="MWebfileTest" file="$PROJECT_DIR$/tests/source/core/datasystem/file/format/MWebfileTest.php" method="testIsNumericAttribute" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <configuration name="MWebfileTest.testUnmarshallingAndMarshallingJsonWebfile" type="PHPUnitRunConfigurationType" factoryName="PHPUnit">
+      <TestRunner class="MWebfileTest" file="$PROJECT_DIR$/tests/source/core/datasystem/file/format/MWebfileTest.php" method="testUnmarshallingAndMarshallingJsonWebfile" scope="Method" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="PHPUnit.MWebfileTest.testIsNumericAttribute" />
+        <item itemvalue="PHPUnit.MRssDatastoreTest.test_json_getAllWebfiles_tagesschau" />
+        <item itemvalue="PHPUnit.MRssDatastoreTest.test_json_getAllWebfiles_spiegel" />
+        <item itemvalue="PHPUnit.MRemoteDatastoreTest.test_json_storeWebfileAndDeleteItAgain" />
+        <item itemvalue="PHPUnit.MRssDatastoreTest.test_json_getAllWebfiles" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="928b1207-78ed-4a08-8634-98b547d29c9a" name="Default Changelist" comment="" />
+      <created>1621164438420</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1621164438420</updated>
+      <workItem from="1621164439746" duration="6678000" />
+      <workItem from="1622229493045" duration="24629000" />
+      <workItem from="1623098209422" duration="594000" />
+      <workItem from="1623456414414" duration="4742000" />
+      <workItem from="1623696309231" duration="8037000" />
+      <workItem from="1624296179216" duration="1102000" />
+      <workItem from="1624554318966" duration="2600000" />
+      <workItem from="1625397870980" duration="5498000" />
+      <workItem from="1626470579991" duration="6511000" />
+      <workItem from="1627685076110" duration="18258000" />
+      <workItem from="1628957048848" duration="557000" />
+      <workItem from="1630143891406" duration="2319000" />
+      <workItem from="1645735367803" duration="15774000" />
+      <workItem from="1646689109195" duration="17821000" />
+      <workItem from="1647298755779" duration="1216000" />
+      <workItem from="1648153369926" duration="13592000" />
+      <workItem from="1649450911921" duration="1546000" />
+      <workItem from="1651406872106" duration="594000" />
+      <workItem from="1651418947409" duration="1196000" />
+      <workItem from="1653522090931" duration="629000" />
+      <workItem from="1653586270341" duration="580000" />
+      <workItem from="1653682960631" duration="496000" />
+      <workItem from="1654684008197" duration="593000" />
+      <workItem from="1655041618557" duration="12828000" />
+      <workItem from="1656453265826" duration="592000" />
+      <workItem from="1657837427070" duration="2743000" />
+      <workItem from="1658265403102" duration="595000" />
+      <workItem from="1658266766827" duration="2308000" />
+      <workItem from="1658336929911" duration="3746000" />
+      <workItem from="1740861273676" duration="2663000" />
+      <workItem from="1760794792239" duration="3611000" />
+    </task>
+    <task id="LOCAL-00003" summary="allow requests from all locations">
+      <created>1622280467787</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1622280467787</updated>
+    </task>
+    <task id="LOCAL-00004" summary="divide between xml and json in output format">
+      <created>1622285664417</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1622285664417</updated>
+    </task>
+    <task id="LOCAL-00005" summary="switch in test back to xml">
+      <created>1622286505806</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1622286505806</updated>
+    </task>
+    <task id="LOCAL-00006" summary="adapted todo">
+      <created>1622288276624</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1622288276624</updated>
+    </task>
+    <task id="LOCAL-00007" summary="corrected json marshalling in webfileStream">
+      <created>1622288954590</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1622288954590</updated>
+    </task>
+    <task id="LOCAL-00008" summary="add content type as header">
+      <created>1622290103754</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1622290103754</updated>
+    </task>
+    <task id="LOCAL-00009" summary="corrected json marshalling">
+      <created>1622291702535</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1622291702535</updated>
+    </task>
+    <task id="LOCAL-00010" summary="only add trailing comma if its not the last element">
+      <created>1622293473654</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1622293473654</updated>
+    </task>
+    <task id="LOCAL-00011" summary="only add trailing comma if its not the last element">
+      <created>1622294812663</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1622294812663</updated>
+    </task>
+    <task id="LOCAL-00012" summary="also quote attribute names">
+      <created>1622297344743</created>
+      <option name="number" value="00012" />
+      <option name="presentableId" value="LOCAL-00012" />
+      <option name="project" value="LOCAL" />
+      <updated>1622297344743</updated>
+    </task>
+    <task id="LOCAL-00013" summary="also quote attribute names">
+      <created>1622298518682</created>
+      <option name="number" value="00013" />
+      <option name="presentableId" value="LOCAL-00013" />
+      <option name="project" value="LOCAL" />
+      <updated>1622298518682</updated>
+    </task>
+    <task id="LOCAL-00014" summary="replace backslashes with doubebackslahes in classname">
+      <created>1622299032446</created>
+      <option name="number" value="00014" />
+      <option name="presentableId" value="LOCAL-00014" />
+      <option name="project" value="LOCAL" />
+      <updated>1622299032446</updated>
+    </task>
+    <task id="LOCAL-00015" summary="adjust json format">
+      <created>1623697915535</created>
+      <option name="number" value="00015" />
+      <option name="presentableId" value="LOCAL-00015" />
+      <option name="project" value="LOCAL" />
+      <updated>1623697915535</updated>
+    </task>
+    <task id="LOCAL-00016" summary="adjust json format">
+      <created>1623698962431</created>
+      <option name="number" value="00016" />
+      <option name="presentableId" value="LOCAL-00016" />
+      <option name="project" value="LOCAL" />
+      <updated>1623698962431</updated>
+    </task>
+    <task id="LOCAL-00017" summary="add json testcase">
+      <created>1625507506933</created>
+      <option name="number" value="00017" />
+      <option name="presentableId" value="LOCAL-00017" />
+      <option name="project" value="LOCAL" />
+      <updated>1625507506934</updated>
+    </task>
+    <task id="LOCAL-00018" summary="allow all headers and origins">
+      <created>1625678565540</created>
+      <option name="number" value="00018" />
+      <option name="presentableId" value="LOCAL-00018" />
+      <option name="project" value="LOCAL" />
+      <updated>1625678565540</updated>
+    </task>
+    <task id="LOCAL-00019" summary="update google api client">
+      <created>1625682743265</created>
+      <option name="number" value="00019" />
+      <option name="presentableId" value="LOCAL-00019" />
+      <option name="project" value="LOCAL" />
+      <updated>1625682743265</updated>
+    </task>
+    <task id="LOCAL-00020" summary="added missing import">
+      <created>1626502920151</created>
+      <option name="number" value="00020" />
+      <option name="presentableId" value="LOCAL-00020" />
+      <option name="project" value="LOCAL" />
+      <updated>1626502920151</updated>
+    </task>
+    <task id="LOCAL-00021" summary="corrected import">
+      <created>1626503396370</created>
+      <option name="number" value="00021" />
+      <option name="presentableId" value="LOCAL-00021" />
+      <option name="project" value="LOCAL" />
+      <updated>1626503396370</updated>
+    </task>
+    <task id="LOCAL-00022" summary="extend test and parsing for json">
+      <created>1627694130393</created>
+      <option name="number" value="00022" />
+      <option name="presentableId" value="LOCAL-00022" />
+      <option name="project" value="LOCAL" />
+      <updated>1627694130393</updated>
+    </task>
+    <task id="LOCAL-00023" summary="add format as paramter to remoteDatatore instead of part of url">
+      <created>1627695926601</created>
+      <option name="number" value="00023" />
+      <option name="presentableId" value="LOCAL-00023" />
+      <option name="project" value="LOCAL" />
+      <updated>1627695926601</updated>
+    </task>
+    <task id="LOCAL-00024" summary="rename method eliminates the warning?">
+      <created>1627724393322</created>
+      <option name="number" value="00024" />
+      <option name="presentableId" value="LOCAL-00024" />
+      <option name="project" value="LOCAL" />
+      <updated>1627724393322</updated>
+    </task>
+    <task id="LOCAL-00025" summary="enable test reporter again">
+      <created>1627725208958</created>
+      <option name="number" value="00025" />
+      <option name="presentableId" value="LOCAL-00025" />
+      <option name="project" value="LOCAL" />
+      <updated>1627725208958</updated>
+    </task>
+    <task id="LOCAL-00026" summary="add json test for getting all webfiles from remotedatastore">
+      <created>1627727423101</created>
+      <option name="number" value="00026" />
+      <option name="presentableId" value="LOCAL-00026" />
+      <option name="project" value="LOCAL" />
+      <updated>1627727423101</updated>
+    </task>
+    <task id="LOCAL-00027" summary="return directly">
+      <created>1627727602384</created>
+      <option name="number" value="00027" />
+      <option name="presentableId" value="LOCAL-00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1627727602384</updated>
+    </task>
+    <task id="LOCAL-00028" summary="add test for json in webfilestreamtest">
+      <created>1627730916261</created>
+      <option name="number" value="00028" />
+      <option name="presentableId" value="LOCAL-00028" />
+      <option name="project" value="LOCAL" />
+      <updated>1627730916261</updated>
+    </task>
+    <task id="LOCAL-00029" summary="add hint">
+      <created>1627735632275</created>
+      <option name="number" value="00029" />
+      <option name="presentableId" value="LOCAL-00029" />
+      <option name="project" value="LOCAL" />
+      <updated>1627735632275</updated>
+    </task>
+    <task id="LOCAL-00030" summary="set id and time on storing webfile in directory datastore if they are not set">
+      <created>1627764821381</created>
+      <option name="number" value="00030" />
+      <option name="presentableId" value="LOCAL-00030" />
+      <option name="project" value="LOCAL" />
+      <updated>1627764821381</updated>
+    </task>
+    <task id="LOCAL-00031" summary="add rss datastore - initial version">
+      <created>1646082229981</created>
+      <option name="number" value="00031" />
+      <option name="presentableId" value="LOCAL-00031" />
+      <option name="project" value="LOCAL" />
+      <updated>1646082229981</updated>
+    </task>
+    <task id="LOCAL-00032" summary="described the usecases little better">
+      <created>1646082267333</created>
+      <option name="number" value="00032" />
+      <option name="presentableId" value="LOCAL-00032" />
+      <option name="project" value="LOCAL" />
+      <updated>1646082267333</updated>
+    </task>
+    <task id="LOCAL-00033" summary="removed var_dump">
+      <created>1646083642712</created>
+      <option name="number" value="00033" />
+      <option name="presentableId" value="LOCAL-00033" />
+      <option name="project" value="LOCAL" />
+      <updated>1646083642712</updated>
+    </task>
+    <task id="LOCAL-00034" summary="first implementation for getLatestWebfiles">
+      <created>1646087449807</created>
+      <option name="number" value="00034" />
+      <option name="presentableId" value="LOCAL-00034" />
+      <option name="project" value="LOCAL" />
+      <updated>1646087449807</updated>
+    </task>
+    <task id="LOCAL-00035" summary="normalize field value">
+      <created>1646777077874</created>
+      <option name="number" value="00035" />
+      <option name="presentableId" value="LOCAL-00035" />
+      <option name="project" value="LOCAL" />
+      <updated>1646777077874</updated>
+    </task>
+    <task id="LOCAL-00036" summary="do not make quotes in json when value is numeric">
+      <created>1646779942657</created>
+      <option name="number" value="00036" />
+      <option name="presentableId" value="LOCAL-00036" />
+      <option name="project" value="LOCAL" />
+      <updated>1646779942657</updated>
+    </task>
+    <task id="LOCAL-00037" summary="escape quotes">
+      <created>1646782402312</created>
+      <option name="number" value="00037" />
+      <option name="presentableId" value="LOCAL-00037" />
+      <option name="project" value="LOCAL" />
+      <updated>1646782402312</updated>
+    </task>
+    <task id="LOCAL-00038" summary="escape newline">
+      <created>1646869707577</created>
+      <option name="number" value="00038" />
+      <option name="presentableId" value="LOCAL-00038" />
+      <option name="project" value="LOCAL" />
+      <updated>1646869707577</updated>
+    </task>
+    <task id="LOCAL-00039" summary="make it possibly to publish writable datastores as readonly">
+      <created>1647081769051</created>
+      <option name="number" value="00039" />
+      <option name="presentableId" value="LOCAL-00039" />
+      <option name="project" value="LOCAL" />
+      <updated>1647081769051</updated>
+    </task>
+    <task id="LOCAL-00040" summary="some cleanup / read exif / wrap mysql exception">
+      <created>1655042184784</created>
+      <option name="number" value="00040" />
+      <option name="presentableId" value="LOCAL-00040" />
+      <option name="project" value="LOCAL" />
+      <updated>1655042184784</updated>
+    </task>
+    <task id="LOCAL-00041" summary="add backslash">
+      <created>1655043162236</created>
+      <option name="number" value="00041" />
+      <option name="presentableId" value="LOCAL-00041" />
+      <option name="project" value="LOCAL" />
+      <updated>1655043162236</updated>
+    </task>
+    <task id="LOCAL-00042" summary="return simplified array in webfile stream">
+      <created>1655059035160</created>
+      <option name="number" value="00042" />
+      <option name="presentableId" value="LOCAL-00042" />
+      <option name="project" value="LOCAL" />
+      <updated>1655059035160</updated>
+    </task>
+    <task id="LOCAL-00043" summary="corrected imports">
+      <created>1655067424281</created>
+      <option name="number" value="00043" />
+      <option name="presentableId" value="LOCAL-00043" />
+      <option name="project" value="LOCAL" />
+      <updated>1655067424281</updated>
+    </task>
+    <task id="LOCAL-00044" summary="some things">
+      <created>1657837627337</created>
+      <option name="number" value="00044" />
+      <option name="presentableId" value="LOCAL-00044" />
+      <option name="project" value="LOCAL" />
+      <updated>1657837627337</updated>
+    </task>
+    <task id="LOCAL-00045" summary="some things">
+      <created>1657837876489</created>
+      <option name="number" value="00045" />
+      <option name="presentableId" value="LOCAL-00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1657837876489</updated>
+    </task>
+    <task id="LOCAL-00046" summary="some things">
+      <created>1657838040035</created>
+      <option name="number" value="00046" />
+      <option name="presentableId" value="LOCAL-00046" />
+      <option name="project" value="LOCAL" />
+      <updated>1657838040035</updated>
+    </task>
+    <task id="LOCAL-00047" summary="remove duplicated init (already done in constructor)">
+      <created>1657839734574</created>
+      <option name="number" value="00047" />
+      <option name="presentableId" value="LOCAL-00047" />
+      <option name="project" value="LOCAL" />
+      <updated>1657839734574</updated>
+    </task>
+    <task id="LOCAL-00048" summary="init connection if not set">
+      <created>1658336976217</created>
+      <option name="number" value="00048" />
+      <option name="presentableId" value="LOCAL-00048" />
+      <option name="project" value="LOCAL" />
+      <updated>1658336976218</updated>
+    </task>
+    <task id="LOCAL-00049" summary="do not query if metadatanormalization table does not exist">
+      <created>1658339064161</created>
+      <option name="number" value="00049" />
+      <option name="presentableId" value="LOCAL-00049" />
+      <option name="project" value="LOCAL" />
+      <updated>1658339064161</updated>
+    </task>
+    <task id="LOCAL-00050" summary="init renovate.json">
+      <created>1740863026699</created>
+      <option name="number" value="00050" />
+      <option name="presentableId" value="LOCAL-00050" />
+      <option name="project" value="LOCAL" />
+      <updated>1740863026699</updated>
+    </task>
+    <task id="LOCAL-00051" summary="add composer.lock">
+      <created>1740865571458</created>
+      <option name="number" value="00051" />
+      <option name="presentableId" value="LOCAL-00051" />
+      <option name="project" value="LOCAL" />
+      <updated>1740865571458</updated>
+    </task>
+    <option name="localTasksCounter" value="52" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.History.Properties">
+    <option name="COLUMN_ID_ORDER">
+      <list>
+        <option value="Default.Root" />
+        <option value="Default.Author" />
+        <option value="Default.Date" />
+        <option value="Default.Subject" />
+        <option value="Space.CommitStatus" />
+      </list>
+    </option>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="1">
+          <value>
+            <State>
+              <option name="SHOW_ONLY_AFFECTED_CHANGES" value="true" />
+              <option name="FILTERS">
+                <map>
+                  <entry key="branch">
+                    <value>
+                      <list>
+                        <option value="HEAD" />
+                      </list>
+                    </value>
+                  </entry>
+                  <entry key="roots">
+                    <value>
+                      <list>
+                        <option value="$PROJECT_DIR$" />
+                      </list>
+                    </value>
+                  </entry>
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="OPEN_GENERIC_TABS">
+      <map>
+        <entry key="1" value="TOOL_WINDOW" />
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="add json test for getting all webfiles from remotedatastore" />
+    <MESSAGE value="return directly" />
+    <MESSAGE value="add test for json in webfilestreamtest" />
+    <MESSAGE value="add hint" />
+    <MESSAGE value="set id and time on storing webfile in directory datastore if they are not set" />
+    <MESSAGE value="add rss datastore - initial version" />
+    <MESSAGE value="described the usecases little better" />
+    <MESSAGE value="removed var_dump" />
+    <MESSAGE value="first implementation for getLatestWebfiles" />
+    <MESSAGE value="normalize field value" />
+    <MESSAGE value="do not make quotes in json when value is numeric" />
+    <MESSAGE value="escape quotes" />
+    <MESSAGE value="escape newline" />
+    <MESSAGE value="make it possibly to publish writable datastores as readonly" />
+    <MESSAGE value="some cleanup / read exif / wrap mysql except" />
+    <MESSAGE value="some cleanup / read exif / wrap mysql exception" />
+    <MESSAGE value="add backslash" />
+    <MESSAGE value="return simplified array in webfile stream" />
+    <MESSAGE value="corrected imports" />
+    <MESSAGE value="some things" />
+    <MESSAGE value="remove duplicated init (already done in constructor)" />
+    <MESSAGE value="init connection if not set" />
+    <MESSAGE value="do not query if metadatanormalization table does not exist" />
+    <MESSAGE value="init renovate.json" />
+    <MESSAGE value="add composer.lock" />
+    <option name="LAST_COMMIT_MESSAGE" value="add composer.lock" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/tests/source/core/datastore/types/rss/MRssDatastoreTest.php</url>
+          <line>24</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="php">
+          <url>file://$PROJECT_DIR$/source/core/datastore/types/rss/MRssDatastore.php</url>
+          <line>47</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+</project>

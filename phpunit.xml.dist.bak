@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<phpunit bootstrap="./tests/source/bootstrap.php" colors="true">
+
+    <testsuites>
+        <testsuite name="webfiles framework test suite">
+            <directory suffix="Test.php">./tests/source</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory>./source</directory>
+            <exclude>
+                <directory>./build/</directory>
+                <directory>./tests/</directory>
+                <directory>./vendor/</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>

@@ -18,13 +18,11 @@
 		"ext-json": "*",
 		"ext-simplexml": "*",
 		"ext-exif": "*",
-		"google/apiclient" : "^2.10",
 		"katzgrau/klogger" : "dev-master",
 		"lsolesen/pel": "0.9.12"
 	},
 	"require-dev" : {
-		"phpunit/phpunit" : "8.5.*",
-        "codeclimate/php-test-reporter": "dev-master"
+	    "phpunit/phpunit": "^9.5.10"
     },
 	"minimum-stability" : "stable"
 }

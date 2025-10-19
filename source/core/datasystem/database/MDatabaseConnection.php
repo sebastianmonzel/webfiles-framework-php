@@ -90,7 +90,7 @@ class MDatabaseConnection
                 $this->databaseName
             );
         } catch (\mysqli_sql_exception $ex) {
-            throw new MWebfilesFrameworkException("error on connecting to myql-server: " . $this->host . " with user: " . $this->username);
+            throw new MWebfilesFrameworkException("error on connecting to myql-server: " . $this->host . " with user: " . $this->username . ", error: " . $ex->getMessage());
         }
 
 

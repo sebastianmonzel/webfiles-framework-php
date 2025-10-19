@@ -1,16 +1,23 @@
-#
-# SOURCE IMAGE
-FROM phusion/baseimage
+FROM php:7.4-apache
 
-# 
-MAINTAINER mail@sebastianmonzel.de
 
-# INSTALL PACKAGES
-RUN apt-get update \
-        && apt-get install -y apache2 php5 libapache2-mod-php5
+LABEL maintainer="mail@sebastianmonzel.de"
 
-RUN sudo update-rc.d apache2 defaults
+# Install required packages and PHP extensions
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+        libpng-dev \
+        libjpeg-dev \
+        libfreetype6-dev \
+        && docker-php-ext-configure gd --with-freetype --with-jpeg \
+        && docker-php-ext-install gd \
+        && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-#
+# Enable Apache mod_rewrite
+RUN a2enmod rewrite
+
+# Set the working directory
+WORKDIR /var/www/html
+
 EXPOSE 80
 

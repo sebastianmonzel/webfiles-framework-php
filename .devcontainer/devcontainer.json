@@ -1,0 +1,35 @@
+{
+  "name": "Webfiles PHP Dev Container",
+  "image": "php:8.2-apache",
+  "workspaceFolder": "/app",
+  "mounts": [
+    "source=${localWorkspaceFolder},target=/app,type=bind"
+  ],
+  "features": {},
+  "postCreateCommand": "apt-get update && apt-get install -y git libpng-dev libzip-dev unzip && docker-php-ext-install gd exif mysqli zip && php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\" && php composer-setup.php --install-dir=/usr/local/bin --filename=composer && rm composer-setup.php && composer install --optimize-autoloader && a2enmod rewrite",
+  "settings": {
+    "terminal.integrated.shell.linux": "/bin/bash"
+  },
+  "extensions": [
+    "bmewburn.vscode-intelephense-client",
+    "junstyle.php-cs-fixer",
+    "esbenp.prettier-vscode"
+  ],
+  "forwardPorts": [80, 3306],
+  "remoteUser": "root",
+  "services": {
+    "mysql": {
+      "image": "mysql:8.0",
+      "restart": "unless-stopped",
+      "environment": {
+        "MYSQL_ROOT_PASSWORD": "root",
+        "MYSQL_DATABASE": "webfiles-mysql",
+        "MYSQL_USER": "webfiles",
+        "MYSQL_PASSWORD": "webfiles"
+      },
+      "ports": [
+        "3306:3306"
+      ]
+    }
+  }
+}

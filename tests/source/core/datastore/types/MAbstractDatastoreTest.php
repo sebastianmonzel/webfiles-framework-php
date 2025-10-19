@@ -4,9 +4,10 @@ namespace test\webfilesframework\core\datastore\types;
 
 use PHPUnit\Framework\TestCase;
 use ReflectionException;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 
-abstract class MAbstractDatastoreTest extends TestCase {
+abstract class MAbstractDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 
 	protected function createSampleWebfile() {

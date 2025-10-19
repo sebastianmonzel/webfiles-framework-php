@@ -179,11 +179,11 @@ class MDatabaseDatastoreMysqlIntegrationGeneralTest extends MAbstractDatastoreTe
     private function createDatabaseDatastore()
     {
         $connection = new MDatabaseConnection(
-            "127.0.0.1",
-            "webfiles",
+            "webfiles-mysql",
+            "webfiles-mysql",
             "prefix_",
             "root",
-            "");
+            "root");
 
         $databaseDatastore = new MDatabaseDatastore($connection);
         return $databaseDatastore;

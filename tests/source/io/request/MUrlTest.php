@@ -1,12 +1,12 @@
 <?php
 
-use PHPUnit\Framework\TestCase;
+use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\io\request\MUrl;
 
 /**
  * @covers webfilesframework\io\request\MUrl
  */
-class MUrlTest extends TestCase {
+class MUrlTest extends MAbstractWebfilesFramworkTest {
 
     protected $testUrl;
 
