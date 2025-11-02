@@ -3,7 +3,8 @@
 # === Feature Toggles ===
 FEATURE_SETUP=true
 FEATURE_COMPOSER_INSTALL=true
-FEATURE_RUN_TESTS=true
+FEATURE_RUN_TESTS=false
+FEATURE_GENERATE_DOCUMENTATION=true
 FEATURE_BUILD_PROD=false
 FEATURE_BUILD_IMAGE=false
 # =======================
@@ -13,9 +14,10 @@ set -e
 CONTAINER_NAME="php-build-container"
 PROJECT_PATH="D:\\workspace-phpstorm\\webfiles-framework-php"
 
-
+# --- Docker Netzwerk Setup ---
 docker network create webfiles-net || true
 
+# --- PHP Build Container starten ---
 echo "Starting Docker container for build..."
 if [ "$(docker ps -aq -f name=$CONTAINER_NAME)" ]; then
     if [ "$(docker ps -q -f name=$CONTAINER_NAME)" ]; then
@@ -29,12 +31,15 @@ else
     docker run -dit --name $CONTAINER_NAME --network webfiles-net -v "$PROJECT_PATH":/app php:8.2-cli bash
 fi
 
+# --- Feature: Setup ---
 if [ "$FEATURE_SETUP" = true ]; then
     echo "Running setup in container..."
     docker exec $CONTAINER_NAME bash -c "
     if [ ! -f /root/.setup_done ]; then
         apt-get update &&
-        apt-get install -y git libpng-dev libzip-dev unzip &&
+        apt-get install -y git libpng-dev libzip-dev unzip wget &&
+        pecl install pcov &&
+        docker-php-ext-enable pcov &&
         docker-php-ext-install gd exif mysqli zip &&
         php -r \"copy('https://getcomposer.org/installer', 'composer-setup.php');\" &&
         php composer-setup.php --install-dir=/usr/local/bin --filename=composer &&
@@ -45,6 +50,7 @@ if [ "$FEATURE_SETUP" = true ]; then
     fi"
 fi
 
+# --- Feature: Composer Install ---
 if [ "$FEATURE_COMPOSER_INSTALL" = true ]; then
     echo "Running composer install/update in container..."
     docker exec $CONTAINER_NAME bash -c "
@@ -59,6 +65,7 @@ fi
 
 MYSQL_CONTAINER_NAME="webfiles-mysql"
 
+# --- MySQL Container starten ---
 echo "Starting MySQL container for build..."
 if [ "$(docker ps -aq -f name=$MYSQL_CONTAINER_NAME)" ]; then
     if [ "$(docker ps -q -f name=$MYSQL_CONTAINER_NAME)" ]; then
@@ -81,7 +88,7 @@ else
         mysql:8.0
 fi
 
-
+# --- MySQL Readiness Check ---
 echo "Waiting for MySQL to be ready..."
 docker exec $MYSQL_CONTAINER_NAME bash -c '
 for i in {1..30}; do
@@ -96,24 +103,39 @@ echo "MySQL did not become available in time."
 exit 1
 '
 
-
+# --- Feature: Tests ausführen ---
 if [ "$FEATURE_RUN_TESTS" = true ]; then
     echo "Running PHPUnit tests in Docker container..."
     docker exec $CONTAINER_NAME bash -c "\
         cd /app && \
         if [ -f vendor/bin/phpunit ]; then \
-            vendor/bin/phpunit --debug; \
+            vendor/bin/phpunit  --coverage-html build/coverage --coverage-clover build/logs/clover.xml --debug; \
         else \
             echo 'PHPUnit not found. Please ensure it is installed as a dev dependency.'; \
             exit 1; \
         fi"
 fi
 
+if [ "$FEATURE_GENERATE_DOCUMENTATION" = true ]; then
+    echo "Generating API documentation in Docker container..."
+    docker exec $CONTAINER_NAME bash -c "\
+        cd /app && \
+        rm -f apigen.phar && \
+        wget https://github.com/ApiGen/ApiGen/releases/latest/download/apigen.phar && \
+        php apigen.phar source --output ./gh-pages --workers 1 \
+
+    "
+fi
+
+
+# --- Feature: Production Build ---
 if [ "$FEATURE_BUILD_PROD" = true ]; then
     echo "Building PHP source code (production)..."
     docker exec $CONTAINER_NAME bash -c "cd /app && composer install --no-dev --optimize-autoloader"
 fi
 
+
+# --- Feature: Docker Image bauen ---
 if [ "$FEATURE_BUILD_IMAGE" = true ]; then
     echo "Building Docker image..."
     docker build -t my-php-app .

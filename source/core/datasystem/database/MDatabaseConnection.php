@@ -65,7 +65,7 @@ class MDatabaseConnection
      * multiton to administrate the instances of the connection
      * and global accessing
      *
-     * @param String $instanceName
+     * @param string $instanceName
      * @return object
      */
     static public function getInstance($instanceName)
@@ -172,7 +172,7 @@ class MDatabaseConnection
      * returns the hostname of the databaseserver
      *
      * @access public
-     * @return String
+     * @return string
      */
     public function getHost()
     {
@@ -183,7 +183,7 @@ class MDatabaseConnection
      * returns the name of the user connected to the database server
      *
      * @access public
-     * @return String
+     * @return string
      */
     public function getUsername()
     {

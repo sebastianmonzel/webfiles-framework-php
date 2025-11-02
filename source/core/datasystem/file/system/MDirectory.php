@@ -140,7 +140,7 @@ class MDirectory extends MFile
 
     /**
      * Returns the manually defined name of the folder.
-     * @return String folderName
+     * @return string folderName
      */
     public function getPath()
     {

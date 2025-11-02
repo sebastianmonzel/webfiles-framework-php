@@ -13,10 +13,6 @@ use webfilesframework\MWebfilesFrameworkException;
  * @covers webfilesframework\core\datasystem\file\format\media\image\MImage
  */
 class MImageTest extends MAbstractWebfilesFramworkTest {
-    /**
-     * @var MDatabaseDatasourceDatastore
-     */
-    protected $object;
 
 	/**
 	 * @return MDirectoryDatastore

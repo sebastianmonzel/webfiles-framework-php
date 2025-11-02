@@ -1,4 +1,6 @@
 .settings
+build
+gh-pages
 vendor
 composer.phar
 composer.lock

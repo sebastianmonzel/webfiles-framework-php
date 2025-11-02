@@ -49,7 +49,7 @@ class MDatastoreTransferTest extends MAbstractWebfilesFramworkTest {
     }
 
     /**
-     * @return MockObject
+     * @return MDatabaseConnection|MockObject
      */
     public function createPreparedDatabaseConnectionMock()
     {

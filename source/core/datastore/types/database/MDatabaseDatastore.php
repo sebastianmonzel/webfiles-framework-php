@@ -685,10 +685,10 @@ class MDatabaseDatastore extends MAbstractDatastore
     }
 
     /**
-     * @param      $tableName
-     * @param null $className
-     * @param null $condition
-     * @param null $order
+     * @param string $tableName
+     * @param string $className
+     * @param string $condition
+     * @param string $order
      *
      * @return array
      * @throws MWebfilesFrameworkException

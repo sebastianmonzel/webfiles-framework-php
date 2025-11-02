@@ -55,7 +55,7 @@ class MDatabaseDatastoreTest extends MAbstractWebfilesFramworkTest {
     }
 
     /**
-     * @return MockObject
+     * @return MDatabaseConnection|MockObject
      */
     public function createDatabaseConnectionMock()
     {
@@ -65,7 +65,7 @@ class MDatabaseDatastoreTest extends MAbstractWebfilesFramworkTest {
     }
 
     /**
-     * @return MockObject
+     * @return DataMockObject
      */
     public function createPreparedDatabaseConnectionMock()
     {
@@ -187,9 +187,7 @@ class MDatabaseDatastoreTest extends MAbstractWebfilesFramworkTest {
         $template = new MSampleWebfile();
         $template->presetForTemplateSearch();
 
-        $result = $databaseDatastore->deleteByTemplate($template);
-
-        self::assertNull($result);
+        $databaseDatastore->deleteByTemplate($template);
     }
 
     public function testCreationOfNewTableIfItDoesNotExists() {

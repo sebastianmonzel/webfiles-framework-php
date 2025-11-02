@@ -10,7 +10,7 @@ use webfilesframework\core\datasystem\file\system\MFile;
  */
 class MDirectoryTest extends MAbstractWebfilesFramworkTest {
     /**
-     * @var MDatastoreFactory
+     * @var MDirectory
      */
     protected $object;
 
