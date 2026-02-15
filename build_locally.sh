@@ -48,7 +48,7 @@ if [ "$FEATURE_SETUP" = true ]; then
     else
         echo 'Setup already done. Skipping setup steps.'
     fi"
-fi
+fi  
 
 # --- Feature: Composer Install ---
 if [ "$FEATURE_COMPOSER_INSTALL" = true ]; then
