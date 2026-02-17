@@ -112,7 +112,7 @@ class MRemoteDatastoreJsonTest extends MAbstractWebfilesFramworkTest {
         self::assertNotNull($webfilesAsStream);
         $webfilesArray = $webfilesAsStream->getArray();
         self::assertTrue(is_array($webfilesArray));
-        self::assertCount(2, $webfilesArray);
+        self::assertCount(1, $webfilesArray);
 
         /** @var MSampleWebfile $firstWebfile */
         $firstWebfile = $webfilesArray[0];
