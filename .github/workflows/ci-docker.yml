@@ -62,39 +62,26 @@ jobs:
         run: |
           mkdir -p build/logs
           if [ -f vendor/bin/phpunit ]; then
-            vendor/bin/phpunit --bootstrap tests/source/bootstrap.php --coverage-text --coverage-clover build/logs/clover.xml
+            vendor/bin/phpunit --bootstrap tests/source/bootstrap.php --coverage-text --coverage-clover build/logs/clover.xml | tee build/logs/coverage.txt
           else
             echo "PHPUnit not found!"
             exit 1
           fi
 
-      - name: Verify Coverage File
+      - name: Generate Coverage Report
         run: |
-          if [ -f build/logs/clover.xml ]; then
-            echo "Coverage file exists"
-            ls -lh build/logs/clover.xml
-            echo "First few lines of coverage file:"
-            head -n 20 build/logs/clover.xml
-          else
-            echo "Coverage file not found!"
-          fi
-
-      - name: Code Coverage Report
-        uses: irongut/CodeCoverageSummary@v1.3.0
-        continue-on-error: true
-        with:
-          filename: build/logs/clover.xml
-          badge: true
-          format: markdown
-          output: both
+          echo "## Code Coverage Report" > coverage-report.md
+          echo "" >> coverage-report.md
+          echo '```' >> coverage-report.md
+          tail -n 20 build/logs/coverage.txt >> coverage-report.md
+          echo '```' >> coverage-report.md
 
       - name: Add Coverage PR Comment
         uses: marocchino/sticky-pull-request-comment@v2
         if: github.event_name == 'pull_request'
-        continue-on-error: true
         with:
           recreate: true
-          path: code-coverage-results.md
+          path: coverage-report.md
 
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
