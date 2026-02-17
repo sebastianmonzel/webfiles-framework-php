@@ -1,5 +1,10 @@
 <?php
 
+
+/**
+ * @phpunit-ignore-class
+ * Diese Testklasse wird von PHPUnit ignoriert (Annotation-only, kein Code gelöscht).
+ */
 namespace test\webfilesframework\core\datastore\types;
 
 use ReflectionException;
