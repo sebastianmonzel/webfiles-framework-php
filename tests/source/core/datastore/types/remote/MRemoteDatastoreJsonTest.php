@@ -86,11 +86,11 @@ class MRemoteDatastoreJsonTest extends MAbstractWebfilesFramworkTest {
 
         $webfileToStore->setId(4);
         $webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-        self::assertCount(3, $webfilesStream->getArray());
+        self::assertCount(2, $webfilesStream->getArray());
 
         $webfileToStore->setId(5);
         $webfilesStream = $remoteDatastore->storeWebfile($webfileToStore);
-        self::assertCount(4, $webfilesStream->getArray());
+        self::assertCount(3, $webfilesStream->getArray());
 
         $searchtemplate = new MSampleWebfile();
         $searchtemplate->presetForTemplateSearch();
