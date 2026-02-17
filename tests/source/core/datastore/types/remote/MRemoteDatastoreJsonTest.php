@@ -10,11 +10,13 @@ use webfilesframework\MWebfilesFrameworkException;
 
 class MRemoteDatastoreJsonTest extends MAbstractWebfilesFramworkTest {
 
+	private const REMOTE_DATASTORE_URL = "http://webfiles.sebastianmonzel.de/jenkins/datastore/";
+
 	protected $object;
 
     public function createJsonRemoteDatastore(): MRemoteDatastore {
         return new MRemoteDatastore(
-            "http://webfiles.sebastianmonzel.de/jenkins/datastore/","json"
+            self::REMOTE_DATASTORE_URL,"json"
         );
     }
 

@@ -10,11 +10,13 @@ use webfilesframework\MWebfilesFrameworkException;
 
 class MRemoteDatastoreXmlTest extends MAbstractWebfilesFramworkTest {
 
+	private const REMOTE_DATASTORE_URL = "http://webfiles.sebastianmonzel.de/jenkins/datastore/";
+
 	protected $object;
 
 	public function createXmlRemoteDatastore(): MRemoteDatastore {
 		return new MRemoteDatastore(
-			"http://webfiles.sebastianmonzel.de/jenkins/datastore/","xml"
+			self::REMOTE_DATASTORE_URL,"xml"
 		);
 	}
 
