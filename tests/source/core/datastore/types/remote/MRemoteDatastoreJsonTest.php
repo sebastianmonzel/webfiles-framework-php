@@ -42,7 +42,7 @@ class MRemoteDatastoreJsonTest extends MAbstractWebfilesFramworkTest {
         $remoteDatastore = $this->createJsonRemoteDatastore();
         
         // Lösche alle Webfiles nach dem Test
-        $remoteDatastore->deleteAll();
+		$remoteDatastore->deleteByTemplate(new MSampleWebfile());
         
         parent::tearDown();
     }
