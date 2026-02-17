@@ -74,13 +74,13 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
 
       - name: Build Docker image
-        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/<image-name>:${{ github.sha }} .
+        run: docker build -t ${{ secrets.DOCKER_USERNAME }}/webfiles-framework-php:${{ github.sha }} .
 
       - name: Push Docker image
-        run: docker push ${{ secrets.DOCKER_USERNAME }}/<image-name>:${{ github.sha }}
+        run: docker push ${{ secrets.DOCKER_USERNAME }}/webfiles-framework-php:${{ github.sha }}
 
       - name: Tag latest and push
         if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         run: |
-          docker tag ${{ secrets.DOCKER_USERNAME }}/<image-name>:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/<image-name>:latest
-          docker push ${{ secrets.DOCKER_USERNAME }}/<image-name>:latest
+          docker tag ${{ secrets.DOCKER_USERNAME }}/webfiles-framework-php:${{ github.sha }} ${{ secrets.DOCKER_USERNAME }}/webfiles-framework-php:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/webfiles-framework-php:latest
