@@ -14,6 +14,39 @@ class MRemoteDatastoreXmlTest extends MAbstractWebfilesFramworkTest {
 
 	protected $object;
 
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
+	protected function setUp(): void
+	{
+		parent::setUp();
+		
+		$remoteDatastore = $this->createXmlRemoteDatastore();
+		
+		// Initialisiere Webfile mit Sebastian Monzel
+		$webfile = new MSampleWebfile();
+		$webfile->setId(1);
+		$webfile->setFirstname("Sebastian");
+		$webfile->setLastname("Monzel");
+		
+		$remoteDatastore->storeWebfile($webfile);
+	}
+
+	/**
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
+	protected function tearDown(): void
+	{
+		$remoteDatastore = $this->createXmlRemoteDatastore();
+		
+		// Lösche alle Webfiles nach dem Test
+		$remoteDatastore->deleteByTemplate(new MSampleWebfile());
+		
+		parent::tearDown();
+	}
+
 	public function createXmlRemoteDatastore(): MRemoteDatastore {
 		return new MRemoteDatastore(
 			self::REMOTE_DATASTORE_URL,"xml"
@@ -135,11 +168,6 @@ class MRemoteDatastoreXmlTest extends MAbstractWebfilesFramworkTest {
         $searchtemplate->presetForTemplateSearch();
 		$searchtemplate->setLastname("Schmidt");
         $webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
-
-		$searchtemplate = new MSampleWebfile();
-        $searchtemplate->presetForTemplateSearch();
-		$searchtemplate->setLastname("Schmidt\\n        // TODO zeil4enumbruch macht probleme bei json\\n        ");
-		$webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
 
         self::assertGreaterThanOrEqual(2, $webfilesStream->getArray());
     }

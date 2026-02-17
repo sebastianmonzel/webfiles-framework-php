@@ -14,6 +14,39 @@ class MRemoteDatastoreJsonTest extends MAbstractWebfilesFramworkTest {
 
 	protected $object;
 
+    /**
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    protected function setUp(): void
+    {
+        parent::setUp();
+        
+        $remoteDatastore = $this->createJsonRemoteDatastore();
+        
+        // Initialisiere Webfile mit Sebastian Monzel
+        $webfile = new MSampleWebfile();
+        $webfile->setId(1);
+        $webfile->setFirstname("Sebastian");
+        $webfile->setLastname("Monzel");
+        
+        $remoteDatastore->storeWebfile($webfile);
+    }
+
+    /**
+     * @throws MWebfilesFrameworkException
+     * @throws ReflectionException
+     */
+    protected function tearDown(): void
+    {
+        $remoteDatastore = $this->createJsonRemoteDatastore();
+        
+        // Lösche alle Webfiles nach dem Test
+        $remoteDatastore->deleteAll();
+        
+        parent::tearDown();
+    }
+
     public function createJsonRemoteDatastore(): MRemoteDatastore {
         return new MRemoteDatastore(
             self::REMOTE_DATASTORE_URL,"json"
