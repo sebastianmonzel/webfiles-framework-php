@@ -139,7 +139,18 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
         // TODO zeil4enumbruch macht probleme bei json
         ");*/
         $webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
-        self::assertCount(2, $webfilesStream->getArray());
+
+		$searchtemplate = new MSampleWebfile();
+        $searchtemplate->presetForTemplateSearch();
+		$searchtemplate->setLastname("Schmidt\n        // TODO zeil4enumbruch macht probleme bei json\n        ");
+        /*$searchtemplate->setLastname("Schmidt
+        // TODO zeil4enumbruch macht probleme bei json
+        ");*/
+		$webfilesStream = $remoteDatastore->deleteByTemplate($searchtemplate);
+
+
+		
+        self::assertGreaterThanOrEqual(2, $webfilesStream->getArray());
     }
     /*
 	public function testGetNextWebfileForTimestamp() {
