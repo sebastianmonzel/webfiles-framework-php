@@ -21,7 +21,7 @@ jobs:
           --health-cmd="mysqladmin ping --silent" --health-interval=10s --health-timeout=5s --health-retries=5
 
     env:
-      DB_HOST: 127.0.0.1
+      WEBFILES_DB_HOST: 127.0.0.1
       DB_PORT: 3306
       DB_DATABASE: test
       DB_USERNAME: root
@@ -54,7 +54,7 @@ jobs:
 
       - name: Run PHPUnit tests
         env:
-          DB_HOST: 127.0.0.1
+          WEBFILES_DB_HOST: 127.0.0.1
           DB_PORT: 3306
           DB_DATABASE: test
           DB_USERNAME: root

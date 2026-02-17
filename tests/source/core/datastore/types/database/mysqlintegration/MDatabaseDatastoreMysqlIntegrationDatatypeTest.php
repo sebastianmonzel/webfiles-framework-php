@@ -178,12 +178,14 @@ class MDatabaseDatastoreMysqlIntegrationDatatypeTest extends MAbstractDatastoreT
      */
     private function createDatabaseDatastore()
     {
-        $connection = new MDatabaseConnection(
-            "webfiles-mysql",
-            "webfiles-mysql",
-            "prefix_",
-            "root",
-            "root");
+
+		$mysqlHost = getenv('WEBFILES_DB_HOST') ?: 'webfiles-mysql';
+		$connection = new MDatabaseConnection(
+			$mysqlHost,
+			"webfiles-mysql",
+			"prefix_",
+			"root",
+			"root");
 
         $databaseDatastore = new MDatabaseDatastore($connection);
         return $databaseDatastore;
