@@ -142,7 +142,7 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 		$searchtemplate = new MSampleWebfile();
         $searchtemplate->presetForTemplateSearch();
-		$searchtemplate->setLastname("Schmidt\n        // TODO zeil4enumbruch macht probleme bei json\n        ");
+		$searchtemplate->setLastname("Schmidt\\n        // TODO zeil4enumbruch macht probleme bei json\\n        ");
         /*$searchtemplate->setLastname("Schmidt
         // TODO zeil4enumbruch macht probleme bei json
         ");*/
