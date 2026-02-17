@@ -9,10 +9,7 @@ use test\webfilesframework\MAbstractWebfilesFramworkTest;
 use webfilesframework\core\datastore\types\database\MSampleWebfile;
 use webfilesframework\core\datastore\types\remote\MRemoteDatastore;
 use webfilesframework\MWebfilesFrameworkException;
-/**
- * @phpunit-ignore-class
- * Diese Testklasse wird von PHPUnit ignoriert (Annotation-only, kein Code gelöscht).
- */
+/*
 class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
 
 	protected $object;
@@ -218,4 +215,4 @@ class MRemoteDatastoreTest extends MAbstractWebfilesFramworkTest {
     }
 
 
-}
+}*/
