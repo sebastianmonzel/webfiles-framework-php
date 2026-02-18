@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<object classname="webfilesframework\core\datastore\types\directory\MDirectoryDatastoreMetainformation">
+	<timezone><![CDATA[]]></timezone>
+	<isnormalized><![CDATA[1]]></isnormalized>
+	<usehumanreadabletimestamps><![CDATA[]]></usehumanreadabletimestamps>
+	<containsthumbnails><![CDATA[]]></containsthumbnails>
+	<id><![CDATA[0]]></id>
+	<time><![CDATA[0]]></time>
+</object>
