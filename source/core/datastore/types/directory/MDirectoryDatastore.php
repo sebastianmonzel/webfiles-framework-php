@@ -164,12 +164,12 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
                 // Validate webfile has id and timestamp (only for .webfile files, not images)
                 $lowerCaseFileExtension = strtolower($file->getExtension());
                 if ( $lowerCaseFileExtension == "webfile" ) {
-                    if ( $webfile->getId() == null || $webfile->getId() == 0 || $webfile->getId() == '' ) {
+                    if ( empty($webfile->getId()) ) {
                         throw new MWebfilesFrameworkException(
                             "Webfile in file '" . $file->getName() . "' does not have a valid id."
                         );
                     }
-                    if ( $webfile->getTime() == null || $webfile->getTime() == 0 ) {
+                    if ( empty($webfile->getTime()) ) {
                         throw new MWebfilesFrameworkException(
                             "Webfile in file '" . $file->getName() . "' does not have a valid timestamp."
                         );
@@ -273,11 +273,11 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         // TODO normalize hier anwenden
         
         // Validate that webfile has id and timestamp
-        if ( $webfile->getId() == 0 || $webfile->getId() == null ) {
+        if ( empty($webfile->getId()) ) {
             $webfile->setId(uniqid());
         }
 
-        if ( $webfile->getTime() == 0 || $webfile->getTime() == null ) {
+        if ( empty($webfile->getTime()) ) {
             $webfile->setTime(time());
         }
 

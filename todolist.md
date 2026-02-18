@@ -17,7 +17,7 @@
  - [ ] webfile links - MWebfileLink / MLocalWebfileLink / MRemoteWebfileLink / MWebfileReferences
  - [ ] MDatastoreTransfer: inkrementeller Transfer ermöglichen (irgendwo speichern was oder bis zu welchem punkt schon transferiert wurde)
  - [ ] Gaufrette nochmal anschauen als abstraktion für directory datastore
- - [x] directory-datastore: wenn nciht alle webfiles ein timestamp und eine id haben eine exception werden
+ - [x] directory-datastore: wenn nicht alle webfiles ein timestamp und eine id haben eine exception werden
  - [x] nur dateiendungen mit .webfile zulassen bei storeWebfile
  - [x] bei invalidem payload kontrollierter rausgehen
  - [ ] MDatabaseDatastore: wie kann man überschneidungen in datenbanken vermeiden? z.b. durch gleiches prefix
