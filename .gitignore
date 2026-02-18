@@ -5,3 +5,4 @@ vendor
 composer.phar
 composer.lock
 /tests/resources/targetTransferDirectoryDatastore/
+.phpunit.result.cache
