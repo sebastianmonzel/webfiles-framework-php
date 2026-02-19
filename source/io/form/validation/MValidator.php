@@ -1,6 +1,6 @@
 <?php
 
-namespace webfilesframework\io\form\validation;
+namespace webfilesframework\io\validation;
 
 /**
  * description
