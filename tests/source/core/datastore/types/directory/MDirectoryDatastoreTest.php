@@ -233,4 +233,158 @@ class MDirectoryDatastoreTest extends MAbstractWebfilesFramworkTest {
 
     }
 
+
+	/**
+	 * Test that webfiles without valid id throw an exception
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
+	public function testWebfileWithoutIdThrowsException() {
+		$this->expectException(MWebfilesFrameworkException::class);
+		$this->expectExceptionMessage("does not have a valid id");
+
+		// Create a directory with a webfile that has no id
+		$dirPath = __DIR__ . '/../../../../../resources/testInvalidWebfiles';
+		$directory = new MDirectory($dirPath);
+		if (!$directory->exists()) {
+			$directory->create();
+		}
+
+		// Create a webfile without id
+		$webfile = new MSampleWebfile();
+		$webfile->setFirstname('Test');
+		$webfile->setLastname('User');
+		$webfile->setTime(time());
+
+		$filePath = $directory->getPath() . '/test-no-id.webfile';
+		$file = new \webfilesframework\core\datasystem\file\system\MFile($filePath);
+		$file->writeContent($webfile->marshall(), true);
+
+		try {
+			$datastore = new MDirectoryDatastore($directory);
+			$datastore->getAllWebfiles();
+		} finally {
+			// Clean up
+			if (file_exists($filePath)) {
+				unlink($filePath);
+			}
+			if (is_dir($dirPath)) {
+				rmdir($dirPath);
+			}
+		}
+	}
+
+	/**
+	 * Test that webfiles without valid timestamp throw an exception
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
+	public function testWebfileWithoutTimestampThrowsException() {
+		$this->expectException(MWebfilesFrameworkException::class);
+		$this->expectExceptionMessage("does not have a valid timestamp");
+
+		// Create a directory with a webfile that has no timestamp
+		$dirPath = __DIR__ . '/../../../../../resources/testInvalidWebfiles2';
+		$directory = new MDirectory($dirPath);
+		if (!$directory->exists()) {
+			$directory->create();
+		}
+
+		// Create a webfile without timestamp
+		$webfile = new MSampleWebfile();
+		$webfile->setId(999);
+		$webfile->setFirstname('Test');
+		$webfile->setLastname('User');
+
+		$filePath = $directory->getPath() . '/test-no-timestamp.webfile';
+		$file = new \webfilesframework\core\datasystem\file\system\MFile($filePath);
+		$file->writeContent($webfile->marshall(), true);
+
+		try {
+			$datastore = new MDirectoryDatastore($directory);
+			$datastore->getAllWebfiles();
+		} finally {
+			// Clean up
+			if (file_exists($filePath)) {
+				unlink($filePath);
+			}
+			if (is_dir($dirPath)) {
+				rmdir($dirPath);
+			}
+		}
+	}
+
+	/**
+	 * Test that storeWebfile automatically assigns id and timestamp if missing
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
+	public function testStoreWebfileAutoAssignsIdAndTimestamp() {
+		// Create a temporary directory
+		$dirPath = __DIR__ . '/../../../../../resources/testStoreWebfile';
+		$directory = new MDirectory($dirPath);
+		if (!$directory->exists()) {
+			$directory->create();
+		}
+
+		$datastore = new MDirectoryDatastore($directory);
+
+		// Create a webfile without id and timestamp
+		$webfile = new MSampleWebfile();
+		$webfile->setFirstname('Auto');
+		$webfile->setLastname('Generated');
+
+		// Store the webfile
+		$datastore->storeWebfile($webfile);
+
+		// Verify id and timestamp were assigned
+		self::assertNotNull($webfile->getId());
+		self::assertNotEquals(0, $webfile->getId());
+		self::assertNotNull($webfile->getTime());
+		self::assertNotEquals(0, $webfile->getTime());
+
+		// Clean up
+		$datastore->deleteAll();
+		if (is_dir($dirPath)) {
+			rmdir($dirPath);
+		}
+	}
+
+	/**
+	 * Test that invalid payload is handled gracefully
+	 * @throws MDatastoreException
+	 * @throws MWebfilesFrameworkException
+	 * @throws ReflectionException
+	 */
+	public function testInvalidPayloadThrowsException() {
+		$this->expectException(MWebfilesFrameworkException::class);
+
+		// Create a directory with an empty webfile
+		$dirPath = __DIR__ . '/../../../../../resources/testInvalidPayload';
+		$directory = new MDirectory($dirPath);
+		if (!$directory->exists()) {
+			$directory->create();
+		}
+
+		$filePath = $directory->getPath() . '/empty.webfile';
+		$file = new \webfilesframework\core\datasystem\file\system\MFile($filePath);
+		$file->writeContent('', true);
+
+		try {
+			$datastore = new MDirectoryDatastore($directory);
+			$datastore->getAllWebfiles();
+		} finally {
+			// Clean up
+			if (file_exists($filePath)) {
+				unlink($filePath);
+			}
+			if (is_dir($dirPath)) {
+				rmdir($dirPath);
+			}
+		}
+	}
+
 }

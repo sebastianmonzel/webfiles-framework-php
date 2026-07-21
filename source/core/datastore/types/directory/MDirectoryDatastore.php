@@ -161,6 +161,20 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
 
             $webfile = $this->readFileAsWebfile($file);
             if ( $webfile != null ) {
+                // Validate webfile has id and timestamp (only for .webfile files, not images)
+                $lowerCaseFileExtension = strtolower($file->getExtension());
+                if ( $lowerCaseFileExtension == "webfile" ) {
+                    if ( empty($webfile->getId()) ) {
+                        throw new MWebfilesFrameworkException(
+                            "Webfile in file '" . $file->getName() . "' does not have a valid id."
+                        );
+                    }
+                    if ( empty($webfile->getTime()) ) {
+                        throw new MWebfilesFrameworkException(
+                            "Webfile in file '" . $file->getName() . "' does not have a valid timestamp."
+                        );
+                    }
+                }
                 $webfileArray = $this->addWebfileSafetyToArray($webfile,$webfileArray);
             }
         }
@@ -182,25 +196,45 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         /** @var MWebfile $item */
         $lowerCaseFileExtension = strtolower($file->getExtension());
 
-        // AUTOBOXING for MImage-Definition
-        if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
+        try {
+            // AUTOBOXING for MImage-Definition
+            if ($lowerCaseFileExtension == "jpg" || $lowerCaseFileExtension == "jpeg") {
 
-            $normalizedFile = new MFile($file->getFolder() . "/" . $this->NORMAL_IMAGES_FOLDER_NAME . "/" . $file->getName());
+                $normalizedFile = new MFile($file->getFolder() . "/" . $this->NORMAL_IMAGES_FOLDER_NAME . "/" . $file->getName());
 
-            if ($normalizedFile->exists()) {
-                $item = new MImage($normalizedFile->getPath());
+                if ($normalizedFile->exists()) {
+                    $item = new MImage($normalizedFile->getPath());
+                } else {
+                    $item = new MImage($file->getPath());
+                }
+                $item->setTime($item->readExifDate());
+
+            } else if ($lowerCaseFileExtension == "webfile" || $forceTransformation) {
+
+                $fileContent = $file->getContent();
+                
+                // Handle invalid payload gracefully
+                if (empty($fileContent)) {
+                    throw new MWebfilesFrameworkException(
+                        "File '" . $file->getName() . "' has empty content and cannot be unmarshalled."
+                    );
+                }
+                
+                $item = MWebfile::staticUnmarshall($fileContent);
+
             } else {
-                $item = new MImage($file->getPath());
+                return null;
             }
-            $item->setTime($item->readExifDate());
-
-        } else if ($lowerCaseFileExtension == "webfile" || $forceTransformation) {
-
-            $fileContent = $file->getContent();
-            $item = MWebfile::staticUnmarshall($fileContent);
-
-        } else {
-            return null;
+        } catch (MWebfilesFrameworkException $e) {
+            // Re-throw framework exceptions
+            throw $e;
+        } catch (\Exception $e) {
+            // Wrap other exceptions with context
+            throw new MWebfilesFrameworkException(
+                "Error reading file '" . $file->getName() . "' as webfile: " . $e->getMessage(),
+                $e->getCode(),
+                $e
+            );
         }
 
         if ( $item->getTime() == null) {
@@ -237,14 +271,17 @@ class MDirectoryDatastore extends MAbstractCachableDatastore
         $directoryPath = $this->m_oDirectory->getPath();
         // TODO implizite annahme, dass dateiname immer gleich id ist lösen
         // TODO normalize hier anwenden
-        if ( $webfile->getId() == 0 ) {
+        
+        // Validate that webfile has id and timestamp
+        if ( empty($webfile->getId()) ) {
             $webfile->setId(uniqid());
         }
 
-        if ( $webfile->getTime() == 0 ) {
+        if ( empty($webfile->getTime()) ) {
             $webfile->setTime(time());
         }
 
+        // Only allow .webfile extension
         $file = new MFile($directoryPath . "/" . $webfile->getId() . ".webfile");
 
         $file->writeContent($webfile->marshall(), true);
